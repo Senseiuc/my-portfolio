@@ -263,19 +263,19 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Konga */}
-            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-orange-500/30 transition-colors flex flex-col justify-between group">
+            {/* Xxolcare */}
+            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-teal-500/30 transition-colors flex flex-col justify-between group">
               <div className="space-y-2">
-                <span className="font-mono text-[9px] text-orange-400 uppercase font-bold tracking-wider">01. Fintech Systems</span>
-                <h3 className="font-bold text-slate-200 text-sm group-hover:text-orange-400 transition-colors">Konga Payouts Gateway</h3>
+                <span className="font-mono text-[9px] text-teal-400 uppercase font-bold tracking-wider">01. Care Hospitality</span>
+                <h3 className="font-bold text-slate-200 text-sm group-hover:text-teal-400 transition-colors">Xxolcare Booking Portal</h3>
                 <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Automated merchant bulk payouts utilizing cron offset tasks and batch cursor loops, processing millions in currency transfers with atomic consistency.
+                  Designed care hospitality booking algorithms, integrated Paystack payment gateway webhooks, and configured Docker pipelines for automated transactional mail notifications.
                 </p>
               </div>
               <div className="flex flex-wrap gap-1.5 pt-2">
                 <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Laravel</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">MySQL</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Queue Workers</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Paystack API</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Docker</span>
               </div>
             </div>
 
