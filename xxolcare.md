@@ -43,6 +43,33 @@ To oversee and manage the operational ecosystem, the platform implements a high-
 
 ---
 
-## 2. Payment & Third-Party Integrations
 * **Paystack Webhooks:** Secure webhook ingestion verifying transaction references, resolving payment sessions, and triggering automated customer invoices.
 * **Automated Mail Controllers:** Leverages customized SMTP mail routines (`MailController.php`) to deliver real-time care alerts, booking changes, and invoicing receipts.
+
+---
+
+## 3. Debugging Case Study: The Flipped Finance Metrics Bug
+
+A deep dive into the repository's git commit logs and source files reveals a critical logic error inside the admin analytics controller (`AdminController.php` lines 55-71). 
+
+### The Bug
+In the monthly financial calculation loop, the variables summing dynamic DB income and expenses were pushed into the opposite telemetry arrays:
+```php
+for ($i = 1; $i <= 12; $i++) {
+    $incomeMonthData = Finance::where('type', 'Income')->whereYear('created_at', $year)->whereMonth('created_at', $i)->pluck('amount')->sum();
+    $expenseMonthData = Finance::where('type', 'Expense')->whereYear('created_at', $year)->whereMonth('created_at', $i)->pluck('amount')->sum();
+    array_push($expenseData, $incomeMonthData); // <-- BUG: Income pushed to expenses
+    array_push($incomeData, $expenseMonthData); // <-- BUG: Expense pushed to income
+}
+```
+
+### The Operational Impact
+Because the admin dashboard graphs flipped income and expenditures, the visual reports showed massive, artificial deficits. 
+
+This directly explains a sequence of older "panic commits" adjusting system-wide pricing:
+* `3d2eb764 25% increase`
+* `b12a31cc increased cost by 35%`
+* `32bf5f45 increased cost by 50%`
+
+The pricing surges were introduced as a reaction to false negative-margin reports. Finding and correcting this swapped array logic resolves the reporting deficit without requiring arbitrary client cost increases.
+

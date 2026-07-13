@@ -39,12 +39,15 @@ const PROJECTS = [
         'Surge Price Algorithms: Developed dynamic price multiplier formulas (25%, 35%, 50% peaks) based on booking demand surges.',
         'Variable Queue Optimization: Re-engineered transaction notifications using in-memory variables to bypass worker queue choke-points.',
         'Bot Prevention: Added user registration firewall scripts to block automated signup requests.',
-        'Admin Operations Console: Programmed dynamic dashboards managing financial audit trails, onboarding verifications, and manual staff allocations.'
+        'Admin Operations Console: Programmed dynamic dashboards managing financial audit trails, onboarding verifications, and manual staff allocations.',
+        'Flipped Analytics Audit: Diagnosed and resolved a critical logic error in monthly finance calculations (swapped array pushes) that caused fake deficit reports.'
       ],
       commits: [
         '6a83855 feat: add optional website/address fields to staff card',
         '9c5d8e8 feat: add QR code digital business card system for staff',
         '55798e1 fix admin jobs status list display layouts',
+        '32bf5f4 increased cost by 50% (pricing surge reaction to fake reports)',
+        '3d2eb76 25% increase (pricing surge reaction to fake reports)',
         'ba7b3b2 test without queue - using variables for mail thread optimization'
       ]
     }
