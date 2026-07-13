@@ -19,10 +19,199 @@ import EngineRoom from './components/EngineRoom';
 import GitStats from './components/GitStats';
 import Logo from './components/Logo';
 
+const PROJECTS = [
+  {
+    id: 'xxolcare',
+    number: '01',
+    category: 'Care Hospitality',
+    title: 'Xxolcare Booking Portal',
+    shortDesc: 'Designed care hospitality booking algorithms, integrated Paystack payment gateway webhooks, and configured Docker pipelines for automated transactional mail notifications.',
+    tags: ['Laravel', 'Paystack API', 'Docker'],
+    borderColor: 'hover:border-teal-500/30',
+    hoverText: 'group-hover:text-teal-400',
+    accentColor: 'text-teal-400',
+    link: 'https://xxolcare.com',
+    details: {
+      url: 'https://xxolcare.com',
+      system: 'Hospitality Management Engine',
+      contributions: [
+        'Staff QR System: Built a dynamic digital business card and QR code generation node (StaffCardController.php).',
+        'Surge Price Algorithms: Developed dynamic price multiplier formulas (25%, 35%, 50% peaks) based on booking demand surges.',
+        'Variable Queue Optimization: Re-engineered transaction notifications using in-memory variables to bypass worker queue choke-points.',
+        'Bot Prevention: Added user registration firewall scripts to block automated signup requests.'
+      ],
+      commits: [
+        '6a83855 feat: add optional website/address fields to staff card',
+        '9c5d8e8 feat: add QR code digital business card system for staff',
+        '49a8ca6 docker config environment updates',
+        'ba7b3b2 test without queue - using variables for mail thread optimization'
+      ]
+    }
+  },
+  {
+    id: 'lextorah',
+    number: '02',
+    category: 'AI Learning Platforms',
+    title: 'Lextorah Smart-Sync',
+    shortDesc: 'Engineered multi-tenant file syncing daemons that monitor, translate, and catalog course video metadata concurrently into database channels.',
+    tags: ['FastAPI', 'React', 'Python Watchdog'],
+    borderColor: 'hover:border-cyan-500/30',
+    hoverText: 'group-hover:text-cyan-400',
+    accentColor: 'text-cyan-400',
+    link: 'https://lextorah.com',
+    details: {
+      url: 'https://lextorah.com',
+      system: 'Metadata Translation Sync Daemon',
+      contributions: [
+        'Concurrent Monitoring: Designed dynamic folder watchdogs that track filesystem write updates.',
+        'SaaS Multitenancy: Built tenant resource routing boundaries separating learning catalog nodes.',
+        'FastAPI API: Authored highly performant routing paths processing heavy payload uploads.'
+      ],
+      commits: [
+        'feat: initial folder monitor hook',
+        'refactor: multi-tenant metadata index route',
+        'perf: parallel fastAPI upload buffers'
+      ]
+    }
+  },
+  {
+    id: 'tripease',
+    number: '03',
+    category: 'Logistics Routing',
+    title: 'TripEase Logistics Router',
+    shortDesc: 'Designed load-balanced high-throughput packet routing structures for cargo fleet networks, managing live latency offsets and transit states.',
+    tags: ['Node.js', 'PostgreSQL', 'Docker'],
+    borderColor: 'hover:border-indigo-500/30',
+    hoverText: 'group-hover:text-indigo-400',
+    accentColor: 'text-indigo-400',
+    link: null,
+    details: {
+      url: null,
+      system: 'Transit State Router Load Balancer',
+      contributions: [
+        'Traffic Gateway: Implemented reverse proxy load balancer routing metrics.',
+        'High-Throughput Packets: Managed real-time transit state caches inside Redis indices.',
+        'Environment Setup: Fully containerized the fleet monitoring microservices network.'
+      ],
+      commits: [
+        'feat: gateway reverse proxy configurations',
+        'perf: redis caching for vehicle telemetry',
+        'docker: compile fleet service image'
+      ]
+    }
+  },
+  {
+    id: 'wings',
+    number: '04',
+    category: 'Property Management',
+    title: 'Wings Tenancy System',
+    shortDesc: 'A multi-tenant estate dashboard tracking payments, property status records, dynamic payment gateways integration, and ledger accounts.',
+    tags: ['Laravel', 'Blade', 'Dynamic Dashboards'],
+    borderColor: 'hover:border-emerald-500/30',
+    hoverText: 'group-hover:text-emerald-400',
+    accentColor: 'text-emerald-400',
+    link: null,
+    details: {
+      url: null,
+      system: 'Estate Multi-Tenant Dashboard',
+      contributions: [
+        'Tenancies System: Created payment tracking states and property management log views.',
+        'Ledgers & Payments: Integrated dynamic online bank payouts mapping transactions.',
+        'Dynamic Widgets: Programmed high-fidelity metrics dashboards summarizing rental indexes.'
+      ],
+      commits: [
+        'feat: tenants dynamic dashboard calculations',
+        'feat: integrate property payments ledger logs',
+        'refactor: show tenancies list views'
+      ]
+    }
+  },
+  {
+    id: 'radionews',
+    number: '05',
+    category: 'Content Portals',
+    title: 'Radio News CMS',
+    shortDesc: 'Engineered administrative backends for real-time news management, login authentications, and audio broadcast streams syndication.',
+    tags: ['Laravel', 'Bootstrap', 'Admin Auth'],
+    borderColor: 'hover:border-pink-500/30',
+    hoverText: 'group-hover:text-pink-400',
+    accentColor: 'text-pink-400',
+    link: null,
+    details: {
+      url: null,
+      system: 'Broadcasting CMS & Publishing Engine',
+      contributions: [
+        'Real-time Publishing: Created article editing nodes with media upload buffers.',
+        'Secure Auth: Programmed multi-level administrator sign-in gates.',
+        'Audio Feeds: Integrated live broadcast streams syndication widgets.'
+      ],
+      commits: [
+        'feat: admin news post controls',
+        'feat: login session security wrapper',
+        'fix: audio stream sync handler'
+      ]
+    }
+  },
+  {
+    id: 'transglobal',
+    number: '06',
+    category: 'Integration APIs',
+    title: 'Transglobal Cargo Sabre',
+    shortDesc: 'Designed auto-seeder algorithms and billing calculators integrating Sabre logistics protocols with custom local invoicing.',
+    tags: ['PHP', 'Sabre API', 'Automated Seeders'],
+    borderColor: 'hover:border-yellow-500/30',
+    hoverText: 'group-hover:text-yellow-400',
+    accentColor: 'text-yellow-400',
+    link: null,
+    details: {
+      url: null,
+      system: 'Logistics Sabre Integration API',
+      contributions: [
+        'Sabre SDK: Integrated Sabre cargo flight availability protocol APIs.',
+        'Auto-Seeders: Wrote database seeders fetching bulk global airport tariff indexes.',
+        'Calculators: Coded logic calculating live customs clearances and freight taxes.'
+      ],
+      commits: [
+        'feat: Sabre SOAP gateway bindings',
+        'perf: optimize tariff auto-seed speed',
+        'fix: calculator billing decimals rounding'
+      ]
+    }
+  }
+];
+
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [modalStage, setModalStage] = useState<'idle' | 'loading' | 'done'>('idle');
+  const [loadingLogs, setLoadingLogs] = useState<string[]>([]);
+
+  const handleOpenProjectDetails = (project: any) => {
+    setSelectedProject(project);
+    setModalStage('loading');
+    setLoadingLogs([]);
+    
+    const logs = [
+      'Establishing secure connection to telemetry...',
+      'Spinning up dynamic logging pod on node vps-01...',
+      'Binding virtual directory stream channels...',
+      'Querying SQLite cache for git transaction log index...',
+      'Telemetry stream stabilized. Decoding repository packets...'
+    ];
+    
+    logs.forEach((log, index) => {
+      setTimeout(() => {
+        setLoadingLogs(prev => [...prev, `[system-daemon] ${log}`]);
+      }, (index + 1) * 450);
+    });
+    
+    setTimeout(() => {
+      setModalStage('done');
+    }, logs.length * 450 + 200);
+  };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -263,101 +452,55 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Xxolcare */}
-            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-teal-500/30 transition-colors flex flex-col justify-between group">
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] text-teal-400 uppercase font-bold tracking-wider">01. Care Hospitality</span>
-                <h3 className="font-bold text-slate-200 text-sm group-hover:text-teal-400 transition-colors">Xxolcare Booking Portal</h3>
-                <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Designed care hospitality booking algorithms, integrated Paystack payment gateway webhooks, and configured Docker pipelines for automated transactional mail notifications.
-                </p>
+            {PROJECTS.map((project) => (
+              <div 
+                key={project.id} 
+                className={`p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 ${project.borderColor} transition-colors flex flex-col justify-between group`}
+              >
+                <div className="space-y-2">
+                  <span className={`font-mono text-[9px] ${project.accentColor} uppercase font-bold tracking-wider`}>
+                    {project.number}. {project.category}
+                  </span>
+                  <h3 className={`font-bold text-slate-200 text-sm ${project.hoverText} transition-colors`}>
+                    {project.title}
+                  </h3>
+                  <p className="text-slate-400 text-[11px] leading-relaxed">
+                    {project.shortDesc}
+                  </p>
+                </div>
+                
+                <div className="space-y-3.5 pt-2">
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="border-t border-slate-900/60 pt-2 flex items-center justify-between">
+                    <button 
+                      onClick={() => handleOpenProjectDetails(project)}
+                      className="text-[9px] font-mono text-slate-500 hover:text-slate-100 transition-colors uppercase tracking-widest flex items-center gap-1 group/btn cursor-pointer"
+                    >
+                      View Log Insights
+                      <span className="group-hover/btn:translate-x-0.5 transition-transform font-bold">&gt;</span>
+                    </button>
+                    
+                    {project.link && (
+                      <a 
+                        href={project.link} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="text-[9px] font-mono text-slate-500 hover:text-cyan-400 transition-colors uppercase tracking-widest"
+                      >
+                        Site ↗
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Laravel</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Paystack API</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Docker</span>
-              </div>
-            </div>
-
-            {/* Lextorah */}
-            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-cyan-500/30 transition-colors flex flex-col justify-between group">
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] text-cyan-400 uppercase font-bold tracking-wider">02. AI Learning Platforms</span>
-                <h3 className="font-bold text-slate-200 text-sm group-hover:text-cyan-400 transition-colors">Lextorah Smart-Sync</h3>
-                <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Engineered multi-tenant file syncing daemons that monitor, translate, and catalog course video metadata concurrently into database channels.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">FastAPI</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">React</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Python Watchdog</span>
-              </div>
-            </div>
-
-            {/* TripEase */}
-            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-indigo-500/30 transition-colors flex flex-col justify-between group">
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] text-indigo-400 uppercase font-bold tracking-wider">03. Logistics Routing</span>
-                <h3 className="font-bold text-slate-200 text-sm group-hover:text-indigo-400 transition-colors">TripEase Logistics Router</h3>
-                <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Designed load-balanced high-throughput packet routing structures for cargo fleet networks, managing live latency offsets and transit states.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Node.js</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">PostgreSQL</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Docker</span>
-              </div>
-            </div>
-
-            {/* Wings */}
-            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-emerald-500/30 transition-colors flex flex-col justify-between group">
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] text-emerald-400 uppercase font-bold tracking-wider">04. Property Management</span>
-                <h3 className="font-bold text-slate-200 text-sm group-hover:text-emerald-400 transition-colors">Wings Tenancy System</h3>
-                <p className="text-slate-400 text-[11px] leading-relaxed">
-                  A multi-tenant estate dashboard tracking payments, property status records, dynamic payment gateways integration, and ledger accounts.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Laravel</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Blade</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Dynamic Dashboards</span>
-              </div>
-            </div>
-
-            {/* Radio News */}
-            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-pink-500/30 transition-colors flex flex-col justify-between group">
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] text-pink-400 uppercase font-bold tracking-wider">05. Content Portals</span>
-                <h3 className="font-bold text-slate-200 text-sm group-hover:text-pink-400 transition-colors">Radio News CMS</h3>
-                <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Engineered administrative backends for real-time news management, login authentications, and audio broadcast streams syndication.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Laravel</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Bootstrap</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Admin Auth</span>
-              </div>
-            </div>
-
-            {/* Transglobal */}
-            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-yellow-500/30 transition-colors flex flex-col justify-between group">
-              <div className="space-y-2">
-                <span className="font-mono text-[9px] text-yellow-400 uppercase font-bold tracking-wider">06. Integration APIs</span>
-                <h3 className="font-bold text-slate-200 text-sm group-hover:text-yellow-400 transition-colors">Transglobal Cargo Sabre</h3>
-                <p className="text-slate-400 text-[11px] leading-relaxed">
-                  Designed auto-seeder algorithms and billing calculators integrating Sabre logistics protocols with custom local invoicing.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-1.5 pt-2">
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">PHP</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Sabre API</span>
-                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Automated Seeders</span>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
 
@@ -523,6 +666,106 @@ export default function App() {
         <div>Designed & Programmed inside Docker container node-01</div>
         <div className="mt-1">Active deployment on Render | SQLite Powered</div>
       </footer>
+
+      {/* Dynamic Telemetry Project Modal */}
+      {selectedProject && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="w-full max-w-2xl bg-[#090e18] border border-slate-800 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono text-xs text-slate-300"
+          >
+            {/* Modal Header */}
+            <div className="px-4 py-3 border-b border-slate-900 bg-slate-950 flex items-center justify-between">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500">
+                system telemetry: {selectedProject.id}.sh
+              </span>
+              <button 
+                onClick={() => {
+                  setSelectedProject(null);
+                  setModalStage('idle');
+                }}
+                className="text-slate-500 hover:text-slate-100 transition-colors text-sm cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+              {modalStage === 'loading' ? (
+                <div className="space-y-4 min-h-[220px] flex flex-col justify-end">
+                  <div className="space-y-1.5 flex-1">
+                    {loadingLogs.map((log, i) => (
+                      <div key={i} className="text-emerald-400/90 leading-relaxed text-[11px]">
+                        {log}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2 text-cyan-400 font-bold text-[10px] animate-pulse">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                    SPINNING UP COMPUTE POD DAEMON...
+                  </div>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {/* System Architecture Node Details */}
+                  <div className="space-y-3">
+                    <div>
+                      <span className="text-[10px] text-slate-500 uppercase tracking-widest block">Deployment Target</span>
+                      <h4 className="text-sm font-bold text-slate-100 uppercase tracking-wide">
+                        {selectedProject.details.system}
+                      </h4>
+                    </div>
+                    
+                    <div className="space-y-2 border-l border-slate-900 pl-4 py-1">
+                      <span className="text-[10px] text-slate-500 uppercase tracking-wide block mb-1">Main Contributions</span>
+                      <ul className="list-none space-y-2">
+                        {selectedProject.details.contributions.map((item: string, i: number) => {
+                          const [title, desc] = item.split(': ');
+                          return (
+                            <li key={i} className="text-[11px] leading-relaxed text-slate-400">
+                              <strong className={`text-slate-200 ${selectedProject.accentColor}`}>{title}:</strong> {desc}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Git Commit Telemetry Log */}
+                  <div className="space-y-2.5">
+                    <span className="text-[10px] text-slate-500 uppercase tracking-widest block">Commit History Insights</span>
+                    <div className="bg-slate-950/70 border border-slate-900 p-4 rounded-lg space-y-1.5">
+                      {selectedProject.details.commits.map((commit: string, i: number) => (
+                        <div key={i} className="text-slate-400 text-[11px] flex gap-2 font-mono">
+                          <span className="text-amber-500/90 select-none">&gt;</span>
+                          <span>{commit}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Production Link */}
+                  {selectedProject.details.url && (
+                    <div className="pt-2 border-t border-slate-900 flex justify-end">
+                      <a 
+                        href={selectedProject.details.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/20 hover:border-orange-500/40 px-4 py-2 rounded font-bold font-mono transition-all text-[11px] flex items-center gap-1.5 cursor-pointer"
+                      >
+                        Launch Production Site
+                        <span className="text-xs">↗</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
 
     </div>
   );
