@@ -17,6 +17,7 @@ import Terminal from './components/Terminal';
 import MetricsMonitor from './components/MetricsMonitor';
 import EngineRoom from './components/EngineRoom';
 import GitStats from './components/GitStats';
+import Logo from './components/Logo';
 
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -63,15 +64,7 @@ export default function App() {
       <header className="sticky top-0 z-50 w-full bg-[#070a13]/70 backdrop-blur-md border-b border-slate-900">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img 
-              src="/My Brand Logo - senseiuc.png" 
-              alt="Senseiuc logo" 
-              className="w-8 h-8 object-contain"
-              onError={(e) => {
-                // Fallback text if logo file is not loaded yet in public directory
-                e.currentTarget.style.display = 'none';
-              }}
-            />
+            <Logo className="w-8 h-8" />
             <span className="font-mono text-sm font-bold text-slate-100 uppercase tracking-widest">
               GIDEON <span className="text-cyan-400">NWADIALU</span>
             </span>
@@ -153,13 +146,9 @@ export default function App() {
             <div className="absolute inset-0 z-0 bg-cover bg-center opacity-25 group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: "url('/background-senseiuc-design.png')" }} />
             <div className="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent z-0" />
 
-            {/* Brand Logo in center */}
-            <div className="relative z-10 w-24 h-24 bg-[#070a13] border border-slate-850 p-4 rounded-xl flex items-center justify-center shadow-lg group-hover:border-cyan-500/50 transition-colors duration-500">
-              <img 
-                src="/My Brand Logo - senseiuc.png" 
-                alt="Senseiuc brand logo" 
-                className="w-full h-full object-contain"
-              />
+            {/* Brand Logo in center (Animated Transparent SVG Logo) */}
+            <div className="relative z-10 w-28 h-28 flex items-center justify-center">
+              <Logo className="w-full h-full" />
             </div>
             <div className="relative z-10 mt-6 font-mono text-[10px] text-slate-500 text-center uppercase tracking-widest">
               senseiuc vps-01 node
