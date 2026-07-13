@@ -34,6 +34,13 @@ To protect the database from malicious registrations and fake accounts:
 * **Middlewares:** Configured anti-bot middlewares analyzing request headers, payloads, and request frequency limits.
 * **Bot Deflector:** Intercepts, logs, and blocks automated spambot sign-ups.
 
+### F. Administrative Command Center & Operations Dashboard
+To oversee and manage the operational ecosystem, the platform implements a high-security admin console (`AdminController.php`):
+* **Admin Dashboard:** Aggregates operational KPIs, booking counts, active staffing levels, and pending dispatch actions in real-time.
+* **Finance & Ledgers Console:** Oversees platform cashflow and generates detailed year-on-year accounting data.
+* **Worker & Client Management:** Enables admins to override worker ratings, audit document files (IDs, background checks), check account histories, and dispatch care stars to specific jobs.
+* **Jobs Stream Controller:** Manages the operational dispatch lifecycle, mapping, scheduling, and allocating bookings to care professionals.
+
 ---
 
 ## 2. Payment & Third-Party Integrations
