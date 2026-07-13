@@ -29,7 +29,7 @@ Fullstack Engineer with experience building production-grade systems across e-co
 * Implemented a transaction ledger featuring hashed audit records to **provide tamper-resistant tracking and robust auditing logs**.
 * Engineered an event-driven rewards/commission system using Laravel queues and Redis, **reducing server overhead by 35% and improving queue throughput**.
 
-### **Freelance Software Engineer** | *Full-Stack Consultant & DevOps Specialist* (2023 - PRESENT)
+### **Freelance Software Engineer** | *Full-Stack Consultant & DevOps Specialist* (2020 - PRESENT)
 
 #### **Lextorah (AI Learning Platform)** *(DevOps & Backend Specialist)*
 * Optimized platform deployment configurations and server parameters, **enhancing system response speed and resource utilization**.
