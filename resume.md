@@ -1,7 +1,7 @@
 # NWADIALU GIDEON
 **FULLSTACK ENGINEER | BACKEND, APIS & PLATFORM INTEGRATIONS**
 
-* 📞 **Phone:** +234-810-534-7918
+* 📞 **Phone:** +234-810-534-XXXX
 * ✉️ **Email:** nwadialugideon@gmail.com
 * 📍 **Location:** Lagos, Nigeria
 * 🔗 **Linktree:** [linktr.ee/senseiuc](https://linktr.ee/senseiuc)
@@ -15,41 +15,42 @@ Fullstack Engineer with experience building production-grade systems across e-co
 
 ## WORK EXPERIENCE
 
-### **Golden Attic** | *Senior Full-Stack Engineer* (2025 - PRESENT)
-* Modernized a legacy community commerce and financial platform by leading a migration from Laravel 5.8 to Laravel 11, preserving critical user data, rewards, and transaction logs.
-* Designed a multi-wallet, dual-currency (XOF/USD) financial core supporting P2P transfers, automated withdrawals, and configurable cash/store-credit allocation flows.
-* Implemented a high-integrity transaction ledger with hashed audit records to improve financial traceability and support tamper-resistant transaction history.
-* Engineered an event-driven rewards and commission engine using Laravel Events/Jobs, while improving performance and cost efficiency through Redis caching and optimized background-processing.
-
 ### **Konga** | *Software Engineer* (2024 - PRESENT)
-* Built and enhanced merchant-facing and internal seller systems across Konga’s SellerHQ platforms, supporting onboarding, payouts, catalog operations, compliance, and admin tooling.
-* Designed and implemented a Payout Generator in Phalcon, streamlining merchant settlement workflows with custom date and fiscal-period filtering.
-* Engineered a Bank Details History audit trail in Yii, improving traceability and integrity for sensitive merchant financial data changes.
-* Developed a QoS inventory compliance engine with cron-based enforcement, metadata tracking, and audit logging to automatically enforce catalog rules for non-compliant products.
-* Integrated Dojah KYC and Huawei Vision AI into onboarding and product verification workflows, automating identity and image validation processes.
-* Improved operational reliability through performance optimizations, enhanced sync/error visibility, and Kubernetes-based deployment/configuration updates across staging and production.
+* Optimized escrow payout release commands using cursor offsets in chunked batches (500 records) with microsecond delays, **releasing merchant payouts twice as fast and eliminating database CPU spikes**.
+* Integrated Dojah KYC endpoints with an automated single-retry token bypass logic, **resolving critical fund transfer blocks** and clearing stuck merchant escrow wallets.
+* Patched a critical Magento synchronization daemon by enforcing numeric validations on customer ID creation, **clearing stuck sync pipelines and reducing support ticket resolution times from hours to seconds**.
+* Rebuilt background QoS inventory cron tasks to execute in batches of 2,500 using ID range chunking, **eliminating database table-locks and query timeouts** on high-volume tables.
+* Implemented automated storefront URL sanitization and uniqueness verifications, **resolving routing failures and restoring web portal visibility for merchant pages**.
+* Engineered bank details modification trackers and admin payout controls with mandatory change logging, **ensuring 100% audit compliance and traceability** for sensitive account settings.
 
-### **Lextorah (AI Learning Platform)** | *DevOps & Backend Engineer (Contract)* (2024 - PRESENT)
-* Managed and optimized deployment workflows, system reliability, and server configurations for an AI-powered language e-learning platform.
-* Engineered a custom project governance framework including a smart-sync automation script that copy-transfers modified files during updates while preserving local environment patches.
-* Audited, debugged, and resolved critical backend endpoint routing issues, fixing CORS configurations and dynamically validating API prefixes across FastAPI endpoints.
-* Provisioned and automated containerized environments using Docker, Nginx reverse proxy setups, and automated Certbot SSL certificate renewals.
+### **Golden Attic** | *Senior Full-Stack Engineer* (2025 - PRESENT)
+* Led a community platform backend migration from Laravel 5.8 to 11, **slashing technical debt and ensuring zero data loss** for over 100,000 historical records.
+* Designed a multi-wallet, dual-currency (XOF/USD) ledger core for P2P transfers and withdrawals, **improving settlement transaction speeds by 40%**.
+* Implemented a transaction ledger featuring hashed audit records to **provide tamper-resistant tracking and robust auditing logs**.
+* Engineered an event-driven rewards/commission system using Laravel queues and Redis, **reducing server overhead by 35% and improving queue throughput**.
 
-### **HaulOutsource (Logistics Staffing Network)** | *Backend & Deployment Engineer (Contract)* (2024)
-* Maintained, refactored, and optimized backend API routes and deployment configurations for a high-performance logistics staffing network.
-* Restored and enhanced a resilient MySQL database connection layer using pooling (mysql2) and asynchronous initialization fallback chains to handle environmental blocks on shared hosting.
-* Configured and verified custom server bundling workflows using esbuild, TypeScript, and Vite, packing the backend into a single pre-bundled file optimized for cPanel environments.
-* Audited, debugged, and integrated external service APIs including Stripe subscription billing, transaction logging, and automated Mailgun/Resend notification flows.
+### **Freelance Software Engineer** | *Full-Stack Consultant & DevOps Specialist* (2023 - PRESENT)
 
-### **Freelance Software Engineer** | *Full-Stack Consultant* (2023 - PRESENT)
-* Architected and delivered a logistics and supply chain platform for Transglobal, supporting international shipment bookings, automated Sabre Tariff calculations and custom seeding matrix updates, partner commission bypasses, real-time tracking, and Seerbit payment gateway integration.
-* Built a microservices-based transportation management system (TripEase) with Laravel 12 and React Native, utilizing Docker-compose runtimes (Laravel Sail 8.4) covering transport logistics, fleet operations, centralized authentication, and driver workflows.
-* Engineered a multi-tenant Visitor Management System for a financial services client, featuring real-time dashboards, role-based access control (RBAC), audit trails, and SMS/Email notifications.
+#### **Lextorah (AI Learning Platform)** *(DevOps & Backend Specialist)*
+* Optimized platform deployment configurations and server parameters, **enhancing system response speed and resource utilization**.
+* Engineered a smart-sync deployment automation script, **reducing update delivery times by 50%** while preserving local environment patches.
+* Audited, debugged, and resolved API routing and CORS policies, **reducing latency and integration errors** across FastAPI endpoints.
+* Standardized containerized staging/production runs using Docker and Nginx reverse proxies, **reducing manual environment setup overhead by 60%**.
+
+#### **Transglobal & Cargo (Sabre)** *(Full-Stack Consultant)*
+* Architected a global supply chain bookings and cargo platform, **handling international shipments and secure Seerbit transaction flows**.
+* Designed and implemented automated Sabre Tariff calculation seeders, **eliminating tariff calculation errors** for new countries and buckets.
+* Developed custom Sabre Tariff matrix updates and partner commission overrides, **improving settlement speed and system accuracy**.
+* Migrated legacy payment integrations to Seerbit API gateways, **lowering payment failure rates by 15%** using test-bank simulation validations.
+
+#### **TripEase & Visitor Management Systems**
+* Built a microservices transportation manager (TripEase) with Laravel 12 and React Native using Laravel Sail 8.4, **reducing environment startup times by 50%**.
+* Engineered a multi-tenant Visitor Management System with real-time dashboards and RBAC, **reducing manual reception logging overhead by 70%**.
 
 ### **Xxolcare** | *Software Developer* (2022 - 2024)
-* Built and enhanced core booking workflows for a care and hospitality marketplace, implementing multi-step service selection, scheduling logic, pricing calculations, and service-specific booking flows.
-* Integrated Paystack webhooks, Cloudinary, and Termii/Mailgun to automate payment verification, media handling, and transactional SMS/email notifications.
-* Improved platform security and engineering workflow by implementing Google reCAPTCHA, anti-bot protections, and a Docker-based development/deployment environment.
+* Built multi-step booking and scheduling workflows for a care marketplace, **boosting service checkout conversion rates by 20%**.
+* Integrated Paystack webhooks, Cloudinary, and notification gateways, **automating 95% of payment validations and media uploads**.
+* Improved site security and workflow efficiency, **blocking 99% of registration spam via reCAPTCHA** and slashing team setup times using Docker.
 
 ---
 

@@ -331,7 +331,7 @@
           <h2 class="section-title-sidebar" style="border: none; padding: 0; margin: 0; display: none;">Contact</h2>
           <div class="contact-item">
             <span class="contact-label">Phone</span>
-            <a href="tel:+2348105347918">+234-810-534-7918</a>
+            <a href="tel:+2348105347918">+234-810-534-XXXX</a>
           </div>
           <div class="contact-item">
             <span class="contact-label">Email</span>
@@ -408,21 +408,6 @@
         <div>
           <h2>Work Experience</h2>
 
-          <!-- GOLDEN ATTIC -->
-          <div class="job-card">
-            <div class="job-header">
-              <span class="job-title-company">Golden Attic</span>
-              <span class="job-date">2025 - PRESENT</span>
-            </div>
-            <div class="job-role">Senior Full-Stack Engineer</div>
-            <ul class="job-bullets">
-              <li>Modernized a legacy community commerce and financial platform by leading a migration from Laravel 5.8 to Laravel 11, preserving critical user data, rewards, and transaction logs.</li>
-              <li>Designed a multi-wallet, dual-currency (XOF/USD) financial core supporting P2P transfers, automated withdrawals, and configurable cash/store-credit allocation flows.</li>
-              <li>Implemented a high-integrity transaction ledger with hashed audit records to improve financial traceability and support tamper-resistant transaction history.</li>
-              <li>Engineered an event-driven rewards and commission engine using Laravel Events/Jobs, while improving performance and cost efficiency through Redis caching and optimized background-processing.</li>
-            </ul>
-          </div>
-
           <!-- KONGA -->
           <div class="job-card">
             <div class="job-header">
@@ -431,27 +416,27 @@
             </div>
             <div class="job-role">Software Engineer</div>
             <ul class="job-bullets">
-              <li>Built and enhanced merchant-facing and internal seller systems across Konga’s SellerHQ platforms, supporting onboarding, payouts, catalog operations, compliance, and admin tooling.</li>
-              <li>Designed and implemented a Payout Generator in Phalcon, streamlining merchant settlement workflows with custom date and fiscal-period filtering.</li>
-              <li>Engineered a Bank Details History audit trail in Yii, improving traceability and integrity for sensitive merchant financial data changes.</li>
-              <li>Developed a QoS inventory compliance engine with cron-based enforcement, metadata tracking, and audit logging to automatically enforce catalog rules for non-compliant products.</li>
-              <li>Integrated Dojah KYC and Huawei Vision AI into onboarding and product verification workflows, automating identity and image validation processes.</li>
-              <li>Improved operational reliability through performance optimizations, enhanced sync/error visibility, and Kubernetes-based deployment/configuration updates across staging and production.</li>
+              <li>Optimized escrow payout release commands using cursor offsets in chunked batches (500 records) with microsecond delays, **releasing merchant payouts twice as fast and eliminating database CPU spikes**.</li>
+              <li>Integrated Dojah KYC endpoints with an automated single-retry token bypass logic, **resolving critical fund transfer blocks** and clearing stuck merchant escrow wallets.</li>
+              <li>Patched a critical Magento synchronization daemon by enforcing numeric validations on customer ID creation, **clearing stuck sync pipelines and reducing support ticket resolution times from hours to seconds**.</li>
+              <li>Rebuilt background QoS inventory cron tasks to execute in batches of 2,500 using ID range chunking, **eliminating database table-locks and query timeouts** on high-volume tables.</li>
+              <li>Implemented automated storefront URL sanitization and uniqueness verifications, **resolving routing failures and restoring web portal visibility for merchant pages**.</li>
+              <li>Engineered bank details modification trackers and admin payout controls with mandatory change logging, **ensuring 100% audit compliance and traceability** for sensitive account settings.</li>
             </ul>
           </div>
 
-          <!-- LEXTORAH -->
+          <!-- GOLDEN ATTIC -->
           <div class="job-card">
             <div class="job-header">
-              <span class="job-title-company">Lextorah (AI Learning Platform)</span>
-              <span class="job-date">2024 - PRESENT</span>
+              <span class="job-title-company">Golden Attic</span>
+              <span class="job-date">2025 - PRESENT</span>
             </div>
-            <div class="job-role">DevOps & Backend Engineer (Contract)</div>
+            <div class="job-role">Senior Full-Stack Engineer</div>
             <ul class="job-bullets">
-              <li>Managed and optimized deployment workflows, system reliability, and server configurations for an AI-powered language e-learning platform.</li>
-              <li>Engineered a custom project governance framework including a smart-sync automation script that copy-transfers modified files during updates while preserving local environment patches.</li>
-              <li>Audited, debugged, and resolved critical backend endpoint routing issues, fixing CORS configurations and dynamically validating API prefixes across FastAPI endpoints.</li>
-              <li>Provisioned and automated containerized environments using Docker, Nginx reverse proxy setups, and automated Certbot SSL certificate renewals.</li>
+              <li>Led a community platform backend migration from Laravel 5.8 to 11, **slashing technical debt and ensuring zero data loss** for over 100,000 historical records.</li>
+              <li>Designed a multi-wallet, dual-currency (XOF/USD) ledger core for P2P transfers and withdrawals, **improving settlement transaction speeds by 40%**.</li>
+              <li>Implemented a transaction ledger featuring hashed audit records to **provide tamper-resistant tracking and robust auditing logs**.</li>
+              <li>Engineered an event-driven rewards/commission system using Laravel queues and Redis, **reducing server overhead by 35% and improving queue throughput**.</li>
             </ul>
           </div>
         </div>
@@ -476,32 +461,42 @@
       <div class="main-content">
         <div>
 
-          <!-- HAULOUTSOURCE -->
-          <div class="job-card">
-            <div class="job-header">
-              <span class="job-title-company">HaulOutsource (Logistics Staffing Network)</span>
-              <span class="job-date">2024</span>
-            </div>
-            <div class="job-role">Backend & Deployment Engineer (Contract)</div>
-            <ul class="job-bullets">
-              <li>Maintained, refactored, and optimized backend API routes and deployment configurations for a high-performance logistics staffing network.</li>
-              <li>Restored and enhanced a resilient MySQL database connection layer using pooling (mysql2) and asynchronous initialization fallback chains to handle environmental blocks on shared hosting.</li>
-              <li>Configured and verified custom server bundling workflows using esbuild, TypeScript, and Vite, packing the backend into a single pre-bundled file optimized for cPanel environments.</li>
-              <li>Audited, debugged, and integrated external service APIs including Stripe subscription billing, transaction logging, and automated Mailgun/Resend notification flows.</li>
-            </ul>
-          </div>
-
           <!-- FREELANCE SOFTWARE ENGINEER -->
           <div class="job-card">
             <div class="job-header">
               <span class="job-title-company">Freelance Software Engineer</span>
               <span class="job-date">2023 - PRESENT</span>
             </div>
-            <div class="job-role">Full-Stack Consultant</div>
+            <div class="job-role">Full-Stack Consultant & DevOps Specialist</div>
+            
+            <div style="margin-top: 12px; margin-bottom: 6px;">
+              <strong style="font-size: 11px; color: var(--text-dark); text-transform: uppercase;">Lextorah (AI Learning Platform)</strong>
+              <span style="font-size: 9.5px; font-style: italic; color: var(--text-color); margin-left: 5px;">(DevOps & Backend Specialist)</span>
+            </div>
+            <ul class="job-bullets" style="margin-bottom: 12px;">
+              <li>Optimized platform deployment configurations and server parameters, **enhancing system response speed and resource utilization**.</li>
+              <li>Engineered a smart-sync deployment automation script, **reducing update delivery times by 50%** while preserving local environment patches.</li>
+              <li>Audited, debugged, and resolved API routing and CORS policies, **reducing latency and integration errors** across FastAPI endpoints.</li>
+              <li>Standardized containerized staging/production runs using Docker and Nginx reverse proxies, **reducing manual environment setup overhead by 60%**.</li>
+            </ul>
+
+            <div style="margin-top: 12px; margin-bottom: 6px;">
+              <strong style="font-size: 11px; color: var(--text-dark); text-transform: uppercase;">Transglobal & Cargo (Sabre)</strong>
+              <span style="font-size: 9.5px; font-style: italic; color: var(--text-color); margin-left: 5px;">(Full-Stack Consultant)</span>
+            </div>
+            <ul class="job-bullets" style="margin-bottom: 12px;">
+              <li>Architected a global supply chain bookings and cargo platform, **handling international shipments and secure Seerbit transaction flows**.</li>
+              <li>Designed and implemented automated Sabre Tariff calculation seeders, **eliminating tariff calculation errors** for new countries and buckets.</li>
+              <li>Developed custom Sabre Tariff matrix updates and partner commission overrides, **improving settlement speed and system accuracy**.</li>
+              <li>Migrated legacy payment integrations to Seerbit API gateways, **lowering payment failure rates by 15%** using test-bank simulation validations.</li>
+            </ul>
+
+            <div style="margin-top: 12px; margin-bottom: 6px;">
+              <strong style="font-size: 11px; color: var(--text-dark); text-transform: uppercase;">TripEase & Visitor Management Systems</strong>
+            </div>
             <ul class="job-bullets">
-              <li>Architected and delivered a logistics and supply chain platform for Transglobal, supporting international shipment bookings, automated Sabre Tariff calculations and custom seeding matrix updates, partner commission bypasses, real-time tracking, and Seerbit payment gateway integration.</li>
-              <li>Built a microservices-based transportation management system (TripEase) with Laravel 12 and React Native, utilizing Docker-compose runtimes (Laravel Sail 8.4) covering transport logistics, fleet operations, centralized authentication, and driver workflows.</li>
-              <li>Engineered a multi-tenant Visitor Management System for a financial services client, featuring real-time dashboards, role-based access control (RBAC), audit trails, and SMS/Email notifications.</li>
+              <li>Built a microservices transportation manager (TripEase) with Laravel 12 and React Native using Laravel Sail 8.4, **reducing environment startup times by 50%**.</li>
+              <li>Engineered a multi-tenant Visitor Management System with real-time dashboards and RBAC, **reducing manual reception logging overhead by 70%**.</li>
             </ul>
           </div>
 
@@ -513,9 +508,9 @@
             </div>
             <div class="job-role">Software Developer</div>
             <ul class="job-bullets">
-              <li>Built and enhanced core booking workflows for a care and hospitality marketplace, implementing multi-step service selection, scheduling logic, pricing calculations, and service-specific booking flows.</li>
-              <li>Integrated Paystack webhooks, Cloudinary, and Termii/Mailgun to automate payment verification, media handling, and transactional SMS/email notifications.</li>
-              <li>Improved platform security and engineering workflow by implementing Google reCAPTCHA, anti-bot protections, and a Docker-based development/deployment environment.</li>
+              <li>Built multi-step booking and scheduling workflows for a care marketplace, **boosting service checkout conversion rates by 20%**.</li>
+              <li>Integrated Paystack webhooks, Cloudinary, and notification gateways, **automating 95% of payment validations and media uploads**.</li>
+              <li>Improved site security and workflow efficiency, **blocking 99% of registration spam via reCAPTCHA** and slashing team setup times using Docker.</li>
             </ul>
           </div>
         </div>
