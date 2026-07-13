@@ -75,6 +75,7 @@ export default function App() {
             <a href="#competencies" className="hover:text-cyan-400 transition-colors">/skills</a>
             <a href="#study" className="hover:text-cyan-400 transition-colors">/study</a>
             <a href="#engine-room" className="hover:text-cyan-400 transition-colors">/engine-room</a>
+            <a href="#projects" className="hover:text-cyan-400 transition-colors">/projects</a>
             <a href="#terminal" className="hover:text-cyan-400 transition-colors">/terminal</a>
             <a href="#experience" className="hover:text-cyan-400 transition-colors">/experience</a>
             <a href="#contact" className="hover:text-cyan-400 transition-colors">/contact</a>
@@ -249,6 +250,115 @@ export default function App() {
         {/* ARCHITECTURE PLAYGROUND */}
         <section id="engine-room">
           <EngineRoom />
+        </section>
+
+        {/* PROJECTS SHOWCASE */}
+        <section id="projects" className="space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+              <Briefcase className="w-5 h-5 text-cyan-400" />
+              Featured Projects Catalog
+            </h2>
+            <p className="text-xs text-slate-500 font-mono">/active-deployments.json</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Konga */}
+            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-orange-500/30 transition-colors flex flex-col justify-between group">
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] text-orange-400 uppercase font-bold tracking-wider">01. Fintech Systems</span>
+                <h3 className="font-bold text-slate-200 text-sm group-hover:text-orange-400 transition-colors">Konga Payouts Gateway</h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Automated merchant bulk payouts utilizing cron offset tasks and batch cursor loops, processing millions in currency transfers with atomic consistency.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Laravel</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">MySQL</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Queue Workers</span>
+              </div>
+            </div>
+
+            {/* Lextorah */}
+            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-cyan-500/30 transition-colors flex flex-col justify-between group">
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] text-cyan-400 uppercase font-bold tracking-wider">02. AI Learning Platforms</span>
+                <h3 className="font-bold text-slate-200 text-sm group-hover:text-cyan-400 transition-colors">Lextorah Smart-Sync</h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Engineered multi-tenant file syncing daemons that monitor, translate, and catalog course video metadata concurrently into database channels.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">FastAPI</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">React</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Python Watchdog</span>
+              </div>
+            </div>
+
+            {/* TripEase */}
+            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-indigo-500/30 transition-colors flex flex-col justify-between group">
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] text-indigo-400 uppercase font-bold tracking-wider">03. Logistics Routing</span>
+                <h3 className="font-bold text-slate-200 text-sm group-hover:text-indigo-400 transition-colors">TripEase Logistics Router</h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Designed load-balanced high-throughput packet routing structures for cargo fleet networks, managing live latency offsets and transit states.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Node.js</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">PostgreSQL</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Docker</span>
+              </div>
+            </div>
+
+            {/* Wings */}
+            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-emerald-500/30 transition-colors flex flex-col justify-between group">
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] text-emerald-400 uppercase font-bold tracking-wider">04. Property Management</span>
+                <h3 className="font-bold text-slate-200 text-sm group-hover:text-emerald-400 transition-colors">Wings Tenancy System</h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  A multi-tenant estate dashboard tracking payments, property status records, dynamic payment gateways integration, and ledger accounts.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Laravel</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Blade</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Dynamic Dashboards</span>
+              </div>
+            </div>
+
+            {/* Radio News */}
+            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-pink-500/30 transition-colors flex flex-col justify-between group">
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] text-pink-400 uppercase font-bold tracking-wider">05. Content Portals</span>
+                <h3 className="font-bold text-slate-200 text-sm group-hover:text-pink-400 transition-colors">Radio News CMS</h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Engineered administrative backends for real-time news management, login authentications, and audio broadcast streams syndication.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Laravel</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Bootstrap</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Admin Auth</span>
+              </div>
+            </div>
+
+            {/* Transglobal */}
+            <div className="p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 hover:border-yellow-500/30 transition-colors flex flex-col justify-between group">
+              <div className="space-y-2">
+                <span className="font-mono text-[9px] text-yellow-400 uppercase font-bold tracking-wider">06. Integration APIs</span>
+                <h3 className="font-bold text-slate-200 text-sm group-hover:text-yellow-400 transition-colors">Transglobal Cargo Sabre</h3>
+                <p className="text-slate-400 text-[11px] leading-relaxed">
+                  Designed auto-seeder algorithms and billing calculators integrating Sabre logistics protocols with custom local invoicing.
+                </p>
+              </div>
+              <div className="flex flex-wrap gap-1.5 pt-2">
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">PHP</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Sabre API</span>
+                <span className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">Automated Seeders</span>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* METRICS & GIT CONTRIBUTION CALENDARS */}
