@@ -23,7 +23,7 @@ Fullstack Engineer with experience building production-grade systems across e-co
 * Implemented automated storefront URL sanitization and uniqueness verifications, **resolving routing failures and restoring web portal visibility for merchant pages**.
 * Engineered bank details modification trackers and admin payout controls with mandatory change logging, **ensuring 100% audit compliance and traceability** for sensitive account settings.
 
-### **Golden Attic** | *Senior Full-Stack Engineer* (2025 - PRESENT)
+### **Golden Attic** | *Senior Full-Stack Engineer (Part-time)* (2021 - PRESENT)
 * Led a community platform backend migration from Laravel 5.8 to 11, **slashing technical debt and ensuring zero data loss** for over 100,000 historical records.
 * Designed a multi-wallet, dual-currency (XOF/USD) ledger core for P2P transfers and withdrawals, **improving settlement transaction speeds by 40%**.
 * Implemented a transaction ledger featuring hashed audit records to **provide tamper-resistant tracking and robust auditing logs**.
