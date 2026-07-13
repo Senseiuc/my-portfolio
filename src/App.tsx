@@ -73,6 +73,7 @@ export default function App() {
           <nav className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-400">
             <a href="#about" className="hover:text-cyan-400 transition-colors">/about</a>
             <a href="#competencies" className="hover:text-cyan-400 transition-colors">/skills</a>
+            <a href="#study" className="hover:text-cyan-400 transition-colors">/study</a>
             <a href="#engine-room" className="hover:text-cyan-400 transition-colors">/engine-room</a>
             <a href="#terminal" className="hover:text-cyan-400 transition-colors">/terminal</a>
             <a href="#experience" className="hover:text-cyan-400 transition-colors">/experience</a>
@@ -147,7 +148,7 @@ export default function App() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent z-0" />
 
             {/* Brand Logo in center (Animated Transparent SVG Logo) */}
-            <div className="relative z-10 w-28 h-28 flex items-center justify-center">
+            <div className="relative z-10 w-44 h-44 flex items-center justify-center">
               <Logo className="w-full h-full" />
             </div>
             <div className="relative z-10 mt-6 font-mono text-[10px] text-slate-500 text-center uppercase tracking-widest">
@@ -197,6 +198,50 @@ export default function App() {
               <p className="text-slate-400 text-[11px] leading-relaxed">
                 Integrated third-party Dojah KYC and computer vision APIs with dynamic token retry wrappers, **blocking 99% of registration spam and resolving critical wallet payout failures**.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* SENSEI'S STUDY: LOGIC, MATHEMATICS & CHESS */}
+        <section id="study" className="space-y-6">
+          <div className="space-y-1">
+            <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+              <Logo className="w-6 h-6 animate-pulse" animate={false} />
+              Sensei's Study: Logic & Strategy
+            </h2>
+            <p className="text-xs text-slate-500 font-mono">/logic-core.json</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6 border border-slate-800 bg-[#0f172a]/20 rounded-xl items-center relative overflow-hidden backdrop-blur-md">
+            <div className="absolute inset-0 z-0 bg-cover bg-center opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url('/background-senseiuc-design.png')" }} />
+            
+            <div className="md:col-span-3 flex justify-center z-10">
+              <Logo className="w-36 h-36 filter drop-shadow-[0_0_15px_rgba(249,115,22,0.25)] animate-pulse" />
+            </div>
+            
+            <div className="md:col-span-9 space-y-4 font-sans z-10">
+              <div className="space-y-2">
+                <h3 className="text-slate-200 font-bold text-sm uppercase tracking-wide font-mono text-orange-400">
+                  Mathematics & Algorithmic Foundations
+                </h3>
+                <p className="text-slate-400 text-xs leading-relaxed">
+                  Holding a <strong className="text-slate-200">BSc in Mathematics</strong> from the University of Lagos, Gideon treats software engineering as the application of rigorous proof and quantitative logic. From designing multi-wallet transactional ledger constraints to formulating Redis caching distributions, his mathematical training ensures code is written with absolute correctness and efficiency.
+                </p>
+              </div>
+
+              <div className="space-y-2 border-t border-slate-900 pt-3">
+                <h3 className="text-slate-200 font-bold text-sm uppercase tracking-wide font-mono text-cyan-400">
+                  The Chess Philosophy of Systems Design
+                </h3>
+                <p className="text-slate-400 text-xs leading-relaxed">
+                  An avid chess player, Gideon views system architecture through the lens of strategic board logic. Designing high-throughput payouts and auto-renewal daemons is similar to mapping out lines of play: every command is a calculated move designed to preempt runtime exceptions, mitigate bottlenecks, and secure an optimized endpoint execution path.
+                </p>
+              </div>
+
+              <blockquote className="border-l-2 border-orange-500 pl-4 py-1 italic text-slate-400 text-xs font-serif bg-orange-500/5 rounded-r">
+                "A robust backend is like a master chess game—invisible in its complexity, absolute in its logic, and executing with flawless precision."
+                <span className="block text-[10px] font-mono text-orange-400 mt-1 uppercase font-bold not-italic">— Sensei's Maxim</span>
+              </blockquote>
             </div>
           </div>
         </section>
