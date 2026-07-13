@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nwadialu Gideon - Fullstack Engineer Resume</title>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #1b365d; /* Dark Navy */
+      --secondary-color: #0f172a; /* Slate 900 */
+      --sidebar-bg: #1b365d;
+      --text-color: #334155; /* Slate 700 */
+      --text-dark: #0f172a;
+      --text-light: #f8fafc;
+      --accent-color: #3b82f6; /* Blue */
+      --border-color: #e2e8f0;
+      --bullet-color: #38bdf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-color);
+      background-color: #f1f5f9;
+      line-height: 1.4;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    /* Resume Pages Container */
+    .resume-container {
+      max-width: 820px;
+      margin: 20px auto;
+      background: #ffffff;
+      box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+
+    .page {
+      display: grid;
+      grid-template-columns: 32% 68%;
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+    }
+
+    /* Sidebar (Left Column) */
+    .sidebar {
+      background-color: var(--sidebar-bg);
+      color: var(--text-light);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    /* Main Content (Right Column) */
+    .main-content {
+      padding: 30px 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Typography */
+    h1 {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--primary-color);
+      text-transform: uppercase;
+    }
+
+    h2 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 4px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      margin-top: 2px;
+      border-bottom: 2px solid var(--primary-color);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .section-title-sidebar {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      padding-bottom: 4px;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    /* Sidebar Content Styles */
+    .contact-item {
+      margin-bottom: 10px;
+      font-size: 10.5px;
+    }
+    
+    .contact-item a {
+      color: var(--text-light);
+      text-decoration: none;
+    }
+
+    .contact-label {
+      font-weight: 600;
+      font-size: 9px;
+      text-transform: uppercase;
+      color: #94a3b8;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .edu-item {
+      margin-bottom: 12px;
+    }
+
+    .edu-degree {
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .edu-school {
+      font-size: 10px;
+      color: #cbd5e1;
+    }
+
+    .cert-item {
+      font-size: 10px;
+      margin-bottom: 8px;
+      padding-left: 10px;
+      position: relative;
+    }
+
+    .cert-item::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--bullet-color);
+    }
+
+    .skill-group {
+      margin-bottom: 12px;
+    }
+
+    .skill-title {
+      font-weight: 600;
+      font-size: 10.5px;
+      color: #e2e8f0;
+      margin-bottom: 3px;
+    }
+
+    .skill-list {
+      font-size: 9.5px;
+      color: #cbd5e1;
+      line-height: 1.35;
+    }
+
+    .lang-item {
+      font-size: 10.5px;
+      margin-bottom: 5px;
+    }
+
+    /* Main Content Styles */
+    .profile-text {
+      font-size: 11px;
+      color: var(--text-color);
+      text-align: justify;
+      line-height: 1.45;
+    }
+
+    .job-card {
+      margin-bottom: 18px;
+      page-break-inside: avoid;
+    }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .job-title-company {
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--text-dark);
+      text-transform: uppercase;
+    }
+
+    .job-date {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .job-role {
+      font-size: 10.5px;
+      font-weight: 500;
+      color: var(--text-color);
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    .job-bullets {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .job-bullets li {
+      font-size: 10px;
+      padding-left: 12px;
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .job-bullets li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+      font-weight: bold;
+    }
+
+    /* Print Button for Browser view */
+    .print-banner {
+      max-width: 820px;
+      margin: 15px auto 0 auto;
+      padding: 10px;
+      background: #1e293b;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .print-button {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .print-button:hover {
+      background: #2563eb;
+    }
+
+    /* Print styling overrides */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+      body {
+        background-color: #ffffff;
+      }
+      .resume-container {
+        margin: 0;
+        box-shadow: none;
+        max-width: 100%;
+      }
+      .print-banner {
+        display: none !important;
+      }
+      .page {
+        margin: 0;
+        border: none;
+        box-shadow: none;
+        page-break-after: always;
+        width: 210mm;
+        height: 297mm;
+        overflow: hidden;
+      }
+      .sidebar {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background-color: var(--sidebar-bg) !important;
+        color: var(--text-light) !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Printable Banner (only visible in browser) -->
+  <div class="print-banner">
+    <span>💡 <strong>Tip:</strong> Click Print to export a pixel-perfect 2-page PDF. Set layout to <strong>Portrait</strong> and margins to <strong>None/Default</strong>.</span>
+    <button class="print-button" onclick="window.print()">Print / Save PDF</button>
+  </div>
+
+  <div class="resume-container">
+    
+    <!-- PAGE 1 -->
+    <div class="page">
+      <!-- Page 1 Sidebar -->
+      <div class="sidebar">
+        <div>
+          <h2 class="section-title-sidebar" style="border: none; padding: 0; margin: 0; display: none;">Contact</h2>
+          <div class="contact-item">
+            <span class="contact-label">Phone</span>
+            <a href="tel:+2348105347918">+234-810-534-7918</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Email</span>
+            <a href="mailto:nwadialugideon@gmail.com">nwadialugideon@gmail.com</a>
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Location</span>
+            Lagos, Nigeria
+          </div>
+          <div class="contact-item">
+            <span class="contact-label">Linktree</span>
+            <a href="https://linktr.ee/senseiuc" target="_blank">linktr.ee/senseiuc</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title-sidebar">Education</div>
+          <div class="edu-item">
+            <div class="edu-degree">BSc Mathematics</div>
+            <div class="edu-school">University of Lagos</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title-sidebar">Certifications</div>
+          <div class="cert-item">ALX Back End Development</div>
+          <div class="cert-item">Google IT Automation with Python</div>
+          <div class="cert-item">Using Python to Access Web Data</div>
+        </div>
+
+        <div>
+          <div class="section-title-sidebar">Skills</div>
+          <div class="skill-group">
+            <div class="skill-title">Backend & AI</div>
+            <div class="skill-list">PHP (Laravel, Yii, Phalcon), Node.js (Express), FastAPI, LangGraph, LangChain, REST APIs, Queue Processing</div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-title">Frontend</div>
+            <div class="skill-list">JavaScript/TypeScript, React 19, Vue.js, AngularJS, Livewire, Alpine.js, Tailwind CSS 4, Motion</div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-title">Data & Infra</div>
+            <div class="skill-list">MySQL/MariaDB, MongoDB, SQLite, Pinecone, ChromaDB, Redis, Docker, Kubernetes, Swagger/OpenAPI</div>
+          </div>
+          <div class="skill-group">
+            <div class="skill-title">Domains</div>
+            <div class="skill-list">Paystack, Stripe, Dojah, E-commerce, Logistics Platforms, AI Agents & RAG, Admin Dashboards</div>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title-sidebar">Languages</div>
+          <div class="lang-item">English (Fluent)</div>
+          <div class="lang-item">Igbo (Fluent)</div>
+          <div class="lang-item">French (Basics)</div>
+          <div class="lang-item">Yoruba (Basics)</div>
+        </div>
+      </div>
+
+      <!-- Page 1 Main Content -->
+      <div class="main-content">
+        <div>
+          <h1>Nwadialu Gideon</h1>
+          <div class="subtitle">Fullstack Engineer | Backend, APIs & Platform Integrations</div>
+        </div>
+
+        <div>
+          <h2>Profile</h2>
+          <p class="profile-text">
+            Fullstack Engineer with experience building production-grade systems across e-commerce, logistics, financial platforms, e-learning, and AI integrations. Skilled in PHP, Node.js, Python, and modern backend workflows, with hands-on experience in APIs, automated workflows, payments, KYC compliance, and LangGraph-driven AI agents. Proven track record of delivering scalable architectures for merchant operations, logistics booking engines, and tamper-resistant transaction ledgers.
+          </p>
+        </div>
+
+        <div>
+          <h2>Work Experience</h2>
+
+          <!-- GOLDEN ATTIC -->
+          <div class="job-card">
+            <div class="job-header">
+              <span class="job-title-company">Golden Attic</span>
+              <span class="job-date">2025 - PRESENT</span>
+            </div>
+            <div class="job-role">Senior Full-Stack Engineer</div>
+            <ul class="job-bullets">
+              <li>Modernized a legacy community commerce and financial platform by leading a migration from Laravel 5.8 to Laravel 11, preserving critical user data, rewards, and transaction logs.</li>
+              <li>Designed a multi-wallet, dual-currency (XOF/USD) financial core supporting P2P transfers, automated withdrawals, and configurable cash/store-credit allocation flows.</li>
+              <li>Implemented a high-integrity transaction ledger with hashed audit records to improve financial traceability and support tamper-resistant transaction history.</li>
+              <li>Engineered an event-driven rewards and commission engine using Laravel Events/Jobs, while improving performance and cost efficiency through Redis caching and optimized background-processing.</li>
+            </ul>
+          </div>
+
+          <!-- KONGA -->
+          <div class="job-card">
+            <div class="job-header">
+              <span class="job-title-company">Konga</span>
+              <span class="job-date">2024 - PRESENT</span>
+            </div>
+            <div class="job-role">Software Engineer</div>
+            <ul class="job-bullets">
+              <li>Built and enhanced merchant-facing and internal seller systems across Konga’s SellerHQ platforms, supporting onboarding, payouts, catalog operations, compliance, and admin tooling.</li>
+              <li>Designed and implemented a Payout Generator in Phalcon, streamlining merchant settlement workflows with custom date and fiscal-period filtering.</li>
+              <li>Engineered a Bank Details History audit trail in Yii, improving traceability and integrity for sensitive merchant financial data changes.</li>
+              <li>Developed a QoS inventory compliance engine with cron-based enforcement, metadata tracking, and audit logging to automatically enforce catalog rules for non-compliant products.</li>
+              <li>Integrated Dojah KYC and Huawei Vision AI into onboarding and product verification workflows, automating identity and image validation processes.</li>
+              <li>Improved operational reliability through performance optimizations, enhanced sync/error visibility, and Kubernetes-based deployment/configuration updates across staging and production.</li>
+            </ul>
+          </div>
+
+          <!-- LEXTORAH -->
+          <div class="job-card">
+            <div class="job-header">
+              <span class="job-title-company">Lextorah (AI Learning Platform)</span>
+              <span class="job-date">2024 - PRESENT</span>
+            </div>
+            <div class="job-role">DevOps & Backend Engineer (Contract)</div>
+            <ul class="job-bullets">
+              <li>Managed and optimized deployment workflows, system reliability, and server configurations for an AI-powered language e-learning platform.</li>
+              <li>Engineered a custom project governance framework including a smart-sync automation script that copy-transfers modified files during updates while preserving local environment patches.</li>
+              <li>Audited, debugged, and resolved critical backend endpoint routing issues, fixing CORS configurations and dynamically validating API prefixes across FastAPI endpoints.</li>
+              <li>Provisioned and automated containerized environments using Docker, Nginx reverse proxy setups, and automated Certbot SSL certificate renewals.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE 2 -->
+    <div class="page">
+      <!-- Page 2 Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar is repeated for clean layout, but empty or minimal on page 2 -->
+        <div style="text-align: center; margin-top: 40px; opacity: 0.15;">
+          <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: white;">
+            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <div style="font-size: 8px; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 8px;">NWADIALU GIDEON</div>
+        </div>
+      </div>
+
+      <!-- Page 2 Main Content -->
+      <div class="main-content">
+        <div>
+
+          <!-- HAULOUTSOURCE -->
+          <div class="job-card">
+            <div class="job-header">
+              <span class="job-title-company">HaulOutsource (Logistics Staffing Network)</span>
+              <span class="job-date">2024</span>
+            </div>
+            <div class="job-role">Backend & Deployment Engineer (Contract)</div>
+            <ul class="job-bullets">
+              <li>Maintained, refactored, and optimized backend API routes and deployment configurations for a high-performance logistics staffing network.</li>
+              <li>Restored and enhanced a resilient MySQL database connection layer using pooling (mysql2) and asynchronous initialization fallback chains to handle environmental blocks on shared hosting.</li>
+              <li>Configured and verified custom server bundling workflows using esbuild, TypeScript, and Vite, packing the backend into a single pre-bundled file optimized for cPanel environments.</li>
+              <li>Audited, debugged, and integrated external service APIs including Stripe subscription billing, transaction logging, and automated Mailgun/Resend notification flows.</li>
+            </ul>
+          </div>
+
+          <!-- FREELANCE SOFTWARE ENGINEER -->
+          <div class="job-card">
+            <div class="job-header">
+              <span class="job-title-company">Freelance Software Engineer</span>
+              <span class="job-date">2023 - PRESENT</span>
+            </div>
+            <div class="job-role">Full-Stack Consultant</div>
+            <ul class="job-bullets">
+              <li>Architected and delivered a logistics and supply chain platform for Transglobal, supporting international shipment bookings, automated Sabre Tariff calculations and custom seeding matrix updates, partner commission bypasses, real-time tracking, and Seerbit payment gateway integration.</li>
+              <li>Built a microservices-based transportation management system (TripEase) with Laravel 12 and React Native, utilizing Docker-compose runtimes (Laravel Sail 8.4) covering transport logistics, fleet operations, centralized authentication, and driver workflows.</li>
+              <li>Engineered a multi-tenant Visitor Management System for a financial services client, featuring real-time dashboards, role-based access control (RBAC), audit trails, and SMS/Email notifications.</li>
+            </ul>
+          </div>
+
+          <!-- XXOLCARE -->
+          <div class="job-card">
+            <div class="job-header">
+              <span class="job-title-company">Xxolcare</span>
+              <span class="job-date">2022 - 2024</span>
+            </div>
+            <div class="job-role">Software Developer</div>
+            <ul class="job-bullets">
+              <li>Built and enhanced core booking workflows for a care and hospitality marketplace, implementing multi-step service selection, scheduling logic, pricing calculations, and service-specific booking flows.</li>
+              <li>Integrated Paystack webhooks, Cloudinary, and Termii/Mailgun to automate payment verification, media handling, and transactional SMS/email notifications.</li>
+              <li>Improved platform security and engineering workflow by implementing Google reCAPTCHA, anti-bot protections, and a Docker-based development/deployment environment.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
