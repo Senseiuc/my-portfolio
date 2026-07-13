@@ -28,6 +28,7 @@ COPY --from=builder /app/dist-server ./dist-server
 
 # Copy assets and files
 COPY ["My Brand Logo - senseiuc.png", "./dist/My Brand Logo - senseiuc.png"]
+COPY ["My Brand Logo - senseiuc.svg", "./dist/My Brand Logo - senseiuc.svg"]
 COPY ["background-senseiuc-design.png", "./dist/background-senseiuc-design.png"]
 COPY ["resume.html", "./dist/resume.html"]
 COPY ["resume.md", "./dist/resume.md"]
