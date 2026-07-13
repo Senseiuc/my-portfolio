@@ -35,7 +35,7 @@ const PROJECTS = [
       url: 'https://xxolcare.com',
       system: 'Hospitality Management Engine',
       contributions: [
-        'Staff QR System: Built a dynamic digital business card and QR code generation node (StaffCardController.php).',
+        'Staff QR System: Built a dynamic digital business card and QR code generation node.',
         'Surge Price Algorithms: Developed dynamic price multiplier formulas (25%, 35%, 50% peaks) based on booking demand surges.',
         'Variable Queue Optimization: Re-engineered transaction notifications using in-memory variables to bypass worker queue choke-points.',
         'Bot Prevention: Added user registration firewall scripts to block automated signup requests.'
