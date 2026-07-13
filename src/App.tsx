@@ -40,14 +40,17 @@ const PROJECTS = [
         'Variable Queue Optimization: Re-engineered transaction notifications using in-memory variables to bypass worker queue choke-points.',
         'Bot Prevention: Added user registration firewall scripts to block automated signup requests.',
         'Admin Operations Console: Programmed dynamic dashboards managing financial audit trails, onboarding verifications, and manual staff allocations.',
-        'Flipped Analytics Audit: Diagnosed and resolved a critical logic error in monthly finance calculations (swapped array pushes) that caused fake deficit reports.'
+        'Flipped Analytics Audit: Diagnosed and resolved a critical logic error in monthly finance calculations (swapped array pushes) that caused fake deficit reports.',
+        'Ancillary Staffing Engine: Developed selection routing controllers onboarding Chauffeur Drivers and Personal Chefs alongside cleaning profiles.',
+        'Training Sandbox & Automations: Created a replica staging environment for staff onboarding training, and automated CI/CD deployment pipelines reloading containers during pushes.'
       ],
       commits: [
         '6a83855 feat: add optional website/address fields to staff card',
         '9c5d8e8 feat: add QR code digital business card system for staff',
         '55798e1 fix admin jobs status list display layouts',
+        '38e0230 dynamic schedule controller and task calendars',
         '32bf5f4 increased cost by 50% (pricing surge reaction to fake reports)',
-        '3d2eb76 25% increase (pricing surge reaction to fake reports)',
+        '314d436 fix: webhook payload signature validations',
         'ba7b3b2 test without queue - using variables for mail thread optimization'
       ]
     }

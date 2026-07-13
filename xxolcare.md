@@ -41,6 +41,25 @@ To oversee and manage the operational ecosystem, the platform implements a high-
 * **Worker & Client Management:** Enables admins to override worker ratings, audit document files (IDs, background checks), check account histories, and dispatch care stars to specific jobs.
 * **Jobs Stream Controller:** Manages the operational dispatch lifecycle, mapping, scheduling, and allocating bookings to care professionals.
 
+### G. Ancillary Services & Staffing Engine
+The platform accommodates multiple hospitality domains beyond standard domestic cleaning:
+* **Service Selection Routing:** Integrated dedicated selection structures (`SelectXXOLController.php` and `ServicesController.php`) facilitating onboarding and hiring of **Private Chefs**, **Chauffeur Drivers**, and specialist care assistants.
+* **Specialist Class Models:** Implemented tailored scheduling configurations (`Standard_home_cleaning.php`) matching star availability with client criteria.
+
+### H. Automated Billing Calculations & Loaders
+To guarantee billing accuracy and smooth client experiences:
+* **Calculation Engine:** Automates pricing aggregates mapping session duration multipliers, travel distance fees, and specialist service packages.
+* **Visual Progress Loaders:** Implemented client-side progression indicators smoothing booking checks during intensive server-side calculations.
+
+### I. Onboarding Sandboxes & Deployment pipelines
+To maintain operational confidence and ensure seamless releases:
+* **Staff Training Staging:** Created a replica testing sandbox environment allowing newly onboarded staff (care stars, chefs, chauffeurs) to complete practice bookings and training exercises before accessing the live portal.
+* **Automated CI/CD Workflows:** Configured automated Git deployment pipelines that execute database migrations, config caches, and Supervisor container daemon refreshes automatically during production merges.
+
+### J. Client Feedbacks & Monthly Financial breakdowns
+* **Feedback Verification Loop:** Programmed complaints and feedback review pipelines (`Feedbacks.php`) routing client scores directly to the admin dashboard.
+* **Monthly Breakdown Page:** Authored a dedicated analytics console presenting monthly financial breakdowns, accounting ledgers, and transaction payouts.
+
 ---
 
 * **Paystack Webhooks:** Secure webhook ingestion verifying transaction references, resolving payment sessions, and triggering automated customer invoices.
