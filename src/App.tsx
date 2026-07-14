@@ -36,22 +36,23 @@ const PROJECTS = [
       system: 'Hospitality Management Engine',
       contributions: [
         'Staff QR System: Built a dynamic digital business card and QR code generation node.',
-        'Surge Price Algorithms: Developed dynamic price multiplier formulas (25%, 35%, 50% peaks) based on booking demand surges.',
+        'Manual Cost Adjustments: Applied iterative service pricing increases (25%, 35%, 50%) to adjust billing in response to operational cost pressures.',
         'Variable Queue Optimization: Re-engineered transaction notifications using in-memory variables to bypass worker queue choke-points.',
-        'Bot Prevention: Added user registration firewall scripts to block automated signup requests.',
-        'Admin Operations Console: Programmed dynamic dashboards managing financial audit trails, onboarding verifications, and manual staff allocations.',
+        'Bot Prevention: Integrated Google reCAPTCHA verification and honeypot field traps to block automated signup requests.',
+        'Admin Operations Console: Programmed dashboards managing financial ledgers, onboarding document verifications, and manual staff allocations.',
         'Flipped Analytics Audit: Diagnosed and resolved a critical logic error in monthly finance calculations (swapped array pushes) that caused fake deficit reports.',
-        'Ancillary Staffing Engine: Developed selection routing controllers onboarding Chauffeur Drivers and Personal Chefs alongside cleaning profiles.',
-        'Training Sandbox & Automations: Created a replica staging environment for staff onboarding training, and automated CI/CD deployment pipelines reloading containers during pushes.'
+        'Ancillary Staffing Engine: Developed Livewire components and selection routing for Chauffeur Drivers and Personal Chefs alongside cleaning profiles.',
+        'Training Sandbox: Created a replica staging environment for staff onboarding training before production access.',
+        'Automated Deployment: Configured cPanel Git auto-deploy pipeline copying application files to production on push.'
       ],
       commits: [
         '6a83855 feat: add optional website/address fields to staff card',
         '9c5d8e8 feat: add QR code digital business card system for staff',
-        '55798e1 fix admin jobs status list display layouts',
-        '38e0230 dynamic schedule controller and task calendars',
-        '32bf5f4 increased cost by 50% (pricing surge reaction to fake reports)',
-        '314d436 fix: webhook payload signature validations',
-        'ba7b3b2 test without queue - using variables for mail thread optimization'
+        '55798e1 fix admin jobs display',
+        '38e0230 schedules',
+        '32bf5f4 increased cost by 50%',
+        '314d436 sms issue fixed',
+        'ba7b3b2 test without queue - using variables'
       ]
     }
   },
