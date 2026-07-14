@@ -113,8 +113,8 @@ const PROJECTS = [
     number: '04',
     category: 'Property Management',
     title: 'Wings Tenancy System',
-    shortDesc: 'A multi-tenant estate dashboard tracking payments, property status records, dynamic payment gateways integration, and ledger accounts.',
-    tags: ['Laravel', 'Blade', 'Dynamic Dashboards'],
+    shortDesc: 'A multi-tenant property management platform with automated rent schedule generation, payment lifecycle tracking, and Cloudinary-powered property image pipelines.',
+    tags: ['Laravel', 'Livewire', 'REST API'],
     borderColor: 'hover:border-emerald-500/30',
     hoverText: 'group-hover:text-emerald-400',
     accentColor: 'text-emerald-400',
@@ -123,14 +123,19 @@ const PROJECTS = [
       url: null,
       system: 'Estate Multi-Tenant Dashboard',
       contributions: [
-        'Tenancies System: Created payment tracking states and property management log views.',
-        'Ledgers & Payments: Integrated dynamic online bank payouts mapping transactions.',
-        'Dynamic Widgets: Programmed high-fidelity metrics dashboards summarizing rental indexes.'
+        'Rent Schedule Engine: Automated rent payment schedule generation with first-payment auto-distribution and FIFO lump-sum payment application across billing periods.',
+        'Tenancy Overlap Detection: Built date-range conflict validation preventing double-booking of units across tenancy agreements.',
+        'Service Layer Architecture: Structured all business logic into dedicated service classes (PropertyService, TenancyService, RentScheduleService, PaymentService) keeping controllers thin.',
+        'Dynamic Data Tables: Built a reusable HasDataTableColumns trait auto-generating sortable, searchable, paginated table definitions from database schema.',
+        'Cloudinary Image Pipeline: Integrated cloud image uploads with polymorphic cover/gallery relationships for properties and units.'
       ],
       commits: [
-        'feat: tenants dynamic dashboard calculations',
-        'feat: integrate property payments ledger logs',
-        'refactor: show tenancies list views'
+        '8ee0d88 tenants, payments and dynamic dashboard',
+        '081751f show tenancies',
+        'f043c39 added property page',
+        '7828448 auth and dashboard',
+        '6006048 images',
+        '58f7f32 cover_image'
       ]
     }
   },
