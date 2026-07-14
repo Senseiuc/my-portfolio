@@ -60,25 +60,32 @@ const PROJECTS = [
     id: 'lextorah',
     number: '02',
     category: 'AI Learning Platforms',
-    title: 'Lextorah Smart-Sync',
-    shortDesc: 'Engineered multi-tenant file syncing daemons that monitor, translate, and catalog course video metadata concurrently into database channels.',
-    tags: ['FastAPI', 'React', 'Python Watchdog'],
+    title: 'Lextorah Educational Ecosystem',
+    shortDesc: 'A unified educational platform combining a Laravel LMS for student registrations and course sprint scheduling with a FastAPI/React AI tutoring agent, media whisper transcriber, and portal support chatbot.',
+    tags: ['FastAPI', 'Laravel', 'React'],
     borderColor: 'hover:border-cyan-500/30',
     hoverText: 'group-hover:text-cyan-400',
     accentColor: 'text-cyan-400',
     link: 'https://lextorah.com',
     details: {
       url: 'https://lextorah.com',
-      system: 'Metadata Translation Sync Daemon',
+      system: 'Learning Management System & AI Tutor Portal',
       contributions: [
-        'Concurrent Monitoring: Designed dynamic folder watchdogs that track filesystem write updates.',
-        'SaaS Multitenancy: Built tenant resource routing boundaries separating learning catalog nodes.',
-        'FastAPI API: Authored highly performant routing paths processing heavy payload uploads.'
+        'Socratic AI Tutor Agent: Designed a LangGraph StateGraph tutoring system streaming contextual lessons, dynamically translating vocabularies, and integrating a client-side support widget (Ms. Lexi) communicating with the backend.',
+        'LMS Sprints & Timetables: Implemented course sprint scheduling modules, student enrollment selectors, and a master timetable grid with overlap checks to prevent tutor double-booking.',
+        'Cart, Discount & Checkout: Debugged registration shopping carts, added coupon/tuition discount multipliers, and refactored the Paystack payment verification flow.',
+        'reCAPTCHA Registration Guard: Rebuilt foreign exam registration pages (SAT, PTE, TOEFL) with Google reCAPTCHA v2 validations to block spambots.',
+        'Whisper Media Pipeline: Integrated Local OpenAI Whisper audio transcribing (lazy-loaded on demand to resolve OOM runtime crashes) with Cloudinary upload streams.',
+        'Architecture Governance Tools: Engineered a git-diff based smart sync script and a Node.js-based static analyzer checking route prefixes, casing issues, and ghost package imports.'
       ],
       commits: [
-        'feat: initial folder monitor hook',
-        'refactor: multi-tenant metadata index route',
-        'perf: parallel fastAPI upload buffers'
+        '94ae637 build(governance): add smart sync script to copy files changed in latest pull',
+        '8ca21c4 auto schedule feature done',
+        'e808cfb refactor payment system',
+        'ee3d70f fix(backend): replace deprecated create_agent with langgraph create_react_agent',
+        'f1a4109 modify register page popup',
+        '14abf66 Sat registration done',
+        '4965946 email implementation'
       ]
     }
   },
