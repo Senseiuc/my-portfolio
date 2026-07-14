@@ -29,3 +29,6 @@ portfolio.db
 
 # Compiled backend build
 dist-server/
+
+# Environment variables
+.env

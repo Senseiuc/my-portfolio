@@ -30,6 +30,8 @@ COPY --from=builder /app/dist-server ./dist-server
 COPY ["My Brand Logo - senseiuc.png", "./dist/My Brand Logo - senseiuc.png"]
 COPY ["My Brand Logo - senseiuc.svg", "./dist/My Brand Logo - senseiuc.svg"]
 COPY ["background-senseiuc-design.png", "./dist/background-senseiuc-design.png"]
+COPY ["Bearded_logo_glowing_orange_energy_202607140039.mp4", "./dist/Bearded_logo_glowing_orange_energy_202607140039.mp4"]
+COPY ["gideon_caricature.jpg", "./dist/gideon_caricature.jpg"]
 COPY ["resume.html", "./dist/resume.html"]
 COPY ["resume.md", "./dist/resume.md"]
 

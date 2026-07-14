@@ -7,6 +7,7 @@ import {
   Mail, 
   Github, 
   Linkedin, 
+  Gitlab,
   Briefcase, 
   Award, 
   Calendar,
@@ -18,6 +19,7 @@ import MetricsMonitor from './components/MetricsMonitor';
 import EngineRoom from './components/EngineRoom';
 import GitStats from './components/GitStats';
 import Logo from './components/Logo';
+import ChatWidget from './components/ChatWidget';
 
 const PROJECTS = [
   {
@@ -63,55 +65,63 @@ const PROJECTS = [
     title: 'Lextorah Educational Ecosystem',
     shortDesc: 'A unified educational platform combining a Laravel LMS for student registrations and course sprint scheduling with a FastAPI/React AI tutoring agent, media whisper transcriber, and portal support chatbot.',
     tags: ['FastAPI', 'Laravel', 'React'],
-    borderColor: 'hover:border-cyan-500/30',
-    hoverText: 'group-hover:text-cyan-400',
-    accentColor: 'text-cyan-400',
-    link: 'https://lextorah.com',
+    borderColor: 'hover:border-orange-500/30',
+    hoverText: 'group-hover:text-orange-400',
+    accentColor: 'text-orange-400',
+    link: 'https://lextorah-elearning.com/',
     details: {
-      url: 'https://lextorah.com',
+      url: 'https://www.lextorah.ai/',
       system: 'Learning Management System & AI Tutor Portal',
       contributions: [
-        'Socratic AI Tutor Agent: Designed a LangGraph StateGraph tutoring system streaming contextual lessons, dynamically translating vocabularies, and integrating a client-side support widget (Ms. Lexi) communicating with the backend.',
+        'AI Portal Sync & Deployments: Configured Docker deployment files, engineered a git-diff based smart sync script, and developed a Node-based static analyzer (audit_sync.js) to automate copying files from upstream while verifying casing and route prefix rules.',
+        'AI Portal Error Corrections: Debugged and fixed critical runtime/build errors in the FastAPI/React code (e.g. lazy-loading Whisper model to prevent startup crashes, correcting case-sensitive asset paths, standardizing client-side API prefixes, and replacing deprecated agent functions with LangGraph create_react_agent).',
+        'Support Chat Widget Integration: Deployed a floating, responsive AI assistant widget ("Ms. Lexi") into the legacy PHP portal templates (footer.php, chat-widget.js, chat-widget.css), implementing browser-based guest sessions and typing states communicating with the FastAPI backend.',
         'LMS Sprints & Timetables: Implemented course sprint scheduling modules, student enrollment selectors, and a master timetable grid with overlap checks to prevent tutor double-booking.',
+        'AI Tutor JWT Bridge API: Deployed a Laravel-based JWT authentication gateway (/aitutor-login) validating active subscriptions and forwarding user roles to the FastAPI portal.',
         'Cart, Discount & Checkout: Debugged registration shopping carts, added coupon/tuition discount multipliers, and refactored the Paystack payment verification flow.',
-        'reCAPTCHA Registration Guard: Rebuilt foreign exam registration pages (SAT, PTE, TOEFL) with Google reCAPTCHA v2 validations to block spambots.',
-        'Whisper Media Pipeline: Integrated Local OpenAI Whisper audio transcribing (lazy-loaded on demand to resolve OOM runtime crashes) with Cloudinary upload streams.',
-        'Architecture Governance Tools: Engineered a git-diff based smart sync script and a Node.js-based static analyzer checking route prefixes, casing issues, and ghost package imports.'
+        'reCAPTCHA Registration Guard: Rebuilt foreign exam registration pages (SAT, PTE, TOEFL) with Google reCAPTCHA v2 validations to block spambots.'
       ],
       commits: [
-        '94ae637 build(governance): add smart sync script to copy files changed in latest pull',
-        '8ca21c4 auto schedule feature done',
-        'e808cfb refactor payment system',
-        'ee3d70f fix(backend): replace deprecated create_agent with langgraph create_react_agent',
-        'f1a4109 modify register page popup',
-        '14abf66 Sat registration done',
-        '4965946 email implementation'
+        '94ae637 build(governance): add smart sync script (AI Portal)',
+        'ee3d70f fix(backend): replace deprecated create_agent with langgraph create_react_agent (AI Portal)',
+        '86ab97e feat: add sprint schedule relations to auth payload (ap/laravel)',
+        '4965946 feat: email implementation for student alerts (elearning/main)',
+        '8ca21c4 feat: auto schedule calendar build & collision checks (elearning/main)',
+        'e808cfb refactor: payment system cart checkout flow (elearning/main)',
+        'f1a4109 refactor: modify registration page validations & popups (elearning/main)'
       ]
     }
   },
   {
     id: 'tripease',
     number: '03',
-    category: 'Logistics Routing',
+    category: 'Transit Booking',
     title: 'TripEase Logistics Router',
-    shortDesc: 'Designed load-balanced high-throughput packet routing structures for cargo fleet networks, managing live latency offsets and transit states.',
-    tags: ['Node.js', 'PostgreSQL', 'Docker'],
+    shortDesc: 'A distributed transit scheduling, seat booking, and fleet routing ecosystem built across separate Laravel microservices managing escrow ledger wallets and payment gateways.',
+    tags: ['PHP', 'Laravel', 'Docker', 'Microservices'],
     borderColor: 'hover:border-indigo-500/30',
     hoverText: 'group-hover:text-indigo-400',
     accentColor: 'text-indigo-400',
     link: null,
     details: {
       url: null,
-      system: 'Transit State Router Load Balancer',
+      system: 'Distributed Microservices Logistics System',
       contributions: [
-        'Traffic Gateway: Implemented reverse proxy load balancer routing metrics.',
-        'High-Throughput Packets: Managed real-time transit state caches inside Redis indices.',
-        'Environment Setup: Fully containerized the fleet monitoring microservices network.'
+        'Microservices Architecture: Designed and deployed the system across four independent Laravel microservices (Auth, Companies, Payments, and Transport Services) running containerized in Docker.',
+        'Escrow Wallet Ledger: Programmed secure transaction wallets in the transport service utilizing lockForUpdate row locks inside database transactions to eliminate race conditions, with 5-stage deadlock retries.',
+        'Idempotence Governance: Created idempotency lookup layers in the WalletService using distinct reference keys to block duplicate transaction payouts or booking adjustments.',
+        'Modular Payment Providers: Integrated Flutterwave and Paystack payment gateway providers, managing verification webhook routes secured with custom signature validations.',
+        'Fleet & Schedule Registry: Programmed operators registries, active vehicle fleets, driver records, and scheduling controllers supporting bidirectional routes with stations/stops.',
+        'Journey Search Engine: Programmed search algorithms querying schedules tables to map out optimal multi-leg travel route options for booking passengers.'
       ],
       commits: [
-        'feat: gateway reverse proxy configurations',
-        'perf: redis caching for vehicle telemetry',
-        'docker: compile fleet service image'
+        '08d58aa authentication service complete (auth)',
+        '27e64f4 service registration & company registries (companies)',
+        '522d7a3 price calculations and scheduling updates (companies)',
+        '74d987a trip ease payment service init (payments)',
+        '2d81857 paystack and flutterwave service (payments)',
+        '0c48886 stats and analytics controllers (transport)',
+        '2873599 stats reporting (transport)'
       ]
     }
   },
@@ -125,9 +135,9 @@ const PROJECTS = [
     borderColor: 'hover:border-emerald-500/30',
     hoverText: 'group-hover:text-emerald-400',
     accentColor: 'text-emerald-400',
-    link: null,
+    link: 'https://wings.nmobile.com.ng/',
     details: {
-      url: null,
+      url: 'https://wings.nmobile.com.ng/',
       system: 'Estate Multi-Tenant Dashboard',
       contributions: [
         'Rent Schedule Engine: Automated rent payment schedule generation with first-payment auto-distribution and FIFO lump-sum payment application across billing periods.',
@@ -151,24 +161,30 @@ const PROJECTS = [
     number: '05',
     category: 'Content Portals',
     title: 'Radio News CMS',
-    shortDesc: 'Engineered administrative backends for real-time news management, login authentications, and audio broadcast streams syndication.',
-    tags: ['Laravel', 'Bootstrap', 'Admin Auth'],
+    shortDesc: 'A broadcasting content management system integrating dynamic news publishing and revisions logs with Daily.co WebRTC video call rooms and live stream analytics.',
+    tags: ['Laravel', 'Filament', 'Daily.co'],
     borderColor: 'hover:border-pink-500/30',
     hoverText: 'group-hover:text-pink-400',
     accentColor: 'text-pink-400',
-    link: null,
+    link: 'https://home.homelandradio.org/',
     details: {
-      url: null,
+      url: 'https://home.homelandradio.org/',
       system: 'Broadcasting CMS & Publishing Engine',
       contributions: [
-        'Real-time Publishing: Created article editing nodes with media upload buffers.',
-        'Secure Auth: Programmed multi-level administrator sign-in gates.',
-        'Audio Feeds: Integrated live broadcast streams syndication widgets.'
+        'Filament CMS Dashboard: Built resource managers for article management, category sorting orders, comments moderation, and ads placements.',
+        'Spatie Role Access: Restricted administrative actions by applying Spatie permission layers for admin, editor, moderator, and viewer accounts.',
+        'Daily.co WebRTC Rooms: Integrated rooms creation and tokens generation via the Daily.co API, embedding owner-privileged conference screens inside admin pages.',
+        'Real-time Chat Webhooks: Built a webhook dispatcher (/daily-webhook) parsing video call chat events and logging participant logs in database channels.',
+        'Live Broadcast Analytics: Created stream metadata trackers displaying current listeners status, peaks, last restarts, and calculated uptime.',
+        'SEO Discovery Feeds: Automated search engine discovery by generating dynamic sitemaps (/sitemap.xml) and RSS feeds (/feed).'
       ],
       commits: [
-        'feat: admin news post controls',
-        'feat: login session security wrapper',
-        'fix: audio stream sync handler'
+        'f9a7688 admin (sprint list & layout setups)',
+        '818a0be login (authentication templates)',
+        '5940ec0 deploy (automated shell deploy dispatcher)',
+        '85b255b seed (tariff and site configurations)',
+        '528aab5 radio news completed (CMS features integration)',
+        '8efe315 radio news app completed'
       ]
     }
   },
@@ -176,25 +192,32 @@ const PROJECTS = [
     id: 'transglobal',
     number: '06',
     category: 'Integration APIs',
-    title: 'Transglobal Cargo Sabre',
-    shortDesc: 'Designed auto-seeder algorithms and billing calculators integrating Sabre logistics protocols with custom local invoicing.',
-    tags: ['PHP', 'Sabre API', 'Automated Seeders'],
+    title: 'Transglobal X Sabre',
+    shortDesc: 'Designed and built the Transglobal logistics API engine and shipping portal from scratch, integrating Sabre tariff matrices, Paystack dedicated accounts, and SeerBit gateways.',
+    tags: ['PHP', 'Laravel', 'Docker'],
     borderColor: 'hover:border-yellow-500/30',
     hoverText: 'group-hover:text-yellow-400',
     accentColor: 'text-yellow-400',
-    link: null,
+    link: 'https://cargo.sabrecwa.com/',
     details: {
-      url: null,
-      system: 'Logistics Sabre Integration API',
+      url: 'https://transglobal.africa/',
+      system: 'Logistics Sabre Integration API & Booking Hub',
       contributions: [
-        'Sabre SDK: Integrated Sabre cargo flight availability protocol APIs.',
-        'Auto-Seeders: Wrote database seeders fetching bulk global airport tariff indexes.',
-        'Calculators: Coded logic calculating live customs clearances and freight taxes.'
+        'Full-Stack Architecture: Engineered both the Transglobal API hub and Cargo shipping portal from scratch, designing database schemas, multi-tenant referral models, and admin/customer dashboards.',
+        'Paystack DVA Gateway: Integrated Paystack dedicated virtual bank accounts (test-bank) linked to customer codes, implementing self-healing name-splitting (first/last name split fallback) and auto-retries to bypass API validation errors.',
+        'Sabre Tariff Auto-Seeders: Programmed database tariff seeders parsing global international shipping rate matrix files, mapping weight-based pricing brackets (sellingRate10kg vs. sellingRate20kg) and auto-creating missing countries/locations.',
+        'SeerBit Payment Gateway: Developed a payment provider for the Cargo portal utilizing a secure token-exchange handshake (generating dynamic Bearer tokens via credential encryption).',
+        'Webhook Syncing: Engineered webhook listener routes validating HMAC-SHA512 signatures and dispatching automated shipment status syncs to downstream logistics databases.',
+        'Console Feedback Scheduler: Coded cron-driven console commands sending automated NPS review requests 24 hours after delivery, with partner-portal exclusion rules (sabre/bicourtney).'
       ],
       commits: [
-        'feat: Sabre SOAP gateway bindings',
-        'perf: optimize tariff auto-seed speed',
-        'fix: calculator billing decimals rounding'
+        '9175766 feat: automatically create missing countries/tariff buckets (backyard)',
+        'c7d03a7 feat: Sabre Tariff matrix update and commission calculation bypass (backyard)',
+        '28f45b3 Fix Paystack test-bank assignment & update runtime to sail-8.4 (backyard)',
+        '13be8f8 Fix Paystack Customer Update last_name required validation error (backyard)',
+        'b174a3b feat: complete feedback system with delayed emails & NPS (backyard)',
+        'df8df00 chore: remove Paystack/Flutterwave, enforce Seerbit (cargo)',
+        '5d01dd3 feat: complete automated webhook syncing & waybill PDF dispatch (cargo)'
       ]
     }
   }
@@ -261,33 +284,33 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070a13] text-slate-100 font-sans relative selection:bg-cyan-500/30 selection:text-cyan-200">
+    <div className="min-h-screen bg-[#0a0806] text-slate-100 font-sans relative selection:bg-orange-500/30 selection:text-orange-200">
       
       {/* Background Glows */}
       <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-blue-500/10 rounded-full blur-[120px] glow-bg" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-500/10 rounded-full blur-[120px] glow-bg" style={{ animationDelay: '-5s' }} />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-orange-500/8 rounded-full blur-[120px] glow-bg" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-600/8 rounded-full blur-[120px] glow-bg" style={{ animationDelay: '-5s' }} />
       </div>
 
       {/* Floating Navbar */}
-      <header className="sticky top-0 z-50 w-full bg-[#070a13]/70 backdrop-blur-md border-b border-slate-900">
+      <header className="sticky top-0 z-50 w-full bg-[#0a0806]/70 backdrop-blur-md border-b border-amber-950/40">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Logo className="w-8 h-8" />
             <span className="font-mono text-sm font-bold text-slate-100 uppercase tracking-widest">
-              GIDEON <span className="text-cyan-400">NWADIALU</span>
+              GIDEON <span className="text-orange-400">NWADIALU</span>
             </span>
           </div>
 
           <nav className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-400">
-            <a href="#about" className="hover:text-cyan-400 transition-colors">/about</a>
-            <a href="#competencies" className="hover:text-cyan-400 transition-colors">/skills</a>
-            <a href="#study" className="hover:text-cyan-400 transition-colors">/study</a>
-            <a href="#engine-room" className="hover:text-cyan-400 transition-colors">/engine-room</a>
-            <a href="#projects" className="hover:text-cyan-400 transition-colors">/projects</a>
-            <a href="#terminal" className="hover:text-cyan-400 transition-colors">/terminal</a>
-            <a href="#experience" className="hover:text-cyan-400 transition-colors">/experience</a>
-            <a href="#contact" className="hover:text-cyan-400 transition-colors">/contact</a>
+            <a href="#about" className="hover:text-orange-400 transition-colors">/about</a>
+            <a href="#competencies" className="hover:text-orange-400 transition-colors">/skills</a>
+            <a href="#study" className="hover:text-orange-400 transition-colors">/study</a>
+            <a href="#engine-room" className="hover:text-orange-400 transition-colors">/engine-room</a>
+            <a href="#projects" className="hover:text-orange-400 transition-colors">/projects</a>
+            <a href="#terminal" className="hover:text-orange-400 transition-colors">/terminal</a>
+            <a href="#experience" className="hover:text-orange-400 transition-colors">/experience</a>
+            <a href="#contact" className="hover:text-orange-400 transition-colors">/contact</a>
           </nav>
         </div>
       </header>
@@ -303,10 +326,10 @@ export default function App() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 py-1 bg-cyan-500/10 border border-cyan-500/20 rounded-full"
+              className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full"
             >
-              <Cpu className="w-3.5 h-3.5 text-cyan-400 animate-spin" />
-              <span className="font-mono text-[10px] text-cyan-400 uppercase tracking-wider font-bold">Systems Architect & Developer</span>
+              <Cpu className="w-3.5 h-3.5 text-orange-400 animate-spin" />
+              <span className="font-mono text-[10px] text-orange-400 uppercase tracking-wider font-bold">Systems Architect & Developer</span>
             </motion.div>
 
             <motion.h1 
@@ -315,7 +338,7 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl md:text-6xl font-extrabold text-slate-100 tracking-tight"
             >
-              Nwadialu <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500">Gideon</span>
+              Nwadialu <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-500">Gideon</span>
             </motion.h1>
 
             <motion.p 
@@ -333,60 +356,68 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex items-center gap-4 pt-2"
             >
-              <a href="#contact" className="px-5 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-900 rounded font-semibold text-xs transition-colors flex items-center gap-2 shadow-lg cursor-pointer">
+              <a href="mailto:nwadialugideon@gmail.com" className="px-5 py-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-slate-900 rounded font-semibold text-xs transition-colors flex items-center gap-2 shadow-lg cursor-pointer">
                 <Mail className="w-3.5 h-3.5" />
                 Contact Gideon
               </a>
-              <a href="https://github.com/Senseiuc" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-cyan-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-cyan-400 cursor-pointer">
+              <a href="https://github.com/Senseiuc" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
                 <Github className="w-4 h-4" />
               </a>
-              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-cyan-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-cyan-400 cursor-pointer">
+              <a href="https://az-gitlab.igbimo.com/gideon.nwadialu" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
+                <Gitlab className="w-4 h-4" />
+              </a>
+              <a href="https://www.linkedin.com/in/gideonnwadialu/" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
                 <Linkedin className="w-4 h-4" />
               </a>
             </motion.div>
           </div>
 
-          {/* Profile Logo Card with background-senseiuc-design.png background */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="lg:col-span-5 relative w-full aspect-square max-w-[360px] mx-auto rounded-2xl overflow-hidden border border-slate-800 bg-[#0f172a]/50 p-6 flex flex-col items-center justify-center shadow-2xl group"
-          >
-            {/* Background design image with overlay gradient */}
-            <div className="absolute inset-0 z-0 bg-cover bg-center opacity-25 group-hover:scale-105 transition-transform duration-700" style={{ backgroundImage: "url('/background-senseiuc-design.png')" }} />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#070a13] via-transparent to-transparent z-0" />
-
-            {/* Brand Logo in center (Animated Transparent SVG Logo) */}
-            <div className="relative z-10 w-44 h-44 flex items-center justify-center">
-              <Logo className="w-full h-full" />
-            </div>
-            <div className="relative z-10 mt-6 font-mono text-[10px] text-slate-500 text-center uppercase tracking-widest">
+          {/* Profile Logo Card with full-bleed glowing energy video */}
+          <div className="lg:col-span-5 flex flex-col items-center gap-3 w-full max-w-[480px] mx-auto">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-800 shadow-2xl group"
+            >
+              {/* Background glowing energy video filling container */}
+              <video 
+                src="/Bearded_logo_glowing_orange_energy_202607140039.mp4" 
+                autoPlay 
+                loop 
+                muted 
+                playsInline 
+                className="absolute inset-0 w-full h-full object-cover z-0"
+              />
+            </motion.div>
+            
+            {/* Node label positioned below the video container */}
+            <div className="font-mono text-[10px] text-slate-500 text-center uppercase tracking-widest">
               senseiuc vps-01 node
             </div>
-          </motion.div>
+          </div>
         </section>
 
         {/* CORE COMPETENCIES GRID */}
         <section id="competencies" className="space-y-6">
           <div className="space-y-1">
             <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
-              <Layers className="w-5 h-5 text-cyan-400" />
+              <Layers className="w-5 h-5 text-orange-400" />
               Core Competencies
             </h2>
             <p className="text-xs text-slate-500 font-mono">/capabilities-matrix.json</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-5 border border-slate-800 bg-[#0f172a]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
-              <span className="font-mono text-[10px] text-cyan-400 uppercase font-bold">1. Fintech & Ledger Operations</span>
+            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
+              <span className="font-mono text-[10px] text-orange-400 uppercase font-bold">1. Fintech & Ledger Operations</span>
               <h3 className="font-bold text-slate-200 text-sm">Escrow Wallet Payouts & Audits</h3>
               <p className="text-slate-400 text-[11px] leading-relaxed">
                 Optimized billing and payouts updates in backend daemons using cursor offsets in chunked batches of 500 records with microsecond delays, **releasing payments twice as fast and eliminating database locking spikes**.
               </p>
             </div>
 
-            <div className="p-5 border border-slate-800 bg-[#0f172a]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
+            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
               <span className="font-mono text-[10px] text-indigo-400 uppercase font-bold">2. Systems Governance</span>
               <h3 className="font-bold text-slate-200 text-sm">Smart-Sync Deployment Automation</h3>
               <p className="text-slate-400 text-[11px] leading-relaxed">
@@ -394,7 +425,7 @@ export default function App() {
               </p>
             </div>
 
-            <div className="p-5 border border-slate-800 bg-[#0f172a]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
+            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
               <span className="font-mono text-[10px] text-emerald-400 uppercase font-bold">3. Microservices Routing</span>
               <h3 className="font-bold text-slate-200 text-sm">API Gateway Authentication</h3>
               <p className="text-slate-400 text-[11px] leading-relaxed">
@@ -402,7 +433,7 @@ export default function App() {
               </p>
             </div>
 
-            <div className="p-5 border border-slate-800 bg-[#0f172a]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
+            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
               <span className="font-mono text-[10px] text-pink-400 uppercase font-bold">4. DevOps & Compliance</span>
               <h3 className="font-bold text-slate-200 text-sm">Kubernetes Cluster & KYC Integration</h3>
               <p className="text-slate-400 text-[11px] leading-relaxed">
@@ -422,14 +453,20 @@ export default function App() {
             <p className="text-xs text-slate-500 font-mono">/logic-core.json</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6 border border-slate-800 bg-[#0f172a]/20 rounded-xl items-center relative overflow-hidden backdrop-blur-md">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6 border border-slate-800 bg-[#141110]/20 rounded-xl items-center relative overflow-hidden backdrop-blur-md">
             <div className="absolute inset-0 z-0 bg-cover bg-center opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url('/background-senseiuc-design.png')" }} />
             
-            <div className="md:col-span-3 flex justify-center z-10">
-              <Logo className="w-36 h-36 filter drop-shadow-[0_0_15px_rgba(249,115,22,0.25)] animate-pulse" />
+            <div className="md:col-span-4 flex justify-center z-10 w-full">
+              <div className="w-full aspect-square max-w-[260px] flex items-center justify-center rounded-xl overflow-hidden border border-slate-800/40 shadow-lg bg-[#141110]/30">
+                <img 
+                  src="/gideon_caricature.jpg" 
+                  alt="Gideon Caricature" 
+                  className="w-full h-full object-cover filter drop-shadow-[0_0_15px_rgba(249,115,22,0.15)]"
+                />
+              </div>
             </div>
             
-            <div className="md:col-span-9 space-y-4 font-sans z-10">
+            <div className="md:col-span-8 space-y-4 font-sans z-10">
               <div className="space-y-2">
                 <h3 className="text-slate-200 font-bold text-sm uppercase tracking-wide font-mono text-orange-400">
                   Mathematics & Algorithmic Foundations
@@ -439,8 +476,8 @@ export default function App() {
                 </p>
               </div>
 
-              <div className="space-y-2 border-t border-slate-900 pt-3">
-                <h3 className="text-slate-200 font-bold text-sm uppercase tracking-wide font-mono text-cyan-400">
+              <div className="space-y-2 border-t border-amber-950/40 pt-3">
+                <h3 className="text-slate-200 font-bold text-sm uppercase tracking-wide font-mono text-orange-400">
                   The Chess Philosophy of Systems Design
                 </h3>
                 <p className="text-slate-400 text-xs leading-relaxed">
@@ -465,7 +502,7 @@ export default function App() {
         <section id="projects" className="space-y-6">
           <div className="space-y-1">
             <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-cyan-400" />
+              <Briefcase className="w-5 h-5 text-orange-400" />
               Featured Projects Catalog
             </h2>
             <p className="text-xs text-slate-500 font-mono">/active-deployments.json</p>
@@ -475,7 +512,7 @@ export default function App() {
             {PROJECTS.map((project) => (
               <div 
                 key={project.id} 
-                className={`p-5 border border-slate-900 bg-[#0f172a]/20 rounded-xl space-y-3 ${project.borderColor} transition-colors flex flex-col justify-between group`}
+                className={`p-5 border border-amber-950/40 bg-[#141110]/20 rounded-xl space-y-3 ${project.borderColor} transition-colors flex flex-col justify-between group`}
               >
                 <div className="space-y-2">
                   <span className={`font-mono text-[9px] ${project.accentColor} uppercase font-bold tracking-wider`}>
@@ -498,7 +535,7 @@ export default function App() {
                     ))}
                   </div>
                   
-                  <div className="border-t border-slate-900/60 pt-2 flex items-center justify-between">
+                  <div className="border-t border-amber-950/40/60 pt-2 flex items-center justify-between">
                     <button 
                       onClick={() => handleOpenProjectDetails(project)}
                       className="text-[9px] font-mono text-slate-500 hover:text-slate-100 transition-colors uppercase tracking-widest flex items-center gap-1 group/btn cursor-pointer"
@@ -512,7 +549,7 @@ export default function App() {
                         href={project.link} 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        className="text-[9px] font-mono text-slate-500 hover:text-cyan-400 transition-colors uppercase tracking-widest"
+                        className="text-[9px] font-mono text-slate-500 hover:text-orange-400 transition-colors uppercase tracking-widest"
                       >
                         Site ↗
                       </a>
@@ -534,7 +571,7 @@ export default function App() {
         <section id="terminal" className="space-y-4">
           <div className="space-y-1">
             <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
-              <TerminalIcon className="w-5 h-5 text-cyan-400" />
+              <TerminalIcon className="w-5 h-5 text-orange-400" />
               Interactive Console Shell
             </h2>
             <p className="text-xs text-slate-500 font-mono">Type commands directly to query Gideon's database.</p>
@@ -546,7 +583,7 @@ export default function App() {
         <section id="experience" className="space-y-6">
           <div className="space-y-1">
             <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
-              <Briefcase className="w-5 h-5 text-cyan-400" />
+              <Briefcase className="w-5 h-5 text-orange-400" />
               Professional Experience
             </h2>
             <p className="text-xs text-slate-500 font-mono">/history.xml</p>
@@ -555,10 +592,10 @@ export default function App() {
           <div className="relative border-l border-slate-800 pl-4 ml-2 space-y-8 font-mono text-xs">
             {/* Konga */}
             <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-cyan-400 rounded-full ring-4 ring-[#070a13]" />
+              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-orange-400 rounded-full ring-4 ring-[#0a0806]" />
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="font-bold text-sm text-slate-100">Konga — Software Engineer</span>
-                <span className="text-cyan-400 flex items-center gap-1 font-semibold text-[10px]">
+                <span className="text-orange-400 flex items-center gap-1 font-semibold text-[10px]">
                   <Calendar className="w-3 h-3" />
                   2024 - PRESENT
                 </span>
@@ -570,7 +607,7 @@ export default function App() {
 
             {/* Golden Attic */}
             <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-indigo-500 rounded-full ring-4 ring-[#070a13]" />
+              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-indigo-500 rounded-full ring-4 ring-[#0a0806]" />
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="font-bold text-sm text-slate-100">Golden Attic — Senior Full-Stack Engineer (Part-time)</span>
                 <span className="text-indigo-400 flex items-center gap-1 font-semibold text-[10px]">
@@ -585,7 +622,7 @@ export default function App() {
 
             {/* Freelance */}
             <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-emerald-500 rounded-full ring-4 ring-[#070a13]" />
+              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-emerald-500 rounded-full ring-4 ring-[#0a0806]" />
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="font-bold text-sm text-slate-100">Freelance — Full-Stack & DevOps Consultant</span>
                 <span className="text-emerald-400 flex items-center gap-1 font-semibold text-[10px]">
@@ -600,7 +637,7 @@ export default function App() {
 
             {/* Xxolcare */}
             <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-slate-700 rounded-full ring-4 ring-[#070a13]" />
+              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-slate-700 rounded-full ring-4 ring-[#0a0806]" />
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <span className="font-bold text-sm text-slate-100">Xxolcare — Software Developer</span>
                 <span className="text-slate-500 flex items-center gap-1 font-semibold text-[10px]">
@@ -616,13 +653,29 @@ export default function App() {
         </section>
 
         {/* CONTACT FORM */}
-        <section id="contact" className="space-y-6 max-w-xl mx-auto border border-slate-900 bg-[#0f172a]/20 p-6 rounded-xl backdrop-blur-md">
+        <section id="contact" className="space-y-6 max-w-xl mx-auto border border-amber-950/40 bg-[#141110]/20 p-6 rounded-xl backdrop-blur-md">
           <div className="text-center space-y-1">
             <h2 className="text-xl font-extrabold text-slate-100 flex items-center justify-center gap-2">
-              <Award className="w-5 h-5 text-cyan-400" />
+              <Award className="w-5 h-5 text-orange-400" />
               Contact & Connections Node
             </h2>
             <p className="text-[11px] text-slate-500 font-mono">Submit a query securely to the portfolio sqlite log.</p>
+          </div>
+
+          {/* Direct contact nodes */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border border-amber-950/40/60 bg-slate-950/40 p-4 rounded-lg font-mono text-[10px]">
+            <div className="flex flex-col gap-1 items-center sm:items-start">
+              <span className="text-slate-500 uppercase tracking-widest text-[9px]">DIRECT EMAIL</span>
+              <a href="mailto:nwadialugideon@gmail.com" className="text-orange-400 hover:underline transition-all">
+                nwadialugideon@gmail.com
+              </a>
+            </div>
+            <div className="flex flex-col gap-1 items-center sm:items-start border-t sm:border-t-0 sm:border-l border-amber-950/40/60 pt-2 sm:pt-0 sm:pl-4">
+              <span className="text-slate-500 uppercase tracking-widest text-[9px]">PHONE NODE</span>
+              <a href="tel:+2348105347918" className="text-orange-400 hover:underline transition-all">
+                +2348105347918
+              </a>
+            </div>
           </div>
 
           {sent ? (
@@ -641,7 +694,7 @@ export default function App() {
                     required
                     value={form.name}
                     onChange={e => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-cyan-400 outline-none focus:border-cyan-500/50"
+                    className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-orange-400 outline-none focus:border-orange-500/50"
                   />
                 </div>
                 <div className="space-y-1">
@@ -651,7 +704,7 @@ export default function App() {
                     required
                     value={form.email}
                     onChange={e => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-cyan-400 outline-none focus:border-cyan-500/50"
+                    className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-orange-400 outline-none focus:border-orange-500/50"
                   />
                 </div>
               </div>
@@ -663,14 +716,14 @@ export default function App() {
                   rows={4}
                   value={form.message}
                   onChange={e => setForm({ ...form, message: e.target.value })}
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-cyan-400 outline-none focus:border-cyan-500/50"
+                  className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-orange-400 outline-none focus:border-orange-500/50"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/40 hover:border-cyan-500 text-cyan-400 font-bold rounded flex items-center justify-center gap-2 transition-all cursor-pointer"
+                className="w-full py-2.5 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/40 hover:border-orange-500 text-orange-400 font-bold rounded flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <Send className="w-3.5 h-3.5" />
                 {loading ? 'Transmitting...' : 'Send Transmission'}
@@ -696,7 +749,7 @@ export default function App() {
             className="w-full max-w-2xl bg-[#090e18] border border-slate-800 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono text-xs text-slate-300"
           >
             {/* Modal Header */}
-            <div className="px-4 py-3 border-b border-slate-900 bg-slate-950 flex items-center justify-between">
+            <div className="px-4 py-3 border-b border-amber-950/40 bg-slate-950 flex items-center justify-between">
               <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500">
                 system telemetry: {selectedProject.id}.sh
               </span>
@@ -722,8 +775,8 @@ export default function App() {
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center gap-2 text-cyan-400 font-bold text-[10px] animate-pulse">
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                  <div className="flex items-center gap-2 text-orange-400 font-bold text-[10px] animate-pulse">
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping" />
                     SPINNING UP COMPUTE POD DAEMON...
                   </div>
                 </div>
@@ -738,7 +791,7 @@ export default function App() {
                       </h4>
                     </div>
                     
-                    <div className="space-y-2 border-l border-slate-900 pl-4 py-1">
+                    <div className="space-y-2 border-l border-amber-950/40 pl-4 py-1">
                       <span className="text-[10px] text-slate-500 uppercase tracking-wide block mb-1">Main Contributions</span>
                       <ul className="list-none space-y-2">
                         {selectedProject.details.contributions.map((item: string, i: number) => {
@@ -756,7 +809,7 @@ export default function App() {
                   {/* Git Commit Telemetry Log */}
                   <div className="space-y-2.5">
                     <span className="text-[10px] text-slate-500 uppercase tracking-widest block">Commit History Insights</span>
-                    <div className="bg-slate-950/70 border border-slate-900 p-4 rounded-lg space-y-1.5">
+                    <div className="bg-slate-950/70 border border-amber-950/40 p-4 rounded-lg space-y-1.5">
                       {selectedProject.details.commits.map((commit: string, i: number) => (
                         <div key={i} className="text-slate-400 text-[11px] flex gap-2 font-mono">
                           <span className="text-amber-500/90 select-none">&gt;</span>
@@ -768,7 +821,7 @@ export default function App() {
 
                   {/* Production Link */}
                   {selectedProject.details.url && (
-                    <div className="pt-2 border-t border-slate-900 flex justify-end">
+                    <div className="pt-2 border-t border-amber-950/40 flex justify-end">
                       <a 
                         href={selectedProject.details.url} 
                         target="_blank" 
@@ -786,6 +839,9 @@ export default function App() {
           </motion.div>
         </div>
       )}
+
+      {/* Floating Chat Widget */}
+      <ChatWidget />
 
     </div>
   );

@@ -19,9 +19,12 @@ Type 'help' to view available custom commands.`
   ]);
   const [loading, setLoading] = useState(false);
   const terminalEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    terminalEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
+    }
   };
 
   useEffect(() => {
@@ -77,11 +80,11 @@ Check server connections or reload the docker containers.`
   };
 
   return (
-    <div className="w-full bg-[#070b19]/90 border border-slate-800 rounded-xl shadow-2xl overflow-hidden backdrop-blur-md">
+    <div className="w-full bg-[#0d0a07]/90 border border-slate-800 rounded-xl shadow-2xl overflow-hidden backdrop-blur-md">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 bg-slate-900/60 border-b border-slate-800">
         <div className="flex items-center gap-2">
-          <TerminalIcon className="w-4 height-4 text-cyan-400" />
+          <TerminalIcon className="w-4 h-4 text-orange-400" />
           <span className="font-mono text-xs font-semibold text-slate-300">gideon@senseiuc-vps:~</span>
         </div>
         <div className="flex items-center gap-1.5">
@@ -98,10 +101,10 @@ Check server connections or reload the docker containers.`
       </div>
 
       {/* Terminal Screen Output */}
-      <div className="p-4 h-80 overflow-y-auto font-mono text-sm leading-relaxed text-slate-300 scrollbar-thin">
+      <div ref={scrollContainerRef} className="p-4 h-80 overflow-y-auto font-mono text-sm leading-relaxed text-slate-300 scrollbar-thin">
         {logs.map((log, index) => (
           <div key={index} className="mb-4">
-            <div className="flex items-center gap-2 text-cyan-400">
+            <div className="flex items-center gap-2 text-orange-400">
               <span>$</span>
               <span>{log.command}</span>
             </div>
@@ -119,7 +122,7 @@ Check server connections or reload the docker containers.`
 
       {/* Terminal Form Input */}
       <form onSubmit={handleSubmit} className="flex items-center gap-2 px-4 py-3 bg-slate-950/60 border-t border-slate-800">
-        <span className="font-mono text-cyan-400">$</span>
+        <span className="font-mono text-orange-400">$</span>
         <input
           type="text"
           value={input}
@@ -127,12 +130,12 @@ Check server connections or reload the docker containers.`
           placeholder="type 'help' or 'skills'..."
           disabled={loading}
           className="flex-1 bg-transparent border-none outline-none font-mono text-sm text-emerald-400 placeholder-slate-700"
-          autoFocus
+          
         />
         <button 
           type="submit" 
           disabled={loading}
-          className="px-3 py-1 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 hover:border-cyan-500/50 rounded text-cyan-400 font-mono text-xs transition-colors cursor-pointer"
+          className="px-3 py-1 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/30 hover:border-orange-500/50 rounded text-orange-400 font-mono text-xs transition-colors cursor-pointer"
         >
           Run
         </button>

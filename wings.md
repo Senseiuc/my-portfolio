@@ -2,6 +2,7 @@
 
 **Wings** is a multi-tenant property management platform built for estate landlords and letting agents. It manages the full lifecycle of rental properties — from property and unit registration, tenant onboarding, tenancy agreement creation, automated rent schedule generation, to payment tracking and income reporting.
 
+* **Production URL:** [https://wings.nmobile.com.ng/](https://wings.nmobile.com.ng/)
 * **Core Technology Stack:** Laravel 11, Livewire, Blade, MySQL, Cloudinary (image hosting), REST API layer.
 
 ---
