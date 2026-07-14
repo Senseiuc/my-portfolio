@@ -25,7 +25,7 @@ const PROJECTS = [
     number: '01',
     category: 'Care Hospitality',
     title: 'Xxolcare Booking Portal',
-    shortDesc: 'Designed care hospitality booking algorithms, integrated Paystack payment gateway webhooks, and configured containerized supervisors for background queue processing and transactional mail dispatchers.',
+    shortDesc: 'Designed care hospitality booking algorithms, integrated Paystack payment gateway webhooks, and automated cPanel Git deployment pipelines with optimized mail dispatch routing.',
     tags: ['Laravel', 'Paystack API', 'Docker'],
     borderColor: 'hover:border-teal-500/30',
     hoverText: 'group-hover:text-teal-400',
