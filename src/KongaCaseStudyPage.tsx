@@ -108,7 +108,7 @@ export default function KongaCaseStudyPage() {
       <a href="#case-study-main" className="skip-link">Skip to case study</a>
 
       <header className="sticky top-0 z-40 border-b border-amber-950/60 bg-[#0a0806]/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
+        <div className="mx-auto flex min-h-14 max-w-7xl items-center justify-between px-4 py-3 md:px-8">
           <a href="/" className="inline-flex items-center gap-2 text-sm font-bold text-slate-200 transition-colors hover:text-orange-400">
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Portfolio
@@ -120,13 +120,13 @@ export default function KongaCaseStudyPage() {
       <main id="case-study-main">
         <section className="relative overflow-hidden border-b border-amber-950/60">
           <div className="systems-grid pointer-events-none absolute inset-0" aria-hidden="true" />
-          <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-10 px-5 pb-14 pt-14 md:px-8 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-12">
+          <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-7 px-4 pb-10 pt-10 md:px-8 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-8">
               <p className="font-mono text-xs uppercase text-orange-400">Konga / Merchant platform engineering</p>
-              <h1 className="mt-4 max-w-4xl text-4xl font-extrabold leading-tight text-slate-100 md:text-6xl">
+              <h1 className="mt-4 max-w-4xl text-3xl font-extrabold leading-tight text-slate-100 sm:text-4xl md:text-6xl">
                 Making marketplace operations faster, safer, and easier to recover.
               </h1>
-              <p className="mt-6 max-w-3xl text-base leading-8 text-slate-400 md:text-lg">
+              <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-400 md:text-lg md:leading-8">
                 Gideon handled delivery from merchant and admin interfaces through backend rules, data, scheduled processing, integrations, automated tests, CI, and Kubernetes operations across a multi-language commerce platform.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -138,16 +138,16 @@ export default function KongaCaseStudyPage() {
               </div>
             </div>
 
-            <aside className="border-l border-amber-900/60 pl-5 lg:col-span-4 lg:self-end lg:pl-7" aria-label="Case study outcome">
+            <aside className="border-l border-amber-900/60 pl-4 lg:col-span-4 lg:self-end lg:pl-7" aria-label="Case study outcome">
               <p className="font-mono text-[11px] uppercase text-slate-500">Flagship production result</p>
-              <p className="mt-3 text-4xl font-extrabold text-orange-400">2x faster</p>
+              <p className="mt-2 text-3xl font-extrabold text-orange-400 sm:text-4xl">2x faster</p>
               <p className="mt-2 max-w-sm text-sm leading-6 text-slate-400">merchant payout execution, with bounded batches and paced processing to control database pressure.</p>
             </aside>
           </div>
         </section>
 
         <section className="border-b border-slate-900" aria-labelledby="frameworks-title">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-5 py-12 md:px-8 lg:grid-cols-12">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-10 md:px-8 md:py-12 lg:grid-cols-12">
             <div className="lg:col-span-3">
               <p className="font-mono text-xs uppercase text-orange-400">Languages and frameworks</p>
               <h2 id="frameworks-title" className="mt-2 text-2xl font-bold text-slate-100">A multi-stack delivery surface.</h2>
@@ -169,26 +169,26 @@ export default function KongaCaseStudyPage() {
         </section>
 
         <section className="border-b border-slate-900" aria-label="Project scope">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 divide-y divide-slate-900 px-5 sm:grid-cols-2 sm:divide-x md:grid-cols-4 md:divide-y-0 md:px-8">
+          <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-slate-900 px-4 md:grid-cols-4 md:divide-y-0 md:px-8">
             {[
               ['8 repositories', 'Merchant, middleware, administration, identity, notification, integration, and operations codebases.'],
               ['4 language ecosystems', 'JavaScript/TypeScript, PHP, Node.js, and Python services connected through APIs, queues, shared data, and operational workflows.'],
               ['Screen to cluster', 'Frontend remediation, backend rules, integrations, tests, CI, and Kubernetes operations delivered as one accountable engineering path.'],
               ['2024 - present', 'Sustained delivery across production features, incident recovery, modernization, and deployment operations.'],
             ].map(([value, detail]) => (
-              <div key={value} className="py-7 md:px-7 md:first:pl-0 md:last:pr-0">
-                <p className="text-xl font-bold text-slate-100">{value}</p>
-                <p className="mt-2 text-sm leading-6 text-slate-500">{detail}</p>
+              <div key={value} className="p-3 sm:p-5 md:px-7 md:py-7 md:first:pl-0 md:last:pr-0">
+                <p className="text-base font-bold text-slate-100 sm:text-xl">{value}</p>
+                <p className="mt-2 text-xs leading-relaxed text-slate-500 sm:text-sm sm:leading-6">{detail}</p>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24" aria-labelledby="scope-title">
+        <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24" aria-labelledby="scope-title">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <p className="font-mono text-xs uppercase text-orange-400">Technical design 01</p>
-              <h2 id="scope-title" className="mt-3 text-3xl font-extrabold text-slate-100">From merchant screen to cluster operations.</h2>
+              <h2 id="scope-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">From merchant screen to cluster operations.</h2>
               <p className="mt-4 text-sm leading-7 text-slate-400">
                 The work was not confined to one repository or layer. Product changes moved through merchant and admin interfaces, commerce and identity services, background processing, shared data, external systems, tests, and deployment infrastructure.
               </p>
@@ -199,12 +199,12 @@ export default function KongaCaseStudyPage() {
                 {topology.map((node, index) => {
                   const Icon = node.icon;
                   return (
-                    <li key={node.label} className="relative min-h-44 border-b border-slate-800 p-5 last:border-b-0 sm:[&:nth-child(odd)]:border-r sm:[&:nth-child(3)]:border-b-0">
+                    <li key={node.label} className="relative min-h-36 border-b border-slate-800 p-4 last:border-b-0 sm:min-h-44 sm:p-5 sm:[&:nth-child(odd)]:border-r sm:[&:nth-child(3)]:border-b-0">
                       <div className="flex items-center justify-between">
                         <Icon className="h-5 w-5 text-orange-400" aria-hidden="true" />
                         <span className="font-mono text-[10px] text-slate-600">NODE {String(index + 1).padStart(2, '0')}</span>
                       </div>
-                      <h3 className="mt-8 font-bold text-slate-100">{node.label}</h3>
+                      <h3 className="mt-5 font-bold text-slate-100 sm:mt-8">{node.label}</h3>
                       <p className="mt-2 text-sm leading-6 text-slate-500">{node.detail}</p>
                       {index < topology.length - 1 && (
                         <ArrowRight className="absolute -right-3 top-1/2 z-10 hidden h-6 w-6 bg-[#0a0806] p-1 text-amber-700 sm:block" aria-hidden="true" />
@@ -219,26 +219,26 @@ export default function KongaCaseStudyPage() {
         </section>
 
         <section className="border-y border-slate-900 bg-[#0d0b09]" aria-labelledby="delivery-slices-title">
-          <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24">
             <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:items-end">
               <div className="md:col-span-7">
                 <p className="font-mono text-xs uppercase text-orange-400">Technical design 02</p>
-                <h2 id="delivery-slices-title" className="mt-3 text-3xl font-extrabold text-slate-100 md:text-4xl">Features delivered as complete operating paths.</h2>
+                <h2 id="delivery-slices-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl md:text-4xl">Features delivered as complete operating paths.</h2>
               </div>
               <p className="text-sm leading-7 text-slate-400 md:col-span-5">Each path crossed interface, application logic, data, service integration, verification, and production operations instead of stopping at a single layer.</p>
             </div>
 
             <div className="mt-10 divide-y divide-slate-800 border-y border-slate-800">
               {deliverySlices.map((slice, sliceIndex) => (
-                <article key={slice.title} className="grid grid-cols-1 gap-6 py-8 lg:grid-cols-12 lg:items-center">
+                <article key={slice.title} className="grid grid-cols-1 gap-5 py-6 sm:py-8 lg:grid-cols-12 lg:items-center">
                   <div className="lg:col-span-3">
                     <span className="font-mono text-[10px] text-orange-400">PATH {String(sliceIndex + 1).padStart(2, '0')}</span>
                     <h3 className="mt-2 text-lg font-bold text-slate-100">{slice.title}</h3>
                     <p className="mt-1 text-xs leading-5 text-slate-500">{slice.impact}</p>
                   </div>
-                  <ol className="grid grid-cols-1 border border-slate-800 sm:grid-cols-5 lg:col-span-9">
+                  <ol className="grid grid-cols-2 border border-slate-800 sm:grid-cols-5 lg:col-span-9">
                     {slice.path.map((step, stepIndex) => (
-                      <li key={step} className="relative min-h-20 border-b border-slate-800 p-3 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
+                      <li key={step} className="relative min-h-20 border-b border-r border-slate-800 p-3 even:border-r-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
                         <span className="font-mono text-[9px] text-orange-400">{String(stepIndex + 1).padStart(2, '0')}</span>
                         <p className="mt-2 text-xs leading-5 text-slate-300">{step}</p>
                         {stepIndex < slice.path.length - 1 && <ArrowRight className="absolute -right-3 top-1/2 z-10 hidden h-6 w-6 bg-[#0d0b09] p-1 text-amber-700 sm:block" aria-hidden="true" />}
@@ -252,17 +252,17 @@ export default function KongaCaseStudyPage() {
         </section>
 
         <section className="border-y border-amber-950/50 bg-[#0d0b09]">
-          <div className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24">
             <div className="max-w-3xl">
               <p className="font-mono text-xs uppercase text-orange-400">Delivery record</p>
-              <h2 className="mt-3 text-3xl font-extrabold text-slate-100 md:text-4xl">Four chapters of the same reliability problem.</h2>
+              <h2 className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl md:text-4xl">Four chapters of the same reliability problem.</h2>
             </div>
 
             <div className="mt-10 divide-y divide-slate-800 border-y border-slate-800">
               {chapters.map((chapter) => {
                 const Icon = chapter.icon;
                 return (
-                  <article key={chapter.index} className="grid grid-cols-1 gap-7 py-10 lg:grid-cols-12 lg:gap-10">
+                  <article key={chapter.index} className="grid grid-cols-1 gap-5 py-8 lg:grid-cols-12 lg:gap-10">
                     <div className="lg:col-span-4">
                       <div className="flex items-center gap-3">
                         <span className="font-mono text-xs text-orange-400">{chapter.index}</span>
@@ -291,11 +291,11 @@ export default function KongaCaseStudyPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-16 md:px-8 md:py-24" aria-labelledby="payout-design-title">
+        <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24" aria-labelledby="payout-design-title">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
             <div className="lg:col-span-4">
               <p className="font-mono text-xs uppercase text-orange-400">Technical design 03</p>
-              <h2 id="payout-design-title" className="mt-3 text-3xl font-extrabold text-slate-100">Bounded payout execution.</h2>
+              <h2 id="payout-design-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Bounded payout execution.</h2>
               <p className="mt-4 text-sm leading-7 text-slate-400">The optimization treated throughput and database stability as one design constraint. Smaller resumable units reduced broad scans and made load easier to control.</p>
               <div className="mt-7 border-l border-amber-900/60 pl-5">
                 <Gauge className="h-5 w-5 text-orange-400" aria-hidden="true" />
@@ -320,7 +320,7 @@ export default function KongaCaseStudyPage() {
         </section>
 
         <section className="border-t border-slate-900">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-5 py-14 md:px-8 lg:grid-cols-12">
+          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-7 px-4 py-12 md:px-8 md:py-14 lg:grid-cols-12">
             <div className="lg:col-span-7">
               <p className="font-mono text-xs uppercase text-orange-400">Confidentiality</p>
               <h2 className="mt-3 text-2xl font-bold text-slate-100">Technical depth without exposing private systems.</h2>

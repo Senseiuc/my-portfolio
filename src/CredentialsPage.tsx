@@ -67,21 +67,21 @@ export default function CredentialsPage() {
         </div>
       </header>
 
-      <main id="credentials-list" tabIndex={-1} className="relative z-10 max-w-5xl mx-auto px-4 py-10 md:py-16">
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 border-b border-amber-950/60 pb-10 md:pb-14">
-          <div className="md:col-span-2">
-            <img src="/senseiuc-section-certificate.png" alt="Senseiuc mascot holding a certificate" width="512" height="512" className="mascot mascot--celebrate w-32 sm:w-40 object-contain" />
+      <main id="credentials-list" tabIndex={-1} className="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-16">
+        <section className="relative grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 border-b border-amber-950/60 pb-8 md:pb-14">
+          <div className="absolute right-0 top-0 md:static md:col-span-2">
+            <img src="/senseiuc-section-certificate.png" alt="Senseiuc mascot holding a certificate" width="512" height="512" className="mascot mascot--celebrate w-20 sm:w-24 md:w-40 object-contain" />
           </div>
-          <div className="md:col-span-10">
+          <div className="pr-20 sm:pr-24 md:col-span-10 md:pr-0">
             <p className="font-mono text-xs uppercase text-orange-400">Licenses & certifications</p>
-            <h1 className="mt-3 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Structured learning,<br />applied in production.</h1>
+            <h1 className="mt-3 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Structured learning,<br />applied in production.</h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300">
               Formal training across web foundations, Python data access, Django applications, automation, version control, and backend software engineering.
             </p>
           </div>
         </section>
 
-        <section className="py-10 md:py-14 border-y border-slate-800 divide-y divide-slate-800">
+        <section className="py-8 md:py-14 border-y border-slate-800 divide-y divide-slate-800">
           {CREDENTIALS.map((credential, index) => (
             <article key={credential.id} className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-7 py-7 first:pt-0 last:pb-0">
               <div className="md:col-span-2 font-mono text-xs text-orange-400">{String(index + 1).padStart(2, '0')} / {credential.issued}</div>

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import EngineRoom from './components/EngineRoom';
 import Logo from './components/Logo';
 
@@ -18,11 +18,10 @@ export default function SystemsPage() {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-6xl px-4 py-10 md:py-16">
+      <main className="relative z-10 mx-auto max-w-6xl px-4 py-8 md:py-16">
         <section className="border-b border-amber-950/60 pb-10 md:pb-14">
-          <a href="/" className="inline-flex min-h-11 items-center gap-2 text-sm text-slate-400 hover:text-orange-400"><ArrowLeft className="h-4 w-4" /> Portfolio</a>
-          <p className="mt-8 font-mono text-xs uppercase text-orange-400">Systems and architecture</p>
-          <h1 className="mt-3 max-w-4xl text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">Follow the decisions through the stack.</h1>
+          <p className="font-mono text-xs uppercase text-orange-400">Systems and architecture</p>
+          <h1 className="mt-3 max-w-4xl text-3xl font-extrabold leading-tight sm:text-5xl md:text-6xl">Follow the decisions through the stack.</h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">Public architecture walkthroughs showing triggers, boundaries, safeguards, technologies, and outcomes without exposing private implementation details.</p>
         </section>
 

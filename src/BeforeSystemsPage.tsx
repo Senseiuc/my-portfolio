@@ -71,11 +71,11 @@ export default function BeforeSystemsPage() {
         </div>
       </header>
 
-      <main id="origin-story" tabIndex={-1} className="relative z-10 max-w-6xl mx-auto px-4 py-10 md:py-16">
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center border-b border-amber-950/60 pb-12 md:pb-16">
+      <main id="origin-story" tabIndex={-1} className="relative z-10 max-w-6xl mx-auto px-4 py-8 md:py-16">
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 items-center border-b border-amber-950/60 pb-10 md:pb-16">
           <div className="lg:col-span-8">
             <p className="font-mono text-xs uppercase text-orange-400">The prequel / 2013 to 2022</p>
-            <h1 className="mt-3 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+            <h1 className="mt-3 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
               Before I built systems,<br /><span className="text-orange-400">I taught people how to solve them.</span>
             </h1>
             <p className="mt-6 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300">
@@ -83,14 +83,14 @@ export default function BeforeSystemsPage() {
             </p>
           </div>
           <div className="lg:col-span-4 flex lg:justify-end">
-            <img src="/gideon_caricature.webp" alt="Caricature of Gideon Nwadialu" width="520" height="520" className="w-48 sm:w-56 lg:w-64 aspect-square object-cover border border-slate-800" />
+            <img src="/gideon_caricature.webp" alt="Caricature of Gideon Nwadialu" width="520" height="520" className="w-32 sm:w-48 lg:w-64 aspect-square object-cover border border-slate-800" />
           </div>
         </section>
 
-        <section className="py-12 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
+        <section className="py-10 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-24">
-              <img src="/senseiuc-section-teaching.png" alt="Senseiuc mascot teaching mathematics" width="512" height="512" className="mascot mascot--inspect w-36 object-contain" />
+              <img src="/senseiuc-section-teaching.png" alt="Senseiuc mascot teaching mathematics" width="512" height="512" className="mascot mascot--inspect w-24 md:w-36 object-contain" />
               <p className="mt-4 font-mono text-xs uppercase text-orange-400">Chapter one</p>
               <h2 className="mt-2 text-3xl font-extrabold">The classroom years</h2>
               <p className="mt-4 text-sm leading-relaxed text-slate-400">Teaching sharpened the skills I still use in engineering: clarity, patience, structure, feedback, and knowing when a problem needs a different explanation.</p>

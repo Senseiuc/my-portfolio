@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ArrowLeft, Music2, Quote } from 'lucide-react';
+import { Music2, Quote } from 'lucide-react';
 import Logo from './components/Logo';
 import Mascot from './components/Mascot';
 
@@ -25,11 +25,10 @@ export default function LifePage() {
         </div>
       </header>
 
-      <main className="relative z-10 mx-auto max-w-5xl px-4 py-10 md:py-16">
+      <main className="relative z-10 mx-auto max-w-5xl px-4 py-8 md:py-16">
         <section className="border-b border-amber-950/60 pb-10 md:pb-14">
-          <a href="/" className="inline-flex min-h-11 items-center gap-2 text-sm text-slate-400 hover:text-orange-400"><ArrowLeft className="h-4 w-4" /> Portfolio</a>
-          <p className="mt-8 font-mono text-xs uppercase text-orange-400">Life outside code</p>
-          <h1 className="mt-3 max-w-3xl text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">The things that keep me curious.</h1>
+          <p className="font-mono text-xs uppercase text-orange-400">Life outside code</p>
+          <h1 className="mt-3 max-w-3xl text-3xl font-extrabold leading-tight sm:text-5xl md:text-6xl">The things that keep me curious.</h1>
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-400">Engineering is a large part of my life, not the whole of it. Strategy, movement, language, stories, music, and people keep the rest interesting.</p>
         </section>
 

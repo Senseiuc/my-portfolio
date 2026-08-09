@@ -39,11 +39,11 @@ export default function WorkPage() {
         </div>
       </header>
 
-      <main id="work-archive" tabIndex={-1} className="relative z-10 max-w-6xl mx-auto px-4 py-10 md:py-16">
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 border-b border-amber-950/60 pb-10 md:pb-14">
+      <main id="work-archive" tabIndex={-1} className="relative z-10 max-w-6xl mx-auto px-4 py-8 md:py-16">
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 border-b border-amber-950/60 pb-8 md:pb-14">
           <div className="lg:col-span-8">
             <p className="font-mono text-xs uppercase text-orange-400">Selected systems / 2020 to now</p>
-            <h1 className="mt-3 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Work that spans the whole stack.</h1>
+            <h1 className="mt-3 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Work that spans the whole stack.</h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300">
               Production systems delivered across interfaces, mobile clients, APIs, financial ledgers, data migrations, integrations, testing, infrastructure, and ongoing operations.
             </p>
@@ -63,7 +63,7 @@ export default function WorkPage() {
           </div>
         </section>
 
-        <section className="py-10 md:py-14 border-b border-slate-800">
+        <section className="py-8 md:py-14 border-b border-slate-800">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:items-center">
             <div className="md:col-span-3">
               <span className="font-mono text-[11px] uppercase font-bold text-orange-400">Flagship case study</span>
@@ -80,7 +80,7 @@ export default function WorkPage() {
           </div>
         </section>
 
-        <section className="py-10 md:py-14">
+        <section className="py-8 md:py-14">
           <div className="flex items-center gap-3 mb-8">
             <Layers3 className="w-5 h-5 text-orange-400" />
             <div>

@@ -87,19 +87,19 @@ export default function LeadershipPage() {
         </div>
       </header>
 
-      <main id="leadership-timeline" tabIndex={-1} className="relative z-10 max-w-5xl mx-auto px-4 py-10 md:py-16">
-        <section className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end border-b border-amber-950/60 pb-10 md:pb-14">
+      <main id="leadership-timeline" tabIndex={-1} className="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-16">
+        <section className="relative grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-end border-b border-amber-950/60 pb-8 md:pb-14">
           <div className="md:col-span-9">
             <p className="font-mono text-xs uppercase text-orange-400">Leadership / mentorship / service</p>
-            <h1 className="mt-3 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Leadership is making<br /><span className="text-orange-400">other people stronger.</span></h1>
+            <h1 className="mt-3 pr-16 text-3xl sm:pr-0 sm:text-5xl md:text-6xl font-extrabold leading-tight">Leadership is making<br /><span className="text-orange-400">other people stronger.</span></h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300">From mathematics tutorials to community events and technology outreach, these roles taught me to organize clearly, listen closely, delegate thoughtfully, and contribute alongside the people I lead.</p>
           </div>
-          <div className="md:col-span-3 md:flex md:justify-end">
-            <Mascot variant="partner" label="Leadership and collaboration mascot" motion="float" className="w-32 sm:w-40" />
+          <div className="absolute right-0 top-0 md:static md:col-span-3 md:flex md:justify-end">
+            <Mascot variant="partner" label="Leadership and collaboration mascot" motion="float" className="w-16 sm:w-24 md:w-40" />
           </div>
         </section>
 
-        <section className="py-10 md:py-14 grid grid-cols-1 md:grid-cols-3 gap-5 border-b border-slate-800">
+        <section className="py-8 md:py-14 grid grid-cols-3 gap-3 md:gap-5 border-b border-slate-800">
           {[
             [Users, '300+', 'Talent-event audience'],
             [HeartHandshake, '50%', 'Weekly attendance growth'],
@@ -108,8 +108,8 @@ export default function LeadershipPage() {
             const MetricIcon = Icon as typeof Users;
             return (
               <div key={String(label)} className="border-l border-orange-500 pl-4">
-                <MetricIcon className="w-5 h-5 text-orange-400" />
-                <p className="mt-3 text-3xl font-extrabold">{String(value)}</p>
+                <MetricIcon className="w-4 h-4 text-orange-400 md:w-5 md:h-5" />
+                <p className="mt-2 text-xl font-extrabold md:mt-3 md:text-3xl">{String(value)}</p>
                 <p className="mt-1 text-xs font-mono text-slate-500">{String(label)}</p>
               </div>
             );

@@ -278,6 +278,68 @@
       background: #2563eb;
     }
 
+    @media screen and (max-width: 700px) {
+      body {
+        background: #ffffff;
+      }
+
+      .print-banner {
+        margin: 0;
+        max-width: none;
+        border-radius: 0;
+        gap: 12px;
+        padding: 10px 12px;
+        font-size: 10px;
+      }
+
+      .print-button {
+        flex: 0 0 auto;
+      }
+
+      .resume-container {
+        width: 100%;
+        margin: 0;
+        box-shadow: none;
+      }
+
+      .page {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        min-height: 0;
+        overflow: visible;
+        page-break-after: auto;
+      }
+
+      .sidebar,
+      .main-content {
+        width: 100%;
+        padding: 24px 18px;
+      }
+
+      .sidebar {
+        order: 2;
+        gap: 20px;
+      }
+
+      .main-content {
+        order: 1;
+        gap: 18px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .subtitle {
+        line-height: 1.5;
+      }
+
+      .job-header {
+        gap: 8px;
+      }
+    }
+
     /* Print styling overrides */
     @media print {
       @page {
@@ -409,7 +471,7 @@
         <div>
           <h2>Profile</h2>
           <p class="profile-text">
-            Senior Full-Stack Engineer specializing in backend systems, APIs, payment infrastructure, and platform integrations across e-commerce, logistics, financial services, education, and institutional platforms. Experienced with PHP/Laravel, Node.js/NestJS, Python/FastAPI, React/Next.js, Flutter, queues, and containerized operations. Proven track record delivering high-volume merchant workflows, logistics booking engines, multi-wallet ledger cores, and LangGraph-driven AI agents.
+            Product Engineer delivering applications across web, mobile, backend services, data, deployment, and production operations, with deep expertise in APIs, payment infrastructure, and platform integrations. Experienced with PHP/Laravel, Node.js/NestJS, Python/FastAPI, React/Next.js, Flutter, queues, and containerized operations. Proven track record delivering high-volume merchant workflows, logistics booking engines, multi-wallet ledger cores, and LangGraph-driven AI agents.
           </p>
         </div>
 
