@@ -571,7 +571,7 @@ export default function App() {
               className="inline-flex items-center gap-2 border-l-2 border-orange-500 pl-3"
             >
               <Cpu className="w-4 h-4 text-orange-400" />
-              <span className="font-mono text-xs text-orange-300 uppercase tracking-wider font-bold">Web / mobile / backend / delivery</span>
+              <span className="font-mono text-xs text-orange-300 uppercase tracking-wider font-bold">Product engineer / interface to infrastructure</span>
             </motion.div>
 
             <motion.h1 
@@ -590,7 +590,7 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-slate-300 text-base md:text-lg max-w-2xl leading-relaxed font-sans"
             >
-              I’m Gideon Nwadialu, an end-to-end application engineer. I take products from interface and mobile experience through APIs, data, infrastructure, deployment, and production support, with particular depth in payments and complex integrations.
+              I’m Gideon Nwadialu, a Product Engineer with deep backend expertise. I take products from interface and mobile experience through APIs, data, infrastructure, deployment, and production support, with particular depth in payments and complex integrations.
             </motion.p>
 
             <motion.dl
