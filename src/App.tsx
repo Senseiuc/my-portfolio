@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Terminal as TerminalIcon, 
@@ -9,17 +9,20 @@ import {
   Linkedin, 
   Gitlab,
   Briefcase, 
-  Award, 
   Calendar,
   Send,
-  CheckCircle2
+  CheckCircle2,
+  ArrowRight,
+  FileText
 } from 'lucide-react';
-import Terminal from './components/Terminal';
-import MetricsMonitor from './components/MetricsMonitor';
 import EngineRoom from './components/EngineRoom';
-import GitStats from './components/GitStats';
 import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
+import Mascot from './components/Mascot';
+
+const Terminal = lazy(() => import('./components/Terminal'));
+const MetricsMonitor = lazy(() => import('./components/MetricsMonitor'));
+const GitStats = lazy(() => import('./components/GitStats'));
 
 const PROJECTS = [
   {
@@ -106,6 +109,15 @@ const PROJECTS = [
     details: {
       url: null,
       system: 'Distributed Microservices Logistics System',
+      role: 'System architect and backend engineer across four independently versioned Laravel services.',
+      constraints: 'Independent service ownership, duplicate payment callbacks, concurrent wallet mutations, and multi-leg journey discovery.',
+      architecture: ['Auth', 'Companies + route graph', 'Payments', 'Transport + escrow ledger'],
+      evidence: [
+        '4 local service repositories inspected',
+        '20 tests and 45 migrations in the companies service',
+        'Row locks, reference idempotency, and 5-attempt transaction retries verified in WalletService',
+        'Precomputed route graph with bounded path search and all-pairs shortest paths verified in RouteGraphService'
+      ],
       contributions: [
         'Microservices Architecture: Designed and deployed the system across four independent Laravel microservices (Auth, Companies, Payments, and Transport Services) running containerized in Docker.',
         'Escrow Wallet Ledger: Programmed secure transaction wallets in the transport service utilizing lockForUpdate row locks inside database transactions to eliminate race conditions, with 5-stage deadlock retries.',
@@ -199,9 +211,26 @@ const PROJECTS = [
     hoverText: 'group-hover:text-yellow-400',
     accentColor: 'text-yellow-400',
     link: 'https://cargo.sabrecwa.com/',
+    links: [
+      { label: 'Transglobal platform', url: 'https://transglobal.africa/' },
+      { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
+    ],
     details: {
       url: 'https://transglobal.africa/',
+      links: [
+        { label: 'Transglobal platform', url: 'https://transglobal.africa/' },
+        { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
+      ],
       system: 'Logistics Sabre Integration API & Booking Hub',
+      role: 'Full-stack architect and implementation owner across the Transglobal API hub and customer-facing Cargo portal.',
+      constraints: 'Partner tariff matrices changed independently, payment providers required different handshakes, and shipment state had to remain consistent across systems.',
+      architecture: ['Sabre tariff import', 'Transglobal API hub', 'Cargo booking portal', 'SeerBit + shipment sync'],
+      evidence: [
+        '2 local product repositories inspected',
+        '45 tests and 57 migrations across Transglobal Backyard and Cargo',
+        'Custom tariff overrides, commission calculations, shipment tracking, and provider interfaces verified in source',
+        'Recent implementation trail includes self-healing tariff imports and migration to a single SeerBit provider'
+      ],
       contributions: [
         'Full-Stack Architecture: Engineered both the Transglobal API hub and Cargo shipping portal from scratch, designing database schemas, multi-tenant referral models, and admin/customer dashboards.',
         'Paystack DVA Gateway: Integrated Paystack dedicated virtual bank accounts (test-bank) linked to customer codes, implementing self-healing name-splitting (first/last name split fallback) and auto-retries to bypass API validation errors.',
@@ -220,41 +249,258 @@ const PROJECTS = [
         '5d01dd3 feat: complete automated webhook syncing & waybill PDF dispatch (cargo)'
       ]
     }
+  },
+  {
+    id: 'ansar-ud-deen',
+    number: '07',
+    category: 'Digital Modernization',
+    title: 'Ansar-Ud-Deen Digital Platform',
+    shortDesc: 'A society-wide digital platform spanning a NestJS API, Next.js website and CMS, Flutter mobile app, donation workflows, queued communications, and production operations.',
+    tags: ['NestJS', 'Next.js', 'Flutter', 'PostgreSQL'],
+    borderColor: 'hover:border-green-500/30',
+    hoverText: 'group-hover:text-green-400',
+    accentColor: 'text-green-400',
+    link: null,
+    details: {
+      url: null,
+      system: 'Ansar-Ud-Deen Society Digital Platform',
+      role: 'Platform engineer modernizing the society website, administration workflows, API platform, and member-facing mobile experience.',
+      constraints: 'A public-facing institution needed one governed content source, dependable donation and communication flows, and deployable web and mobile clients without disrupting existing operations.',
+      architecture: ['Next.js web + CMS', 'NestJS API', 'PostgreSQL + Redis queues', 'Flutter mobile client'],
+      evidence: [
+        '154 commits in the local monorepo',
+        'Docker Compose targets for development, staging, and production',
+        'Prisma migrations, Redis-backed BullMQ jobs, Sentry instrumentation, and operational runbooks verified locally',
+        'Web, API, and mobile applications maintained in one governed repository'
+      ],
+      contributions: [
+        'Platform Modernization: Structured a shared digital platform across a Next.js public site and CMS, NestJS backend, and Flutter mobile application.',
+        'Content Delivery: Built API-managed news, events, leadership, branch, and media content with cache invalidation and Cloudinary-backed assets.',
+        'Donation Infrastructure: Implemented donation verification and webhook-ready payment flows with Paystack configuration boundaries.',
+        'Queued Communications: Integrated Redis and BullMQ foundations for email, SMS, and push-notification workloads.',
+        'Operational Readiness: Added containerized staging targets, database migration discipline, monitoring hooks, backup guidance, and recovery runbooks.',
+        'Mobile Delivery: Hardened Firebase initialization and iOS deployment configuration for a reliable cross-platform client startup path.'
+      ],
+      commits: [
+        'ef47225 fix(mobile): safe Firebase init and iOS deployment target setup',
+        'fbc642f chore: restore authentication guards after leadership seeding',
+        '91fae82 feat: add admin endpoint for Cloudinary leadership records',
+        'ae415ef fix: clear Redis keys during container seed startup',
+        '740fb63 fix: flexible leadership matching and cache invalidation'
+      ]
+    }
+  },
+  {
+    id: 'visitor-management',
+    number: '08',
+    category: 'Workplace Operations',
+    title: 'Visitor Management System',
+    shortDesc: 'A multi-location visitor and staff check-in platform with approval workflows, role-based administration, duplicate-entry protection, privacy controls, and SMS/email notifications.',
+    tags: ['Laravel', 'Filament', 'Termii', 'Cloudinary'],
+    borderColor: 'hover:border-cyan-500/30',
+    hoverText: 'group-hover:text-cyan-400',
+    accentColor: 'text-cyan-400',
+    link: 'https://fcmbvms.visitors.com.ng',
+    details: {
+      url: 'https://fcmbvms.visitors.com.ng',
+      system: 'Multi-Location Visitor Management System',
+      role: 'Full-stack engineer responsible for self-service check-in, staff workflows, administration controls, and notification delivery.',
+      constraints: 'Reception teams needed fast identity lookup and location-aware check-in while preventing duplicate visits and preserving consent, privacy, and role boundaries.',
+      architecture: ['Location QR entry', 'Visitor + staff check-in', 'Approval and access rules', 'Email + SMS notifications'],
+      evidence: [
+        '23 commits in the local repository',
+        'Visitor and staff check-in routes, approval flows, and duplicate-check protection verified in source',
+        'Role presets cover superadmin, admin, receptionist, and staff access levels',
+        'Termii SMS, email notifications, Cloudinary fallback storage, CAPTCHA, and consent controls implemented'
+      ],
+      contributions: [
+        'Self-Service Check-In: Built location-specific QR entry, visitor lookup, registration, staff selection, and successful-arrival workflows.',
+        'Duplicate Protection: Prevented pending or active duplicate check-ins and enforced required host information before admission.',
+        'Staff Operations: Added staff attendance check-in and checkout alongside visitor approval and reception workflows.',
+        'Access Governance: Defined role and permission presets for superadmins, administrators, receptionists, and staff users.',
+        'Notification Delivery: Connected email and Termii SMS alerts to visitor arrival events and host notifications.',
+        'Privacy Controls: Added consent-aware check-in, an institutional privacy notice, cookie controls, CAPTCHA, and optional visitor photography.'
+      ],
+      commits: [
+        'c8ff7c24 feat: staff checkout workflow',
+        '72bfc401 fix: block pending duplicate check-ins and require staff visited',
+        'b46b036c feat: privacy notice and branded cookie banner',
+        '904c05fc feat: staff approval, mandatory consent, and optional photos',
+        '76d4869c fix: CAPTCHA and visitor search handling'
+      ]
+    }
+  },
+  {
+    id: 'shipwize',
+    number: '09',
+    category: 'Delivery Logistics',
+    title: 'Shipwize',
+    shortDesc: 'A shipment booking and tracking platform combining delivery pricing, Flutterwave payments, confirmation codes, operational dashboards, commissions, and Termii SMS updates.',
+    tags: ['Laravel', 'Livewire', 'Flutterwave', 'Termii'],
+    borderColor: 'hover:border-blue-500/30',
+    hoverText: 'group-hover:text-blue-400',
+    accentColor: 'text-blue-400',
+    link: 'https://shipwize.ng/',
+    details: {
+      url: 'https://shipwize.ng/',
+      system: 'Shipwize Booking, Payment, and Tracking Platform',
+      role: 'Full-stack engineer implementing the shipment lifecycle from booking and payment through tracking and delivery confirmation.',
+      constraints: 'Customers and operators needed one reliable workflow connecting shipment pricing, online payment verification, status updates, collection security, and outbound communication.',
+      architecture: ['Shipment booking', 'Flutterwave verification', 'Tracking timeline', 'Termii delivery alerts'],
+      evidence: [
+        '91 commits in the local repository',
+        'Shipment, tracking update, payout, commission, and sales domains verified in source',
+        'Flutterwave initialization and callback verification implemented for shipment payments',
+        'Termii messaging and delivery confirmation codes connected to the order lifecycle'
+      ],
+      contributions: [
+        'Shipment Lifecycle: Built customer booking, operational shipment management, unique tracking numbers, and public delivery-status lookup.',
+        'Payment Verification: Integrated Flutterwave checkout initialization and callback verification against shipment records.',
+        'Collection Security: Generated delivery confirmation codes and connected them to post-payment customer messages.',
+        'Tracking Operations: Implemented timestamped tracking updates and customer-facing origin-to-destination progress views.',
+        'SMS Automation: Integrated Termii notifications for order confirmation and delivery communication.',
+        'Commercial Controls: Added commission, payout, sales, and team-oriented administrative workflows.'
+      ],
+      commits: [
+        '5f312cc4 feat: Termii messaging integration',
+        '90e0aae6 fix: SMS delivery handling',
+        'e432eecf update: customer shipment message flow',
+        '5973dc12 update: logistics workflow changes',
+        'Local implementation trail includes shipment tracking, Flutterwave callbacks, and commission controls'
+      ]
+    }
   }
+];
+
+const KONGA_CASE_STUDY = {
+  id: 'konga-payouts',
+  number: '01',
+  category: 'Commerce Infrastructure',
+  title: 'Konga Merchant Payout Engine',
+  shortDesc: 'Refactored a high-volume payout workflow to release merchant funds faster without trading speed for database stability.',
+  tags: ['PHP', 'MySQL', 'Batch Processing'],
+  borderColor: 'hover:border-orange-500/30',
+  hoverText: 'group-hover:text-orange-400',
+  accentColor: 'text-orange-400',
+  link: null,
+  details: {
+    url: null,
+    system: 'High-Volume Merchant Payout Infrastructure',
+    role: 'Backend engineer responsible for payout throughput, synchronization workers, and production database stability.',
+    constraints: 'Enterprise source is proprietary; the public case study must preserve implementation confidentiality and omit customer data.',
+    architecture: ['Payout cursor', '500-record batches', 'Paced worker execution', 'Merchant ledger release'],
+    evidence: [
+      'Reported production outcome: payout execution time reduced by half',
+      'Reported implementation: cursor offsets, bounded 500-record batches, and paced execution',
+      'Evidence basis: professional work record; proprietary repository is not stored locally'
+    ],
+    contributions: [
+      'Operational Problem: Large payout runs produced database pressure and delayed merchant fund releases.',
+      'Batch Strategy: Reworked processing around cursor offsets and bounded groups of 500 records instead of broad scans.',
+      'Load Control: Introduced controlled microsecond delays between batches to smooth CPU and database demand.',
+      'Recovery Path: Strengthened synchronization daemons and failure handling around payout and catalog workflows.',
+      'Outcome: Cut payout execution time in half while eliminating the locking spikes observed in the previous flow.'
+    ],
+    commits: [
+      'Production work completed within Konga enterprise repositories.',
+      'Implementation details are summarized without exposing proprietary source code.'
+    ]
+  }
+};
+
+const FLAGSHIP_CASE_STUDIES = [
+  {
+    project: KONGA_CASE_STUDY,
+    mascot: 'ledger' as const,
+    index: '01',
+    context: 'Konga / production commerce',
+    problem: 'Merchant payout batches were slow and generated database locking pressure during high-volume execution.',
+    decision: 'Process bounded cursor batches of 500 records, pace the workload, and strengthen daemon recovery paths.',
+    outcome: '2x faster payouts',
+    outcomeNote: 'reported production result; proprietary source withheld',
+    evidence: ['500-record batches', 'Cursor pagination', 'Paced execution'],
+  },
+  {
+    project: PROJECTS.find((project) => project.id === 'transglobal')!,
+    mascot: 'integrate' as const,
+    index: '02',
+    context: 'Transglobal x Sabre / logistics',
+    problem: 'Shipping quotes, tariff matrices, customer accounts, and payment providers lived across disconnected systems.',
+    decision: 'Build one Laravel integration hub with tariff seeders, signed webhooks, DVA provisioning, and gateway fallbacks.',
+    outcome: 'One integration hub',
+    outcomeNote: 'from global tariff import to payment confirmation',
+    evidence: ['2 repositories', '45 tests', '57 migrations'],
+  },
+  {
+    project: PROJECTS.find((project) => project.id === 'tripease')!,
+    mascot: 'architect' as const,
+    index: '03',
+    context: 'TripEase / distributed transit',
+    problem: 'Booking, fleet operations, payments, and identity needed independent ownership without risking duplicate wallet actions.',
+    decision: 'Split four containerized services and protect the ledger with row locks, idempotency keys, and deadlock retries.',
+    outcome: '4 bounded services',
+    outcomeNote: 'with concurrency-safe escrow operations',
+    evidence: ['4 repositories', '20 company tests', '5 retry attempts'],
+  },
 ];
 
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [telemetryOpen, setTelemetryOpen] = useState(false);
 
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
-  const [modalStage, setModalStage] = useState<'idle' | 'loading' | 'done'>('idle');
-  const [loadingLogs, setLoadingLogs] = useState<string[]>([]);
+  const projectDialogRef = useRef<HTMLDivElement>(null);
+  const projectTriggerRef = useRef<HTMLElement | null>(null);
 
-  const handleOpenProjectDetails = (project: any) => {
+  const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
+    projectTriggerRef.current = trigger;
     setSelectedProject(project);
-    setModalStage('loading');
-    setLoadingLogs([]);
-    
-    const logs = [
-      'Establishing secure connection to telemetry...',
-      'Spinning up dynamic logging pod on node vps-01...',
-      'Binding virtual directory stream channels...',
-      'Querying SQLite cache for git transaction log index...',
-      'Telemetry stream stabilized. Decoding repository packets...'
-    ];
-    
-    logs.forEach((log, index) => {
-      setTimeout(() => {
-        setLoadingLogs(prev => [...prev, `[system-daemon] ${log}`]);
-      }, (index + 1) * 450);
-    });
-    
-    setTimeout(() => {
-      setModalStage('done');
-    }, logs.length * 450 + 200);
   };
+
+  const closeProjectDetails = () => setSelectedProject(null);
+
+  useEffect(() => {
+    if (!selectedProject) return;
+
+    const dialog = projectDialogRef.current;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const focusable = () => Array.from(dialog?.querySelectorAll<HTMLElement>(focusableSelector) ?? []);
+    requestAnimationFrame(() => focusable()[0]?.focus());
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeProjectDetails();
+        return;
+      }
+
+      if (event.key !== 'Tab') return;
+      const items = focusable();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      projectTriggerRef.current?.focus();
+    };
+  }, [selectedProject]);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -285,159 +531,335 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#0a0806] text-slate-100 font-sans relative selection:bg-orange-500/30 selection:text-orange-200">
+      <a href="#main-content" className="skip-link">Skip to main content</a>
       
-      {/* Background Glows */}
-      <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-orange-500/8 rounded-full blur-[120px] glow-bg" />
-        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-600/8 rounded-full blur-[120px] glow-bg" style={{ animationDelay: '-5s' }} />
-      </div>
+      <div className="systems-grid fixed inset-0 pointer-events-none z-0" aria-hidden="true" />
 
-      {/* Floating Navbar */}
-      <header className="sticky top-0 z-50 w-full bg-[#0a0806]/70 backdrop-blur-md border-b border-amber-950/40">
+      <header className="sticky top-0 z-50 w-full bg-[#0a0806]/92 backdrop-blur-md border-b border-amber-950/40">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+          <a href="#about" className="flex items-center gap-2" aria-label="Gideon Nwadialu, back to introduction">
             <Logo className="w-8 h-8" />
-            <span className="font-mono text-sm font-bold text-slate-100 uppercase tracking-widest">
+            <span className="font-mono text-sm font-bold text-slate-100 uppercase tracking-wider">
               GIDEON <span className="text-orange-400">NWADIALU</span>
             </span>
-          </div>
+          </a>
 
-          <nav className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-400">
-            <a href="#about" className="hover:text-orange-400 transition-colors">/about</a>
-            <a href="#competencies" className="hover:text-orange-400 transition-colors">/skills</a>
-            <a href="#study" className="hover:text-orange-400 transition-colors">/study</a>
-            <a href="#engine-room" className="hover:text-orange-400 transition-colors">/engine-room</a>
-            <a href="#projects" className="hover:text-orange-400 transition-colors">/projects</a>
-            <a href="#terminal" className="hover:text-orange-400 transition-colors">/terminal</a>
-            <a href="#experience" className="hover:text-orange-400 transition-colors">/experience</a>
-            <a href="#contact" className="hover:text-orange-400 transition-colors">/contact</a>
+          <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-400">
+            <a href="#projects" className="hover:text-orange-400 transition-colors">Selected work</a>
+            <a href="#engine-room" className="hover:text-orange-400 transition-colors">Engine room</a>
+            <a href="#experience" className="hover:text-orange-400 transition-colors">Experience</a>
+            <a href="#contact" className="text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
           </nav>
         </div>
       </header>
 
       {/* Main Container */}
-      <main className="max-w-6xl mx-auto px-4 py-8 relative z-10 space-y-20">
+      <main id="main-content" tabIndex={-1} className="max-w-6xl mx-auto px-4 py-8 relative z-10 space-y-20">
 
         {/* HERO SECTION */}
-        <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center min-h-[75vh]">
+        <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center min-h-[72vh] py-10 md:py-14">
           {/* Intro Text */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-7">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 py-1 bg-orange-500/10 border border-orange-500/20 rounded-full"
+              className="inline-flex items-center gap-2 border-l-2 border-orange-500 pl-3"
             >
-              <Cpu className="w-3.5 h-3.5 text-orange-400 animate-spin" />
-              <span className="font-mono text-[10px] text-orange-400 uppercase tracking-wider font-bold">Systems Architect & Developer</span>
+              <Cpu className="w-4 h-4 text-orange-400" />
+              <span className="font-mono text-xs text-orange-300 uppercase tracking-wider font-bold">Backend systems / payments / integrations</span>
             </motion.div>
 
             <motion.h1 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-6xl font-extrabold text-slate-100 tracking-tight"
+              className="text-5xl md:text-7xl font-extrabold text-slate-100 leading-[0.96]"
             >
-              Nwadialu <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-500 to-yellow-500">Gideon</span>
+              I build the systems<br />
+              <span className="text-orange-400">behind the transaction.</span>
             </motion.h1>
 
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-slate-400 text-sm md:text-base max-w-xl leading-relaxed font-sans"
+              className="text-slate-300 text-base md:text-lg max-w-2xl leading-relaxed font-sans"
             >
-              Fullstack & Systems Integration Engineer specializing in high-performance backends, secure payment ledgers, automated synchronization systems, and DevOps orchestrations. Experienced in managing legacy refactoring, Kubernetes environments, and speech-enabled AI state agents.
+              I’m Gideon Nwadialu, a full-stack engineer focused on payment ledgers, high-volume backend workflows, and the integrations that keep products moving when the happy path ends.
             </motion.p>
+
+            <motion.dl
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.25 }}
+              className="grid grid-cols-3 border-y border-amber-950/60 py-4 max-w-2xl"
+            >
+              <div>
+                <dt className="font-mono text-[11px] uppercase text-slate-500">Payout speed</dt>
+                <dd className="mt-1 text-xl font-bold text-slate-100">2x faster</dd>
+              </div>
+              <div className="border-l border-amber-950/60 pl-4">
+                <dt className="font-mono text-[11px] uppercase text-slate-500">Records moved</dt>
+                <dd className="mt-1 text-xl font-bold text-slate-100">100k+</dd>
+              </div>
+              <div className="border-l border-amber-950/60 pl-4">
+                <dt className="font-mono text-[11px] uppercase text-slate-500">Core focus</dt>
+                <dd className="mt-1 text-xl font-bold text-slate-100">Reliability</dd>
+              </div>
+            </motion.dl>
 
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex items-center gap-4 pt-2"
+              className="flex flex-wrap items-center gap-3 pt-1"
             >
-              <a href="mailto:nwadialugideon@gmail.com" className="px-5 py-2 bg-gradient-to-r from-orange-500 to-amber-600 hover:from-orange-400 hover:to-amber-500 text-slate-900 rounded font-semibold text-xs transition-colors flex items-center gap-2 shadow-lg cursor-pointer">
-                <Mail className="w-3.5 h-3.5" />
-                Contact Gideon
+              <a href="#projects" className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-[#0a0806] rounded font-bold text-sm transition-colors flex items-center gap-2 cursor-pointer">
+                Inspect selected work
+                <ArrowRight className="w-4 h-4" />
               </a>
-              <a href="https://github.com/Senseiuc" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
+              <a href="/resume.html" className="px-4 py-3 border border-slate-700 hover:border-orange-500/60 rounded font-semibold text-sm text-slate-200 transition-colors flex items-center gap-2">
+                <FileText className="w-4 h-4" />
+                Resume
+              </a>
+              <a aria-label="GitHub profile" href="https://github.com/Senseiuc" target="_blank" rel="noopener noreferrer" className="p-3 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
                 <Github className="w-4 h-4" />
               </a>
-              <a href="https://az-gitlab.igbimo.com/gideon.nwadialu" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
+              <a aria-label="GitLab profile" href="https://az-gitlab.igbimo.com/gideon.nwadialu" target="_blank" rel="noopener noreferrer" className="p-3 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
                 <Gitlab className="w-4 h-4" />
               </a>
-              <a href="https://www.linkedin.com/in/gideonnwadialu/" target="_blank" rel="noopener noreferrer" className="p-2 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
+              <a aria-label="LinkedIn profile" href="https://www.linkedin.com/in/gideonnwadialu/" target="_blank" rel="noopener noreferrer" className="p-3 border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
                 <Linkedin className="w-4 h-4" />
               </a>
             </motion.div>
           </div>
 
-          {/* Profile Logo Card with full-bleed glowing energy video */}
-          <div className="lg:col-span-5 flex flex-col items-center gap-3 w-full max-w-[480px] mx-auto">
+          <div className="lg:col-span-5 w-full max-w-[520px] mx-auto lg:ml-auto">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8 }}
-              className="relative w-full aspect-video rounded-2xl overflow-hidden border border-slate-800 shadow-2xl group"
+              className="w-full overflow-hidden border border-amber-900/40 shadow-2xl bg-[#100d09]"
             >
-              {/* Background glowing energy video filling container */}
-              <video 
-                src="/Bearded_logo_glowing_orange_energy_202607140039.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="absolute inset-0 w-full h-full object-cover z-0"
-              />
+              <div className="aspect-video bg-black">
+                <video
+                  src="/Bearded_logo_glowing_orange_energy_202607140039.mp4"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster="/background-senseiuc-design.webp"
+                  aria-label="Animated Senseiuc chessboard identity"
+                  className="block w-full h-full object-contain"
+                />
+              </div>
+              <div className="border-t border-amber-900/40 p-4 flex items-end justify-between gap-4">
+                <div>
+                  <p className="font-mono text-[10px] uppercase text-orange-400">Senseiuc / systems study 01</p>
+                  <p className="text-sm text-slate-300 mt-1">Strategy translated into dependable software.</p>
+                </div>
+                <span className="font-mono text-[10px] text-slate-500">LAGOS → REMOTE</span>
+              </div>
             </motion.div>
-            
-            {/* Node label positioned below the video container */}
-            <div className="font-mono text-[10px] text-slate-500 text-center uppercase tracking-widest">
-              senseiuc vps-01 node
+          </div>
+        </section>
+
+        <section aria-labelledby="systems-practice-title" className="border-y border-amber-950/50 py-8 md:py-10">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-8">
+            <div>
+              <p className="font-mono text-xs uppercase text-orange-400">The Senseiuc method</p>
+              <h2 id="systems-practice-title" className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100">
+                Three moves behind every reliable system.
+              </h2>
             </div>
+            <p className="max-w-md text-sm leading-relaxed text-slate-400">
+              Understand the money, connect the moving parts, then design for the failure nobody scheduled.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
+            {[
+              {
+                variant: 'ledger' as const,
+                number: '01',
+                title: 'Protect the ledger',
+                copy: 'Treat every payment state, retry, and reconciliation path as an auditable contract.',
+              },
+              {
+                variant: 'integrate' as const,
+                number: '02',
+                title: 'Bridge the systems',
+                copy: 'Make APIs, webhooks, queues, and legacy services agree on one dependable truth.',
+              },
+              {
+                variant: 'architect' as const,
+                number: '03',
+                title: 'Plan beyond happy paths',
+                copy: 'Model locks, failures, recovery, and scale before they become production incidents.',
+              },
+            ].map((item) => (
+              <article key={item.number} className="group grid grid-cols-[112px_1fr] md:block gap-4 items-center md:px-6 first:md:pl-0 last:md:pr-0 md:border-l first:md:border-l-0 border-amber-950/50">
+                <Mascot
+                  variant={item.variant}
+                  label={`${item.title} Senseiuc mascot`}
+                  motion={item.variant === 'architect' ? 'inspect' : 'float'}
+                  className="w-28 md:w-40 mx-auto transition-transform duration-300 group-hover:scale-[1.03]"
+                />
+                <div className="md:mt-4">
+                  <span className="font-mono text-[11px] text-orange-400">MOVE {item.number}</span>
+                  <h3 className="mt-1 text-lg font-bold text-slate-100">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.copy}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="projects" className="space-y-10" aria-labelledby="selected-work-title">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:items-end">
+            <div className="md:col-span-7">
+              <p className="font-mono text-xs uppercase text-orange-400">Selected work / evidence first</p>
+              <h2 id="selected-work-title" className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-100">
+                Systems judged by what happens under pressure.
+              </h2>
+            </div>
+            <p className="md:col-span-5 text-sm md:text-base leading-relaxed text-slate-400">
+              Three projects that show the work from production bottleneck to architecture decision and operational result.
+            </p>
+          </div>
+
+          <div className="divide-y divide-amber-950/50 border-y border-amber-950/50">
+            {FLAGSHIP_CASE_STUDIES.map((story, storyIndex) => (
+              <article
+                key={story.project.id}
+                className="group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 py-10 md:py-14"
+              >
+                <div className={`lg:col-span-3 flex items-center justify-center ${storyIndex % 2 === 1 ? 'lg:order-3' : ''}`}>
+                  <Mascot
+                    variant={story.mascot}
+                    label={`${story.project.title} case study mascot`}
+                    motion={story.mascot === 'architect' ? 'inspect' : 'float'}
+                    className="w-40 md:w-48 transition-transform duration-300 group-hover:scale-[1.025]"
+                  />
+                </div>
+
+                <div className={`lg:col-span-6 ${storyIndex % 2 === 1 ? 'lg:order-2' : ''}`}>
+                  <p className="font-mono text-[11px] uppercase text-slate-500">
+                    Case {story.index} / {story.context}
+                  </p>
+                  <h3 className="mt-3 text-2xl md:text-3xl font-bold text-slate-100">{story.project.title}</h3>
+
+                  <dl className="mt-6 space-y-5">
+                    <div className="grid grid-cols-[76px_1fr] gap-4">
+                      <dt className="font-mono text-[11px] uppercase text-orange-400 pt-0.5">Problem</dt>
+                      <dd className="text-sm leading-relaxed text-slate-300">{story.problem}</dd>
+                    </div>
+                    <div className="grid grid-cols-[76px_1fr] gap-4">
+                      <dt className="font-mono text-[11px] uppercase text-orange-400 pt-0.5">Decision</dt>
+                      <dd className="text-sm leading-relaxed text-slate-300">{story.decision}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-6 border-l border-amber-900/60 pl-4">
+                    <p className="font-mono text-[10px] uppercase text-slate-500">Evidence</p>
+                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5">
+                      {story.evidence.map((item) => (
+                        <li key={item} className="text-xs text-slate-300 before:content-['/'] before:mr-2 before:text-orange-400">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="mt-6 flex flex-wrap items-center gap-2">
+                    {story.project.tags.map((tag) => (
+                      <span key={tag} className="border border-slate-800 px-2.5 py-1 text-[11px] font-mono text-slate-400">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={(event) => handleOpenProjectDetails(story.project, event.currentTarget)}
+                    className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-slate-100 hover:text-orange-400 transition-colors"
+                  >
+                    Read engineering notes
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+
+                <div className={`lg:col-span-3 lg:border-l lg:border-amber-950/50 lg:pl-7 flex flex-col justify-center ${storyIndex % 2 === 1 ? 'lg:order-1 lg:border-l-0 lg:border-r lg:pr-7 lg:pl-0' : ''}`}>
+                  <p className="font-mono text-[11px] uppercase text-slate-500">Outcome</p>
+                  <p className="mt-2 text-2xl md:text-3xl font-extrabold text-orange-400">{story.outcome}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{story.outcomeNote}</p>
+                  <div className="mt-5 flex flex-col items-start gap-2">
+                    {(story.project.links ?? (story.project.link ? [{ label: 'Visit production site', url: story.project.link }] : [])).map((link) => (
+                      <a
+                        key={link.url}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-mono text-slate-300 hover:text-orange-400 transition-colors"
+                      >
+                        {link.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </section>
 
         {/* CORE COMPETENCIES GRID */}
         <section id="competencies" className="space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:items-end">
+            <div className="md:col-span-7">
+              <p className="font-mono text-xs uppercase text-orange-400">Capability board / field tested</p>
+              <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100 flex items-center gap-2">
               <Layers className="w-5 h-5 text-orange-400" />
               Core Competencies
-            </h2>
-            <p className="text-xs text-slate-500 font-mono">/capabilities-matrix.json</p>
+              </h2>
+            </div>
+            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">Capabilities demonstrated through production constraints, not a logo wall.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
-              <span className="font-mono text-[10px] text-orange-400 uppercase font-bold">1. Fintech & Ledger Operations</span>
-              <h3 className="font-bold text-slate-200 text-sm">Escrow Wallet Payouts & Audits</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Optimized billing and payouts updates in backend daemons using cursor offsets in chunked batches of 500 records with microsecond delays, **releasing payments twice as fast and eliminating database locking spikes**.
+          <div className="grid grid-cols-1 md:grid-cols-2 border-y border-slate-800 md:border-x">
+            <div className="relative p-6 pr-28 border-b md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="secure" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">01 / Fintech & Ledger Operations</span>
+              <h3 className="font-bold text-slate-200 text-base">Escrow Wallet Payouts & Audits</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Optimized billing and payout updates in backend daemons using cursor offsets and batches of 500 records, releasing payments twice as fast while eliminating database locking spikes.
               </p>
             </div>
 
-            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
-              <span className="font-mono text-[10px] text-indigo-400 uppercase font-bold">2. Systems Governance</span>
-              <h3 className="font-bold text-slate-200 text-sm">Smart-Sync Deployment Automation</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Engineered custom smart-sync file isolation scripts, **reducing environment sync delivery times by 50%** while preserving staging configuration overrides and local patches.
+            <div className="relative p-6 pr-28 border-b border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="deploy" motion="celebrate" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">02 / Systems Governance</span>
+              <h3 className="font-bold text-slate-200 text-base">Smart-Sync Deployment Automation</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Engineered custom smart-sync file isolation scripts, reducing environment sync delivery time by 50% while preserving staging overrides and local patches.
               </p>
             </div>
 
-            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
-              <span className="font-mono text-[10px] text-emerald-400 uppercase font-bold">3. Microservices Routing</span>
-              <h3 className="font-bold text-slate-200 text-sm">API Gateway Authentication</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Implemented multi-tenant gateways and secure token validation wrappers routing logistics traffic between Laravel microservices, **improving environment setup startup times by 50%**.
+            <div className="relative p-6 pr-28 md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="cloud" motion="float" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">03 / Microservices Routing</span>
+              <h3 className="font-bold text-slate-200 text-base">API Gateway Authentication</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Implemented multi-tenant gateways and secure token validation wrappers between Laravel services, improving environment startup time by 50%.
               </p>
             </div>
 
-            <div className="p-5 border border-slate-800 bg-[#141110]/30 rounded-xl space-y-2 hover:border-slate-700/60 transition-colors">
-              <span className="font-mono text-[10px] text-pink-400 uppercase font-bold">4. DevOps & Compliance</span>
-              <h3 className="font-bold text-slate-200 text-sm">Kubernetes Cluster & KYC Integration</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">
-                Integrated third-party Dojah KYC and computer vision APIs with dynamic token retry wrappers, **blocking 99% of registration spam and resolving critical wallet payout failures**.
+            <div className="relative p-6 pr-28 border-t md:border-t-0 border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="debug" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">04 / DevOps & Compliance</span>
+              <h3 className="font-bold text-slate-200 text-base">Kubernetes Cluster & KYC Integration</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                Integrated Dojah KYC and computer vision APIs with dynamic token retry wrappers, blocking 99% of registration spam and resolving wallet payout failures.
               </p>
             </div>
           </div>
@@ -445,22 +867,26 @@ export default function App() {
 
         {/* SENSEI'S STUDY: LOGIC, MATHEMATICS & CHESS */}
         <section id="study" className="space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <div>
+            <p className="font-mono text-xs uppercase text-orange-400">Personal operating system</p>
+            <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100 flex items-center gap-2">
               <Logo className="w-6 h-6 animate-pulse" animate={false} />
               Sensei's Study: Logic & Strategy
             </h2>
-            <p className="text-xs text-slate-500 font-mono">/logic-core.json</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 p-6 border border-slate-800 bg-[#141110]/20 rounded-xl items-center relative overflow-hidden backdrop-blur-md">
-            <div className="absolute inset-0 z-0 bg-cover bg-center opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url('/background-senseiuc-design.png')" }} />
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 py-8 border-y border-slate-800 items-center relative overflow-hidden">
+            <div className="absolute inset-0 z-0 bg-cover bg-center opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url('/background-senseiuc-design.webp')" }} />
             
             <div className="md:col-span-4 flex justify-center z-10 w-full">
-              <div className="w-full aspect-square max-w-[260px] flex items-center justify-center rounded-xl overflow-hidden border border-slate-800/40 shadow-lg bg-[#141110]/30">
+              <div className="w-full aspect-square max-w-[260px] flex items-center justify-center overflow-hidden border border-slate-800 shadow-lg bg-[#141110]/30">
                 <img 
-                  src="/gideon_caricature.jpg" 
+                  src="/gideon_caricature.webp"
                   alt="Gideon Caricature" 
+                  width="520"
+                  height="520"
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover filter drop-shadow-[0_0_15px_rgba(249,115,22,0.15)]"
                 />
               </div>
@@ -471,7 +897,7 @@ export default function App() {
                 <h3 className="text-slate-200 font-bold text-sm uppercase tracking-wide font-mono text-orange-400">
                   Mathematics & Algorithmic Foundations
                 </h3>
-                <p className="text-slate-400 text-xs leading-relaxed">
+                <p className="text-slate-400 text-sm leading-relaxed">
                   Holding a <strong className="text-slate-200">BSc in Mathematics</strong> from the University of Lagos, Gideon treats software engineering as the application of rigorous proof and quantitative logic. From designing multi-wallet transactional ledger constraints to formulating Redis caching distributions, his mathematical training ensures code is written with absolute correctness and efficiency.
                 </p>
               </div>
@@ -480,12 +906,12 @@ export default function App() {
                 <h3 className="text-slate-200 font-bold text-sm uppercase tracking-wide font-mono text-orange-400">
                   The Chess Philosophy of Systems Design
                 </h3>
-                <p className="text-slate-400 text-xs leading-relaxed">
+                <p className="text-slate-400 text-sm leading-relaxed">
                   An avid chess player, Gideon views system architecture through the lens of strategic board logic. Designing high-throughput payouts and auto-renewal daemons is similar to mapping out lines of play: every command is a calculated move designed to preempt runtime exceptions, mitigate bottlenecks, and secure an optimized endpoint execution path.
                 </p>
               </div>
 
-              <blockquote className="border-l-2 border-orange-500 pl-4 py-1 italic text-slate-400 text-xs font-serif bg-orange-500/5 rounded-r">
+              <blockquote className="border-l-2 border-orange-500 pl-4 py-1 italic text-slate-400 text-sm font-serif bg-orange-500/5">
                 "A robust backend is like a master chess game—invisible in its complexity, absolute in its logic, and executing with flawless precision."
                 <span className="block text-[10px] font-mono text-orange-400 mt-1 uppercase font-bold not-italic">— Sensei's Maxim</span>
               </blockquote>
@@ -498,341 +924,344 @@ export default function App() {
           <EngineRoom />
         </section>
 
-        {/* PROJECTS SHOWCASE */}
-        <section id="projects" className="space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+        {/* SUPPORTING PROJECTS */}
+        <section id="project-archive" className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:items-end">
+            <div className="md:col-span-7">
+              <p className="font-mono text-xs uppercase text-orange-400">Supporting work / broader range</p>
+              <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100 flex items-center gap-2">
               <Briefcase className="w-5 h-5 text-orange-400" />
-              Featured Projects Catalog
-            </h2>
-            <p className="text-xs text-slate-500 font-mono">/active-deployments.json</p>
+              More Systems Shipped
+              </h2>
+            </div>
+            <p className="md:col-span-5 text-sm text-slate-400 leading-relaxed">Additional production and client work across education, care, property, broadcasting, institutional platforms, and logistics.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {PROJECTS.map((project) => (
-              <div 
-                key={project.id} 
-                className={`p-5 border border-amber-950/40 bg-[#141110]/20 rounded-xl space-y-3 ${project.borderColor} transition-colors flex flex-col justify-between group`}
+          <div className="border-y border-slate-800 divide-y divide-slate-800">
+            {PROJECTS.filter((project) => !['tripease', 'transglobal'].includes(project.id)).map((project) => (
+              <article
+                key={project.id}
+                className="group grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 py-6 hover:bg-orange-500/[0.025] transition-colors"
               >
-                <div className="space-y-2">
-                  <span className={`font-mono text-[9px] ${project.accentColor} uppercase font-bold tracking-wider`}>
-                    {project.number}. {project.category}
-                  </span>
-                  <h3 className={`font-bold text-slate-200 text-sm ${project.hoverText} transition-colors`}>
+                <div className="md:col-span-3">
+                  <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">{project.number} / {project.category}</span>
+                  <h3 className="mt-2 font-bold text-slate-100 text-lg group-hover:text-orange-400 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-slate-400 text-[11px] leading-relaxed">
-                    {project.shortDesc}
-                  </p>
                 </div>
-                
-                <div className="space-y-3.5 pt-2">
-                  <div className="flex flex-wrap gap-1.5">
+
+                <p className="md:col-span-6 text-slate-400 text-sm leading-relaxed">{project.shortDesc}</p>
+
+                <div className="md:col-span-3 flex md:flex-col items-start md:items-end justify-between gap-4">
+                  <div className="flex flex-wrap md:justify-end gap-1.5">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="bg-slate-900 px-2 py-0.5 rounded text-[9px] font-mono text-slate-400">
+                      <span key={tag} className="border border-slate-800 px-2 py-0.5 text-[10px] font-mono text-slate-400">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  
-                  <div className="border-t border-amber-950/40/60 pt-2 flex items-center justify-between">
-                    <button 
-                      onClick={() => handleOpenProjectDetails(project)}
-                      className="text-[9px] font-mono text-slate-500 hover:text-slate-100 transition-colors uppercase tracking-widest flex items-center gap-1 group/btn cursor-pointer"
-                    >
-                      View Log Insights
-                      <span className="group-hover/btn:translate-x-0.5 transition-transform font-bold">&gt;</span>
-                    </button>
-                    
-                    {project.link && (
-                      <a 
-                        href={project.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="text-[9px] font-mono text-slate-500 hover:text-orange-400 transition-colors uppercase tracking-widest"
-                      >
-                        Site ↗
-                      </a>
-                    )}
-                  </div>
+                  <button
+                    type="button"
+                    onClick={(event) => handleOpenProjectDetails(project, event.currentTarget)}
+                    className="text-xs font-mono text-slate-300 hover:text-orange-400 transition-colors flex items-center gap-1 cursor-pointer"
+                  >
+                    Engineering notes <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
                 </div>
-              </div>
+              </article>
             ))}
           </div>
         </section>
 
-        {/* METRICS & GIT CONTRIBUTION CALENDARS */}
-        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <MetricsMonitor />
-          <GitStats />
-        </section>
-
-        {/* DEVELOPER TERMINAL CONSOLE */}
-        <section id="terminal" className="space-y-4">
-          <div className="space-y-1">
-            <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
-              <TerminalIcon className="w-5 h-5 text-orange-400" />
-              Interactive Console Shell
-            </h2>
-            <p className="text-xs text-slate-500 font-mono">Type commands directly to query Gideon's database.</p>
-          </div>
-          <Terminal />
+        <section id="terminal">
+          <details
+            className="group border-y border-slate-800 py-6"
+            onToggle={(event) => setTelemetryOpen(event.currentTarget.open)}
+          >
+            <summary className="list-none cursor-pointer flex items-center justify-between gap-6">
+              <div>
+                <p className="font-mono text-xs uppercase text-orange-400">Optional technical appendix</p>
+                <h2 className="mt-2 text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+                  <TerminalIcon className="w-5 h-5 text-orange-400" />
+                  Live Portfolio Telemetry
+                </h2>
+                <p className="mt-2 text-sm text-slate-400">Runtime metrics, contribution data, and an interactive command reference.</p>
+              </div>
+              <span className="font-mono text-xs text-slate-400 group-open:text-orange-400">OPEN +</span>
+            </summary>
+            {telemetryOpen && (
+              <Suspense fallback={<p role="status" className="pt-8 font-mono text-xs text-slate-500">Loading live telemetry...</p>}>
+                <div className="pt-8 space-y-8">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <MetricsMonitor />
+                    <GitStats />
+                  </div>
+                  <Terminal />
+                </div>
+              </Suspense>
+            )}
+          </details>
         </section>
 
         {/* WORK TIMELINE EXPERIENCE */}
         <section id="experience" className="space-y-6">
-          <div className="space-y-1">
-            <h2 className="text-xl md:text-2xl font-extrabold text-slate-100 flex items-center gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:items-end">
+            <div className="md:col-span-7">
+              <p className="font-mono text-xs uppercase text-orange-400">Experience / where the work happened</p>
+              <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100 flex items-center gap-2">
               <Briefcase className="w-5 h-5 text-orange-400" />
               Professional Experience
-            </h2>
-            <p className="text-xs text-slate-500 font-mono">/history.xml</p>
+              </h2>
+            </div>
+            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">Production engineering across commerce, financial platforms, consulting, and care operations.</p>
           </div>
 
-          <div className="relative border-l border-slate-800 pl-4 ml-2 space-y-8 font-mono text-xs">
-            {/* Konga */}
-            <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-orange-400 rounded-full ring-4 ring-[#0a0806]" />
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="font-bold text-sm text-slate-100">Konga — Software Engineer</span>
-                <span className="text-orange-400 flex items-center gap-1 font-semibold text-[10px]">
-                  <Calendar className="w-3 h-3" />
-                  2024 - PRESENT
-                </span>
-              </div>
-              <p className="text-[11px] leading-relaxed text-slate-400">
-                Optimized payouts and escrow releases, patched synchronization daemons, resolved resource locks in high-volume background QoS cron tasks, and managed staging clusters.
-              </p>
-            </div>
-
-            {/* Golden Attic */}
-            <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-indigo-500 rounded-full ring-4 ring-[#0a0806]" />
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="font-bold text-sm text-slate-100">Golden Attic — Senior Full-Stack Engineer (Part-time)</span>
-                <span className="text-indigo-400 flex items-center gap-1 font-semibold text-[10px]">
-                  <Calendar className="w-3 h-3" />
-                  2021 - PRESENT
-                </span>
-              </div>
-              <p className="text-[11px] leading-relaxed text-slate-400">
-                Led platform migration from Laravel 5.8 to 11 with zero data loss, built multi-wallet dual-currency P2P transaction ledgers, and engineered event-driven reward queue processors.
-              </p>
-            </div>
-
-            {/* Freelance */}
-            <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-emerald-500 rounded-full ring-4 ring-[#0a0806]" />
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="font-bold text-sm text-slate-100">Freelance — Full-Stack & DevOps Consultant</span>
-                <span className="text-emerald-400 flex items-center gap-1 font-semibold text-[10px]">
-                  <Calendar className="w-3 h-3" />
-                  2020 - PRESENT
-                </span>
-              </div>
-              <p className="text-[11px] leading-relaxed text-slate-400">
-                Created Sabre Tariff auto-seeders and billing gateways for Transglobal & Cargo; managed FastAPI microservices routing for Lextorah; engineered multi-tenant Visitor Management Systems.
-              </p>
-            </div>
-
-            {/* Xxolcare */}
-            <div className="relative space-y-1.5">
-              <div className="absolute -left-[21px] w-2.5 h-2.5 bg-slate-700 rounded-full ring-4 ring-[#0a0806]" />
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <span className="font-bold text-sm text-slate-100">Xxolcare — Software Developer</span>
-                <span className="text-slate-500 flex items-center gap-1 font-semibold text-[10px]">
-                  <Calendar className="w-3 h-3" />
-                  2022 - 2024
-                </span>
-              </div>
-              <p className="text-[11px] leading-relaxed text-slate-400">
-                Built care hospitality booking algorithms, integrated Paystack webhooks with transactional mail notifications, and set up Dockerized environments.
-              </p>
-            </div>
+          <div className="border-y border-slate-800 divide-y divide-slate-800">
+            {[
+              ['2024 — NOW', 'Konga', 'Software Engineer', 'Optimized payouts and escrow releases, repaired synchronization daemons, resolved resource locks in high-volume background jobs, and managed staging workloads.'],
+              ['2021 — NOW', 'Golden Attic', 'Senior Full-Stack Engineer, part-time', 'Led a Laravel 5.8 to 11 migration with zero data loss, built dual-currency wallet ledgers, and engineered event-driven reward processors.'],
+              ['2020 — NOW', 'Independent consulting', 'Full-Stack & DevOps Consultant', 'Built Sabre tariff seeders and billing gateways, FastAPI service integrations, and a visitor-management platform for a confidential financial services client.'],
+              ['2022 — 2024', 'Xxolcare', 'Software Developer', 'Built care-booking workflows, integrated Paystack webhooks and transactional notifications, and standardized Docker development environments.'],
+            ].map(([period, company, role, description], index) => (
+              <article key={company} className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 py-6">
+                <div className="md:col-span-2 flex items-center gap-2 font-mono text-xs text-orange-400">
+                  <span className="text-slate-600">0{index + 1}</span>
+                  <Calendar className="w-3.5 h-3.5" />
+                  {period}
+                </div>
+                <div className="md:col-span-4">
+                  <h3 className="text-lg font-bold text-slate-100">{company}</h3>
+                  <p className="mt-1 text-sm text-slate-500">{role}</p>
+                </div>
+                <p className="md:col-span-6 text-sm leading-relaxed text-slate-400">{description}</p>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* CONTACT FORM */}
-        <section id="contact" className="space-y-6 max-w-xl mx-auto border border-amber-950/40 bg-[#141110]/20 p-6 rounded-xl backdrop-blur-md">
-          <div className="text-center space-y-1">
-            <h2 className="text-xl font-extrabold text-slate-100 flex items-center justify-center gap-2">
-              <Award className="w-5 h-5 text-orange-400" />
-              Contact & Connections Node
-            </h2>
-            <p className="text-[11px] text-slate-500 font-mono">Submit a query securely to the portfolio sqlite log.</p>
-          </div>
-
-          {/* Direct contact nodes */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border border-amber-950/40/60 bg-slate-950/40 p-4 rounded-lg font-mono text-[10px]">
-            <div className="flex flex-col gap-1 items-center sm:items-start">
-              <span className="text-slate-500 uppercase tracking-widest text-[9px]">DIRECT EMAIL</span>
-              <a href="mailto:nwadialugideon@gmail.com" className="text-orange-400 hover:underline transition-all">
-                nwadialugideon@gmail.com
+        <section id="contact" className="grid grid-cols-1 lg:grid-cols-12 gap-10 border-y border-amber-950/60 py-10 md:py-14">
+          <div className="lg:col-span-5">
+            <p className="font-mono text-xs uppercase text-orange-400">Your move</p>
+            <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-100">Bring me the difficult part.</h2>
+            <p className="mt-4 text-base leading-relaxed text-slate-400 max-w-md">
+              I’m open to backend, platform integration, payment infrastructure, and full-stack engineering conversations.
+            </p>
+            <Mascot variant="integrate" label="Senseiuc partnership mascot" motion="float" className="mt-6 w-36" />
+            <div className="mt-6 space-y-3 text-sm">
+              <a href="mailto:nwadialugideon@gmail.com" className="flex items-center gap-2 text-slate-200 hover:text-orange-400 transition-colors">
+                <Mail className="w-4 h-4" /> nwadialugideon@gmail.com
               </a>
-            </div>
-            <div className="flex flex-col gap-1 items-center sm:items-start border-t sm:border-t-0 sm:border-l border-amber-950/40/60 pt-2 sm:pt-0 sm:pl-4">
-              <span className="text-slate-500 uppercase tracking-widest text-[9px]">PHONE NODE</span>
-              <a href="tel:+2348105347918" className="text-orange-400 hover:underline transition-all">
-                +2348105347918
-              </a>
+              <p className="font-mono text-xs text-slate-500">Lagos, Nigeria / remote</p>
+              <p className="font-mono text-xs text-slate-500">+234-810-534-XXXX</p>
             </div>
           </div>
 
-          {sent ? (
-            <div className="flex flex-col items-center justify-center p-6 text-center space-y-2 text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-lg">
-              <CheckCircle2 className="w-8 h-8" />
-              <span className="font-bold text-sm">Message Transmitted Successfully!</span>
-              <p className="text-[10px] text-slate-400 max-w-xs">Your transmission has been saved to the portfolio SQLite db. Thank you!</p>
-            </div>
-          ) : (
-            <form onSubmit={handleContactSubmit} className="space-y-4 font-mono text-xs">
-              <div className="grid grid-cols-2 gap-4">
+          <div className="lg:col-span-7 lg:border-l lg:border-slate-800 lg:pl-10">
+            {sent ? (
+              <div role="status" className="min-h-72 flex flex-col items-start justify-center space-y-3 text-emerald-400 border-y border-emerald-500/30">
+                <CheckCircle2 className="w-8 h-8" />
+                <span className="font-bold text-lg">Message received.</span>
+                <p className="text-sm text-slate-400 max-w-sm">Thank you. Gideon can follow up using the email address you provided.</p>
+              </div>
+            ) : (
+            <form onSubmit={handleContactSubmit} className="space-y-5 text-sm">
+              <p id="contact-privacy" className="text-xs leading-relaxed text-slate-500">
+                Your details are used only to respond to this message and are retained for up to 180 days.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                 <div className="space-y-1">
-                  <label className="text-slate-500">Name</label>
+                  <label htmlFor="contact-name" className="text-slate-400">Name</label>
                   <input
+                    id="contact-name"
+                    name="name"
                     type="text"
                     required
+                    aria-describedby="contact-privacy"
+                    autoComplete="name"
+                    maxLength={100}
                     value={form.name}
                     onChange={e => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-orange-400 outline-none focus:border-orange-500/50"
+                    className="w-full bg-transparent border-b border-slate-700 px-0 py-3 text-slate-100 outline-none focus:border-orange-500"
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-slate-500">Email Address</label>
+                  <label htmlFor="contact-email" className="text-slate-400">Email Address</label>
                   <input
+                    id="contact-email"
+                    name="email"
                     type="email"
                     required
+                    aria-describedby="contact-privacy"
+                    autoComplete="email"
+                    maxLength={254}
                     value={form.email}
                     onChange={e => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-orange-400 outline-none focus:border-orange-500/50"
+                    className="w-full bg-transparent border-b border-slate-700 px-0 py-3 text-slate-100 outline-none focus:border-orange-500"
                   />
                 </div>
               </div>
 
               <div className="space-y-1">
-                <label className="text-slate-500">Transmission Message</label>
+                <label htmlFor="contact-message" className="text-slate-400">Message</label>
                 <textarea
+                  id="contact-message"
+                  name="message"
                   required
+                  aria-describedby="contact-privacy"
                   rows={4}
+                  maxLength={3000}
                   value={form.message}
                   onChange={e => setForm({ ...form, message: e.target.value })}
-                  className="w-full bg-slate-950/60 border border-slate-800 rounded px-3 py-2 text-orange-400 outline-none focus:border-orange-500/50"
+                  className="w-full resize-y bg-transparent border-b border-slate-700 px-0 py-3 text-slate-100 outline-none focus:border-orange-500"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-2.5 bg-orange-500/10 hover:bg-orange-500/20 border border-orange-500/40 hover:border-orange-500 text-orange-400 font-bold rounded flex items-center justify-center gap-2 transition-all cursor-pointer"
+                aria-busy={loading}
+                className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-[#0a0806] font-bold rounded flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
               >
-                <Send className="w-3.5 h-3.5" />
-                {loading ? 'Transmitting...' : 'Send Transmission'}
+                <Send className="w-4 h-4" />
+                {loading ? 'Sending...' : 'Send message'}
               </button>
             </form>
-          )}
+            )}
+          </div>
         </section>
 
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-slate-950 py-6 text-center font-mono text-[10px] text-slate-600 relative z-10">
-        <div>Designed & Programmed inside Docker container node-01</div>
-        <div className="mt-1">Active deployment on Render | SQLite Powered</div>
+      <footer className="border-t border-slate-900 py-8 text-center text-xs text-slate-600 relative z-10">
+        <div>Designed and built by Gideon Nwadialu in Lagos, Nigeria.</div>
+        <div className="mt-1 font-mono">React / Express / SQLite / Docker</div>
       </footer>
 
-      {/* Dynamic Telemetry Project Modal */}
+      {/* Project engineering notes */}
       {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) closeProjectDetails();
+          }}
+        >
           <motion.div 
+            ref={projectDialogRef}
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="w-full max-w-2xl bg-[#090e18] border border-slate-800 rounded-xl overflow-hidden shadow-2xl flex flex-col font-mono text-xs text-slate-300"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-dialog-title"
+            className="w-full max-w-3xl bg-[#0a0806] border border-slate-700 rounded-lg overflow-hidden shadow-2xl flex flex-col text-slate-300"
           >
-            {/* Modal Header */}
-            <div className="px-4 py-3 border-b border-amber-950/40 bg-slate-950 flex items-center justify-between">
-              <span className="text-[10px] uppercase font-bold tracking-widest text-slate-500">
-                system telemetry: {selectedProject.id}.sh
+            <div className="px-5 py-4 border-b border-amber-950/50 flex items-center justify-between">
+              <span className="font-mono text-xs uppercase text-orange-400">
+                Engineering notes / {selectedProject.category}
               </span>
               <button 
-                onClick={() => {
-                  setSelectedProject(null);
-                  setModalStage('idle');
-                }}
-                className="text-slate-500 hover:text-slate-100 transition-colors text-sm cursor-pointer"
+                type="button"
+                aria-label="Close project details"
+                onClick={closeProjectDetails}
+                className="w-9 h-9 text-slate-400 hover:text-slate-100 hover:bg-slate-900 transition-colors text-sm cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
-            {/* Modal Body */}
-            <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
-              {modalStage === 'loading' ? (
-                <div className="space-y-4 min-h-[220px] flex flex-col justify-end">
-                  <div className="space-y-1.5 flex-1">
-                    {loadingLogs.map((log, i) => (
-                      <div key={i} className="text-emerald-400/90 leading-relaxed text-[11px]">
-                        {log}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-2 text-orange-400 font-bold text-[10px] animate-pulse">
-                    <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-ping" />
-                    SPINNING UP COMPUTE POD DAEMON...
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-6">
-                  {/* System Architecture Node Details */}
-                  <div className="space-y-3">
-                    <div>
-                      <span className="text-[10px] text-slate-500 uppercase tracking-widest block">Deployment Target</span>
-                      <h4 className="text-sm font-bold text-slate-100 uppercase tracking-wide">
-                        {selectedProject.details.system}
-                      </h4>
+            <div className="p-6 md:p-8 space-y-8 max-h-[78vh] overflow-y-auto">
+              <div>
+                <p className="font-mono text-xs uppercase text-slate-500">System</p>
+                <h4 id="project-dialog-title" className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100">
+                  {selectedProject.details.system}
+                </h4>
+              </div>
+
+              {(selectedProject.details.role || selectedProject.details.constraints) && (
+                <dl className="grid grid-cols-1 md:grid-cols-2 gap-px bg-slate-800 border border-slate-800">
+                  {selectedProject.details.role && (
+                    <div className="bg-[#0a0806] p-4">
+                      <dt className="font-mono text-[10px] uppercase text-orange-400">Role</dt>
+                      <dd className="mt-2 text-sm leading-relaxed text-slate-300">{selectedProject.details.role}</dd>
                     </div>
-                    
-                    <div className="space-y-2 border-l border-amber-950/40 pl-4 py-1">
-                      <span className="text-[10px] text-slate-500 uppercase tracking-wide block mb-1">Main Contributions</span>
-                      <ul className="list-none space-y-2">
+                  )}
+                  {selectedProject.details.constraints && (
+                    <div className="bg-[#0a0806] p-4">
+                      <dt className="font-mono text-[10px] uppercase text-orange-400">Constraints</dt>
+                      <dd className="mt-2 text-sm leading-relaxed text-slate-300">{selectedProject.details.constraints}</dd>
+                    </div>
+                  )}
+                </dl>
+              )}
+
+              {selectedProject.details.architecture && (
+                <div>
+                  <p className="font-mono text-xs uppercase text-slate-500 mb-3">Architecture path</p>
+                  <ol className="grid grid-cols-1 sm:grid-cols-4 border border-slate-800">
+                    {selectedProject.details.architecture.map((node: string, i: number) => (
+                      <li key={node} className="relative min-h-20 p-3 border-b last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0 border-slate-800">
+                        <span className="font-mono text-[10px] text-orange-400">{String(i + 1).padStart(2, '0')}</span>
+                        <p className="mt-2 text-xs leading-relaxed text-slate-200">{node}</p>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {selectedProject.details.evidence && (
+                <div>
+                  <p className="font-mono text-xs uppercase text-orange-400 mb-3">Evidence basis</p>
+                  <ul className="border-y border-slate-800 divide-y divide-slate-800">
+                    {selectedProject.details.evidence.map((item: string) => (
+                      <li key={item} className="py-3 text-sm leading-relaxed text-slate-400 flex gap-3">
+                        <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0 text-orange-400" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div>
+                <p className="font-mono text-xs uppercase text-orange-400 mb-4">Owned and delivered</p>
+                <ul className="divide-y divide-slate-800 border-y border-slate-800">
                         {selectedProject.details.contributions.map((item: string, i: number) => {
                           const [title, desc] = item.split(': ');
                           return (
-                            <li key={i} className="text-[11px] leading-relaxed text-slate-400">
-                              <strong className={`text-slate-200 ${selectedProject.accentColor}`}>{title}:</strong> {desc}
+                            <li key={i} className="grid grid-cols-1 sm:grid-cols-[150px_1fr] gap-2 sm:gap-5 py-4 text-sm leading-relaxed text-slate-400">
+                              <strong className="text-slate-200">{title}</strong>
+                              <span>{desc}</span>
                             </li>
                           );
                         })}
-                      </ul>
-                    </div>
-                  </div>
+                </ul>
+              </div>
 
-                  {/* Git Commit Telemetry Log */}
-                  <div className="space-y-2.5">
-                    <span className="text-[10px] text-slate-500 uppercase tracking-widest block">Commit History Insights</span>
-                    <div className="bg-slate-950/70 border border-amber-950/40 p-4 rounded-lg space-y-1.5">
+              <div>
+                <p className="font-mono text-xs uppercase text-slate-500 mb-3">Selected implementation trail</p>
+                <div className="border-l border-amber-900/60 pl-4 space-y-2">
                       {selectedProject.details.commits.map((commit: string, i: number) => (
-                        <div key={i} className="text-slate-400 text-[11px] flex gap-2 font-mono">
-                          <span className="text-amber-500/90 select-none">&gt;</span>
-                          <span>{commit}</span>
+                        <div key={i} className="text-slate-400 text-xs leading-relaxed flex gap-2 font-mono">
+                          <span className="text-orange-400 select-none">{String(i + 1).padStart(2, '0')}</span>
+                          <span className="break-words">{commit}</span>
                         </div>
                       ))}
-                    </div>
-                  </div>
+                </div>
+              </div>
 
-                  {/* Production Link */}
-                  {selectedProject.details.url && (
-                    <div className="pt-2 border-t border-amber-950/40 flex justify-end">
-                      <a 
-                        href={selectedProject.details.url} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/20 hover:border-orange-500/40 px-4 py-2 rounded font-bold font-mono transition-all text-[11px] flex items-center gap-1.5 cursor-pointer"
-                      >
-                        Launch Production Site
-                        <span className="text-xs">↗</span>
-                      </a>
-                    </div>
-                  )}
+              {(selectedProject.details.links || selectedProject.details.url) && (
+                <div className="pt-5 border-t border-amber-950/50 flex flex-wrap justify-end gap-2">
+                  {(selectedProject.details.links ?? [{ label: 'Visit production site', url: selectedProject.details.url }]).map((link: { label: string; url: string }) => (
+                    <a
+                      key={link.url}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-orange-500 hover:bg-orange-400 text-[#0a0806] px-4 py-2.5 rounded font-bold transition-colors text-sm flex items-center gap-1.5 cursor-pointer"
+                    >
+                      {link.label} ↗
+                    </a>
+                  ))}
                 </div>
               )}
             </div>

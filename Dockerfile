@@ -5,7 +5,7 @@ RUN apk add --no-cache python3 make g++
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 RUN npm run build
@@ -18,7 +18,7 @@ ENV NODE_ENV=production
 # Install only production dependencies (better-sqlite3 requires compilation)
 COPY package*.json ./
 RUN apk add --no-cache python3 make g++ && \
-    npm install --omit=dev && \
+    npm ci --omit=dev && \
     apk del python3 make g++
 
 # Copy built frontend assets
@@ -26,12 +26,7 @@ COPY --from=builder /app/dist ./dist
 # Copy compiled backend assets
 COPY --from=builder /app/dist-server ./dist-server
 
-# Copy assets and files
-COPY ["My Brand Logo - senseiuc.png", "./dist/My Brand Logo - senseiuc.png"]
-COPY ["My Brand Logo - senseiuc.svg", "./dist/My Brand Logo - senseiuc.svg"]
-COPY ["background-senseiuc-design.png", "./dist/background-senseiuc-design.png"]
-COPY ["Bearded_logo_glowing_orange_energy_202607140039.mp4", "./dist/Bearded_logo_glowing_orange_energy_202607140039.mp4"]
-COPY ["gideon_caricature.jpg", "./dist/gideon_caricature.jpg"]
+# Public assets are already copied into dist by Vite.
 COPY ["resume.html", "./dist/resume.html"]
 COPY ["resume.md", "./dist/resume.md"]
 

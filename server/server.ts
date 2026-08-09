@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import express from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
@@ -13,22 +14,63 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5001;
+const isProduction = process.env.NODE_ENV === 'production';
 
-// Security Middlewares
+if (isProduction) app.set('trust proxy', 1);
+
 app.use(helmet({
-  contentSecurityPolicy: false, // Turn off CSP to support client loading custom styles/scripts dynamically
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'sha256-6+IVlHEzgfce2yMyriTfmw3UBKgyKmmVPTBxCw8jj8I='"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:'],
+      mediaSrc: ["'self'"],
+      connectSrc: ["'self'", ...(isProduction ? [] : ['ws:', 'http://localhost:*'])],
+      fontSrc: ["'self'", 'data:'],
+      objectSrc: ["'none'"],
+      frameAncestors: ["'none'"],
+      baseUri: ["'self'"],
+      formAction: ["'self'"],
+    },
+  },
+  crossOriginEmbedderPolicy: false,
 }));
-app.use(cors());
-app.use(express.json());
+if (!isProduction) {
+  app.use(cors({ origin: [/^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/] }));
+}
+app.use('/api', (req, res, next) => {
+  if (req.method !== 'GET') res.setHeader('Cache-Control', 'no-store');
+  next();
+});
+app.use(express.json({ limit: '16kb', strict: true }));
 
-// Rate Limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 500, // limit each IP to 500 requests per window
+const createLimiter = (windowMs: number, max: number, message: string) => rateLimit({
+  windowMs,
+  max,
   standardHeaders: true,
   legacyHeaders: false,
+  message: { error: message },
 });
-app.use('/api/', limiter);
+
+const readLimiter = createLimiter(15 * 60 * 1000, 120, 'Too many requests. Please try again shortly.');
+const terminalLimiter = createLimiter(10 * 60 * 1000, 30, 'Terminal request limit reached. Please wait before trying again.');
+const contactLimiter = createLimiter(60 * 60 * 1000, 5, 'Message limit reached. Please try again later.');
+const chatLimiter = createLimiter(10 * 60 * 1000, 20, 'Chat request limit reached. Please wait before trying again.');
+
+app.use(['/api/git-metrics', '/api/metrics', '/api/health'], readLimiter);
+
+const normalizeText = (value: unknown, maxLength: number): string | null => {
+  if (typeof value !== 'string') return null;
+  const normalized = value.replace(/[\u0000-\u001F\u007F]/g, ' ').replace(/\s+/g, ' ').trim();
+  return normalized && normalized.length <= maxLength ? normalized : null;
+};
+
+const normalizeEmail = (value: unknown): string | null => {
+  const email = normalizeText(value, 254)?.toLowerCase();
+  if (!email) return null;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null;
+};
 
 // Streak Calculation Helpers
 async function getGithubStreaks(token: string, username: string) {
@@ -405,15 +447,17 @@ app.get('/api/metrics', (req, res) => {
 });
 
 // Terminal Commands Executor API
-app.post('/api/terminal/run', (req, res) => {
-  const { command } = req.body;
-  if (!command) return res.status(400).json({ error: 'Command is required' });
+app.post('/api/terminal/run', terminalLimiter, (req, res) => {
+  const command = normalizeText(req.body?.command, 40);
+  if (!command || !/^[a-z-]+$/i.test(command)) {
+    return res.status(400).json({ error: 'Enter a valid terminal command.' });
+  }
 
-  const rawCmd = command.trim().toLowerCase();
+  const rawCmd = command.toLowerCase();
   
   // Log command execution to database
   try {
-    db.prepare('INSERT INTO terminal_logs (command) VALUES (?)').run(command);
+    db.prepare('INSERT INTO terminal_logs (command) VALUES (?)').run(rawCmd);
   } catch (err) {
     console.error('Failed to log command:', err);
   }
@@ -473,10 +517,12 @@ app.post('/api/terminal/run', (req, res) => {
 });
 
 // Contact message handler
-app.post('/api/contact', (req, res) => {
-  const { name, email, message } = req.body;
+app.post('/api/contact', contactLimiter, (req, res) => {
+  const name = normalizeText(req.body?.name, 100);
+  const email = normalizeEmail(req.body?.email);
+  const message = normalizeText(req.body?.message, 3000);
   if (!name || !email || !message) {
-    return res.status(400).json({ error: 'Name, email, and message are required' });
+    return res.status(400).json({ error: 'Enter a valid name, email address, and message.' });
   }
 
   try {
@@ -491,7 +537,20 @@ app.post('/api/contact', (req, res) => {
 // Local Fallback Answering Engine (used if GEMINI_API_KEY is not defined or fails)
 function getLocalChatResponse(message: string, userProfile?: { firstName: string; lastName?: string; email?: string }): string {
   const msg = message.toLowerCase();
-  const namePrefix = userProfile?.firstName ? `${userProfile.firstName}, ` : '';
+  const namePrefix = '';
+
+  if (msg.includes('compare') && msg.includes('tripease') && (msg.includes('transglobal') || msg.includes('sabre'))) {
+    return `${namePrefix}TripEase demonstrates distributed architecture: four bounded services for identity, companies, payments, and transport, with concurrency-safe escrow operations. Transglobal demonstrates integration depth: one Laravel hub coordinating Sabre tariffs, customer accounts, payment providers, and signed shipment webhooks. TripEase is the stronger microservices example; Transglobal is the stronger external-systems integration example.`;
+  }
+  if (msg.includes('best') || msg.includes('strongest') || msg.includes('backend architecture')) {
+    return `${namePrefix}the strongest public backend examples are Konga for high-volume batch processing, TripEase for service boundaries and ledger concurrency, and Transglobal for payment and logistics integrations. Ansar-Ud-Deen adds full-platform operational ownership across API, web, mobile, queues, and deployment.`;
+  }
+  if (msg.includes('what can') || msg.includes('for my team') || msg.includes('hire')) {
+    return `${namePrefix}Gideon is best suited to backend-heavy product work: payment and ledger workflows, logistics platforms, API integrations, operational dashboards, data migrations, and containerized services. He can own the path from architecture and implementation through deployment and production troubleshooting.`;
+  }
+  if (msg.includes('projects') || msg.includes('portfolio') || msg.includes('work')) {
+    return `${namePrefix}Gideon's portfolio covers commerce infrastructure at Konga, distributed transit with TripEase, logistics integrations for Transglobal and Shipwize, the Ansar-Ud-Deen web/mobile platform, visitor operations, education, property management, broadcasting, and care hospitality. Ask for a comparison or a specific project and I can explain the engineering decisions and evidence.`;
+  }
   
   if (msg.includes('konga')) {
     return `${namePrefix}at Konga, Gideon worked as a Software Engineer. He was responsible for refactoring the merchant payout engine (which cut execution time in half), resolving database replication lags, and managing migrations of over 100k records. He also rebuilt various catalog synchronization daemons.`;
@@ -513,6 +572,15 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
   }
   if (msg.includes('radionews') || msg.includes('radio')) {
     return `${namePrefix}RadioNews is a broadcasting CMS Gideon built using Filament and Spatie roles. He integrated WebRTC video call rooms using the Daily.co API and created automated shell deploy scripts.`;
+  }
+  if (msg.includes('ansar') || msg.includes('deen')) {
+    return `${namePrefix}the Ansar-Ud-Deen Digital Platform is a society-wide modernization project spanning a NestJS API, Next.js website and CMS, Flutter mobile app, PostgreSQL, Redis queues, donations, media delivery, and containerized operations.`;
+  }
+  if (msg.includes('visitor management') || msg.includes('visitor system') || msg.includes('check-in')) {
+    return `${namePrefix}Gideon built a multi-location visitor and staff management system with QR-based entry, approval workflows, duplicate check-in protection, role-based administration, privacy consent, and Termii SMS and email alerts.`;
+  }
+  if (msg.includes('shipwize')) {
+    return `${namePrefix}Shipwize is a Laravel logistics platform Gideon developed for shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation codes, commissions, and Termii customer notifications.`;
   }
   if (msg.includes('skills') || msg.includes('stack') || msg.includes('languages') || msg.includes('technologies')) {
     return `${namePrefix}Gideon's primary technical competencies include PHP (Laravel, Yii, Phalcon), Node.js (Express), Python (FastAPI), React, TypeScript, Docker, Kubernetes, Kibana, MySQL/MariaDB, and SQLite.`;
@@ -539,15 +607,15 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `${namePrefix}an API acts as a bridge letting different software systems talk to each other, while Webhooks send real-time event updates. Gideon specializes in API integrations, having connected Sabre logistics tariff seeders, Paystack/Seerbit billing loops, and Dojah KYC identity verification with automated retry logic.`;
   }
   if (/\b(hello|hi|hey|greetings)\b/i.test(msg)) {
-    return `Hello${userProfile?.firstName ? ` ${userProfile.firstName}` : ''}! I am Sensei, Gideon Nwadialu's AI Assistant. Ask me anything about Gideon's professional projects (like Konga, TransGlobal, TripEase, Xxolcare, Wings, Lextorah, RadioNews) or his technical skills!`;
+    return `Hello${userProfile?.firstName ? ` ${userProfile.firstName}` : ''}! I am Sensei, Gideon Nwadialu's AI Assistant. Ask me about Gideon's work on Konga, TransGlobal, TripEase, Ansar-Ud-Deen, Visitor Management, Shipwize, or his other systems and technical skills!`;
   }
   
-  return `Thanks for asking${userProfile?.firstName ? ` ${userProfile.firstName}` : ''}! Gideon is a senior full-stack software engineer with deep expertise in PHP/Laravel, Node.js, microservices, and Docker/DevOps. He has worked at Konga and built major systems like TransGlobal, TripEase, and Xxolcare. Ask me about any of these systems for more details!`;
+  return `${namePrefix}I do not have enough verified portfolio context to answer that confidently. I can help with Gideon's projects, architecture decisions, technologies, experience, availability, or contact details. Try asking which project best matches the problem your team is solving.`;
 }
 
 const GIDEON_INFO = `
 You are "Sensei", the personal AI coding and development assistant for Gideon Nwadialu. You are answering a visitor on Gideon's professional portfolio site.
-Keep your answers brief, engaging, and focused on Gideon's work, experience, and technical skills. Be professional, friendly, and speak of Gideon in the third person ("Gideon built...", "He has...").
+Keep answers concise, specific, and focused on Gideon's work, experience, and technical skills. Speak of Gideon in the third person ("Gideon built...", "He has..."). Use the visitor's name in the initial greeting only; do not prefix or repeatedly personalize ordinary answers with their name. Ground every claim in the information below. Never invent clients, metrics, technologies, URLs, responsibilities, or outcomes. When the information is insufficient, say so and suggest a relevant question you can answer. For comparisons, identify the distinct engineering strengths of each project. Prefer concrete decisions and evidence over promotional language.
 
 Information about Gideon Nwadialu:
 - Role: Full-Stack Software Engineer & Technical Solutions Architect.
@@ -563,6 +631,9 @@ Information about Gideon Nwadialu:
   - Wings: Tenancy contract and rent scheduler automation with FIFO billing application.
   - RadioNews: Radio CMS dashboard with Daily.co WebRTC integrations and Spatie access controls.
   - Lextorah: FastAPI tutoring portal with smart sync pipelines and footer chatbot widgets.
+  - Ansar-Ud-Deen Digital Platform: NestJS, Next.js, and Flutter modernization platform with PostgreSQL, Redis queues, donations, CMS workflows, and containerized operations.
+  - Visitor Management System: Multi-location visitor and staff check-in with approvals, role controls, privacy consent, and SMS/email notifications.
+  - Shipwize: Shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation, commissions, and Termii notifications.
 - Core Technologies:
   - Languages: PHP, TypeScript, JavaScript, Python, SQL
   - Frameworks: Laravel, Express, FastAPI, React
@@ -571,26 +642,59 @@ Information about Gideon Nwadialu:
 `;
 
 // Cache map for Chat responses to save tokens and respond in under 1ms
-const chatCache = new Map<string, string>();
+const CHAT_CACHE_LIMIT = 200;
+const CHAT_CACHE_TTL = 60 * 60 * 1000;
+const chatCache = new Map<string, { reply: string; expiresAt: number }>();
 
-app.post('/api/chat', async (req, res) => {
-  const { message, userProfile } = req.body;
+const cacheChatReply = (key: string, reply: string) => {
+  if (chatCache.size >= CHAT_CACHE_LIMIT) {
+    const oldestKey = chatCache.keys().next().value;
+    if (oldestKey) chatCache.delete(oldestKey);
+  }
+  chatCache.set(key, { reply, expiresAt: Date.now() + CHAT_CACHE_TTL });
+};
+
+app.post('/api/chat', chatLimiter, async (req, res) => {
+  const message = normalizeText(req.body?.message, 600);
   if (!message) {
-    return res.status(400).json({ error: 'Message is required' });
+    return res.status(400).json({ error: 'Enter a message between 1 and 600 characters.' });
   }
 
-  const normalizedMessage = message.trim().toLowerCase();
-  const cacheKey = `${normalizedMessage}_${userProfile?.firstName ? userProfile.firstName.toLowerCase() : 'anonymous'}`;
-  
-  if (chatCache.has(cacheKey)) {
-    const reply = chatCache.get(cacheKey)!;
-    return res.json({ reply, cached: true });
+  const suppliedProfile = req.body?.userProfile;
+  const userProfile = suppliedProfile && typeof suppliedProfile === 'object' ? {
+    firstName: normalizeText(suppliedProfile.firstName, 80) || '',
+    lastName: normalizeText(suppliedProfile.lastName, 80) || undefined,
+  } : undefined;
+  const history: Array<{ role: 'user' | 'assistant'; text: string }> = Array.isArray(req.body?.history)
+    ? req.body.history.slice(-8).flatMap((item: unknown) => {
+        if (!item || typeof item !== 'object') return [];
+        const candidate = item as { role?: unknown; text?: unknown };
+        const role = candidate.role === 'user' || candidate.role === 'assistant' ? candidate.role : null;
+        const text = normalizeText(candidate.text, 600);
+        return role && text ? [{ role, text }] : [];
+      })
+    : [];
+  const firstUserTurn = history.findIndex((item) => item.role === 'user');
+  const conversationHistory = firstUserTurn >= 0 ? history.slice(firstUserTurn) : [];
+
+  const normalizedMessage = message.toLowerCase();
+  const historyKey = conversationHistory
+    .map((item) => `${item.role}:${item.text.toLowerCase()}`)
+    .join('|');
+  const cacheKey = `${normalizedMessage}_${historyKey}_${userProfile?.firstName ? userProfile.firstName.toLowerCase() : 'anonymous'}`;
+
+  const cached = chatCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    return res.json({ reply: cached.reply, cached: true });
+  }
+  if (cached) {
+    chatCache.delete(cacheKey);
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     const reply = getLocalChatResponse(message, userProfile);
-    chatCache.set(cacheKey, reply);
+    cacheChatReply(cacheKey, reply);
     return res.json({ reply });
   }
 
@@ -599,7 +703,7 @@ app.post('/api/chat', async (req, res) => {
     
     let systemInstructionText = GIDEON_INFO;
     if (userProfile && userProfile.firstName) {
-      systemInstructionText += `\n- The current visitor's first name is ${userProfile.firstName}.${userProfile.lastName ? ` Their last name is ${userProfile.lastName}.` : ''}${userProfile.email ? ` Their email is ${userProfile.email}.` : ''} Address them personally by their first name (${userProfile.firstName}) in your answers where natural.`;
+      systemInstructionText += `\n- The current visitor's first name is ${userProfile.firstName}.${userProfile.lastName ? ` Their last name is ${userProfile.lastName}.` : ''} Their name has already been used in the greeting. Do not repeat it in normal answers unless it is genuinely necessary for clarity.`;
     }
 
     const response = await fetch(geminiUrl, {
@@ -609,10 +713,11 @@ app.post('/api/chat', async (req, res) => {
       },
       body: JSON.stringify({
         contents: [
-          {
-            role: 'user',
-            parts: [{ text: message }]
-          }
+          ...conversationHistory.map((item) => ({
+            role: item.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: item.text }]
+          })),
+          { role: 'user', parts: [{ text: message }] }
         ],
         systemInstruction: {
           parts: [{ text: systemInstructionText }]
@@ -628,7 +733,7 @@ app.post('/api/chat', async (req, res) => {
     const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "I'm having trouble formulating a response right now. Feel free to contact Gideon directly!";
     
     // Store in cache
-    chatCache.set(cacheKey, reply);
+    cacheChatReply(cacheKey, reply);
     
     res.json({ reply });
   } catch (error) {
@@ -639,34 +744,23 @@ app.post('/api/chat', async (req, res) => {
 });
 
 // Leads registration route
-app.post('/api/leads', async (req, res) => {
+app.post('/api/leads', contactLimiter, async (req, res) => {
   try {
-    const { firstName, lastName, email } = req.body;
-    if (!firstName) {
-      return res.status(400).json({ error: 'First name is required' });
+    const firstName = normalizeText(req.body?.firstName, 80);
+    const lastName = normalizeText(req.body?.lastName, 80) || '';
+    const email = normalizeEmail(req.body?.email);
+    const consent = req.body?.consent === true;
+    if (!firstName || !email || !consent) {
+      return res.status(400).json({ error: 'A valid name, email address, and follow-up consent are required.' });
     }
 
-    const leadsPath = path.resolve(__dirname, 'leads.json');
-    let leads: any[] = [];
-    
-    if (fs.existsSync(leadsPath)) {
-      const data = fs.readFileSync(leadsPath, 'utf-8');
-      try {
-        leads = JSON.parse(data);
-      } catch (pe) {
-        leads = [];
-      }
-    }
-    
-    leads.push({
-      firstName,
-      lastName: lastName || '',
-      email: email || '',
-      timestamp: new Date().toISOString()
-    });
-    
-    fs.writeFileSync(leadsPath, JSON.stringify(leads, null, 2), 'utf-8');
-    res.json({ success: true });
+    const consentedAt = new Date().toISOString();
+    db.prepare(`
+      INSERT INTO leads (first_name, last_name, email, consented_at)
+      VALUES (?, ?, ?, ?)
+    `).run(firstName, lastName, email, consentedAt);
+
+    res.status(201).json({ success: true });
   } catch (err) {
     console.error('Failed to save lead:', err);
     res.status(500).json({ error: 'Failed to record contact details' });
@@ -678,13 +772,51 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });
 
+app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
+  if (!req.path.startsWith('/api')) return next(error);
+
+  const bodyError = error as { type?: string; status?: number };
+  if (bodyError.type === 'entity.too.large') {
+    return res.status(413).json({ error: 'Request body is too large.' });
+  }
+  if (bodyError.type === 'entity.parse.failed' || bodyError.status === 400) {
+    return res.status(400).json({ error: 'Request body must be valid JSON.' });
+  }
+
+  console.error('Unhandled API error:', error);
+  return res.status(500).json({ error: 'Unexpected server error.' });
+});
+
 // Serve frontend build static files in production
 const distPath = path.resolve(__dirname, '../dist');
-app.use(express.static(distPath));
+const getSiteUrl = (req: Request) => {
+  const configuredUrl = process.env.SITE_URL?.trim().replace(/\/$/, '');
+  if (configuredUrl && /^https?:\/\//i.test(configuredUrl)) return configuredUrl;
+
+  const renderHostname = process.env.RENDER_EXTERNAL_HOSTNAME?.trim();
+  if (renderHostname) return `https://${renderHostname}`;
+
+  return `${req.protocol}://${req.get('host')}`;
+};
+
+const withSiteUrl = (content: string, req: Request) => content.replaceAll('__SITE_URL__', getSiteUrl(req));
+
+app.get('/robots.txt', (req, res) => {
+  const template = fs.readFileSync(path.join(distPath, 'robots.txt'), 'utf8');
+  res.type('text/plain').send(withSiteUrl(template, req));
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  const template = fs.readFileSync(path.join(distPath, 'sitemap.xml'), 'utf8');
+  res.type('application/xml').send(withSiteUrl(template, req));
+});
+
+app.use(express.static(distPath, { index: false }));
 
 app.get('*', (req, res) => {
   if (!req.path.startsWith('/api')) {
-    res.sendFile(path.join(distPath, 'index.html'));
+    const template = fs.readFileSync(path.join(distPath, 'index.html'), 'utf8');
+    res.type('html').send(withSiteUrl(template, req));
   } else {
     res.status(404).json({ error: 'API route not found' });
   }

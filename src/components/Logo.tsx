@@ -20,6 +20,7 @@ export default function Logo({ className = "w-12 h-12", animate = true }: LogoPr
       <img 
         src="/My Brand Logo - senseiuc.svg" 
         alt="Senseiuc Brand Logo" 
+        decoding="async"
         className={`w-full h-full object-contain relative z-10 ${animate ? 'hover:scale-105 transition-transform duration-300' : ''}`}
       />
     </div>

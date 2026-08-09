@@ -3,8 +3,17 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), tailwindcss()],
+export default defineConfig(({ command }) => ({
+  plugins: [
+    react(),
+    tailwindcss(),
+    {
+      name: 'development-site-url',
+      transformIndexHtml(html) {
+        return command === 'serve' ? html.replaceAll('__SITE_URL__', 'http://localhost:3000') : html
+      }
+    }
+  ],
   server: {
     port: 3000,
     host: true,
@@ -15,4 +24,4 @@ export default defineConfig({
       }
     }
   }
-})
+}))

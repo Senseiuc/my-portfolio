@@ -1,17 +1,24 @@
 services:
   - type: web
     name: senseiuc-portfolio
-    env: docker
-    dockerfilePath: Dockerfile
+    runtime: docker
+    dockerfilePath: ./Dockerfile
     plan: free
     region: oregon
+    autoDeploy: true
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 8080
+      # Free Render services have ephemeral filesystems. Upgrade to a disk or
+      # managed database before relying on stored contact messages or leads.
+      - key: DATABASE_PATH
+        value: /tmp/senseiuc-portfolio.db
+      - key: GEMINI_API_KEY
+        sync: false
       - key: GITHUB_TOKEN
         sync: false
       - key: GITLAB_TOKEN
         sync: false
-    healthCheckPath: /api/health

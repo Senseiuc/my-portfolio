@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Network, Database, RefreshCw, Cpu, CheckCircle, Radio, Globe, Shield, CreditCard, Truck } from 'lucide-react';
 
 interface Step {
@@ -11,6 +11,7 @@ type TabKey = 'payout' | 'sync' | 'tripease' | 'xxolcare' | 'radionews' | 'trans
 
 export default function EngineRoom() {
   const [activeTab, setActiveTab] = useState<TabKey>('payout');
+  const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
   const payoutSteps: Step[] = [
     { title: 'Trigger Daemon', desc: 'Background cron starts execution on order delivery confirmation.', status: 'success' },
@@ -71,90 +72,118 @@ export default function EngineRoom() {
     }
   };
 
-  const tabConfig: { key: TabKey; label: string; activeClass: string }[] = [
-    { key: 'payout', label: 'Konga Escrow Payouts', activeClass: 'bg-orange-500/10 border border-orange-500/40 text-orange-400 font-bold' },
-    { key: 'sync', label: 'Lextorah Smart Sync', activeClass: 'bg-indigo-500/10 border border-indigo-500/40 text-indigo-400 font-bold' },
-    { key: 'tripease', label: 'TripEase Microservices', activeClass: 'bg-emerald-500/10 border border-emerald-500/40 text-emerald-400 font-bold' },
-    { key: 'xxolcare', label: 'Xxolcare Bookings', activeClass: 'bg-teal-500/10 border border-teal-500/40 text-teal-400 font-bold' },
-    { key: 'radionews', label: 'Radio News CMS', activeClass: 'bg-pink-500/10 border border-pink-500/40 text-pink-400 font-bold' },
-    { key: 'transglobal', label: 'Transglobal × Sabre', activeClass: 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-400 font-bold' },
+  const tabConfig: { key: TabKey; label: string; shortLabel: string }[] = [
+    { key: 'payout', label: 'Konga Escrow Payouts', shortLabel: 'Payouts' },
+    { key: 'sync', label: 'Lextorah Smart Sync', shortLabel: 'Sync' },
+    { key: 'tripease', label: 'TripEase Microservices', shortLabel: 'Services' },
+    { key: 'xxolcare', label: 'Xxolcare Bookings', shortLabel: 'Bookings' },
+    { key: 'radionews', label: 'Radio News CMS', shortLabel: 'Broadcast' },
+    { key: 'transglobal', label: 'Transglobal × Sabre', shortLabel: 'Logistics' },
   ];
 
   const getActiveStepColor = () => {
     switch (activeTab) {
       case 'payout': return 'border-orange-500/50 shadow-[0_0_10px_rgba(249,115,22,0.1)]';
-      case 'sync': return 'border-indigo-500/50 shadow-[0_0_10px_rgba(99,102,241,0.1)]';
-      case 'tripease': return 'border-emerald-500/50 shadow-[0_0_10px_rgba(16,185,129,0.1)]';
-      case 'xxolcare': return 'border-teal-500/50 shadow-[0_0_10px_rgba(20,184,166,0.1)]';
-      case 'radionews': return 'border-pink-500/50 shadow-[0_0_10px_rgba(236,72,153,0.1)]';
-      case 'transglobal': return 'border-yellow-500/50 shadow-[0_0_10px_rgba(234,179,8,0.1)]';
+      default: return 'border-orange-500/50';
     }
   };
 
   const getSpinnerColor = () => {
     switch (activeTab) {
       case 'payout': return 'text-orange-400';
-      case 'sync': return 'text-indigo-400';
-      case 'tripease': return 'text-emerald-400';
-      case 'xxolcare': return 'text-teal-400';
-      case 'radionews': return 'text-pink-400';
-      case 'transglobal': return 'text-yellow-400';
+      default: return 'text-orange-400';
     }
   };
 
+  const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
+    let nextIndex = index;
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') nextIndex = (index + 1) % tabConfig.length;
+    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') nextIndex = (index - 1 + tabConfig.length) % tabConfig.length;
+    else if (event.key === 'Home') nextIndex = 0;
+    else if (event.key === 'End') nextIndex = tabConfig.length - 1;
+    else return;
+
+    event.preventDefault();
+    const nextTab = tabConfig[nextIndex];
+    setActiveTab(nextTab.key);
+    tabRefs.current[nextIndex]?.focus();
+  };
+
   return (
-    <div className="bg-[#141110]/50 border border-slate-800 rounded-xl p-5 shadow-xl backdrop-blur-md">
-      {/* Title */}
-      <div className="flex items-center gap-2 mb-4 pb-2 border-b border-slate-800">
-        <Network className="w-4 h-4 text-orange-400" />
-        <span className="font-mono text-xs font-bold text-slate-100 uppercase tracking-wider">
-          The Engine Room — Interactive Architecture Playground
-        </span>
+    <div className="border-y border-amber-950/60 py-8 md:py-10">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:items-end mb-8">
+        <div className="md:col-span-7">
+          <p className="font-mono text-xs uppercase text-orange-400 flex items-center gap-2">
+            <Network className="w-4 h-4" />
+            Interactive systems study
+          </p>
+          <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100">Open the Engine Room.</h2>
+        </div>
+        <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">
+          Choose a system and trace one request through its operational decisions.
+        </p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-2 mb-6 border-b border-slate-800/40 pb-3 overflow-x-auto">
-        {tabConfig.map(tab => (
+      <div role="tablist" aria-label="Architecture studies" className="grid grid-cols-3 md:grid-cols-6 border border-slate-800 mb-8 overflow-x-auto">
+        {tabConfig.map((tab, index) => (
           <button
             key={tab.key}
+            ref={(element) => { tabRefs.current[index] = element; }}
+            id={`engine-room-tab-${tab.key}`}
+            type="button"
+            role="tab"
+            aria-selected={activeTab === tab.key}
+            aria-controls="engine-room-panel"
+            tabIndex={activeTab === tab.key ? 0 : -1}
             onClick={() => setActiveTab(tab.key)}
-            className={`px-3 py-1.5 rounded font-mono text-xs cursor-pointer transition-all whitespace-nowrap ${activeTab === tab.key ? tab.activeClass : 'text-slate-500 border border-transparent hover:text-slate-300'}`}
+            onKeyDown={(event) => handleTabKeyDown(event, index)}
+            className={`min-h-14 px-3 py-2 border-r border-b md:border-b-0 border-slate-800 text-left cursor-pointer transition-colors ${activeTab === tab.key ? 'bg-orange-500 text-[#0a0806]' : 'bg-[#0d0a07] text-slate-400 hover:text-slate-100 hover:bg-slate-900'}`}
           >
-            {tab.label}
+            <span className="block font-mono text-[10px] opacity-70">0{index + 1}</span>
+            <span className="block text-xs font-bold">{tab.shortLabel}</span>
           </button>
         ))}
       </div>
 
-      {/* Grid Container */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+      <div
+        id="engine-room-panel"
+        role="tabpanel"
+        aria-labelledby={`engine-room-tab-${activeTab}`}
+        tabIndex={0}
+        className="grid grid-cols-1 md:grid-cols-5 gap-8"
+      >
+        <h3 className="sr-only">{tabConfig.find((tab) => tab.key === activeTab)?.label}</h3>
         {/* Step Flow List */}
-        <div className="md:col-span-2 space-y-3 font-mono text-xs">
+        <div className="md:col-span-2 divide-y divide-slate-800 border-y border-slate-800 font-mono text-xs">
           {getSteps().map((step, idx) => (
             <div 
               key={idx} 
-              className={`p-3 border rounded-lg transition-all ${step.status === 'active' ? `bg-slate-900 ${getActiveStepColor()}` : step.status === 'success' ? 'bg-slate-950/60 border-slate-800 text-slate-400' : 'bg-slate-950/20 border-slate-900 text-slate-600'}`}
+              className={`py-4 px-2 border-l-2 transition-all ${step.status === 'active' ? `bg-orange-500/5 ${getActiveStepColor()}` : step.status === 'success' ? 'border-emerald-700/50 text-slate-300' : 'border-transparent text-slate-500'}`}
             >
               <div className="flex items-center justify-between mb-1">
                 <span className="font-bold">{idx + 1}. {step.title}</span>
                 {step.status === 'success' && <CheckCircle className="w-3 h-3 text-slate-500" />}
                 {step.status === 'active' && <RefreshCw className={`w-3 h-3 ${getSpinnerColor()} animate-spin`} />}
               </div>
-              <p className="text-[10px] leading-normal">{step.desc}</p>
+              <p className="text-xs leading-relaxed font-sans text-slate-400">{step.desc}</p>
             </div>
           ))}
         </div>
 
         {/* Dynamic Architectural Diagram Block */}
-        <div className="md:col-span-3 bg-slate-950/60 border border-slate-850 rounded-lg p-4 flex flex-col justify-between font-mono text-[10px] min-h-[220px]">
-          <div className="text-slate-500 uppercase tracking-wider text-[9px] mb-4">
-            Flow Simulation Diagram
+        <div className="md:col-span-3 bg-[#0d0a07] border border-slate-800 p-5 flex flex-col justify-between font-mono text-xs min-h-[280px] relative">
+          <div className="absolute top-0 right-0 px-3 py-1 border-l border-b border-slate-800 text-slate-500 text-[10px]">
+            LIVE MODEL / {activeTab.toUpperCase()}
+          </div>
+          <div className="text-slate-400 uppercase text-xs mb-4">
+            Request path
           </div>
 
           <div className="flex flex-col items-center justify-center flex-1 py-4">
             {activeTab === 'payout' && (
               <div className="flex flex-col items-center gap-2 w-full max-w-sm">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded">
-                  <Database className="w-3 h-3 text-indigo-400" />
+                  <Database className="w-3 h-3 text-slate-300" />
                   <span>Konga MySQL DB</span>
                 </div>
                 <div className="w-0.5 h-6 bg-slate-800 relative flex items-center justify-center">
@@ -165,7 +194,7 @@ export default function EngineRoom() {
                   <span>Payout Daemon (offset loop)</span>
                 </div>
                 <div className="w-0.5 h-6 bg-slate-800 relative flex items-center justify-center">
-                  <div className="absolute w-1.5 h-1.5 bg-indigo-400 rounded-full animate-ping" />
+                  <div className="absolute w-1.5 h-1.5 bg-orange-400 rounded-full animate-ping" />
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded">
                   <CheckCircle className="w-3 h-3 text-emerald-400" />
@@ -182,14 +211,14 @@ export default function EngineRoom() {
                 </div>
 
                 <div className="flex-1 h-0.5 bg-slate-800 relative flex items-center justify-center">
-                  <div className="absolute px-1 bg-slate-950 border border-slate-800 text-[8px] rounded text-indigo-400">
+                  <div className="absolute px-1 bg-slate-950 border border-slate-800 text-[8px] rounded text-slate-300">
                     Smart-sync filter
                   </div>
                 </div>
 
                 <div className="flex flex-col items-center gap-1">
-                  <div className="px-2 py-1 bg-slate-900 border border-indigo-500/50 rounded">Staging Server</div>
-                  <span className="text-[8px] text-indigo-400">12 updated files</span>
+                  <div className="px-2 py-1 bg-slate-900 border border-orange-500/50 rounded">Staging Server</div>
+                  <span className="text-[8px] text-slate-300">12 updated files</span>
                 </div>
               </div>
             )}
@@ -219,14 +248,14 @@ export default function EngineRoom() {
             {activeTab === 'xxolcare' && (
               <div className="flex flex-col items-center gap-2 w-full max-w-sm">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-slate-800 rounded">
-                  <Globe className="w-3 h-3 text-teal-400" />
+                  <Globe className="w-3 h-3 text-orange-400" />
                   <span>Client Booking Form</span>
                 </div>
                 <div className="w-0.5 h-5 bg-slate-800 relative flex items-center justify-center">
-                  <div className="absolute w-1.5 h-1.5 bg-teal-400 rounded-full animate-bounce" />
+                  <div className="absolute w-1.5 h-1.5 bg-orange-400 rounded-full animate-bounce" />
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-teal-500/50 rounded shadow-[0_0_8px_rgba(20,184,166,0.1)]">
-                  <Shield className="w-3 h-3 text-teal-400 animate-pulse" />
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-orange-500/50 rounded shadow-[0_0_8px_rgba(20,184,166,0.1)]">
+                  <Shield className="w-3 h-3 text-orange-400 animate-pulse" />
                   <span>reCAPTCHA + Honeypot Gate</span>
                 </div>
                 <div className="w-0.5 h-5 bg-slate-800 relative flex items-center justify-center">
@@ -238,7 +267,7 @@ export default function EngineRoom() {
                     <span>Paystack</span>
                   </div>
                   <div className="flex items-center gap-1.5 px-2 py-1 bg-slate-900 border border-slate-800 rounded">
-                    <Cpu className="w-3 h-3 text-teal-400" />
+                    <Cpu className="w-3 h-3 text-orange-400" />
                     <span>Dynamic Pricing</span>
                   </div>
                 </div>
@@ -252,22 +281,22 @@ export default function EngineRoom() {
 
             {activeTab === 'radionews' && (
               <div className="flex flex-col items-center gap-2 w-full max-w-sm">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-pink-500/50 rounded shadow-[0_0_8px_rgba(236,72,153,0.1)]">
-                  <Radio className="w-3 h-3 text-pink-400 animate-pulse" />
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 border border-orange-500/50 rounded shadow-[0_0_8px_rgba(236,72,153,0.1)]">
+                  <Radio className="w-3 h-3 text-orange-400 animate-pulse" />
                   <span>Filament CMS Dashboard</span>
                 </div>
                 <div className="flex gap-6 mt-2">
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-0.5 h-5 bg-slate-800" />
                     <div className="px-2 py-1 bg-slate-900 border border-slate-800 rounded text-center">
-                      <span className="text-pink-400">Articles</span>
+                      <span className="text-orange-400">Articles</span>
                       <div className="text-[8px] text-slate-500">Revisions + SEO</div>
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-2">
                     <div className="w-0.5 h-5 bg-slate-800" />
                     <div className="px-2 py-1 bg-slate-900 border border-slate-800 rounded text-center">
-                      <span className="text-indigo-400">Daily.co</span>
+                      <span className="text-slate-300">Daily.co</span>
                       <div className="text-[8px] text-slate-500">WebRTC Rooms</div>
                     </div>
                   </div>
@@ -280,7 +309,7 @@ export default function EngineRoom() {
                   </div>
                 </div>
                 <div className="w-full h-0.5 bg-slate-800 mt-2 relative flex items-center justify-center">
-                  <div className="absolute px-1 bg-slate-950 border border-pink-500/30 text-[8px] rounded text-pink-400">
+                  <div className="absolute px-1 bg-slate-950 border border-orange-500/30 text-[8px] rounded text-orange-400">
                     Spatie Role Gates
                   </div>
                 </div>
@@ -310,27 +339,27 @@ export default function EngineRoom() {
                     </div>
 
                     {/* Connection Line */}
-                    <div className="absolute left-[96px] right-[210px] h-0.5 bg-yellow-500/20 top-1/2 -translate-y-1/2 flex items-center justify-center">
-                      <span className="text-[6px] text-yellow-500/60 font-mono">POST</span>
+                    <div className="absolute left-[96px] right-[210px] h-0.5 bg-orange-500/20 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                      <span className="text-[6px] text-orange-500/60 font-mono">POST</span>
                     </div>
 
                     {/* Cargo Booking Portal */}
                     <div className="flex flex-col items-center z-10 w-28">
-                      <div className="px-2 py-1 bg-slate-900 border border-yellow-500/30 rounded text-center w-full">
-                        <span className="text-[8px] text-yellow-400 font-bold uppercase">Cargo Portal</span>
+                      <div className="px-2 py-1 bg-slate-900 border border-orange-500/30 rounded text-center w-full">
+                        <span className="text-[8px] text-orange-400 font-bold uppercase">Cargo Portal</span>
                         <div className="text-[7px] text-slate-500 mt-0.5">Waybill & SeerBit IPN</div>
                       </div>
                     </div>
 
                     {/* Connection Line */}
-                    <div className="absolute right-[112px] left-[208px] h-0.5 bg-indigo-500/20 top-1/2 -translate-y-1/2 flex items-center justify-center">
-                      <span className="text-[6px] text-indigo-500/60 font-mono">REST API</span>
+                    <div className="absolute right-[112px] left-[208px] h-0.5 bg-orange-500/20 top-1/2 -translate-y-1/2 flex items-center justify-center">
+                      <span className="text-[6px] text-slate-400/60 font-mono">REST API</span>
                     </div>
 
                     {/* Transglobal API Hub */}
                     <div className="flex flex-col items-center z-10 w-28">
-                      <div className="px-2 py-1 bg-slate-900 border border-indigo-500/30 rounded text-center w-full">
-                        <span className="text-[8px] text-indigo-400 font-bold uppercase">Backyard API</span>
+                      <div className="px-2 py-1 bg-slate-900 border border-orange-500/30 rounded text-center w-full">
+                        <span className="text-[8px] text-slate-300 font-bold uppercase">Backyard API</span>
                         <div className="text-[7px] text-slate-500 mt-0.5">Sabre Tariffs & DVA</div>
                       </div>
                     </div>
@@ -357,8 +386,8 @@ export default function EngineRoom() {
                   <div className="relative flex items-center justify-between w-full">
                     {/* Webhook Controller */}
                     <div className="flex flex-col items-center z-10 w-28">
-                      <div className="px-2 py-1 bg-slate-900 border border-yellow-500/30 rounded text-center w-full">
-                        <span className="text-[8px] text-yellow-400 font-bold uppercase">HMAC Webhook</span>
+                      <div className="px-2 py-1 bg-slate-900 border border-orange-500/30 rounded text-center w-full">
+                        <span className="text-[8px] text-orange-400 font-bold uppercase">HMAC Webhook</span>
                         <div className="text-[7px] text-slate-500 mt-0.5">Verifies SHA-512</div>
                       </div>
                     </div>
@@ -382,7 +411,7 @@ export default function EngineRoom() {
 
                 {/* Connectivity Pattern explanation */}
                 <div className="text-[8px] text-slate-500 bg-slate-950/40 p-2 border border-slate-900 rounded leading-normal">
-                  <span className="text-yellow-400 font-bold uppercase">Connection Workflow:</span> The client schedules shipping via the <span className="text-slate-300">Cargo Booking Portal</span>. The booking triggers a tariff computation against the Sabre Matrix in the <span className="text-slate-300">Backyard API</span>. Payment is processed using Paystack DVA/SeerBit handshakes. Upon confirmation, a webhook fires to the Backyard engine, which verifies the signature via SHA-512 and dispatches updates back to the Cargo waybill database to unlock printing.
+                  <span className="text-orange-400 font-bold uppercase">Connection Workflow:</span> The client schedules shipping via the <span className="text-slate-300">Cargo Booking Portal</span>. The booking triggers a tariff computation against the Sabre Matrix in the <span className="text-slate-300">Backyard API</span>. Payment is processed using Paystack DVA/SeerBit handshakes. Upon confirmation, a webhook fires to the Backyard engine, which verifies the signature via SHA-512 and dispatches updates back to the Cargo waybill database to unlock printing.
                 </div>
               </div>
             )}
@@ -393,19 +422,19 @@ export default function EngineRoom() {
               <span className="text-orange-400/80">Result: Prevented DB lock failures. Escrow releases processed 2x faster without CPU spikes.</span>
             )}
             {activeTab === 'sync' && (
-              <span className="text-indigo-400/80">Result: Slashing staging deployment transfer cycles by 50% while preserving environment settings.</span>
+              <span className="text-slate-300/80">Result: Slashing staging deployment transfer cycles by 50% while preserving environment settings.</span>
             )}
             {activeTab === 'tripease' && (
               <span className="text-emerald-400/80">Result: Secure, containerized microservices routing with isolated multi-tenant database pools.</span>
             )}
             {activeTab === 'xxolcare' && (
-              <span className="text-teal-400/80">Result: Eliminated bot signups, enabled dynamic pricing adjustments, and bypassed queue bottlenecks for instant notifications.</span>
+              <span className="text-orange-400/80">Result: Eliminated bot signups, enabled dynamic pricing adjustments, and bypassed queue bottlenecks for instant notifications.</span>
             )}
             {activeTab === 'radionews' && (
-              <span className="text-pink-400/80">Result: Full CMS with role-gated publishing, embedded WebRTC conferencing, and automated SEO discovery feeds.</span>
+              <span className="text-orange-400/80">Result: Full CMS with role-gated publishing, embedded WebRTC conferencing, and automated SEO discovery feeds.</span>
             )}
             {activeTab === 'transglobal' && (
-              <span className="text-yellow-400/80">Result: Self-healing tariff seeding with multi-gateway payment processing and HMAC-secured webhook synchronization.</span>
+              <span className="text-orange-400/80">Result: Self-healing tariff seeding with multi-gateway payment processing and HMAC-secured webhook synchronization.</span>
             )}
           </div>
         </div>
