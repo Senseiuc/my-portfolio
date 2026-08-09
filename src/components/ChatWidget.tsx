@@ -50,13 +50,13 @@ export default function ChatWidget() {
       console.error('Failed to load chat history:', e);
     }
 
-    let greetingText = "Hi! I'm Sensei, Gideon's AI assistant. Ask me about Konga, Ansar-Ud-Deen, Visitor Management, Shipwize, or his backend systems work.";
+    let greetingText = "Hi! I'm Sensei, Gideon's AI assistant. Ask me about his web, mobile, backend, DevOps, or end-to-end project work.";
     try {
       const savedProfile = sessionStorage.getItem('chat_user_profile');
       if (savedProfile) {
         const p = JSON.parse(savedProfile);
         if (p?.firstName) {
-          greetingText = `Hi ${p.firstName}! I'm Sensei, Gideon's AI assistant. Ask me about Konga, Ansar-Ud-Deen, Visitor Management, Shipwize, or his backend systems work.`;
+          greetingText = `Hi ${p.firstName}! I'm Sensei, Gideon's AI assistant. Ask me about his web, mobile, backend, DevOps, or end-to-end project work.`;
         }
       }
     } catch {}
@@ -154,7 +154,7 @@ export default function ChatWidget() {
 
     const greeting = {
       role: 'assistant' as const,
-      text: `Hi ${profile.firstName}! I'm Sensei, Gideon's AI assistant. Ask me about Konga, Ansar-Ud-Deen, Visitor Management, Shipwize, or his backend systems work.`,
+      text: `Hi ${profile.firstName}! I'm Sensei, Gideon's AI assistant. Ask me about his web, mobile, backend, DevOps, or end-to-end project work.`,
       timestamp: new Date()
     };
     setMessages([greeting]);

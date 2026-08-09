@@ -6,11 +6,12 @@ assistant, deployment configuration, or visual assets.
 
 ## Product Purpose
 
-This repository contains a backend-focused engineering portfolio and a
-print-ready CV. The site should present Gideon as a software engineer who works
-on payment infrastructure, backend systems, logistics platforms, integrations,
-and production operations. It is a working portfolio, not a generic marketing
-landing page.
+This repository contains an end-to-end application engineering portfolio and a
+print-ready CV. The site should present Gideon as an engineer who owns delivery
+across frontend, mobile, backend, data, DevOps, deployment, and production
+support, with particularly strong depth in payment infrastructure, complex
+integrations, and reliable backend systems. It is a working portfolio, not a
+generic marketing landing page.
 
 ## Technical Architecture
 

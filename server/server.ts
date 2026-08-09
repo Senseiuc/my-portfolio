@@ -546,7 +546,7 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `${namePrefix}the strongest public backend examples are Konga for high-volume batch processing, TripEase for service boundaries and ledger concurrency, and Transglobal for payment and logistics integrations. Ansar-Ud-Deen adds full-platform operational ownership across API, web, mobile, queues, and deployment.`;
   }
   if (msg.includes('what can') || msg.includes('for my team') || msg.includes('hire')) {
-    return `${namePrefix}Gideon is best suited to backend-heavy product work: payment and ledger workflows, logistics platforms, API integrations, operational dashboards, data migrations, and containerized services. He can own the path from architecture and implementation through deployment and production troubleshooting.`;
+    return `${namePrefix}Gideon can own an application end to end: responsive web interfaces, Flutter mobile clients, APIs, data models, payments and integrations, containerized deployment, and production troubleshooting. His deepest specialization is in backend-heavy systems where reliability, transactions, and operational workflows matter.`;
   }
   if (msg.includes('projects') || msg.includes('portfolio') || msg.includes('work')) {
     return `${namePrefix}Gideon's portfolio covers commerce infrastructure at Konga, distributed transit with TripEase, logistics integrations for Transglobal and Shipwize, the Ansar-Ud-Deen web/mobile platform, visitor operations, education, property management, broadcasting, and care hospitality. Ask for a comparison or a specific project and I can explain the engineering decisions and evidence.`;
@@ -583,7 +583,7 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `${namePrefix}Shipwize is a Laravel logistics platform Gideon developed for shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation codes, commissions, and Termii customer notifications.`;
   }
   if (msg.includes('skills') || msg.includes('stack') || msg.includes('languages') || msg.includes('technologies')) {
-    return `${namePrefix}Gideon's primary technical competencies include PHP (Laravel, Yii, Phalcon), Node.js (Express), Python (FastAPI), React, TypeScript, Docker, Kubernetes, Kibana, MySQL/MariaDB, and SQLite.`;
+    return `${namePrefix}Gideon works across the application lifecycle: React and Next.js interfaces, Flutter mobile apps, PHP/Laravel, Node.js/Express and Python/FastAPI services, SQL data systems, plus Docker, Kubernetes, CI/CD, and production operations. His strongest depth is in backend architecture, payments, and integrations.`;
   }
   if (msg.includes('contact') || msg.includes('email') || msg.includes('hire')) {
     return `${namePrefix}you can reach Gideon Nwadialu via email at nwadialugideon@gmail.com, or check out his GitHub profile (github.com/senseiuc) and LinkedIn.`;
@@ -618,7 +618,7 @@ You are "Sensei", the personal AI coding and development assistant for Gideon Nw
 Keep answers concise, specific, and focused on Gideon's work, experience, and technical skills. Speak of Gideon in the third person ("Gideon built...", "He has..."). Use the visitor's name in the initial greeting only; do not prefix or repeatedly personalize ordinary answers with their name. Ground every claim in the information below. Never invent clients, metrics, technologies, URLs, responsibilities, or outcomes. When the information is insufficient, say so and suggest a relevant question you can answer. For comparisons, identify the distinct engineering strengths of each project. Prefer concrete decisions and evidence over promotional language.
 
 Information about Gideon Nwadialu:
-- Role: Full-Stack Software Engineer & Technical Solutions Architect.
+- Role: End-to-End Application Engineer, Full-Stack Software Engineer & Technical Solutions Architect. Owns delivery across frontend, Flutter mobile, backend services, data, DevOps, deployment, and production support, with deep specialization in payment systems and complex integrations.
 - Location: Lagos, Nigeria / remote.
 - Professional Experience:
   1. Konga (2024 - Present): Software Engineer. Optimized payout systems, doubling speed. Rebuilt data synchronization daemons and handled migration operations of over 100k records.
@@ -636,7 +636,8 @@ Information about Gideon Nwadialu:
   - Shipwize: Shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation, commissions, and Termii notifications.
 - Core Technologies:
   - Languages: PHP, TypeScript, JavaScript, Python, SQL
-  - Frameworks: Laravel, Express, FastAPI, React
+  - Frontend & Mobile: React, Next.js, TypeScript, Flutter
+  - Backend Frameworks: Laravel, Express, FastAPI, NestJS
   - DevOps & Tools: Docker, Kubernetes, Kibana, cPanel Git auto-deploy, Git/GitLab workflows.
 - Personal Interests & Hobbies: Playing chess, listening to music, working out, solving logical/mathematical puzzles, and exploring advanced AI agent architectures.
 `;
