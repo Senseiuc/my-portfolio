@@ -571,7 +571,7 @@ export default function App() {
               className="inline-flex items-center gap-2 border-l-2 border-orange-500 pl-3"
             >
               <Cpu className="w-4 h-4 text-orange-400" />
-              <span className="font-mono text-xs text-orange-300 uppercase tracking-wider font-bold">Backend systems / payments / integrations</span>
+              <span className="font-mono text-xs text-orange-300 uppercase tracking-wider font-bold">Web / mobile / backend / delivery</span>
             </motion.div>
 
             <motion.h1 
@@ -580,8 +580,8 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.1 }}
               className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-100 leading-[1.02] md:leading-[0.96]"
             >
-              I build the systems<br />
-              <span className="text-orange-400">behind the transaction.</span>
+              I build the whole application.<br />
+              <span className="text-orange-400">Then make it hold up.</span>
             </motion.h1>
 
             <motion.p 
@@ -590,7 +590,7 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-slate-300 text-base md:text-lg max-w-2xl leading-relaxed font-sans"
             >
-              I’m Gideon Nwadialu, a full-stack engineer focused on payment ledgers, high-volume backend workflows, and the integrations that keep products moving when the happy path ends.
+              I’m Gideon Nwadialu, an end-to-end application engineer. I take products from interface and mobile experience through APIs, data, infrastructure, deployment, and production support, with particular depth in payments and complex integrations.
             </motion.p>
 
             <motion.dl
@@ -837,43 +837,43 @@ export default function App() {
               Core Competencies
               </h2>
             </div>
-            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">Capabilities demonstrated through production constraints, not a logo wall.</p>
+            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">One accountable engineering path from product interface to production operations, demonstrated through shipped systems.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 border-y border-slate-800 md:border-x">
             <div className="relative p-6 pr-28 border-b md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="secure" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">01 / Fintech & Ledger Operations</span>
-              <h3 className="font-bold text-slate-200 text-base">Escrow Wallet Payouts & Audits</h3>
+              <Mascot variant="code" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">01 / Frontend & Product Workflows</span>
+              <h3 className="font-bold text-slate-200 text-base">Interfaces People Can Operate</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Optimized billing and payout updates in backend daemons using cursor offsets and batches of 500 records, releasing payments twice as fast while eliminating database locking spikes.
+                Builds responsive React and Next.js portals, administration dashboards, CMS workflows, booking journeys, and role-aware operational interfaces connected to real production processes.
               </p>
             </div>
 
             <div className="relative p-6 pr-28 border-b border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="deploy" motion="celebrate" className="absolute right-2 bottom-1 w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">02 / Systems Governance</span>
-              <h3 className="font-bold text-slate-200 text-base">Smart-Sync Deployment Automation</h3>
+              <Mascot variant="secure" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">02 / Backend & Financial Systems</span>
+              <h3 className="font-bold text-slate-200 text-base">Reliable APIs, Ledgers & Integrations</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Engineered custom smart-sync file isolation scripts, reducing environment sync delivery time by 50% while preserving staging overrides and local patches.
+                Engineers payment workflows, APIs, queues, webhooks, data migrations, and concurrency-safe services, including payout processing that ran twice as fast without database locking spikes.
               </p>
             </div>
 
             <div className="relative p-6 pr-28 md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="cloud" motion="float" className="absolute right-2 bottom-1 w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">03 / Microservices Routing</span>
-              <h3 className="font-bold text-slate-200 text-base">API Gateway Authentication</h3>
+              <Mascot variant="build" motion="float" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">03 / Mobile & Cross-Platform</span>
+              <h3 className="font-bold text-slate-200 text-base">Mobile Products on Shared Platforms</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Implemented multi-tenant gateways and secure token validation wrappers between Laravel services, improving environment startup time by 50%.
+                Delivers Flutter clients alongside web and API platforms, including the Ansar-Ud-Deen member experience and TripEase mobile workflows backed by shared identity, payment, and content services.
               </p>
             </div>
 
             <div className="relative p-6 pr-28 border-t md:border-t-0 border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="debug" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">04 / DevOps & Compliance</span>
-              <h3 className="font-bold text-slate-200 text-base">Kubernetes Cluster & KYC Integration</h3>
+              <Mascot variant="deploy" motion="celebrate" className="absolute right-2 bottom-1 w-20 opacity-80" />
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">04 / DevOps & Production Ownership</span>
+              <h3 className="font-bold text-slate-200 text-base">From Repository to Running Service</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Integrated Dojah KYC and computer vision APIs with dynamic token retry wrappers, blocking 99% of registration spam and resolving wallet payout failures.
+                Containers, deploys, monitors, and troubleshoots applications with Docker, Kubernetes, CI/CD workflows, environment automation, and production-safe migration practices.
               </p>
             </div>
           </div>
@@ -1058,7 +1058,7 @@ export default function App() {
             <p className="font-mono text-xs uppercase text-orange-400">Your move</p>
             <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-100">Bring me the difficult part.</h2>
             <p className="mt-4 text-base leading-relaxed text-slate-400 max-w-md">
-              I’m open to backend, platform integration, payment infrastructure, and full-stack engineering conversations.
+              I’m open to end-to-end web and mobile application work, backend and payment platforms, product integrations, and production engineering conversations.
             </p>
             <div className="mt-5 lg:mt-6 flex items-center gap-5 lg:block">
               <Mascot variant="integrate" label="Senseiuc partnership mascot" motion="float" className="w-20 sm:w-24 lg:w-36" />
