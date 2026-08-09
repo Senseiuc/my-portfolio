@@ -27,3 +27,11 @@ test('CSP contains the exact hash of the structured-data block', () => {
   const hash = `sha256-${crypto.createHash('sha256').update(match[1]).digest('base64')}`;
   assert.match(server, new RegExp(hash.replace(/[+]/g, '\\+')));
 });
+
+test('resume interactions comply with the site CSP', () => {
+  const html = fs.readFileSync('resume.html', 'utf8');
+
+  assert.doesNotMatch(html, /\son[a-z]+\s*=/i);
+  assert.match(html, /<script src="\/resume\.js" defer><\/script>/);
+  assert.ok(fs.existsSync('public/resume.js'));
+});
