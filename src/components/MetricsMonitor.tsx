@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Activity, Server, Cpu, HardDrive, RefreshCcw } from 'lucide-react';
+import { Activity, Cpu, Database, RefreshCcw, Server } from 'lucide-react';
 
 interface SystemMetrics {
   uptime: number;
-  memory: {
-    rss: number;
-    heapTotal: number;
-    heapUsed: number;
-  };
-  database: {
-    messagesStored: number;
-    terminalLogsStored: number;
-    syncStatus: {
-      konga_sync_count: string;
-      lextorah_sync_count: string;
-      sabre_seed_count: string;
-      last_deployment_time: string;
-    };
-  };
+  memory: { rss: number; heapTotal: number; heapUsed: number };
+  database: { messagesStored: number; terminalLogsStored: number };
   nodeVersion: string;
   platform: string;
 }
@@ -30,33 +17,12 @@ export default function MetricsMonitor() {
   const fetchMetrics = async () => {
     try {
       const response = await fetch('/api/metrics');
-      if (!response.ok) throw new Error('API fetch failed');
-      const data = await response.json();
-      setMetrics(data);
+      if (!response.ok) throw new Error('Runtime metrics are unavailable');
+      setMetrics(await response.json());
       setError(false);
-    } catch (err) {
-      console.error('Failed to load live metrics, using local sandbox metrics:', err);
-      // Fallback local metrics for local presentation
-      setMetrics({
-        uptime: Math.round(performance.now() / 1000) + 7200,
-        memory: {
-          rss: 42,
-          heapTotal: 28,
-          heapUsed: 16 + Math.round(Math.sin(Date.now() / 5000) * 2),
-        },
-        database: {
-          messagesStored: 3,
-          terminalLogsStored: 18,
-          syncStatus: {
-            konga_sync_count: '986',
-            lextorah_sync_count: '412',
-            sabre_seed_count: '1420',
-            last_deployment_time: new Date(Date.now() - 3600000).toISOString(),
-          }
-        },
-        nodeVersion: 'v22.12.0',
-        platform: 'linux-alpine'
-      });
+    } catch (requestError) {
+      console.error('Failed to load portfolio runtime metrics:', requestError);
+      setMetrics(null);
       setError(true);
     } finally {
       setLoading(false);
@@ -65,8 +31,8 @@ export default function MetricsMonitor() {
 
   useEffect(() => {
     fetchMetrics();
-    const interval = setInterval(fetchMetrics, 30000); // Poll every 30 seconds instead of 5 to respect server rate limits
-    return () => clearInterval(interval);
+    const interval = window.setInterval(fetchMetrics, 30000);
+    return () => window.clearInterval(interval);
   }, []);
 
   const formatUptime = (seconds: number) => {
@@ -78,133 +44,70 @@ export default function MetricsMonitor() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 bg-slate-900/40 border border-slate-800  h-60 text-slate-500 font-mono text-sm animate-pulse">
-        <RefreshCcw className="w-5 h-5 animate-spin mb-2 text-orange-400" />
-        <span>Initializing VPS Metrics Stream...</span>
+      <div className="flex h-60 flex-col items-center justify-center border border-slate-800 bg-slate-900/40 p-8 font-mono text-sm text-slate-500">
+        <RefreshCcw className="mb-2 h-5 w-5 animate-spin text-orange-400" />
+        <span>Reading portfolio runtime...</span>
       </div>
     );
   }
 
-  const memoryPercent = metrics 
-    ? Math.round((metrics.memory.heapUsed / metrics.memory.heapTotal) * 100) 
+  if (error || !metrics) {
+    return (
+      <div className="flex h-60 flex-col items-start justify-center border border-slate-800 bg-[#141110]/50 p-6">
+        <Activity className="h-5 w-5 text-slate-500" />
+        <h3 className="mt-3 text-sm font-bold text-slate-200">Runtime metrics unavailable</h3>
+        <p className="mt-2 text-xs leading-relaxed text-slate-500">The portfolio API did not return a current measurement. No fallback values are shown.</p>
+        <button type="button" onClick={fetchMetrics} className="mt-4 inline-flex items-center gap-2 text-xs font-bold text-orange-400 hover:text-orange-300">
+          <RefreshCcw className="h-3.5 w-3.5" /> Retry
+        </button>
+      </div>
+    );
+  }
+
+  const memoryPercent = metrics.memory.heapTotal > 0
+    ? Math.round((metrics.memory.heapUsed / metrics.memory.heapTotal) * 100)
     : 0;
 
   return (
-    <div className="bg-[#141110]/50 border border-slate-800  p-5   font-mono text-xs leading-relaxed text-slate-300">
-      {/* Title */}
-      <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
+    <div className="border border-slate-800 bg-[#141110]/50 p-5 font-mono text-xs leading-relaxed text-slate-300">
+      <div className="mb-4 flex items-center justify-between gap-3 border-b border-slate-800 pb-3">
         <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-orange-400 animate-pulse" />
-          <span className="font-bold text-slate-100 uppercase tracking-wider">Live DevOps Metrics Monitor</span>
+          <Activity className="h-4 w-4 text-orange-400" />
+          <span className="font-bold uppercase text-slate-100">Portfolio runtime</span>
         </div>
-        <span className={`text-[10px] px-2 py-0.5 rounded-full border ${error ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' : 'bg-green-500/10 border-green-500/30 text-green-400'}`}>
-          {error ? 'SANDBOX ACTIVE' : 'LIVE VPS STREAM'}
-        </span>
+        <span className="border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-400">API measured</span>
       </div>
 
-      {/* Grid details */}
-      <div className="grid grid-cols-2 gap-4">
-        {/* Memory widget */}
-        <div className="bg-slate-950/40 border border-slate-800/60  p-3">
-          <div className="flex items-center gap-1.5 text-slate-400 mb-2">
-            <Cpu className="w-3.5 h-3.5 text-orange-400" />
-            <span>Process Heap</span>
+      <p className="mb-4 text-[10px] leading-relaxed text-slate-500">
+        Current health of this portfolio application, not the production systems described elsewhere on the site.
+      </p>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <div className="border border-slate-800/60 bg-slate-950/40 p-3">
+          <div className="mb-2 flex items-center gap-1.5 text-slate-400">
+            <Cpu className="h-3.5 w-3.5 text-orange-400" /> Process heap
           </div>
-          <div className="text-sm font-semibold text-slate-100 mb-1">
-            {metrics?.memory.heapUsed}MB / {metrics?.memory.heapTotal}MB
+          <div className="mb-2 text-sm font-semibold text-slate-100">{metrics.memory.heapUsed}MB / {metrics.memory.heapTotal}MB</div>
+          <div className="h-1.5 w-full overflow-hidden bg-slate-800">
+            <div className="h-full bg-orange-400 transition-[width] duration-500" style={{ width: `${Math.min(memoryPercent, 100)}%` }} />
           </div>
-          {/* Progress bar */}
-          <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-            <div 
-              className="bg-orange-400 h-full transition-all duration-1000" 
-              style={{ width: `${memoryPercent}%` }}
-            />
-          </div>
-          <div className="text-[10px] text-slate-500 mt-1 text-right">
-            Usage: {memoryPercent}%
-          </div>
+          <div className="mt-1 text-right text-[10px] text-slate-500">{memoryPercent}% used</div>
         </div>
 
-        {/* Database state widget */}
-        <div className="bg-slate-950/40 border border-slate-800/60  p-3">
-          <div className="flex items-center gap-1.5 text-slate-400 mb-2">
-            <HardDrive className="w-3.5 h-3.5 text-slate-300" />
-            <span>SQLite Ledgers</span>
+        <div className="border border-slate-800/60 bg-slate-950/40 p-3">
+          <div className="mb-2 flex items-center gap-1.5 text-slate-400">
+            <Database className="h-3.5 w-3.5 text-slate-300" /> Portfolio storage
           </div>
-          <div className="grid grid-cols-2 gap-2 text-slate-300">
-            <div>
-              <div className="text-[10px] text-slate-500">Contact Logs</div>
-              <div className="font-semibold text-slate-100">{metrics?.database.messagesStored}</div>
-            </div>
-            <div>
-              <div className="text-[10px] text-slate-500">Command Logs</div>
-              <div className="font-semibold text-slate-100">{metrics?.database.terminalLogsStored}</div>
-            </div>
+          <div className="grid grid-cols-2 gap-2">
+            <div><div className="text-[10px] text-slate-500">Contact entries</div><div className="font-semibold text-slate-100">{metrics.database.messagesStored}</div></div>
+            <div><div className="text-[10px] text-slate-500">Explorer queries</div><div className="font-semibold text-slate-100">{metrics.database.terminalLogsStored}</div></div>
           </div>
         </div>
       </div>
 
-      {/* External Gateway Latency Matrix */}
-      <div className="mt-4 bg-slate-950/40 border border-slate-800/60  p-3">
-        <div className="text-slate-400 mb-2.5 font-bold uppercase text-[10px] tracking-wider border-b border-slate-800/40 pb-1.5 flex items-center justify-between">
-          <span>External Integrations Gateway Latency</span>
-          <span className="text-[10px] text-green-400 px-1.5 py-0.5 rounded bg-green-500/10 border border-green-500/20 uppercase tracking-widest font-mono animate-pulse">Healthy</span>
-        </div>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-[10px]">
-          <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
-            <span className="text-slate-500 font-medium">Paystack Core</span>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-orange-400">{24 + Math.round(Math.sin(Date.now() / 3000) * 2)}ms</span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
-            <span className="text-slate-500 font-medium">Dojah KYC</span>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-slate-300">{86 + Math.round(Math.cos(Date.now() / 4000) * 3)}ms</span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
-            <span className="text-slate-500 font-medium">Daily.co RTC</span>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-emerald-400">{45 + Math.round(Math.sin(Date.now() / 2500) * 2)}ms</span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
-            <span className="text-slate-500 font-medium">SeerBit API</span>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-orange-400">{19 + Math.round(Math.cos(Date.now() / 3500) * 1)}ms</span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
-            <span className="text-slate-500 font-medium">Termii SMS</span>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-orange-400">{31 + Math.round(Math.sin(Date.now() / 5000) * 2)}ms</span>
-            </div>
-          </div>
-          <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
-            <span className="text-slate-500 font-medium">Cloudinary CDN</span>
-            <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-orange-400">{14 + Math.round(Math.cos(Date.now() / 6000) * 1)}ms</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* System info */}
-      <div className="mt-4 flex flex-wrap items-center justify-between text-[10px] text-slate-500 gap-2 border-t border-slate-800 pt-3">
-        <div className="flex items-center gap-1">
-          <Server className="w-3 h-3 text-slate-600" />
-          <span>Host: {metrics?.platform} ({metrics?.nodeVersion})</span>
-        </div>
-        <div>
-          <span>Uptime: {metrics ? formatUptime(metrics.uptime) : '0s'}</span>
-        </div>
+      <div className="mt-4 grid grid-cols-1 gap-2 border-t border-slate-800 pt-3 text-[10px] text-slate-500 sm:grid-cols-2">
+        <div className="flex items-center gap-1.5"><Server className="h-3 w-3" /> Runtime: {metrics.platform} / {metrics.nodeVersion}</div>
+        <div className="sm:text-right">Process uptime: {formatUptime(metrics.uptime)}</div>
       </div>
     </div>
   );

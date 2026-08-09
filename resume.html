@@ -331,7 +331,7 @@
           <h2 class="section-title-sidebar" style="border: none; padding: 0; margin: 0; display: none;">Contact</h2>
           <div class="contact-item">
             <span class="contact-label">Phone</span>
-            <a href="tel:+2348105347918">+234-810-534-XXXX</a>
+            <a href="tel:+2348105347918">08105347918</a>
           </div>
           <div class="contact-item">
             <span class="contact-label">Email</span>
@@ -374,7 +374,7 @@
           <div class="section-title-sidebar">Skills</div>
           <div class="skill-group">
             <div class="skill-title">Backend &amp; AI</div>
-            <div class="skill-list">PHP (Laravel, Yii, Phalcon), Node.js (NestJS, Express), Python (FastAPI), LangGraph, LangChain, REST APIs</div>
+            <div class="skill-list">PHP (Laravel, Yii, Phalcon), Node.js (NestJS, Express), Python (FastAPI), LangGraph, LangChain, REST APIs, Message Queues (RabbitMQ, Redis)</div>
           </div>
           <div class="skill-group">
             <div class="skill-title">Frontend</div>
@@ -385,8 +385,8 @@
             <div class="skill-list">PostgreSQL, MySQL/MariaDB, MongoDB, SQLite, Prisma, Redis, BullMQ, Docker, Kubernetes, Sentry</div>
           </div>
           <div class="skill-group">
-            <div class="skill-title">Domains</div>
-            <div class="skill-list">Paystack, Flutterwave, SeerBit, Termii, Cloudinary, Dojah, Logistics, AI Agents &amp; RAG</div>
+            <div class="skill-title">Payments &amp; Platforms</div>
+            <div class="skill-list">Paystack, Flutterwave, SeerBit, Stripe, Termii, Cloudinary, Dojah, E-commerce, Logistics, AI Agents &amp; RAG, Admin Dashboards</div>
           </div>
         </div>
 
@@ -409,7 +409,7 @@
         <div>
           <h2>Profile</h2>
           <p class="profile-text">
-            Product Engineer delivering applications end to end across web, mobile, backend services, data, deployment, and production operations. Deeply experienced in APIs, payment infrastructure, and platform integrations across e-commerce, logistics, financial services, education, and institutional platforms. Works with PHP/Laravel, Node.js/NestJS, Python/FastAPI, React/Next.js, Flutter, queues, and containerized operations.
+            Senior Full-Stack Engineer specializing in backend systems, APIs, payment infrastructure, and platform integrations across e-commerce, logistics, financial services, education, and institutional platforms. Experienced with PHP/Laravel, Node.js/NestJS, Python/FastAPI, React/Next.js, Flutter, queues, and containerized operations. Proven track record delivering high-volume merchant workflows, logistics booking engines, multi-wallet ledger cores, and LangGraph-driven AI agents.
           </p>
         </div>
 
@@ -424,12 +424,17 @@
             </div>
             <div class="job-role">Software Engineer</div>
             <ul class="job-bullets">
+              <li>Engineered a secure two-step wallet debit flow with database pessimistic row-locking and OTP verification, <strong>preventing concurrent debit race conditions</strong> and ensuring transaction integrity for merchant escrow wallets.</li>
+              <li>Designed and built the complete QoS (Quality of Service) inventory compliance system from the ground up — database schema, cron-based inventory zeroing engine, REST API layer, admin review UI with real-time countdown tracking, automated CWK breach reporting via Hermes, and K8s deployment infrastructure, <strong>turning inventory compliance into an automated, traceable workflow</strong>.</li>
+              <li>Led a portal-wide mobile responsiveness overhaul and UI remediation initiative across SellerHQ and Backyard admin panels — covering orders, reviews, subscriptions, wallet, warehouse, products, dashboard, commissions, KongaPay, and reporting modules — along with layout redesigns, dropdown/overlay clipping fixes, and interactive component refinements, <strong>delivering a seamless mobile experience</strong> for thousands of merchants and admin users.</li>
+              <li>Revived automated testing and local development across legacy merchant services by containerizing the PHPUnit workflow, isolating test schemas and migrations, mocking Hermes, adding MySQL/Redis readiness and environment configuration, integrating tests into CI, and expanding SSO/authentication regression coverage, <strong>making verification repeatable locally and in deployment pipelines</strong>.</li>
+              <li>Architected the KOMA Price feature with database migrations, warehouse controller updates, and full frontend views/validation, <strong>enabling a new dynamic pricing model</strong> for Konga Marketplace operations.</li>
+              <li>Designed a cross-database SEO tag architecture with versioned caching and Magento sync, <strong>improving search engine visibility</strong> and enabling automated tag propagation across storefronts.</li>
+              <li>Built a comprehensive email audit trail system with delivery status tracking and centralized send-and-log infrastructure, <strong>achieving full traceability</strong> for all transactional merchant communications.</li>
+              <li>Integrated Dojah API for NIN, TIN, and CAC identity verification with backend validation pipeline and automated company-type detection, <strong>strengthening regulatory KYC controls</strong> for merchant onboarding.</li>
               <li>Optimized escrow payout release commands using cursor offsets in chunked batches (500 records) with microsecond delays, <strong>releasing merchant payouts twice as fast and eliminating database CPU spikes</strong>.</li>
-              <li>Integrated Dojah KYC endpoints with automated single-retry token recovery, <strong>resolving critical fund transfer blocks</strong> and clearing stuck merchant escrow wallets.</li>
-              <li>Patched a critical Magento synchronization daemon by enforcing numeric validation during customer ID creation, <strong>clearing stuck records and restoring the synchronization pipeline</strong>.</li>
-              <li>Rebuilt background QoS inventory cron tasks to execute in batches of 2,500 using ID range chunking, <strong>eliminating database table locks and query timeouts</strong> on high-volume tables.</li>
-              <li>Implemented storefront URL sanitization and uniqueness verification, <strong>resolving routing failures and restoring merchant-page visibility</strong>.</li>
-              <li>Engineered bank-details modification tracking and admin payout controls with mandatory change logs, <strong>strengthening traceability for sensitive account updates</strong>.</li>
+              <li>Resolved a critical Magento sync pipeline failure by enforcing numeric customer ID validations, <strong>making stuck merchant synchronization immediately diagnosable and recoverable</strong>.</li>
+              <li>Engineered bank details modification trackers and admin payout controls with mandatory change logging, <strong>adding complete traceability</strong> for sensitive account settings.</li>
             </ul>
           </div>
 
@@ -443,7 +448,7 @@
             <ul class="job-bullets">
               <li>Led a community platform backend migration from Laravel 5.8 to 11, <strong>slashing technical debt and ensuring zero data loss</strong> for over 100,000 historical records.</li>
               <li>Designed a multi-wallet, dual-currency (XOF/USD) ledger core for P2P transfers and withdrawals, <strong>improving settlement transaction speeds by 40%</strong>.</li>
-              <li>Implemented a transaction ledger with hashed audit records to <strong>provide tamper-resistant tracking and robust audit logs</strong>.</li>
+              <li>Engineered a tamper-resistant transaction ledger with hashed audit records, <strong>providing cryptographic integrity verification</strong> for all financial operations across the platform.</li>
               <li>Engineered an event-driven rewards and commission system using Laravel queues and Redis, <strong>reducing server overhead by 35% and improving queue throughput</strong>.</li>
             </ul>
           </div>
@@ -491,8 +496,10 @@
               <span style="font-size: 9.5px; font-style: italic; color: var(--text-color); margin-left: 5px;">(DevOps &amp; Backend Specialist)</span>
             </div>
             <ul class="job-bullets" style="margin-bottom: 9px;">
-              <li>Engineered smart-sync deployment automation, <strong>reducing update delivery times by 50%</strong> while preserving environment patches.</li>
-              <li>Resolved FastAPI routing and CORS issues and standardized Docker/Nginx deployments, <strong>reducing setup overhead by 60%</strong>.</li>
+              <li>Audited and optimized server configurations and deployment parameters across environments, <strong>improving system response times</strong> and resource efficiency for the AI tutoring platform.</li>
+              <li>Engineered a smart-sync deployment automation script, <strong>reducing update delivery times by 50%</strong> while preserving local environment patches.</li>
+              <li>Resolved cross-cutting API routing and CORS misconfigurations across FastAPI endpoints, <strong>eliminating integration errors</strong> and reducing end-to-end latency.</li>
+              <li>Standardized containerized staging and production runs using Docker and Nginx reverse proxies, <strong>reducing manual environment setup overhead by 60%</strong>.</li>
             </ul>
 
             <div style="margin-top: 9px; margin-bottom: 4px;">
@@ -500,8 +507,10 @@
               <span style="font-size: 9.5px; font-style: italic; color: var(--text-color); margin-left: 5px;">(Full-Stack Consultant)</span>
             </div>
             <ul class="job-bullets" style="margin-bottom: 9px;">
-              <li>Architected a global cargo platform with Sabre tariff seeders, partner commissions, signed webhooks, and secure SeerBit transaction flows.</li>
-              <li>Migrated legacy payment integrations to SeerBit, <strong>lowering payment failure rates by 15%</strong> using test-bank validation.</li>
+              <li>Architected a global supply chain bookings and cargo platform with Seerbit payment orchestration, <strong>processing international shipments</strong> through automated tariff calculation and secure transaction flows.</li>
+              <li>Designed and implemented automated Sabre Tariff calculation seeders, <strong>eliminating tariff calculation errors</strong> for new countries and buckets.</li>
+              <li>Built custom Sabre Tariff matrix updates and partner commission override mechanics, <strong>improving settlement accuracy</strong> and reducing manual rate intervention.</li>
+              <li>Migrated legacy payment integrations to Seerbit API gateways, <strong>lowering payment failure rates by 15%</strong> using test-bank simulation validations.</li>
             </ul>
 
             <div style="margin-top: 9px; margin-bottom: 4px;">
@@ -539,7 +548,7 @@
             <ul class="job-bullets">
               <li>Built multi-step booking and scheduling workflows for a care marketplace, <strong>boosting service checkout conversion rates by 20%</strong>.</li>
               <li>Integrated Paystack webhooks, Cloudinary, and notifications, <strong>automating 95% of payment validations and media uploads</strong>.</li>
-              <li>Improved security and workflow efficiency, <strong>blocking 99% of registration spam via reCAPTCHA</strong> and simplifying setup with Docker.</li>
+              <li>Hardened site security with reCAPTCHA and standardized team environments with Docker, <strong>blocking 99% of registration spam</strong> and slashing setup times.</li>
             </ul>
           </div>
         </div>

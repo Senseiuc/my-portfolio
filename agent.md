@@ -61,7 +61,7 @@ Important source files:
 
 Current public project set:
 
-- Konga Merchant Payout Engine
+- Konga Merchant Platform Engineering
 - Transglobal X Sabre and Cargo booking portal
 - TripEase Logistics Router
 - Xxolcare Booking Portal
@@ -69,8 +69,29 @@ Current public project set:
 - Wings Tenancy System
 - Radio News CMS
 - Ansar-Ud-Deen Digital Platform
+- Golden Attic Community Platform
 - Visitor Management System
 - Shipwize
+
+The homepage presents three flagship case studies and a compact set of onward
+paths. The complete project archive lives at `/work`, the dedicated Konga case
+study remains at `/work/konga-merchant-platform`, and public workflow diagrams
+live at `/systems`.
+
+The personal career origin story lives at `/before-systems`. It covers Gideon's
+mathematics teaching experience from 2013 to 2018 and his transition through
+hospitality IT support, operations, and early web development in 2021 and 2022.
+
+The complete certifications archive lives at `/credentials`, and the leadership
+timeline lives at `/leadership`. Keep their detailed content off the homepage.
+
+Gideon's interests in chess, fitness, poetry, gaming, music, and meeting people
+live at `/life` with the existing mascot system. The measured portfolio runtime,
+public GitHub activity, and project explorer live at `/console`.
+
+The homepage presents three selected leadership roles, with the complete
+leadership, mentorship, and community-service timeline at `/leadership`. Do not
+publish LinkedIn edit-form URLs for these entries.
 
 Do not add LockIt, LockItAdmin, LockItApp, LockitApiGateway, lockit-web, or any
 other LockIt component. LockIt is a private personal project and must remain out
@@ -82,6 +103,7 @@ is `https://fcmbvms.visitors.com.ng`.
 
 Approved production URLs:
 
+- Konga SellerHQ: `https://shq.konga.com/`
 - Transglobal platform: `https://transglobal.africa/`
 - Cargo booking portal: `https://cargo.sabrecwa.com/`
 - Visitor Management System: `https://fcmbvms.visitors.com.ng`
@@ -139,7 +161,16 @@ The CV has two canonical representations:
 
 Any factual CV change must be applied to both files in the same change. Do not
 allow project names, dates, skills, metrics, or bullet wording to drift between
-them. Preserve the masked public phone number.
+them. Preserve the full public phone number `08105347918`.
+
+Work Experience must always be listed in this order:
+
+1. Konga (2024 - Present)
+2. Golden Attic (2021 - Present)
+3. Freelance Software Engineer (2020 - Present), with nested project bullets for
+   Ansar-Ud-Deen Digital Platform, Lextorah, Transglobal & Cargo, TripEase,
+   Visitor Management System, and Shipwize.
+4. Xxolcare (2022 - 2024)
 
 Before adding a metric to the CV, identify its source. If it cannot be supported,
 replace it with a concrete scope or engineering result that can be verified.

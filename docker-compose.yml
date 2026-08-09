@@ -11,6 +11,8 @@ services:
       - ./server:/app/server
       - ./public:/app/public
       - ./index.html:/app/index.html
+      - ./resume.html:/app/resume.html
+      - ./resume.md:/app/resume.md
       - ./vite.config.ts:/app/vite.config.ts
       - ./tsconfig.json:/app/tsconfig.json
       - ./tsconfig.app.json:/app/tsconfig.app.json
