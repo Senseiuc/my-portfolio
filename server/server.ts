@@ -267,92 +267,16 @@ app.get('/api/git-metrics', async (req, res) => {
       percentage: Math.round((size / totalSize) * 100),
     })).sort((a, b) => b.percentage - a.percentage);
 
-    // Fetch dynamic GitHub streaks if token is set
-    let githubStreak = { current: 18, longest: 45, totalCommits: 1420 };
+    // Contribution data requires authenticated GraphQL access.
+    let githubContributions: { currentStreak: number; longestStreak: number; commitsThisYear: number } | null = null;
     if (githubToken) {
       const dynamicStreak = await getGithubStreaks(githubToken, username);
       if (dynamicStreak) {
-        githubStreak = dynamicStreak;
-      }
-    }
-
-    let gitlabRes: any = {
-      projectsCount: 8,
-      totalCommits: 240,
-      streak: { current: 24, longest: 56, totalCommits: 1180 },
-      activeProjects: [
-        { name: 'transglobal_backyard', description: 'Core backend API for Sabre calculations', lastActivity: new Date().toISOString() },
-        { name: 'cargo', description: 'Partner cargo booking & waybill dispatch portal', lastActivity: new Date().toISOString() },
-        { name: 'trip-ease-transport-service', description: 'Transit scheduling & journey planner microservice', lastActivity: new Date().toISOString() },
-        { name: 'trip-ease-payment-service', description: 'Escrow wallet ledgers & Paystack gateway microservice', lastActivity: new Date().toISOString() },
-      ]
-    };
-
-    const gitlabToken = process.env.GITLAB_TOKEN;
-    const gitlabUrl = process.env.GITLAB_URL || 'https://az-gitlab.igbimo.com';
-
-    if (gitlabToken) {
-      try {
-        const glHeaders = { 'Authorization': `Bearer ${gitlabToken}` };
-        const projectsRes = await fetch(`${gitlabUrl}/api/v4/projects?membership=true&per_page=100`, { headers: glHeaders });
-        if (projectsRes.ok) {
-          const projects = await projectsRes.json() as any[];
-          gitlabRes.projectsCount = projects.length;
-          
-          let commitsCount = 0;
-          for (const project of projects.slice(0, 3)) {
-            const commitsRes = await fetch(`${gitlabUrl}/api/v4/projects/${project.id}/repository/commits?per_page=1`, { headers: glHeaders });
-            if (commitsRes.ok) {
-              const totalCommitsHeader = commitsRes.headers.get('x-total');
-              if (totalCommitsHeader) {
-                commitsCount += parseInt(totalCommitsHeader, 10);
-              }
-            }
-          }
-          gitlabRes.totalCommits = commitsCount || (projects.length * 35);
-
-          // Fetch user's push events to isolate projects they contributed to personally
-          const eventsRes = await fetch(`${gitlabUrl}/api/v4/events?action=pushed&per_page=100`, { headers: glHeaders });
-          let personalProjects: any[] = [];
-          if (eventsRes.ok) {
-            const events = await eventsRes.json() as any[];
-            const contributedProjectIds = Array.from(new Set(events.map((e: any) => e.project_id)));
-            
-            for (const pid of contributedProjectIds.slice(0, 4)) {
-              const pRes = await fetch(`${gitlabUrl}/api/v4/projects/${pid}`, { headers: glHeaders });
-              if (pRes.ok) {
-                const p = await pRes.json() as any;
-                personalProjects.push(p);
-              }
-            }
-          }
-
-          // Fallback to latest membership projects if no recent personal pushes are recorded
-          const finalActiveProjects = personalProjects.length > 0 
-            ? personalProjects 
-            : projects.sort((a, b) => new Date(b.last_activity_at).getTime() - new Date(a.last_activity_at).getTime()).slice(0, 4);
-
-          gitlabRes.activeProjects = finalActiveProjects.map(p => {
-            const name = p.name === 'konga-ads-be' ? 'SHQAdmin' : p.name;
-            return {
-              name,
-              description: p.description || 'Enterprise workspace project',
-              lastActivity: p.last_activity_at
-            };
-          });
-          
-          // Fetch dynamic GitLab streaks from push events
-          const dynamicGlStreak = await getGitlabStreaks(gitlabToken, gitlabUrl);
-          if (dynamicGlStreak) {
-            gitlabRes.streak = {
-              current: dynamicGlStreak.current,
-              longest: dynamicGlStreak.longest,
-              totalCommits: dynamicGlStreak.totalCommits || gitlabRes.totalCommits
-            };
-          }
-        }
-      } catch (glError) {
-        console.error('Failed to load GitLab metrics dynamically:', glError);
+        githubContributions = {
+          currentStreak: dynamicStreak.current,
+          longestStreak: dynamicStreak.longest,
+          commitsThisYear: dynamicStreak.totalCommits,
+        };
       }
     }
 
@@ -361,13 +285,7 @@ app.get('/api/git-metrics', async (req, res) => {
         publicRepos: repos.length,
         starsCount: repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0),
         languages: languageShare.slice(0, 5),
-        streak: githubStreak
-      },
-      gitlab: {
-        projectsCount: gitlabRes.projectsCount,
-        totalCommits: gitlabRes.totalCommits,
-        streak: gitlabRes.streak,
-        activeProjects: gitlabRes.activeProjects
+        contributions: githubContributions,
       },
       lastUpdated: new Date().toISOString(),
     };
@@ -375,43 +293,8 @@ app.get('/api/git-metrics', async (req, res) => {
 
     res.json(gitCache);
   } catch (error) {
-    // Fallback Mock Data if rate limited or offline
-    const fallbackData = {
-      github: {
-        publicRepos: 18,
-        starsCount: 4,
-        languages: [
-          { name: 'PHP', percentage: 45 },
-          { name: 'TypeScript', percentage: 25 },
-          { name: 'JavaScript', percentage: 15 },
-          { name: 'Python', percentage: 10 },
-          { name: 'Other', percentage: 5 },
-        ],
-        streak: {
-          current: 18,
-          longest: 45,
-          totalCommits: 1420
-        }
-      },
-      gitlab: {
-        projectsCount: 5,
-        totalCommits: 145,
-        streak: {
-          current: 24,
-          longest: 56,
-          totalCommits: 1180
-        },
-        activeProjects: [
-          { name: 'transglobal_backyard', description: 'Core backend API for Sabre calculations', lastActivity: new Date().toISOString() },
-          { name: 'cargo', description: 'Partner cargo booking & waybill dispatch portal', lastActivity: new Date().toISOString() },
-          { name: 'trip-ease-transport-service', description: 'Transit scheduling & journey planner microservice', lastActivity: new Date().toISOString() },
-          { name: 'trip-ease-payment-service', description: 'Escrow wallet ledgers & Paystack gateway microservice', lastActivity: new Date().toISOString() },
-        ]
-      },
-      isFallback: true,
-      lastUpdated: new Date().toISOString(),
-    };
-    res.json(fallbackData);
+    console.error('Failed to load public GitHub metrics:', error);
+    res.status(503).json({ error: 'Public GitHub activity is currently unavailable' });
   }
 });
 
@@ -424,8 +307,6 @@ app.get('/api/metrics', (req, res) => {
     // SQLite count metrics
     const msgCount = db.prepare('SELECT COUNT(*) as count FROM messages').get() as { count: number };
     const logsCount = db.prepare('SELECT COUNT(*) as count FROM terminal_logs').get() as { count: number };
-    const systemSettings = db.prepare('SELECT * FROM sys_metrics').all() as { key: string, value: string }[];
-
     res.json({
       uptime: Math.round(uptime),
       memory: {
@@ -436,7 +317,6 @@ app.get('/api/metrics', (req, res) => {
       database: {
         messagesStored: msgCount.count,
         terminalLogsStored: logsCount.count,
-        syncStatus: systemSettings.reduce((acc, row) => ({ ...acc, [row.key]: row.value }), {}),
       },
       nodeVersion: process.version,
       platform: process.platform,
@@ -470,7 +350,13 @@ app.post('/api/terminal/run', terminalLimiter, (req, res) => {
   help        - List all custom commands
   skills      - Show full-stack technology list
   timeline    - Print career work experiences
-  metrics     - Output real-time VPS metrics
+  best-backend - Show the strongest backend examples
+  payments    - Explore payment and ledger work
+  mobile      - Explore mobile delivery
+  devops      - Explore deployment and operations work
+  leadership  - Show leadership experience
+  recommend-project - Choose a useful case study starting point
+  metrics     - Show this portfolio application's runtime
   db-status   - Check status of SQLite backend
   clear       - Clear screen console log
   contact     - Display social channels & links`;
@@ -486,13 +372,57 @@ app.post('/api/terminal/run', terminalLimiter, (req, res) => {
       break;
     case 'timeline':
       output = `[Career Journey]
-  - Konga (2024 - PRESENT)        | Software Engineer (optimized payout speeds by 2x, fixed sync daemons)
+  - Konga (2024 - PRESENT)        | Software Engineer (merchant money movement, compliance, identity, synchronization, testing enablement, and platform operations; optimized payout speeds by 2x)
   - Golden Attic (2021 - PRESENT) | Senior Full-Stack Engineer (Part-time, 100k data migrations, ledger builds)
   - Freelance (2020 - PRESENT)    | Lextorah smart-sync, Sabre matrix seeders, VMS RBAC ledgers
   - Xxolcare (2022 - 2024)        | Built care scheduling platform, Paystack automation`;
       break;
+    case 'best-backend':
+      output = `[Backend Starting Points]
+  Konga       - Bounded payout processing, wallet correctness, identity, and legacy services
+  TripEase    - Service boundaries, idempotency, row locks, and deadlock retries
+  Transglobal - Tariffs, payment gateways, signed webhooks, and shipment synchronization
+
+Open /systems for workflow diagrams or /work for the full archive.`;
+      break;
+    case 'payments':
+      output = `[Payments and Ledger Work]
+  Konga       - Merchant payouts, escrow release, wallet safeguards, and processing recovery
+  Golden Attic - Dual-currency wallets, holds, controlled adjustments, rewards, and commissions
+  TripEase    - Escrow ledger mutations protected by idempotency, transactions, and row locks
+  Transglobal - Paystack and SeerBit payment verification across connected logistics systems`;
+      break;
+    case 'mobile':
+      output = `[Mobile Delivery]
+  Ansar-Ud-Deen - Flutter member application connected to a NestJS API and shared content platform
+  TripEase       - Mobile transit workflows backed by separate identity, company, payment, and transport services
+  Konga          - Portal-wide responsive remediation across merchant and administration workflows`;
+      break;
+    case 'devops':
+      output = `[Delivery and Operations]
+  Docker environments, repeatable local setup, CI test execution, Kubernetes workloads,
+  Redis-backed jobs, production migrations, monitoring hooks, deployment configuration,
+  service readiness handling, and production troubleshooting.`;
+      break;
+    case 'leadership':
+      output = `[Leadership]
+  Vice President - National Association of Mathematical Science Students
+  President      - Young Disciples International
+  Lead Tutor     - Engineering Career Expo
+  Reviewer       - ALX Africa
+
+Open /leadership for the complete timeline and outcomes.`;
+      break;
+    case 'recommend-project':
+      output = `[Choose Your Route]
+  Hiring manager    -> Start with Konga, then open /work
+  Backend engineer  -> Run 'best-backend' and open /systems
+  Payments team     -> Run 'payments'
+  Product team      -> Review Ansar-Ud-Deen and Golden Attic
+  Engineering lead -> Review /leadership and the Konga testing chapter`;
+      break;
     case 'metrics':
-      output = `[Live System Footprint]
+      output = `[Portfolio Application Runtime]
   Node Version: ${process.version}
   Active Platform: ${process.platform}
   Process Heap: ${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB / ${Math.round(process.memoryUsage().heapTotal / 1024 / 1024)} MB`;
@@ -551,11 +481,11 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `${namePrefix}Gideon can own an application end to end: responsive web interfaces, Flutter mobile clients, APIs, data models, payments and integrations, containerized deployment, and production troubleshooting. His deepest specialization is in backend-heavy systems where reliability, transactions, and operational workflows matter.`;
   }
   if (msg.includes('projects') || msg.includes('portfolio') || msg.includes('work')) {
-    return `${namePrefix}Gideon's portfolio covers commerce infrastructure at Konga, distributed transit with TripEase, logistics integrations for Transglobal and Shipwize, the Ansar-Ud-Deen web/mobile platform, visitor operations, education, property management, broadcasting, and care hospitality. Ask for a comparison or a specific project and I can explain the engineering decisions and evidence.`;
+    return `${namePrefix}Gideon's portfolio covers commerce infrastructure at Konga, community finance and marketplace operations at Golden Attic, distributed transit with TripEase, logistics integrations for Transglobal and Shipwize, the Ansar-Ud-Deen web/mobile platform, visitor operations, education, property management, broadcasting, and care hospitality. Ask for a comparison or a specific project and I can explain the engineering decisions and results.`;
   }
   
   if (msg.includes('konga')) {
-    return `${namePrefix}at Konga, Gideon worked as a Software Engineer. He was responsible for refactoring the merchant payout engine (which cut execution time in half), resolving database replication lags, and managing migrations of over 100k records. He also rebuilt various catalog synchronization daemons.`;
+    return `${namePrefix}at Konga, Gideon works across the merchant platform: payout and wallet correctness, QoS inventory compliance, merchant identity verification, Magento synchronization, pricing, email auditing, responsive operations, testing enablement, and deployment support. He revived repeatable local and CI verification with containerized tests, isolated test data, service mocks, environment-driven configuration, readiness handling, and targeted SSO/authentication regression coverage. His flagship performance result was refactoring payout execution around cursor offsets, bounded 500-record batches, and paced processing, cutting execution time in half while controlling database pressure. His work spans eight merchant, middleware, administration, identity, notification, integration, and operations repositories.`;
   }
   if (msg.includes('sabre') || msg.includes('transglobal')) {
     return `${namePrefix}Gideon designed and built the TransGlobal logistics shipping portal and backend API from scratch. He integrated the Sabre global tariff matrices, custom price calculator models, and payment systems (Paystack, SeerBit).`;
@@ -578,11 +508,23 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
   if (msg.includes('ansar') || msg.includes('deen')) {
     return `${namePrefix}the Ansar-Ud-Deen Digital Platform is a society-wide modernization project spanning a NestJS API, Next.js website and CMS, Flutter mobile app, PostgreSQL, Redis queues, donations, media delivery, and containerized operations.`;
   }
+  if (msg.includes('golden attic') || msg.includes('goldenattic')) {
+    return `${namePrefix}at Golden Attic, Gideon owns delivery across a Laravel 11 community economic platform spanning dual-currency XOF/USD wallets, marketplace seller workflows, referral networks, queued rewards, testing, Docker, and production operations. He led the Laravel 5.8 to 11 migration while preserving more than 100,000 historical records, improved settlement speed by 40%, and reduced server overhead by 35% through queued reward and commission processing.`;
+  }
   if (msg.includes('visitor management') || msg.includes('visitor system') || msg.includes('check-in')) {
     return `${namePrefix}Gideon built a multi-location visitor and staff management system with QR-based entry, approval workflows, duplicate check-in protection, role-based administration, privacy consent, and Termii SMS and email alerts.`;
   }
   if (msg.includes('shipwize')) {
     return `${namePrefix}Shipwize is a Laravel logistics platform Gideon developed for shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation codes, commissions, and Termii customer notifications.`;
+  }
+  if (msg.includes('teach') || msg.includes('teacher') || msg.includes('before software') || msg.includes('before systems')) {
+    return `${namePrefix}before moving fully into software, Gideon taught Mathematics, Quantitative Reasoning, Introductory Technology, and Computer Science across Merus College, Foresight Schools, and Asoland College. He made difficult topics more approachable, improved one class's performance by over 30%, coordinated tutors and tutorial finances, and helped Foresight achieve its strongest university-admission year at the time. He later moved through hospitality IT support and operations into web development at LifeSeed Worldwide.`;
+  }
+  if (msg.includes('certificate') || msg.includes('certification') || msg.includes('credential')) {
+    return `${namePrefix}Gideon's credentials include the ALX Software Engineering Programme with a specialization in Back End Development, Google's IT Automation with Python Specialization, and Coursera certificates in Web Application Technologies and Django, Using Python to Access Web Data, and Introduction to HTML5.`;
+  }
+  if (msg.includes('leadership') || msg.includes('leader') || msg.includes('mentor') || msg.includes('volunteer')) {
+    return `${namePrefix}Gideon's leadership experience spans academic mentoring, tutoring, community programmes, and technology outreach. As Vice President of the National Association of Mathematical Science Students at the University of Lagos, he coordinated tutors and supported students through difficult courses. As President of Young Disciples International, he led an executive team, organized a 300+ person talent event with more than 20 contestants, and helped increase weekly attendance by 50%. He has also served as a Lead Tutor, ALX portfolio reviewer, group coordinator, technology volunteer, and IoT intern.`;
   }
   if (msg.includes('skills') || msg.includes('stack') || msg.includes('languages') || msg.includes('technologies')) {
     return `${namePrefix}Gideon works across the application lifecycle: React and Next.js interfaces, Flutter mobile apps, PHP/Laravel, Node.js/Express and Python/FastAPI services, SQL data systems, plus Docker, Kubernetes, CI/CD, and production operations. His strongest depth is in backend architecture, payments, and integrations.`;
@@ -591,7 +533,7 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `${namePrefix}you can reach Gideon Nwadialu via email at nwadialugideon@gmail.com, or check out his GitHub profile (github.com/senseiuc) and LinkedIn.`;
   }
   if (msg.includes('enjoy') || msg.includes('hobby') || msg.includes('hobbies') || msg.includes('fun') || msg.includes('free time')) {
-    return `Outside of building high-performance software systems, ${userProfile?.firstName ? `${userProfile.firstName}, ` : ''}Gideon enjoys playing chess, listening to music, working out, solving logical and mathematical puzzles (holding a BSc in Mathematics from the University of Lagos), researching advanced AI workflows (like LangGraph & RAG), and learning new languages. He speaks English and Igbo fluently, with basics in French and Yoruba!`;
+    return `Outside software, ${userProfile?.firstName ? `${userProfile.firstName}, ` : ''}Gideon enjoys chess, fitness, poetry, gaming, listening to music, and meeting people. Chess feeds his strategic side, fitness keeps him grounded, poetry gives him a different relationship with language, and he enjoys the systems and stories inside games as much as the perspectives that come from meeting someone new.`;
   }
   if (msg.includes('school') || msg.includes('education') || msg.includes('university') || msg.includes('college') || msg.includes('degree') || msg.includes('study') || msg.includes('studied')) {
     return `${namePrefix}Gideon Nwadialu attended the University of Lagos (UNILAG), where he earned his BSc in Mathematics. He also holds certifications in ALX Back End Development and Google IT Automation.`;
@@ -603,7 +545,7 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `${namePrefix}Kubernetes (K8s) is an orchestration platform that automates the deployment, scaling, and management of containerized apps. Gideon utilizes Kubernetes to orchestrate multi-service networks (like the decoupled Auth, Payment, and Transport microservices in TripEase) for peak availability and smooth traffic scaling.`;
   }
   if (msg.includes('microservice') || msg.includes('microservices')) {
-    return `${namePrefix}Microservices architecture splits a massive application into small, independent services that talk to each other via APIs. Gideon is highly skilled in this layout—in TripEase, he split the platform into decoupled microservices (Auth, Payments, Companies, Transport) to make the system modular and highly scalable.`;
+    return `${namePrefix}microservices architecture separates a system into independently owned services that communicate through explicit interfaces. In TripEase, Gideon separated authentication, companies, payments, and transport into four services, then protected cross-service payment and wallet actions with idempotency, transactions, row locks, and retry handling.`;
   }
   if (msg.includes('api') || msg.includes('apis') || msg.includes('webhook') || msg.includes('webhooks') || msg.includes('integration') || msg.includes('integrations')) {
     return `${namePrefix}an API acts as a bridge letting different software systems talk to each other, while Webhooks send real-time event updates. Gideon specializes in API integrations, having connected Sabre logistics tariff seeders, Paystack/Seerbit billing loops, and Dojah KYC identity verification with automated retry logic.`;
@@ -612,7 +554,7 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `Hello${userProfile?.firstName ? ` ${userProfile.firstName}` : ''}! I am Sensei, Gideon Nwadialu's AI Assistant. Ask me about Gideon's work on Konga, TransGlobal, TripEase, Ansar-Ud-Deen, Visitor Management, Shipwize, or his other systems and technical skills!`;
   }
   
-  return `${namePrefix}I do not have enough verified portfolio context to answer that confidently. I can help with Gideon's projects, architecture decisions, technologies, experience, availability, or contact details. Try asking which project best matches the problem your team is solving.`;
+  return `${namePrefix}I do not have enough information in the portfolio to answer that confidently. I can help with Gideon's projects, architecture decisions, technologies, experience, availability, or contact details. Try asking which project best matches the problem your team is solving.`;
 }
 
 const GIDEON_INFO = `
@@ -623,10 +565,16 @@ Information about Gideon Nwadialu:
 - Role: Product Engineer with deep backend expertise. Owns delivery across frontend, Flutter mobile, backend services, data, DevOps, deployment, and production support, with deep specialization in payment systems and complex integrations.
 - Location: Lagos, Nigeria / remote.
 - Professional Experience:
-  1. Konga (2024 - Present): Software Engineer. Optimized payout systems, doubling speed. Rebuilt data synchronization daemons and handled migration operations of over 100k records.
+  1. Konga (2024 - Present): Software Engineer. Works across merchant money movement, inventory compliance, identity verification, marketplace synchronization, pricing, communications, testing enablement, and platform operations. Revived containerized local and CI testing across legacy merchant services. Optimized payout execution to run twice as fast using cursor offsets, bounded 500-record batches, and paced processing.
   2. Golden Attic (2021 - Present): Senior Full-Stack Engineer (Part-time). Built financial ledger architectures and data pipelines.
   3. Freelance/Contracting (2020 - Present): Engineered Sabre logistics platforms, smart-sync script handlers, and RBAC ledger systems.
   4. Xxolcare (2022 - 2024): Software Engineer. Built care-scheduling engine, integrated Paystack billing, resolved calculation deficit bugs, and developed QR code digital business cards.
+  5. LifeSeed Worldwide (2021 - 2022): Progressed from IT Support Specialist intern to part-time Web Developer, building Laravel, jQuery, and Bootstrap applications, gathering customer feedback, providing IT support, and creating promotional design and video content.
+  6. DENICHE Hospitality (2021 - 2022): Junior Web Developer. Maintained workplace technology, trained staff on internal software, improved multi-entry sales workflows, added Vue.js booking calculations, and served briefly as Operational Supervisor.
+- Teaching Experience:
+  - Foresight Schools (2017 - 2018 and 2014 - 2016): Taught senior secondary Mathematics, managed after-school tutorials, coordinated tutors and disbursements, and helped drive stronger student interest and university admissions.
+  - Asoland College (2015 - 2016): Taught Mathematics and Quantitative Reasoning, organized classes for school events, composed anniversary songs, and trained students for sports activities.
+  - Merus College (2013 - 2014): Taught junior secondary Mathematics, Introductory Technology, and Computer Science, making lessons more approachable and improving class performance by over 30%.
 - Primary Projects:
   - TransGlobal x Sabre: Shipping logistics portal with Sabre matrix seeding and real-time transit pricing.
   - TripEase: Multi-tenant containerized microservices (Auth, Payments, Companies, Transport) transit router with escrow wallets.
@@ -634,6 +582,7 @@ Information about Gideon Nwadialu:
   - RadioNews: Radio CMS dashboard with Daily.co WebRTC integrations and Spatie access controls.
   - Lextorah: FastAPI tutoring portal with smart sync pipelines and footer chatbot widgets.
   - Ansar-Ud-Deen Digital Platform: NestJS, Next.js, and Flutter modernization platform with PostgreSQL, Redis queues, donations, CMS workflows, and containerized operations.
+  - Golden Attic Community Platform: Laravel 11 community economic platform with XOF/USD wallets, marketplace seller workflows, referral networks, Redis-backed rewards, testing, and Docker operations.
   - Visitor Management System: Multi-location visitor and staff check-in with approvals, role controls, privacy consent, and SMS/email notifications.
   - Shipwize: Shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation, commissions, and Termii notifications.
 - Core Technologies:
@@ -641,7 +590,21 @@ Information about Gideon Nwadialu:
   - Frontend & Mobile: React, Next.js, TypeScript, Flutter
   - Backend Frameworks: Laravel, Express, FastAPI, NestJS
   - DevOps & Tools: Docker, Kubernetes, Kibana, cPanel Git auto-deploy, Git/GitLab workflows.
-- Personal Interests & Hobbies: Playing chess, listening to music, working out, solving logical/mathematical puzzles, and exploring advanced AI agent architectures.
+- Certifications:
+  - ALX Software Engineering Programme, Back End Development specialization (issued September 2023, credential yzNECc35M8).
+  - Google IT Automation with Python Specialization (issued April 2021, credential SVDCQ9UBXD8V).
+  - Web Application Technologies and Django, Coursera (issued November 2020, credential MM5GCQ9URH72).
+  - Using Python to Access Web Data, Coursera (issued November 2020, credential WUEL97SVZJKY).
+  - Introduction to HTML5, Coursera (issued November 2020, credential U7B9GMJ8XAM8).
+- Leadership & Community Experience:
+  - Vice President, National Association of Mathematical Science Students, University of Lagos (2021 - 2023): Coordinated tutors, mentored students, and participated in departmental and faculty-wide tutorials.
+  - President, Young Disciples International (2017): Led the executive team, organized a 300+ person talent event with more than 20 contestants, increased weekly attendance by 50%, and appointed team leads.
+  - Lead Tutor, Engineering Career Expo (2023 - 2024): Led tutoring work in an education-focused programme.
+  - Reviewer, ALX Africa (2023): Reviewed students' portfolio projects.
+  - Internet of Things Intern, Nithub (2023 - Present): Technology-focused volunteer experience.
+  - Group Coordinator, Young Disciples International (2014 - 2015): Led the Ready Writers group and helped organize community events.
+  - Volunteer Staff, DesignIT Africa (2022): Supported school outreach, materials distribution, and student technology education.
+- Personal Interests & Hobbies: Playing chess, fitness and working out, reading and writing poetry, gaming, listening to music, meeting people, solving logical and mathematical puzzles, and exploring advanced AI agent architectures.
 `;
 
 // Cache map for Chat responses to save tokens and respond in under 1ms
