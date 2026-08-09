@@ -32,6 +32,6 @@ test('resume interactions comply with the site CSP', () => {
   const html = fs.readFileSync('resume.html', 'utf8');
 
   assert.doesNotMatch(html, /\son[a-z]+\s*=/i);
-  assert.match(html, /<script src="\/resume\.js" defer><\/script>/);
+  assert.match(html, /<script src="public\/resume\.js" defer><\/script>/);
   assert.ok(fs.existsSync('public/resume.js'));
 });

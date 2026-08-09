@@ -29,6 +29,8 @@ COPY --from=builder /app/dist-server ./dist-server
 # Public assets are already copied into dist by Vite.
 COPY ["resume.html", "./dist/resume.html"]
 COPY ["resume.md", "./dist/resume.md"]
+COPY ["public/favicon.svg", "./dist/public/favicon.svg"]
+COPY ["public/resume.js", "./dist/public/resume.js"]
 
 # Set non-root user for security compliance
 USER node
