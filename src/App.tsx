@@ -576,12 +576,14 @@ export default function App() {
 
       <header className="sticky top-0 z-50 w-full bg-[#0a0806]/92 backdrop-blur-md border-b border-amber-950/40">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <a href="#about" className="flex min-h-11 items-center gap-2" aria-label="Gideon Nwadialu, back to introduction">
+          <a href="#about" className="flex min-h-11 min-w-0 items-center gap-1.5" aria-label="Gideon Nwadialu, back to introduction">
             <Logo className="w-8 h-8" />
-            <span className="hidden font-mono text-xs font-bold text-slate-100 uppercase sm:inline sm:text-sm">
+            <span className="hidden font-mono text-[10px] font-bold text-slate-100 uppercase min-[360px]:inline sm:text-sm">
               GIDEON <span className="text-orange-400">NWADIALU</span>
             </span>
-            <span className="font-mono text-xs font-bold text-orange-400 sm:hidden">GN</span>
+            <span className="font-mono text-[10px] font-bold text-slate-100 uppercase min-[360px]:hidden">
+              GIDEON <span className="text-orange-400">N.</span>
+            </span>
           </a>
 
           <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-400">
@@ -590,7 +592,7 @@ export default function App() {
             <a href="#experience" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Experience</a>
             <a href="#contact" className="inline-flex min-h-11 items-center text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
           </nav>
-          <nav aria-label="Mobile navigation" className="flex md:hidden items-center gap-3 font-mono text-[10px] uppercase text-slate-400">
+          <nav aria-label="Mobile navigation" className="flex shrink-0 md:hidden items-center gap-2 font-mono text-[10px] uppercase text-slate-400">
             <a href="#projects" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Work</a>
             <a href="#contact" className="inline-flex min-h-11 items-center text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
           </nav>
@@ -603,7 +605,7 @@ export default function App() {
         {/* HERO SECTION */}
         <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center lg:min-h-[72vh] py-6 md:py-14">
           {/* Intro Text */}
-          <div className="lg:col-span-7 space-y-6 md:space-y-7">
+          <div className="lg:col-span-7 space-y-5 md:space-y-7">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -637,29 +639,28 @@ export default function App() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.22 }}
-              className="flex flex-wrap gap-x-5 gap-y-2 font-mono text-[11px] uppercase text-slate-400"
+              className="flex flex-wrap gap-x-4 gap-y-1.5 font-mono text-[10px] uppercase text-slate-400 sm:text-[11px]"
             >
-              <span>Lagos, Nigeria</span>
-              <span className="text-orange-400">Open to remote product engineering</span>
-              <span>Web / mobile / backend / DevOps</span>
+              <span>Lagos, Nigeria / remote</span>
+              <span className="text-orange-400">Open to product engineering roles</span>
             </motion.div>
 
             <motion.dl
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="grid grid-cols-1 gap-0 border-y border-amber-950/60 py-1 sm:grid-cols-3 sm:py-4 max-w-2xl"
+              className="grid grid-cols-3 border-y border-amber-950/60 py-4 max-w-2xl"
             >
-              <div className="py-3 sm:py-0">
-                <dt className="font-mono text-[11px] uppercase text-slate-500">Payout speed</dt>
+              <div className="pr-2">
+                <dt className="font-mono text-[9px] leading-tight uppercase text-slate-500 sm:text-[11px]">Payout speed</dt>
                 <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">2x faster</dd>
               </div>
-              <div className="border-t border-amber-950/60 py-3 sm:border-l sm:border-t-0 sm:py-0 sm:pl-4">
-                <dt className="font-mono text-[11px] uppercase text-slate-500">Records moved</dt>
+              <div className="border-l border-amber-950/60 px-3 sm:pl-4">
+                <dt className="font-mono text-[9px] leading-tight uppercase text-slate-500 sm:text-[11px]">Records moved</dt>
                 <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">100k+</dd>
               </div>
-              <div className="border-t border-amber-950/60 py-3 sm:border-l sm:border-t-0 sm:py-0 sm:pl-4">
-                <dt className="font-mono text-[11px] uppercase text-slate-500">Core focus</dt>
+              <div className="border-l border-amber-950/60 pl-3 sm:pl-4">
+                <dt className="font-mono text-[9px] leading-tight uppercase text-slate-500 sm:text-[11px]">Core focus</dt>
                 <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">Reliability</dd>
               </div>
             </motion.dl>
@@ -752,12 +753,12 @@ export default function App() {
                 copy: 'Model locks, failures, recovery, and scale before they become production incidents.',
               },
             ].map((item) => (
-              <article key={item.number} className="group grid grid-cols-[112px_1fr] md:block gap-4 items-center md:px-6 first:md:pl-0 last:md:pr-0 md:border-l first:md:border-l-0 border-amber-950/50">
+              <article key={item.number} className="group grid grid-cols-[88px_1fr] sm:grid-cols-[112px_1fr] md:block gap-4 items-center md:px-6 first:md:pl-0 last:md:pr-0 md:border-l first:md:border-l-0 border-amber-950/50">
                 <Mascot
                   variant={item.variant}
                   label={`${item.title} Senseiuc mascot`}
                   motion={item.variant === 'architect' ? 'inspect' : 'float'}
-                  className="w-28 md:w-40 mx-auto transition-transform duration-300 group-hover:scale-[1.03]"
+                  className="w-24 sm:w-28 md:w-40 mx-auto transition-transform duration-300 group-hover:scale-[1.03]"
                 />
                 <div className="md:mt-4">
                   <span className="font-mono text-[11px] text-orange-400">MOVE {item.number}</span>
@@ -809,16 +810,16 @@ export default function App() {
                       variant={story.mascot}
                       label={`${story.project.title} case study mascot`}
                       motion={story.mascot === 'architect' ? 'inspect' : 'float'}
-                      className="w-20 sm:w-24 lg:hidden transition-transform duration-300 group-hover:scale-[1.025]"
+                      className="w-16 sm:w-24 lg:hidden transition-transform duration-300 group-hover:scale-[1.025]"
                     />
                   </div>
 
                   <dl className="mt-6 space-y-5">
-                    <div className="grid grid-cols-[76px_1fr] gap-4">
+                    <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[76px_1fr] sm:gap-4">
                       <dt className="font-mono text-[11px] uppercase text-orange-400 pt-0.5">Problem</dt>
                       <dd className="text-sm leading-relaxed text-slate-300">{story.problem}</dd>
                     </div>
-                    <div className="grid grid-cols-[76px_1fr] gap-4">
+                    <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[76px_1fr] sm:gap-4">
                       <dt className="font-mono text-[11px] uppercase text-orange-400 pt-0.5">Decision</dt>
                       <dd className="text-sm leading-relaxed text-slate-300">{story.decision}</dd>
                     </div>
@@ -900,8 +901,8 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 border-y border-slate-800 md:border-x">
-            <div className="relative p-6 pr-28 border-b md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="code" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
+            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-b md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="code" motion="inspect" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
               <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">01 / Frontend & Product Workflows</span>
               <h3 className="font-bold text-slate-200 text-base">Interfaces People Can Operate</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
@@ -909,8 +910,8 @@ export default function App() {
               </p>
             </div>
 
-            <div className="relative p-6 pr-28 border-b border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="secure" motion="inspect" className="absolute right-2 bottom-1 w-20 opacity-80" />
+            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-b border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="secure" motion="inspect" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
               <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">02 / Backend & Financial Systems</span>
               <h3 className="font-bold text-slate-200 text-base">Reliable APIs, Ledgers & Integrations</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
@@ -918,8 +919,8 @@ export default function App() {
               </p>
             </div>
 
-            <div className="relative p-6 pr-28 md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="build" motion="float" className="absolute right-2 bottom-1 w-20 opacity-80" />
+            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="build" motion="float" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
               <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">03 / Mobile & Cross-Platform</span>
               <h3 className="font-bold text-slate-200 text-base">Mobile Products on Shared Platforms</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
@@ -927,8 +928,8 @@ export default function App() {
               </p>
             </div>
 
-            <div className="relative p-6 pr-28 border-t md:border-t-0 border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="deploy" motion="celebrate" className="absolute right-2 bottom-1 w-20 opacity-80" />
+            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-t md:border-t-0 border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
+              <Mascot variant="deploy" motion="celebrate" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
               <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">04 / DevOps & Production Ownership</span>
               <h3 className="font-bold text-slate-200 text-base">From Repository to Running Service</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
@@ -996,7 +997,7 @@ export default function App() {
               <p className="font-mono text-xs uppercase text-orange-400">Explore by interest</p>
               <h2 id="explore-more-title" className="mt-2 text-2xl font-extrabold text-slate-100">Go deeper where it matters.</h2>
             </div>
-            <nav aria-label="Additional portfolio areas" className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 sm:grid-cols-2 md:col-span-8">
+            <nav aria-label="Additional portfolio areas" className="grid grid-cols-2 gap-px border border-slate-800 bg-slate-800 md:col-span-8">
               {[
                 ['/work', 'All systems', 'Complete project archive and delivery scope'],
                 ['/systems', 'Architecture', 'Interactive workflows and safeguards'],
@@ -1007,7 +1008,7 @@ export default function App() {
                 ['/life', 'Life outside code', 'Chess, fitness, poetry, gaming, music, and people'],
                 ['/resume.html', 'Resume', 'A concise printable view of experience and skills'],
               ].map(([href, title, description]) => (
-                <a key={href} href={href} className="group min-h-24 bg-[#0a0806] p-4 transition-colors hover:bg-orange-500/[0.04]">
+                <a key={href} href={href} className="group min-h-28 bg-[#0a0806] p-3 sm:p-4 transition-colors hover:bg-orange-500/[0.04]">
                   <span className="flex items-center justify-between gap-3 text-sm font-bold text-slate-200 group-hover:text-orange-400">{title}<ArrowRight className="h-4 w-4 shrink-0" /></span>
                   <span className="mt-2 block text-xs leading-relaxed text-slate-500">{description}</span>
                 </a>
@@ -1116,17 +1117,17 @@ export default function App() {
           </div>
         </section>
 
-        <section id="contact" className="grid grid-cols-1 lg:grid-cols-12 gap-10 border-y border-amber-950/60 py-10 md:py-14">
+        <section id="contact" className="grid grid-cols-1 lg:grid-cols-12 gap-7 lg:gap-10 border-y border-amber-950/60 py-8 md:py-14">
           <div className="lg:col-span-5">
             <p className="font-mono text-xs uppercase text-orange-400">Your move</p>
             <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-100">Bring me the difficult part.</h2>
             <p className="mt-4 text-base leading-relaxed text-slate-400 max-w-md">
               I’m open to end-to-end web and mobile application work, backend and payment platforms, product integrations, and production engineering conversations.
             </p>
-            <div className="mt-5 lg:mt-6 flex items-center gap-5 lg:block">
-              <Mascot variant="integrate" label="Senseiuc partnership mascot" motion="float" className="w-20 sm:w-24 lg:w-36" />
+            <div className="mt-5 lg:mt-6 flex items-center gap-3 sm:gap-5 lg:block">
+              <Mascot variant="integrate" label="Senseiuc partnership mascot" motion="float" className="w-16 sm:w-24 lg:w-36" />
               <div className="min-w-0 space-y-3 text-sm lg:mt-6">
-                <a href="mailto:nwadialugideon@gmail.com" className="flex items-center gap-2 text-slate-200 hover:text-orange-400 transition-colors break-all sm:break-normal">
+                <a href="mailto:nwadialugideon@gmail.com" className="flex items-center gap-2 whitespace-nowrap text-xs text-slate-200 hover:text-orange-400 transition-colors sm:text-sm">
                   <Mail className="w-4 h-4 shrink-0" /> nwadialugideon@gmail.com
                 </a>
                 <p className="font-mono text-xs text-slate-500">Lagos, Nigeria / remote</p>
@@ -1199,7 +1200,7 @@ export default function App() {
                 type="submit"
                 disabled={loading}
                 aria-busy={loading}
-                className="px-5 py-3 bg-orange-500 hover:bg-orange-400 text-[#0a0806] font-bold rounded flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
+                className="w-full sm:w-auto px-5 py-3 bg-orange-500 hover:bg-orange-400 text-[#0a0806] font-bold rounded flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50"
               >
                 <Send className="w-4 h-4" />
                 {loading ? 'Sending...' : 'Send message'}

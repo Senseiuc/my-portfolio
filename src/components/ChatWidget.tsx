@@ -468,7 +468,7 @@ export default function ChatWidget() {
           onClick={() => isOpen ? closeChat() : setIsOpen(true)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-12 h-12 rounded-full border border-orange-500/30 hover:border-orange-500/60 shadow-lg shadow-orange-500/20 overflow-hidden cursor-pointer relative group flex items-center justify-center bg-slate-950/80 focus:outline-none pointer-events-auto"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-orange-500/30 hover:border-orange-500/60 shadow-lg shadow-orange-500/20 overflow-hidden cursor-pointer relative group flex items-center justify-center bg-slate-950/80 focus:outline-none pointer-events-auto"
         >
           <img 
             src="/sensei_avatar.webp"
