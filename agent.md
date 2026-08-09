@@ -6,7 +6,7 @@ assistant, deployment configuration, or visual assets.
 
 ## Product Purpose
 
-This repository contains an end-to-end application engineering portfolio and a
+This repository contains a Product Engineering portfolio and a
 print-ready CV. The site should present Gideon as an engineer who owns delivery
 across frontend, mobile, backend, data, DevOps, deployment, and production
 support, with particularly strong depth in payment infrastructure, complex

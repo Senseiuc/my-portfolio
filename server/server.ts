@@ -22,7 +22,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'sha256-6+IVlHEzgfce2yMyriTfmw3UBKgyKmmVPTBxCw8jj8I='"],
+      scriptSrc: ["'self'", "'sha256-VnW+cmoqkeo/ANBqsJnlp81KE/9yzmqwiTGzfedx6IA='"],
       styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       imgSrc: ["'self'", 'data:'],
       mediaSrc: ["'self'"],
@@ -477,6 +477,8 @@ app.post('/api/terminal/run', terminalLimiter, (req, res) => {
       break;
     case 'skills':
       output = `[Senseiuc Technical Competencies Profile]
+  - Frontend: React, Next.js, TypeScript, responsive product interfaces
+  - Mobile: Flutter applications connected to shared web and API platforms
   - Backend: PHP (Laravel, Yii, Phalcon), Node.js (Express), FastAPI, REST/GraphQL
   - DevOps: Docker, Kubernetes, Helm, Elastic/Kibana clusters, cPanel
   - AI Integrations: LangGraph, LangChain, Whisper Speech, OpenAI, Huawei Vision
@@ -618,7 +620,7 @@ You are "Sensei", the personal AI coding and development assistant for Gideon Nw
 Keep answers concise, specific, and focused on Gideon's work, experience, and technical skills. Speak of Gideon in the third person ("Gideon built...", "He has..."). Use the visitor's name in the initial greeting only; do not prefix or repeatedly personalize ordinary answers with their name. Ground every claim in the information below. Never invent clients, metrics, technologies, URLs, responsibilities, or outcomes. When the information is insufficient, say so and suggest a relevant question you can answer. For comparisons, identify the distinct engineering strengths of each project. Prefer concrete decisions and evidence over promotional language.
 
 Information about Gideon Nwadialu:
-- Role: End-to-End Application Engineer, Full-Stack Software Engineer & Technical Solutions Architect. Owns delivery across frontend, Flutter mobile, backend services, data, DevOps, deployment, and production support, with deep specialization in payment systems and complex integrations.
+- Role: Product Engineer with deep backend expertise. Owns delivery across frontend, Flutter mobile, backend services, data, DevOps, deployment, and production support, with deep specialization in payment systems and complex integrations.
 - Location: Lagos, Nigeria / remote.
 - Professional Experience:
   1. Konga (2024 - Present): Software Engineer. Optimized payout systems, doubling speed. Rebuilt data synchronization daemons and handled migration operations of over 100k records.
