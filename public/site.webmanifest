@@ -1,0 +1,23 @@
+{
+  "name": "Gideon Nwadialu | Backend Systems Engineer",
+  "short_name": "Senseiuc",
+  "description": "Backend systems, payment infrastructure, and integration engineering portfolio.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0806",
+  "theme_color": "#0a0806",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/My Brand Logo - senseiuc.png",
+      "sizes": "507x506",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

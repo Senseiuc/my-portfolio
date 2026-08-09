@@ -80,7 +80,7 @@ Check server connections or reload the docker containers.`
   };
 
   return (
-    <div className="w-full bg-[#0d0a07]/90 border border-slate-800 rounded-xl shadow-2xl overflow-hidden backdrop-blur-md">
+    <div className="w-full bg-[#0d0a07]/90 border border-slate-800   overflow-hidden ">
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 bg-slate-900/60 border-b border-slate-800">
         <div className="flex items-center gap-2">

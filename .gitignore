@@ -26,6 +26,7 @@ dist-ssr
 # SQLite Runtime database
 *.db
 portfolio.db
+server/leads.json
 
 # Compiled backend build
 dist-server/

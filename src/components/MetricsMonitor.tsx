@@ -78,7 +78,7 @@ export default function MetricsMonitor() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center p-8 bg-slate-900/40 border border-slate-800 rounded-xl h-60 text-slate-500 font-mono text-sm animate-pulse">
+      <div className="flex flex-col items-center justify-center p-8 bg-slate-900/40 border border-slate-800  h-60 text-slate-500 font-mono text-sm animate-pulse">
         <RefreshCcw className="w-5 h-5 animate-spin mb-2 text-orange-400" />
         <span>Initializing VPS Metrics Stream...</span>
       </div>
@@ -90,7 +90,7 @@ export default function MetricsMonitor() {
     : 0;
 
   return (
-    <div className="bg-[#141110]/50 border border-slate-800 rounded-xl p-5 shadow-xl backdrop-blur-md font-mono text-xs leading-relaxed text-slate-300">
+    <div className="bg-[#141110]/50 border border-slate-800  p-5   font-mono text-xs leading-relaxed text-slate-300">
       {/* Title */}
       <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
         <div className="flex items-center gap-2">
@@ -105,7 +105,7 @@ export default function MetricsMonitor() {
       {/* Grid details */}
       <div className="grid grid-cols-2 gap-4">
         {/* Memory widget */}
-        <div className="bg-slate-950/40 border border-slate-800/60 rounded-lg p-3">
+        <div className="bg-slate-950/40 border border-slate-800/60  p-3">
           <div className="flex items-center gap-1.5 text-slate-400 mb-2">
             <Cpu className="w-3.5 h-3.5 text-orange-400" />
             <span>Process Heap</span>
@@ -126,9 +126,9 @@ export default function MetricsMonitor() {
         </div>
 
         {/* Database state widget */}
-        <div className="bg-slate-950/40 border border-slate-800/60 rounded-lg p-3">
+        <div className="bg-slate-950/40 border border-slate-800/60  p-3">
           <div className="flex items-center gap-1.5 text-slate-400 mb-2">
-            <HardDrive className="w-3.5 h-3.5 text-indigo-400" />
+            <HardDrive className="w-3.5 h-3.5 text-slate-300" />
             <span>SQLite Ledgers</span>
           </div>
           <div className="grid grid-cols-2 gap-2 text-slate-300">
@@ -145,10 +145,10 @@ export default function MetricsMonitor() {
       </div>
 
       {/* External Gateway Latency Matrix */}
-      <div className="mt-4 bg-slate-950/40 border border-slate-800/60 rounded-lg p-3">
+      <div className="mt-4 bg-slate-950/40 border border-slate-800/60  p-3">
         <div className="text-slate-400 mb-2.5 font-bold uppercase text-[10px] tracking-wider border-b border-slate-800/40 pb-1.5 flex items-center justify-between">
           <span>External Integrations Gateway Latency</span>
-          <span className="text-[8px] text-green-400 px-1.5 py-0.5 rounded bg-green-500/10 border border-green-500/20 uppercase tracking-widest font-mono animate-pulse">Healthy</span>
+          <span className="text-[10px] text-green-400 px-1.5 py-0.5 rounded bg-green-500/10 border border-green-500/20 uppercase tracking-widest font-mono animate-pulse">Healthy</span>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-[10px]">
           <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
@@ -162,7 +162,7 @@ export default function MetricsMonitor() {
             <span className="text-slate-500 font-medium">Dojah KYC</span>
             <div className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-indigo-400">{86 + Math.round(Math.cos(Date.now() / 4000) * 3)}ms</span>
+              <span className="font-semibold text-slate-300">{86 + Math.round(Math.cos(Date.now() / 4000) * 3)}ms</span>
             </div>
           </div>
           <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
@@ -176,21 +176,21 @@ export default function MetricsMonitor() {
             <span className="text-slate-500 font-medium">SeerBit API</span>
             <div className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-yellow-400">{19 + Math.round(Math.cos(Date.now() / 3500) * 1)}ms</span>
+              <span className="font-semibold text-orange-400">{19 + Math.round(Math.cos(Date.now() / 3500) * 1)}ms</span>
             </div>
           </div>
           <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
             <span className="text-slate-500 font-medium">Termii SMS</span>
             <div className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-pink-400">{31 + Math.round(Math.sin(Date.now() / 5000) * 2)}ms</span>
+              <span className="font-semibold text-orange-400">{31 + Math.round(Math.sin(Date.now() / 5000) * 2)}ms</span>
             </div>
           </div>
           <div className="flex items-center justify-between bg-slate-950/20 p-1.5 rounded border border-slate-800/20">
             <span className="text-slate-500 font-medium">Cloudinary CDN</span>
             <div className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-ping" />
-              <span className="font-semibold text-teal-400">{14 + Math.round(Math.cos(Date.now() / 6000) * 1)}ms</span>
+              <span className="font-semibold text-orange-400">{14 + Math.round(Math.cos(Date.now() / 6000) * 1)}ms</span>
             </div>
           </div>
         </div>

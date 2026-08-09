@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send } from 'lucide-react';
+import { MessageSquare, RotateCcw, X, Send } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface Message {
@@ -7,6 +7,13 @@ interface Message {
   text: string;
   timestamp: Date;
 }
+
+const STARTER_QUESTIONS = [
+  'Which project best shows backend architecture?',
+  'How did Gideon improve Konga payouts?',
+  'Compare TripEase and Transglobal',
+  'What can Gideon build for my team?'
+];
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState<boolean>(() => {
@@ -18,9 +25,9 @@ export default function ChatWidget() {
     }
   });
 
-  const [userProfile, setUserProfile] = useState<{ firstName: string; lastName?: string; email?: string } | null>(() => {
+  const [userProfile, setUserProfile] = useState<{ firstName: string; lastName?: string } | null>(() => {
     try {
-      const saved = localStorage.getItem('chat_user_profile');
+      const saved = sessionStorage.getItem('chat_user_profile');
       return saved ? JSON.parse(saved) : null;
     } catch {
       return null;
@@ -30,6 +37,7 @@ export default function ChatWidget() {
   const [onboardFirstName, setOnboardFirstName] = useState('');
   const [onboardLastName, setOnboardLastName] = useState('');
   const [onboardEmail, setOnboardEmail] = useState('');
+  const [followUpConsent, setFollowUpConsent] = useState(false);
 
   const [messages, setMessages] = useState<Message[]>(() => {
     try {
@@ -42,13 +50,13 @@ export default function ChatWidget() {
       console.error('Failed to load chat history:', e);
     }
 
-    let greetingText = "Hi! I'm Sensei, Gideon's AI assistant. Ask me anything about his software engineering experience (Konga, Xxolcare), core backend stacks, or microservices projects!";
+    let greetingText = "Hi! I'm Sensei, Gideon's AI assistant. Ask me about Konga, Ansar-Ud-Deen, Visitor Management, Shipwize, or his backend systems work.";
     try {
-      const savedProfile = localStorage.getItem('chat_user_profile');
+      const savedProfile = sessionStorage.getItem('chat_user_profile');
       if (savedProfile) {
         const p = JSON.parse(savedProfile);
         if (p?.firstName) {
-          greetingText = `Hi ${p.firstName}! I'm Sensei, Gideon's AI assistant. Ask me anything about his software engineering experience (Konga, Xxolcare), core backend stacks, or microservices projects!`;
+          greetingText = `Hi ${p.firstName}! I'm Sensei, Gideon's AI assistant. Ask me about Konga, Ansar-Ud-Deen, Visitor Management, Shipwize, or his backend systems work.`;
         }
       }
     } catch {}
@@ -64,10 +72,21 @@ export default function ChatWidget() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const chatPanelRef = useRef<HTMLDivElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const closeChat = () => {
+    setIsOpen(false);
+    requestAnimationFrame(() => toggleButtonRef.current?.focus());
+  };
+
+  useEffect(() => {
+    localStorage.removeItem('chat_user_profile');
+  }, []);
 
   useEffect(() => {
     try {
@@ -91,6 +110,23 @@ export default function ChatWidget() {
     }
   }, [messages, isOpen]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    requestAnimationFrame(() => {
+      chatPanelRef.current?.querySelector<HTMLElement>('input, button')?.focus();
+    });
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      event.preventDefault();
+      closeChat();
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen]);
+
   const handleOnboardSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!onboardFirstName.trim()) return;
@@ -98,37 +134,38 @@ export default function ChatWidget() {
     const profile = {
       firstName: onboardFirstName.trim(),
       lastName: onboardLastName.trim(),
-      email: onboardEmail.trim()
     };
 
-    try {
-      await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profile)
-      });
-    } catch (err) {
-      console.error('Failed to register lead:', err);
+    if (followUpConsent && onboardEmail.trim()) {
+      try {
+        const response = await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...profile, email: onboardEmail.trim(), consent: true })
+        });
+        if (!response.ok) throw new Error('Lead registration rejected');
+      } catch (err) {
+        console.error('Failed to register follow-up consent:', err);
+      }
     }
 
-    localStorage.setItem('chat_user_profile', JSON.stringify(profile));
+    sessionStorage.setItem('chat_user_profile', JSON.stringify(profile));
     setUserProfile(profile);
 
     const greeting = {
       role: 'assistant' as const,
-      text: `Hi ${profile.firstName}! I'm Sensei, Gideon's AI assistant. Ask me anything about his software engineering experience (Konga, Xxolcare), core backend stacks, or microservices projects!`,
+      text: `Hi ${profile.firstName}! I'm Sensei, Gideon's AI assistant. Ask me about Konga, Ansar-Ud-Deen, Visitor Management, Shipwize, or his backend systems work.`,
       timestamp: new Date()
     };
     setMessages([greeting]);
   };
 
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || loading) return;
+  const sendMessage = async (userMessage: string) => {
+    if (!userMessage.trim() || loading) return;
 
-    const userMessage = input.trim();
+    const normalizedMessage = userMessage.trim();
     setInput('');
-    setMessages(prev => [...prev, { role: 'user', text: userMessage, timestamp: new Date() }]);
+    setMessages(prev => [...prev, { role: 'user', text: normalizedMessage, timestamp: new Date() }]);
     setLoading(true);
 
     try {
@@ -138,8 +175,9 @@ export default function ChatWidget() {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({ 
-          message: userMessage,
-          userProfile: userProfile
+          message: normalizedMessage,
+          userProfile,
+          history: messages.slice(-8).map(({ role, text }) => ({ role, text }))
         })
       });
 
@@ -151,7 +189,7 @@ export default function ChatWidget() {
       console.error(err);
       setMessages(prev => [...prev, { 
         role: 'assistant', 
-        text: "I'm having a hard time connecting to my neural core. Please try again or reach out to Gideon directly via nwadialugideon@gmail.com!", 
+        text: "I couldn't reach the chat service. Please try again or contact Gideon directly at nwadialugideon@gmail.com.",
         timestamp: new Date() 
       }]);
     } finally {
@@ -159,11 +197,30 @@ export default function ChatWidget() {
     }
   };
 
+  const handleSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    void sendMessage(input);
+  };
+
+  const resetConversation = () => {
+    const greeting = {
+      role: 'assistant' as const,
+      text: `Fresh slate${userProfile?.firstName ? `, ${userProfile.firstName}` : ''}. Ask about a project, architecture decision, result, or Gideon's fit for your team.`,
+      timestamp: new Date()
+    };
+    setMessages([greeting]);
+    setInput('');
+  };
+
   return (
     <div className="fixed bottom-6 right-6 z-50 font-mono text-xs">
       <AnimatePresence>
         {isOpen && (
           <motion.div
+            ref={chatPanelRef}
+            id="sensei-assistant-panel"
+            role="region"
+            aria-label="Sensei project assistant"
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
@@ -175,81 +232,122 @@ export default function ChatWidget() {
               <div className="flex items-center gap-2.5">
                 <div className="relative">
                   <img 
-                    src="/sensei_avatar.png" 
+                    src="/sensei_avatar.webp"
                     alt="Sensei" 
+                    width="192"
+                    height="192"
+                    decoding="async"
                     className="w-7 h-7 rounded-full border border-orange-500/40 object-cover"
                   />
                   <span className="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-500 border border-slate-950" />
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-200">Sensei</h4>
-                  <span className="text-[8px] text-slate-500 uppercase tracking-widest">Portfolio AI Core</span>
+                  <span className="text-[10px] text-slate-500 uppercase tracking-wider">Project guide</span>
                 </div>
               </div>
-              <button 
-                onClick={() => setIsOpen(false)}
-                className="p-1 hover:bg-slate-900 rounded text-slate-500 hover:text-slate-200 transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-1">
+                {userProfile && (
+                  <button
+                    type="button"
+                    aria-label="Start a new conversation"
+                    title="New conversation"
+                    onClick={resetConversation}
+                    className="p-1.5 hover:bg-slate-900 rounded text-slate-500 hover:text-slate-200 transition-colors cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                  </button>
+                )}
+                <button
+                  type="button"
+                  aria-label="Close Sensei assistant"
+                  onClick={closeChat}
+                  className="p-1.5 hover:bg-slate-900 rounded text-slate-500 hover:text-slate-200 transition-colors cursor-pointer"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {!userProfile ? (
               /* Onboarding Form */
               <form onSubmit={handleOnboardSubmit} className="flex-grow p-5 flex flex-col justify-center gap-2.5 bg-slate-950/40 overflow-y-auto">
                 <div className="text-center mb-1">
-                  <h3 className="text-orange-400 font-bold text-xs tracking-wider uppercase">Systems Briefing</h3>
-                  <p className="text-[10px] text-slate-400 leading-normal font-sans">Introduce yourself to initialize Sensei's AI assistant core.</p>
+                  <h3 className="text-orange-400 font-bold text-xs tracking-wider uppercase">Meet Sensei</h3>
+                  <p className="text-xs text-slate-400 leading-normal font-sans">Your name stays in this browser session. Email is only saved when you request a follow-up.</p>
                 </div>
                 
                 <div className="flex gap-2">
                   <div className="flex-1 flex flex-col gap-1">
-                    <label className="text-[8px] text-slate-500 uppercase tracking-wider">First Name *</label>
+                    <label htmlFor="chat-first-name" className="text-[10px] text-slate-400 uppercase tracking-wider">First Name *</label>
                     <input 
+                      id="chat-first-name"
+                      name="firstName"
                       type="text"
                       required
+                      autoComplete="given-name"
+                      maxLength={80}
                       value={onboardFirstName}
                       onChange={e => setOnboardFirstName(e.target.value)}
                       placeholder="First name" 
-                      className="bg-slate-900 border border-slate-850 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-orange-500/40 text-[10px] placeholder-slate-650 w-full min-w-0"
+                      className="bg-slate-900 border border-slate-850 rounded px-2.5 py-2 text-slate-200 focus:outline-none focus:border-orange-500/40 text-xs placeholder-slate-650 w-full min-w-0"
                     />
                   </div>
                   
                   <div className="flex-1 flex flex-col gap-1">
-                    <label className="text-[8px] text-slate-500 uppercase tracking-wider">Last Name</label>
+                    <label htmlFor="chat-last-name" className="text-[10px] text-slate-400 uppercase tracking-wider">Last Name</label>
                     <input 
+                      id="chat-last-name"
+                      name="lastName"
                       type="text"
+                      autoComplete="family-name"
+                      maxLength={80}
                       value={onboardLastName}
                       onChange={e => setOnboardLastName(e.target.value)}
                       placeholder="Last name" 
-                      className="bg-slate-900 border border-slate-850 rounded px-2.5 py-1.5 text-slate-200 focus:outline-none focus:border-orange-500/40 text-[10px] placeholder-slate-650 w-full min-w-0"
+                      className="bg-slate-900 border border-slate-850 rounded px-2.5 py-2 text-slate-200 focus:outline-none focus:border-orange-500/40 text-xs placeholder-slate-650 w-full min-w-0"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1">
-                  <label className="text-[8px] text-slate-500 uppercase tracking-wider">Your Email (Optional)</label>
+                  <label htmlFor="chat-email" className="text-[10px] text-slate-400 uppercase tracking-wider">Your Email (Optional)</label>
                   <input 
+                    id="chat-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
+                    maxLength={254}
                     value={onboardEmail}
                     onChange={e => setOnboardEmail(e.target.value)}
                     placeholder="name@company.com" 
-                    className="bg-slate-900 border border-slate-850 rounded px-3 py-1.5 text-slate-200 focus:outline-none focus:border-orange-500/40 text-[10px] placeholder-slate-650 w-full"
+                    className="bg-slate-900 border border-slate-850 rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-orange-500/40 text-xs placeholder-slate-650 w-full"
                   />
                 </div>
+
+                <label className="flex items-start gap-2 text-[10px] leading-relaxed text-slate-400 font-sans">
+                  <input
+                    type="checkbox"
+                    checked={followUpConsent}
+                    disabled={!onboardEmail.trim()}
+                    onChange={(event) => setFollowUpConsent(event.target.checked)}
+                    className="mt-0.5 accent-orange-500 disabled:opacity-40"
+                  />
+                  <span>Save my contact details so Gideon can follow up. Stored for up to 180 days.</span>
+                </label>
 
                 <button 
                   type="submit"
                   className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/20 hover:border-orange-500/40 py-2 rounded transition-all font-bold tracking-wider text-[10px] uppercase cursor-pointer mt-1.5"
                 >
-                  Initialize Sensei ⚡
+                  Start conversation
                 </button>
               </form>
             ) : (
               /* Chat View */
               <>
                 {/* Chat Messages */}
-                <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-950/40">
+                <div className="flex-1 p-4 overflow-y-auto space-y-4 bg-slate-950/40" aria-live="polite" aria-busy={loading}>
                   {messages.map((msg, i) => (
                     <div 
                       key={i} 
@@ -259,8 +357,12 @@ export default function ChatWidget() {
                     >
                       {msg.role === 'assistant' && (
                         <img 
-                          src="/sensei_avatar.png" 
-                          alt="Sensei" 
+                          src="/sensei_avatar.webp"
+                          alt=""
+                          width="192"
+                          height="192"
+                          loading="lazy"
+                          decoding="async"
                           className="w-5 h-5 rounded-full border border-slate-800 flex-shrink-0 object-cover"
                         />
                       )}
@@ -275,11 +377,30 @@ export default function ChatWidget() {
                       </div>
                     </div>
                   ))}
+                  {messages.filter((message) => message.role === 'user').length === 0 && !loading && (
+                    <div className="grid gap-1.5 pt-1" aria-label="Suggested questions">
+                      {STARTER_QUESTIONS.map((question) => (
+                        <button
+                          key={question}
+                          type="button"
+                          onClick={() => void sendMessage(question)}
+                          className="border border-slate-800 px-3 py-2 text-left text-[10px] leading-relaxed text-slate-400 hover:border-orange-500/40 hover:text-orange-300 transition-colors cursor-pointer"
+                        >
+                          {question}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   {loading && (
                     <div className="flex gap-2 max-w-[85%] mr-auto items-center">
+                      <span className="sr-only">Sensei is preparing a response.</span>
                       <img 
-                        src="/sensei_avatar.png" 
-                        alt="Sensei" 
+                        src="/sensei_avatar.webp"
+                        alt=""
+                        width="192"
+                        height="192"
+                        loading="lazy"
+                        decoding="async"
                         className="w-5 h-5 rounded-full border border-slate-800 flex-shrink-0 object-cover"
                       />
                       <div className="bg-slate-900/60 border border-slate-850 p-3 rounded-lg text-slate-500 flex items-center gap-1.5 animate-pulse">
@@ -295,7 +416,9 @@ export default function ChatWidget() {
                 {/* Input Form */}
                 <form onSubmit={handleSend} className="p-3 border-t border-slate-850 bg-slate-950 flex gap-2">
                   <input 
+                    aria-label="Message for Sensei"
                     type="text" 
+                    maxLength={600}
                     value={input}
                     onChange={e => setInput(e.target.value)}
                     placeholder="Ask Sensei a question..." 
@@ -303,6 +426,8 @@ export default function ChatWidget() {
                   />
                   <button 
                     type="submit"
+                    aria-label="Send message"
+                    disabled={loading || !input.trim()}
                     className="bg-orange-500/10 hover:bg-orange-500/20 text-orange-400 border border-orange-500/20 hover:border-orange-500/40 p-2 rounded transition-all cursor-pointer flex items-center justify-center"
                   >
                     <Send className="w-3.5 h-3.5" />
@@ -318,29 +443,39 @@ export default function ChatWidget() {
       <div className="flex items-center justify-end relative">
         <AnimatePresence>
           {!isOpen && (
-            <motion.div
+            <motion.button
+              type="button"
+              aria-label="Open Sensei assistant"
               initial={{ opacity: 0, x: 20, scale: 0.9 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               exit={{ opacity: 0, x: 20, scale: 0.9 }}
               transition={{ delay: 0.8, duration: 0.3 }}
               onClick={() => setIsOpen(true)}
-              className="absolute right-14 mr-2 bg-slate-950/90 border border-orange-500/30 px-3.5 py-2 rounded-lg text-orange-400 font-bold text-[10px] tracking-wide whitespace-nowrap shadow-xl flex items-center gap-2 backdrop-blur-md cursor-pointer select-none hover:border-orange-500/60 hover:text-orange-300 transition-colors"
+              className="absolute right-14 mr-2 bg-slate-950/90 border border-orange-500/30 px-3.5 py-2 rounded-lg text-orange-400 font-bold text-[10px] tracking-wide whitespace-nowrap shadow-xl hidden sm:flex items-center gap-2 backdrop-blur-md cursor-pointer select-none hover:border-orange-500/60 hover:text-orange-300 transition-colors"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping" />
-              <span>Need systems intelligence? Ask me! ⚡</span>
-            </motion.div>
+              <span>Questions about the work?</span>
+            </motion.button>
           )}
         </AnimatePresence>
 
         <motion.button
-          onClick={() => setIsOpen(!isOpen)}
+          ref={toggleButtonRef}
+          type="button"
+          aria-label={isOpen ? 'Close Sensei assistant' : 'Open Sensei assistant'}
+          aria-expanded={isOpen}
+          aria-controls="sensei-assistant-panel"
+          onClick={() => isOpen ? closeChat() : setIsOpen(true)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           className="w-12 h-12 rounded-full border border-orange-500/30 hover:border-orange-500/60 shadow-lg shadow-orange-500/20 overflow-hidden cursor-pointer relative group flex items-center justify-center bg-slate-950/80 focus:outline-none"
         >
           <img 
-            src="/sensei_avatar.png" 
+            src="/sensei_avatar.webp"
             alt="Sensei Avatar" 
+            width="192"
+            height="192"
+            decoding="async"
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
           />
           <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-500 border border-slate-950" />
