@@ -720,7 +720,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="projects" className="space-y-10" aria-labelledby="selected-work-title">
+        <section id="projects" className="space-y-7 md:space-y-10" aria-labelledby="selected-work-title">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:items-end">
             <div className="md:col-span-7">
               <p className="font-mono text-xs uppercase text-orange-400">Selected work / evidence first</p>
@@ -739,20 +739,30 @@ export default function App() {
                 key={story.project.id}
                 className="group grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 py-8 md:py-14"
               >
-                <div className={`lg:col-span-3 flex items-center justify-start lg:justify-center ${storyIndex % 2 === 1 ? 'lg:order-3' : ''}`}>
+                <div className={`hidden lg:flex lg:col-span-3 items-center justify-center ${storyIndex % 2 === 1 ? 'lg:order-3' : ''}`}>
                   <Mascot
                     variant={story.mascot}
                     label={`${story.project.title} case study mascot`}
                     motion={story.mascot === 'architect' ? 'inspect' : 'float'}
-                    className="w-32 sm:w-40 md:w-48 transition-transform duration-300 group-hover:scale-[1.025]"
+                    className="w-48 transition-transform duration-300 group-hover:scale-[1.025]"
                   />
                 </div>
 
                 <div className={`lg:col-span-6 ${storyIndex % 2 === 1 ? 'lg:order-2' : ''}`}>
-                  <p className="font-mono text-[11px] uppercase text-slate-500">
-                    Case {story.index} / {story.context}
-                  </p>
-                  <h3 className="mt-3 text-2xl md:text-3xl font-bold text-slate-100">{story.project.title}</h3>
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="min-w-0 pt-1">
+                      <p className="font-mono text-[11px] uppercase text-slate-500">
+                        Case {story.index} / {story.context}
+                      </p>
+                      <h3 className="mt-3 text-2xl md:text-3xl font-bold text-slate-100">{story.project.title}</h3>
+                    </div>
+                    <Mascot
+                      variant={story.mascot}
+                      label={`${story.project.title} case study mascot`}
+                      motion={story.mascot === 'architect' ? 'inspect' : 'float'}
+                      className="w-20 sm:w-24 lg:hidden transition-transform duration-300 group-hover:scale-[1.025]"
+                    />
+                  </div>
 
                   <dl className="mt-6 space-y-5">
                     <div className="grid grid-cols-[76px_1fr] gap-4">
@@ -1050,13 +1060,15 @@ export default function App() {
             <p className="mt-4 text-base leading-relaxed text-slate-400 max-w-md">
               I’m open to backend, platform integration, payment infrastructure, and full-stack engineering conversations.
             </p>
-            <Mascot variant="integrate" label="Senseiuc partnership mascot" motion="float" className="mt-6 w-36" />
-            <div className="mt-6 space-y-3 text-sm">
-              <a href="mailto:nwadialugideon@gmail.com" className="flex items-center gap-2 text-slate-200 hover:text-orange-400 transition-colors">
-                <Mail className="w-4 h-4" /> nwadialugideon@gmail.com
-              </a>
-              <p className="font-mono text-xs text-slate-500">Lagos, Nigeria / remote</p>
-              <p className="font-mono text-xs text-slate-500">+234-810-534-XXXX</p>
+            <div className="mt-5 lg:mt-6 flex items-center gap-5 lg:block">
+              <Mascot variant="integrate" label="Senseiuc partnership mascot" motion="float" className="w-20 sm:w-24 lg:w-36" />
+              <div className="min-w-0 space-y-3 text-sm lg:mt-6">
+                <a href="mailto:nwadialugideon@gmail.com" className="flex items-center gap-2 text-slate-200 hover:text-orange-400 transition-colors break-all sm:break-normal">
+                  <Mail className="w-4 h-4 shrink-0" /> nwadialugideon@gmail.com
+                </a>
+                <p className="font-mono text-xs text-slate-500">Lagos, Nigeria / remote</p>
+                <p className="font-mono text-xs text-slate-500">+234-810-534-XXXX</p>
+              </div>
             </div>
           </div>
 
@@ -1068,7 +1080,7 @@ export default function App() {
                 <p className="text-sm text-slate-400 max-w-sm">Thank you. Gideon can follow up using the email address you provided.</p>
               </div>
             ) : (
-            <form onSubmit={handleContactSubmit} className="space-y-5 text-sm">
+            <form onSubmit={handleContactSubmit} className="space-y-4 md:space-y-5 text-sm">
               <p id="contact-privacy" className="text-xs leading-relaxed text-slate-500">
                 Your details are used only to respond to this message and are retained for up to 180 days.
               </p>
@@ -1085,7 +1097,7 @@ export default function App() {
                     maxLength={100}
                     value={form.name}
                     onChange={e => setForm({ ...form, name: e.target.value })}
-                    className="w-full bg-transparent border-b border-slate-700 px-0 py-3 text-slate-100 outline-none focus:border-orange-500"
+                    className="w-full bg-transparent border-b border-slate-700 px-0 py-2.5 md:py-3 text-slate-100 outline-none focus:border-orange-500"
                   />
                 </div>
                 <div className="space-y-1">
@@ -1100,7 +1112,7 @@ export default function App() {
                     maxLength={254}
                     value={form.email}
                     onChange={e => setForm({ ...form, email: e.target.value })}
-                    className="w-full bg-transparent border-b border-slate-700 px-0 py-3 text-slate-100 outline-none focus:border-orange-500"
+                    className="w-full bg-transparent border-b border-slate-700 px-0 py-2.5 md:py-3 text-slate-100 outline-none focus:border-orange-500"
                   />
                 </div>
               </div>
@@ -1112,7 +1124,7 @@ export default function App() {
                   name="message"
                   required
                   aria-describedby="contact-privacy"
-                  rows={4}
+                  rows={3}
                   maxLength={3000}
                   value={form.message}
                   onChange={e => setForm({ ...form, message: e.target.value })}
