@@ -58,7 +58,7 @@ const terminalLimiter = createLimiter(10 * 60 * 1000, 30, 'Terminal request limi
 const contactLimiter = createLimiter(60 * 60 * 1000, 5, 'Message limit reached. Please try again later.');
 const chatLimiter = createLimiter(10 * 60 * 1000, 20, 'Chat request limit reached. Please wait before trying again.');
 
-app.use(['/api/git-metrics', '/api/metrics', '/api/health'], readLimiter);
+app.use(['/api/git-metrics', '/api/metrics'], readLimiter);
 
 const normalizeText = (value: unknown, maxLength: number): string | null => {
   if (typeof value !== 'string') return null;

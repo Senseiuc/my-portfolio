@@ -67,14 +67,14 @@ after(async () => {
   fs.rmSync(tempDir, { recursive: true, force: true });
 });
 
-test('health endpoint sends security and rate-limit headers', async () => {
+test('health endpoint sends security headers without rate limiting', async () => {
   const response = await fetch(`${baseUrl}/api/health`);
   assert.equal(response.status, 200);
   assert.match(response.headers.get('content-security-policy') ?? '', /default-src 'self'/);
   assert.match(response.headers.get('content-security-policy') ?? '', /style-src[^;]*https:\/\/fonts\.googleapis\.com/);
   assert.match(response.headers.get('content-security-policy') ?? '', /font-src[^;]*https:\/\/fonts\.gstatic\.com/);
   assert.equal(response.headers.get('x-content-type-options'), 'nosniff');
-  assert.equal(response.headers.get('ratelimit-limit'), '120');
+  assert.equal(response.headers.get('ratelimit-limit'), null);
 });
 
 test('missing static assets do not fall through to the SPA document', async () => {
