@@ -61,7 +61,7 @@ export default function Mascot({
       className={`mascot mascot--${motion} ${className}`}
       style={{
         aspectRatio: isSystemsMascot ? '2 / 3' : '9 / 8',
-        backgroundImage: `url(${isSystemsMascot ? '/senseiuc-mascots-systems.webp' : '/senseiuc-mascots.webp'})`,
+        backgroundImage: `url(${isSystemsMascot ? '/senseiuc-mascots-systems-transparent.webp' : '/senseiuc-mascots-transparent.webp'})`,
         backgroundPosition: position,
         backgroundSize: isSystemsMascot ? '300% 100%' : '400% 300%',
       }}
