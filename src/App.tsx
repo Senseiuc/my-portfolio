@@ -536,10 +536,10 @@ export default function App() {
       <div className="systems-grid fixed inset-0 pointer-events-none z-0" aria-hidden="true" />
 
       <header className="sticky top-0 z-50 w-full bg-[#0a0806]/92 backdrop-blur-md border-b border-amber-950/40">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <a href="#about" className="flex items-center gap-2" aria-label="Gideon Nwadialu, back to introduction">
             <Logo className="w-8 h-8" />
-            <span className="font-mono text-sm font-bold text-slate-100 uppercase tracking-wider">
+            <span className="font-mono text-xs sm:text-sm font-bold text-slate-100 uppercase tracking-wider">
               GIDEON <span className="text-orange-400">NWADIALU</span>
             </span>
           </a>
@@ -550,16 +550,20 @@ export default function App() {
             <a href="#experience" className="hover:text-orange-400 transition-colors">Experience</a>
             <a href="#contact" className="text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
           </nav>
+          <nav aria-label="Mobile navigation" className="flex md:hidden items-center gap-3 font-mono text-[10px] uppercase text-slate-400">
+            <a href="#projects" className="py-2 hover:text-orange-400 transition-colors">Work</a>
+            <a href="#contact" className="py-2 text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
+          </nav>
         </div>
       </header>
 
       {/* Main Container */}
-      <main id="main-content" tabIndex={-1} className="max-w-6xl mx-auto px-4 py-8 relative z-10 space-y-20">
+      <main id="main-content" tabIndex={-1} className="max-w-6xl mx-auto px-4 py-5 md:py-8 relative z-10 space-y-14 md:space-y-20">
 
         {/* HERO SECTION */}
-        <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center min-h-[72vh] py-10 md:py-14">
+        <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center lg:min-h-[72vh] py-6 md:py-14">
           {/* Intro Text */}
-          <div className="lg:col-span-7 space-y-7">
+          <div className="lg:col-span-7 space-y-6 md:space-y-7">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -574,7 +578,7 @@ export default function App() {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl md:text-7xl font-extrabold text-slate-100 leading-[0.96]"
+              className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-100 leading-[1.02] md:leading-[0.96]"
             >
               I build the systems<br />
               <span className="text-orange-400">behind the transaction.</span>
@@ -593,19 +597,19 @@ export default function App() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.25 }}
-              className="grid grid-cols-3 border-y border-amber-950/60 py-4 max-w-2xl"
+              className="grid grid-cols-3 gap-2 border-y border-amber-950/60 py-4 max-w-2xl"
             >
               <div>
                 <dt className="font-mono text-[11px] uppercase text-slate-500">Payout speed</dt>
-                <dd className="mt-1 text-xl font-bold text-slate-100">2x faster</dd>
+                <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">2x faster</dd>
               </div>
               <div className="border-l border-amber-950/60 pl-4">
                 <dt className="font-mono text-[11px] uppercase text-slate-500">Records moved</dt>
-                <dd className="mt-1 text-xl font-bold text-slate-100">100k+</dd>
+                <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">100k+</dd>
               </div>
               <div className="border-l border-amber-950/60 pl-4">
                 <dt className="font-mono text-[11px] uppercase text-slate-500">Core focus</dt>
-                <dd className="mt-1 text-xl font-bold text-slate-100">Reliability</dd>
+                <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">Reliability</dd>
               </div>
             </motion.dl>
 
@@ -733,14 +737,14 @@ export default function App() {
             {FLAGSHIP_CASE_STUDIES.map((story, storyIndex) => (
               <article
                 key={story.project.id}
-                className="group grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 py-10 md:py-14"
+                className="group grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 py-8 md:py-14"
               >
-                <div className={`lg:col-span-3 flex items-center justify-center ${storyIndex % 2 === 1 ? 'lg:order-3' : ''}`}>
+                <div className={`lg:col-span-3 flex items-center justify-start lg:justify-center ${storyIndex % 2 === 1 ? 'lg:order-3' : ''}`}>
                   <Mascot
                     variant={story.mascot}
                     label={`${story.project.title} case study mascot`}
                     motion={story.mascot === 'architect' ? 'inspect' : 'float'}
-                    className="w-40 md:w-48 transition-transform duration-300 group-hover:scale-[1.025]"
+                    className="w-32 sm:w-40 md:w-48 transition-transform duration-300 group-hover:scale-[1.025]"
                   />
                 </div>
 
@@ -1141,7 +1145,7 @@ export default function App() {
       {/* Project engineering notes */}
       {selectedProject && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-950/80 backdrop-blur-sm"
           onMouseDown={(event) => {
             if (event.target === event.currentTarget) closeProjectDetails();
           }}
@@ -1153,7 +1157,7 @@ export default function App() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="project-dialog-title"
-            className="w-full max-w-3xl bg-[#0a0806] border border-slate-700 rounded-lg overflow-hidden shadow-2xl flex flex-col text-slate-300"
+            className="w-full max-w-3xl max-h-[92dvh] sm:max-h-none bg-[#0a0806] border border-slate-700 rounded-t-lg sm:rounded-lg overflow-hidden shadow-2xl flex flex-col text-slate-300"
           >
             <div className="px-5 py-4 border-b border-amber-950/50 flex items-center justify-between">
               <span className="font-mono text-xs uppercase text-orange-400">
@@ -1169,7 +1173,7 @@ export default function App() {
               </button>
             </div>
 
-            <div className="p-6 md:p-8 space-y-8 max-h-[78vh] overflow-y-auto">
+            <div className="p-5 md:p-8 space-y-7 md:space-y-8 max-h-[calc(92dvh-66px)] sm:max-h-[78vh] overflow-y-auto">
               <div>
                 <p className="font-mono text-xs uppercase text-slate-500">System</p>
                 <h4 id="project-dialog-title" className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100">

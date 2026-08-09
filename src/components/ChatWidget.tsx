@@ -213,7 +213,7 @@ export default function ChatWidget() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 font-mono text-xs">
+    <div className="fixed inset-x-3 bottom-3 sm:inset-x-auto sm:bottom-6 sm:right-6 z-50 font-mono text-xs">
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -225,7 +225,7 @@ export default function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="w-80 md:w-96 h-[450px] flex-shrink-0 bg-slate-950/95 border border-slate-800 rounded-xl shadow-2xl overflow-hidden flex flex-col backdrop-blur-md mb-4"
+            className="w-full sm:w-80 md:w-96 h-[min(68dvh,520px)] sm:h-[450px] flex-shrink-0 bg-slate-950/95 border border-slate-800 rounded-lg sm:rounded-xl shadow-2xl overflow-hidden flex flex-col backdrop-blur-md mb-3 sm:mb-4"
           >
             {/* Header */}
             <div className="p-3 border-b border-slate-800 bg-slate-950 flex items-center justify-between">
@@ -440,7 +440,7 @@ export default function ChatWidget() {
       </AnimatePresence>
 
       {/* Floating Toggle Button & Prompt Speech Bubble */}
-      <div className="flex items-center justify-end relative">
+      <div className="flex items-center justify-end relative pointer-events-none">
         <AnimatePresence>
           {!isOpen && (
             <motion.button
@@ -451,7 +451,7 @@ export default function ChatWidget() {
               exit={{ opacity: 0, x: 20, scale: 0.9 }}
               transition={{ delay: 0.8, duration: 0.3 }}
               onClick={() => setIsOpen(true)}
-              className="absolute right-14 mr-2 bg-slate-950/90 border border-orange-500/30 px-3.5 py-2 rounded-lg text-orange-400 font-bold text-[10px] tracking-wide whitespace-nowrap shadow-xl hidden sm:flex items-center gap-2 backdrop-blur-md cursor-pointer select-none hover:border-orange-500/60 hover:text-orange-300 transition-colors"
+              className="absolute right-14 mr-2 bg-slate-950/90 border border-orange-500/30 px-3.5 py-2 rounded-lg text-orange-400 font-bold text-[10px] tracking-wide whitespace-nowrap shadow-xl hidden sm:flex items-center gap-2 backdrop-blur-md cursor-pointer select-none hover:border-orange-500/60 hover:text-orange-300 transition-colors pointer-events-auto"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping" />
               <span>Questions about the work?</span>
@@ -468,7 +468,7 @@ export default function ChatWidget() {
           onClick={() => isOpen ? closeChat() : setIsOpen(true)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="w-12 h-12 rounded-full border border-orange-500/30 hover:border-orange-500/60 shadow-lg shadow-orange-500/20 overflow-hidden cursor-pointer relative group flex items-center justify-center bg-slate-950/80 focus:outline-none"
+          className="w-12 h-12 rounded-full border border-orange-500/30 hover:border-orange-500/60 shadow-lg shadow-orange-500/20 overflow-hidden cursor-pointer relative group flex items-center justify-center bg-slate-950/80 focus:outline-none pointer-events-auto"
         >
           <img 
             src="/sensei_avatar.webp"
