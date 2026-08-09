@@ -23,11 +23,11 @@ app.use(helmet({
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "'sha256-6+IVlHEzgfce2yMyriTfmw3UBKgyKmmVPTBxCw8jj8I='"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
       imgSrc: ["'self'", 'data:'],
       mediaSrc: ["'self'"],
       connectSrc: ["'self'", ...(isProduction ? [] : ['ws:', 'http://localhost:*'])],
-      fontSrc: ["'self'", 'data:'],
+      fontSrc: ["'self'", 'data:', 'https://fonts.gstatic.com'],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
       baseUri: ["'self'"],
@@ -812,6 +812,14 @@ app.get('/sitemap.xml', (req, res) => {
 });
 
 app.use(express.static(distPath, { index: false }));
+
+// Asset-like requests should never receive the SPA document as a fallback.
+app.get('*', (req, res, next) => {
+  if (path.extname(req.path)) {
+    return res.status(404).type('text/plain').send('Asset not found');
+  }
+  next();
+});
 
 app.get('*', (req, res) => {
   if (!req.path.startsWith('/api')) {
