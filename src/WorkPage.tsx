@@ -104,7 +104,7 @@ export default function WorkPage() {
               </div>
             </div>
             <div className="md:col-span-7">
-              <div className="flex gap-2 overflow-x-auto border-y border-slate-800 py-2 md:justify-end">
+              <div className="flex gap-2 overflow-x-auto border-y border-slate-800 py-2 md:justify-start lg:flex-wrap lg:justify-end lg:overflow-visible">
                 {categories.map((category) => (
                   <button
                     key={category}
@@ -184,7 +184,7 @@ export default function WorkPage() {
           </div>
 
           <div className="hidden grid-cols-1 gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_390px] lg:items-start">
-            <div className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 sm:grid-cols-2">
+            <div className={`grid auto-rows-fr grid-cols-1 gap-px border border-slate-800 bg-slate-800 ${visibleProjects.length === 1 ? '' : 'sm:grid-cols-2'}`}>
               {visibleProjects.map((project, index) => {
                 const isActive = project.id === activeProject.id;
                 return (
