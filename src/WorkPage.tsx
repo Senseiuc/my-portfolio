@@ -129,7 +129,61 @@ export default function WorkPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_390px] lg:items-start">
+          <div className="lg:hidden">
+            <p className="mb-3 font-mono text-[10px] uppercase text-slate-500">Swipe sideways / details are attached to each card</p>
+            <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4">
+              {visibleProjects.map((project, index) => (
+                <article key={project.id} className="min-w-[86vw] max-w-[86vw] snap-center border border-amber-950/60 bg-[#0d0a07]/90">
+                  <div className="min-h-56 p-4">
+                    <span className="font-mono text-[10px] uppercase font-bold text-orange-400">
+                      {String(index + 1).padStart(2, '0')} / {project.category}
+                    </span>
+                    <h3 className="mt-3 text-2xl font-extrabold leading-tight text-slate-100">{project.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400">{project.shortDesc}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {project.tags.slice(0, 4).map((tag) => (
+                        <span key={tag} className="border border-slate-800 px-2 py-1 text-[10px] font-mono text-slate-400">{tag}</span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="border-t border-slate-800 p-4">
+                    <p className="font-mono text-[10px] uppercase text-slate-500">Role and scope</p>
+                    <p className="mt-2 text-sm leading-relaxed text-slate-300">{project.details.role ?? project.details.system}</p>
+
+                    {project.details.architecture && (
+                      <div className="mt-5 flex flex-wrap gap-2">
+                        {project.details.architecture.map((node) => (
+                          <span key={node} className="border border-amber-950/70 px-2 py-1 text-[11px] text-orange-200">{node}</span>
+                        ))}
+                      </div>
+                    )}
+
+                    <ul className="mt-5 space-y-2 text-sm leading-relaxed text-slate-400">
+                      {project.details.contributions.slice(0, 3).map((item) => (
+                        <li key={item} className="border-l border-slate-800 pl-3">{item}</li>
+                      ))}
+                    </ul>
+
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      {project.id === 'konga-payouts' && (
+                        <a href="/work/konga-merchant-platform" className="inline-flex min-h-11 items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400">
+                          Read case study <ArrowRight className="w-4 h-4" />
+                        </a>
+                      )}
+                      {(project.details.links ?? project.links ?? (project.link ? [{ label: 'Production site', url: project.link }] : [])).map((link) => (
+                        <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-xs font-mono text-slate-300 hover:text-orange-400 transition-colors">
+                          {link.label} <ExternalLink className="w-3.5 h-3.5" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="hidden grid-cols-1 gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_390px] lg:items-start">
             <div className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 sm:grid-cols-2">
               {visibleProjects.map((project, index) => {
                 const isActive = project.id === activeProject.id;
