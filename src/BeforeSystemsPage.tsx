@@ -110,6 +110,21 @@ export default function BeforeSystemsPage() {
           </div>
         </section>
 
+        <section className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 md:grid-cols-4" aria-label="Transferable skills from teaching to engineering">
+          {[
+            ['Explain', 'Translate complex ideas until the user, student, or teammate can act.'],
+            ['Sequence', 'Break large problems into steps that can be practiced, tested, and improved.'],
+            ['Support', 'Stay close to real people when the workflow becomes confusing or costly.'],
+            ['Improve', 'Turn repeated pain into better tools, clearer processes, and stronger systems.'],
+          ].map(([title, detail], index) => (
+            <div key={title} className="min-h-40 bg-[#0a0806] p-5">
+              <p className="font-mono text-[10px] uppercase text-orange-400">Transfer {String(index + 1).padStart(2, '0')}</p>
+              <h2 className="mt-3 text-lg font-bold text-slate-100">{title}</h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-500">{detail}</p>
+            </div>
+          ))}
+        </section>
+
         <section className="py-12 md:py-16 border-t border-amber-950/60">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div className="lg:col-span-4">
