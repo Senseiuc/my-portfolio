@@ -652,16 +652,18 @@ export default function App() {
               className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-100 leading-[1.02] md:leading-[0.96]"
             >
               I build the whole application.<br />
-              <motion.span
-                key={activeHeroSignal.line}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.45 }}
-                className="block text-orange-400"
-              >
-                {activeHeroSignal.line}
-              </motion.span>
+              <span className="relative block min-h-[2.12em] text-orange-400 sm:min-h-[1.06em]">
+                <motion.span
+                  key={activeHeroSignal.line}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.45 }}
+                  className="absolute inset-x-0 top-0 block"
+                >
+                  {activeHeroSignal.line}
+                </motion.span>
+              </span>
             </motion.h1>
 
             <motion.div
@@ -669,7 +671,7 @@ export default function App() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="max-w-2xl border-y border-amber-950/50 py-3"
+              className="min-h-[106px] max-w-2xl border-y border-amber-950/50 py-3 sm:min-h-[82px]"
               aria-live="polite"
             >
               <div className="flex flex-wrap items-center gap-2">
