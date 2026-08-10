@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, Layers3 } from 'lucide-react';
 import Logo from './components/Logo';
+import Mascot from './components/Mascot';
 import MobileMapNav from './components/MobileMapNav';
 import NextRead from './components/NextRead';
 import { PROJECTS } from './App';
@@ -130,7 +131,18 @@ export default function WorkPage() {
           </div>
 
           <div className="lg:hidden">
-            <p className="mb-3 font-mono text-[10px] uppercase text-slate-500">Swipe sideways / details are attached to each card</p>
+            <div className="mb-4 flex items-center gap-3 border-y border-amber-950/60 py-3">
+              <Mascot variant="teach" motion="float" label="Senseiuc mascot showing the swipeable project cards" className="w-14" />
+              <div className="min-w-0">
+                <p className="font-mono text-[10px] uppercase text-orange-400">Swipe the map</p>
+                <div className="mt-1 flex items-center gap-2">
+                  <span className="h-px w-8 bg-orange-500/70" aria-hidden="true" />
+                  <span className="animate-pulse font-mono text-xs text-slate-300">left / right</span>
+                  <span className="h-px w-8 bg-orange-500/70" aria-hidden="true" />
+                </div>
+                <p className="mt-1 text-xs leading-relaxed text-slate-500">Each card carries its own details.</p>
+              </div>
+            </div>
             <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4">
               {visibleProjects.map((project, index) => (
                 <article key={project.id} className="min-w-[86vw] max-w-[86vw] snap-center border border-amber-950/60 bg-[#0d0a07]/90">
