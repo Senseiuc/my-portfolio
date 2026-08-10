@@ -11,13 +11,12 @@ import {
   Send,
   CheckCircle2,
   ArrowRight,
-  FileText,
-  Menu,
-  X
+  FileText
 } from 'lucide-react';
 import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
 import Mascot from './components/Mascot';
+import MobileMapNav from './components/MobileMapNav';
 
 export const PROJECTS = [
   {
@@ -493,20 +492,9 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [activeFlagshipIndex, setActiveFlagshipIndex] = useState(0);
-  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const projectDialogRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLElement | null>(null);
   const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
-
-  const navigationLinks = [
-    { href: '#projects', label: 'Selected work', detail: 'Pressure-tested case boards' },
-    { href: '/work', label: 'All systems', detail: 'Complete project archive' },
-    { href: '/systems', label: 'Architecture', detail: 'How the systems fit together' },
-    { href: '#competencies', label: 'Capabilities', detail: 'Frontend, backend, mobile, DevOps' },
-    { href: '#experience', label: 'Experience', detail: 'Where the work happened' },
-    { href: '/resume.html', label: 'Resume', detail: 'Printable career snapshot' },
-    { href: '#contact', label: 'Contact', detail: 'Start a conversation' },
-  ];
 
   const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
     projectTriggerRef.current = trigger;
@@ -556,23 +544,6 @@ export default function App() {
     };
   }, [selectedProject]);
 
-  useEffect(() => {
-    if (!mobileNavOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setMobileNavOpen(false);
-    };
-
-    document.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = previousOverflow;
-    };
-  }, [mobileNavOpen]);
-
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) return;
@@ -619,88 +590,14 @@ export default function App() {
           </a>
 
           <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-400">
-            {navigationLinks.filter((link) => ['#projects', '/systems', '#experience', '#contact'].includes(link.href)).map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`inline-flex min-h-11 items-center hover:text-orange-400 transition-colors ${link.href === '#contact' ? 'text-slate-100' : ''}`}
-              >
-                {link.label === 'Selected work' ? 'Selected work' : link.label}
-              </a>
-            ))}
+            <a href="#projects" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Selected work</a>
+            <a href="/systems" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Systems</a>
+            <a href="#experience" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Experience</a>
+            <a href="#contact" className="inline-flex min-h-11 items-center text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
           </nav>
-          <button
-            type="button"
-            onClick={() => setMobileNavOpen(true)}
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-slate-800 bg-slate-950/40 text-slate-200 transition-colors hover:border-orange-500/60 hover:text-orange-400 md:hidden"
-            aria-label="Open navigation"
-            aria-expanded={mobileNavOpen}
-            aria-controls="mobile-menu"
-          >
-            <Menu className="h-5 w-5" />
-          </button>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
-
-      {mobileNavOpen && (
-        <div
-          className="fixed inset-0 z-[90] bg-[#0a0806]/96 backdrop-blur-md md:hidden"
-          onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setMobileNavOpen(false);
-          }}
-        >
-          <div
-            id="mobile-menu"
-            className="ml-auto flex h-full max-w-[360px] flex-col border-l border-amber-950/60 bg-[#0d0a07] shadow-2xl"
-          >
-            <div className="flex items-center justify-between border-b border-amber-950/60 px-4 py-3">
-              <div className="flex items-center gap-2">
-                <Logo className="h-8 w-8" />
-                <span className="font-mono text-xs font-bold uppercase text-slate-100">
-                  Gideon <span className="text-orange-400">Nwadialu</span>
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setMobileNavOpen(false)}
-                className="inline-flex h-11 w-11 items-center justify-center border border-slate-800 text-slate-300 transition-colors hover:border-orange-500/60 hover:text-orange-400"
-                aria-label="Close navigation"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-
-            <nav aria-label="Mobile navigation" className="flex-1 overflow-y-auto px-4 py-4">
-              <div className="space-y-2">
-                {navigationLinks.map((link, index) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileNavOpen(false)}
-                    className="group grid grid-cols-[2.25rem_1fr] gap-3 border border-slate-800 bg-black/20 px-3 py-3 transition-colors hover:border-orange-500/60 hover:bg-orange-500/[0.04]"
-                  >
-                    <span className="font-mono text-[10px] text-orange-400">0{index + 1}</span>
-                    <span>
-                      <span className="block text-sm font-bold text-slate-100 group-hover:text-orange-400">{link.label}</span>
-                      <span className="mt-1 block text-xs leading-relaxed text-slate-500">{link.detail}</span>
-                    </span>
-                  </a>
-                ))}
-              </div>
-            </nav>
-
-            <div className="border-t border-amber-950/60 px-4 py-4">
-              <a
-                href="mailto:hello@gideonnwadialu.com"
-                className="inline-flex min-h-11 w-full items-center justify-center gap-2 bg-orange-500 px-4 py-3 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400"
-              >
-                <Mail className="h-4 w-4" />
-                hello@gideonnwadialu.com
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Main Container */}
       <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 py-5 md:py-8 relative z-10 space-y-14 md:space-y-20">

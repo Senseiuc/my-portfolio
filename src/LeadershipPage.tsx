@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowLeft, ArrowRight, GraduationCap, HeartHandshake, Users } from 'lucide-react';
 import Logo from './components/Logo';
 import Mascot from './components/Mascot';
+import MobileMapNav from './components/MobileMapNav';
 
 const LEADERSHIP_ROLES = [
   {
@@ -85,9 +86,10 @@ export default function LeadershipPage() {
             <Logo className="w-8 h-8" />
             <span className="font-mono text-xs sm:text-sm font-bold uppercase">GIDEON <span className="text-orange-400">NWADIALU</span></span>
           </a>
-          <a href="/" className="inline-flex items-center gap-2 text-xs font-mono uppercase text-slate-300 hover:text-orange-400 transition-colors">
+          <a href="/" className="hidden items-center gap-2 text-xs font-mono uppercase text-slate-300 hover:text-orange-400 transition-colors md:inline-flex">
             <ArrowLeft className="w-4 h-4" /> Home
           </a>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 

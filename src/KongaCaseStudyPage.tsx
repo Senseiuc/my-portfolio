@@ -13,6 +13,7 @@ import {
   Store,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import MobileMapNav from './components/MobileMapNav';
 
 const chapters = [
   {
@@ -117,7 +118,8 @@ export default function KongaCaseStudyPage() {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Portfolio
           </a>
-          <span className="hidden font-mono text-xs uppercase text-slate-500 sm:block">Enterprise commerce / technical case study</span>
+          <span className="hidden font-mono text-xs uppercase text-slate-500 md:block">Enterprise commerce / technical case study</span>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 

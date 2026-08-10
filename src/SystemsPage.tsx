@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import EngineRoom from './components/EngineRoom';
 import Logo from './components/Logo';
+import MobileMapNav from './components/MobileMapNav';
 
 export default function SystemsPage() {
   useEffect(() => { document.title = 'Systems and Architecture | Gideon Nwadialu'; }, []);
@@ -14,7 +15,8 @@ export default function SystemsPage() {
           <a href="/" className="flex min-h-11 items-center gap-2 text-sm font-bold text-slate-200 hover:text-orange-400">
             <Logo className="h-8 w-8" /> Gideon Nwadialu
           </a>
-          <a href="/work" className="inline-flex min-h-11 items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300">Work archive <ArrowRight className="h-4 w-4" /></a>
+          <a href="/work" className="hidden min-h-11 items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300 md:inline-flex">Work archive <ArrowRight className="h-4 w-4" /></a>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 

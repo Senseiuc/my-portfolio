@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Music2, Quote } from 'lucide-react';
 import Logo from './components/Logo';
 import Mascot from './components/Mascot';
+import MobileMapNav from './components/MobileMapNav';
 
 const interests = [
   { title: 'Chess', description: 'Planning ahead, testing ideas, and finding the move that changes the position.', image: '/senseiuc-hobby-chess.png', variant: 'think' as const },
@@ -21,7 +22,8 @@ export default function LifePage() {
       <header className="sticky top-0 z-50 border-b border-amber-950/40 bg-[#0a0806]/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
           <a href="/" className="flex min-h-11 items-center gap-2 text-sm font-bold text-slate-200 hover:text-orange-400"><Logo className="h-8 w-8" /> Gideon Nwadialu</a>
-          <Music2 className="h-5 w-5 text-orange-400" aria-hidden="true" />
+          <Music2 className="hidden h-5 w-5 text-orange-400 md:block" aria-hidden="true" />
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 

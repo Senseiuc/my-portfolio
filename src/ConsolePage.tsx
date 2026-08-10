@@ -3,6 +3,7 @@ import { Activity, Database, Github, Terminal as TerminalIcon } from 'lucide-rea
 import GitStats from './components/GitStats';
 import Logo from './components/Logo';
 import MetricsMonitor from './components/MetricsMonitor';
+import MobileMapNav from './components/MobileMapNav';
 import Terminal from './components/Terminal';
 
 export default function ConsolePage() {
@@ -14,7 +15,8 @@ export default function ConsolePage() {
       <header className="sticky top-0 z-50 border-b border-amber-950/40 bg-[#0a0806]/95 backdrop-blur-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
           <a href="/" className="flex min-h-11 items-center gap-2 text-sm font-bold text-slate-200 hover:text-orange-400"><Logo className="h-8 w-8" /> Gideon Nwadialu</a>
-          <span className="font-mono text-[10px] uppercase text-slate-500">Technical appendix</span>
+          <span className="hidden font-mono text-[10px] uppercase text-slate-500 md:inline">Technical appendix</span>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 

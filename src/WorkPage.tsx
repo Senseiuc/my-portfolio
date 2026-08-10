@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, Layers3 } from 'lucide-react';
 import Logo from './components/Logo';
+import MobileMapNav from './components/MobileMapNav';
 import { PROJECTS } from './App';
 
 const PROJECT_ORDER = [
@@ -42,9 +43,10 @@ export default function WorkPage() {
               GIDEON <span className="text-orange-400">NWADIALU</span>
             </span>
           </a>
-          <a href="/" className="inline-flex items-center gap-2 text-xs font-mono uppercase text-slate-300 hover:text-orange-400 transition-colors">
+          <a href="/" className="hidden items-center gap-2 text-xs font-mono uppercase text-slate-300 hover:text-orange-400 transition-colors md:inline-flex">
             <ArrowLeft className="w-4 h-4" /> Home
           </a>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 
