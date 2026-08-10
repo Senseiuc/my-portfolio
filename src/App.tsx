@@ -652,14 +652,14 @@ export default function App() {
               className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-100 leading-[1.02] md:leading-[0.96]"
             >
               I build the whole application.<br />
-              <span className="relative block min-h-[2.12em] text-orange-400 sm:min-h-[1.06em]">
+              <span className="relative mt-1 block min-h-[2.12em] text-orange-400 sm:min-h-[1.12em]">
                 <motion.span
                   key={activeHeroSignal.line}
                   initial={{ opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.45 }}
-                  className="absolute inset-x-0 top-0 block"
+                  className="absolute inset-x-0 top-0 block text-[0.78em] leading-[1.06]"
                 >
                   {activeHeroSignal.line}
                 </motion.span>
