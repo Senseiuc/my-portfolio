@@ -17,6 +17,7 @@ import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
 import Mascot from './components/Mascot';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 export const PROJECTS = [
   {
@@ -1252,6 +1253,14 @@ export default function App() {
             )}
           </div>
         </section>
+
+        <NextRead
+          title="Browse the full project archive"
+          description="If the flagship cases caught your eye, the archive shows the wider delivery surface across web, mobile, backend, payments, logistics, and operations."
+          href="/work"
+          cta="Open archive"
+          icon={Briefcase}
+        />
 
       </main>
 

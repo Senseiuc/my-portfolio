@@ -4,6 +4,7 @@ import GitStats from './components/GitStats';
 import Logo from './components/Logo';
 import MetricsMonitor from './components/MetricsMonitor';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 import Terminal from './components/Terminal';
 
 export default function ConsolePage() {
@@ -56,6 +57,14 @@ export default function ConsolePage() {
             <GitStats />
           </aside>
         </section>
+
+        <NextRead
+          title="Leave the console and inspect the architecture"
+          description="The console shows this portfolio running. The systems page shows how the larger product systems were designed to hold up."
+          href="/systems"
+          cta="Open systems"
+          icon={Activity}
+        />
       </main>
     </div>
   );

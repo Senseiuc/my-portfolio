@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
 import Logo from './components/Logo';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 const CREDENTIALS = [
   {
@@ -132,6 +133,14 @@ export default function CredentialsPage() {
             </article>
           </div>
         </section>
+
+        <NextRead
+          title="Trace the learning into shipped systems"
+          description="The credentials show foundations. The project archive shows how those foundations became production software across the full stack."
+          href="/work"
+          cta="Open work"
+          icon={ExternalLink}
+        />
       </main>
 
       <footer className="relative z-10 border-t border-amber-950/40 mt-10">

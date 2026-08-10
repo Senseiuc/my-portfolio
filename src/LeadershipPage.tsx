@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, GraduationCap, HeartHandshake, Users } from 'luc
 import Logo from './components/Logo';
 import Mascot from './components/Mascot';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 const LEADERSHIP_ROLES = [
   {
@@ -171,6 +172,14 @@ export default function LeadershipPage() {
           <p className="max-w-xl text-sm leading-relaxed text-slate-400">The same habits carry into engineering: clarify the goal, distribute ownership, support the team, and stay close enough to the work to help.</p>
           <a href="/work" className="inline-flex items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300">See engineering work <ArrowRight className="w-4 h-4" /></a>
         </section>
+
+        <NextRead
+          title="See the work those habits shaped"
+          description="Move from leadership style into the project archive, where the same clarity and ownership show up in shipped product systems."
+          href="/work"
+          cta="Open work"
+          icon={Users}
+        />
       </main>
     </div>
   );

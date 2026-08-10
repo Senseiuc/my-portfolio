@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, Layers3 } from 'lucide-react';
 import Logo from './components/Logo';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 import { PROJECTS } from './App';
 
 const PROJECT_ORDER = [
@@ -202,6 +203,14 @@ export default function WorkPage() {
             </aside>
           </div>
         </section>
+
+        <NextRead
+          title="Read the Konga case study"
+          description="The archive shows breadth. The Konga case study goes deeper into one production environment across money movement, identity, testing, and operations."
+          href="/work/konga-merchant-platform"
+          cta="Open case study"
+          icon={Layers3}
+        />
       </main>
 
       <footer className="relative z-10 border-t border-amber-950/40">

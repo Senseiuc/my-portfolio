@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight, BookOpen, Code2, ExternalLink, Wrench } from 'lucide-react';
 import Logo from './components/Logo';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 const TEACHING_CHAPTERS = [
   {
@@ -161,6 +162,14 @@ export default function BeforeSystemsPage() {
             <a href="https://www.linkedin.com/in/gideonnwadialu/details/experience/" target="_blank" rel="noopener noreferrer" className="flex md:justify-end items-center gap-2 text-xs font-mono text-slate-400 hover:text-orange-400">LinkedIn experience <ExternalLink className="w-3.5 h-3.5" /></a>
           </div>
         </section>
+
+        <NextRead
+          title="Jump from origin story to current systems"
+          description="The early chapters explain the mindset. The work archive shows where that mindset now appears in product engineering."
+          href="/work"
+          cta="Open work"
+          icon={Code2}
+        />
       </main>
 
       <footer className="relative z-10 border-t border-amber-950/40 mt-12">

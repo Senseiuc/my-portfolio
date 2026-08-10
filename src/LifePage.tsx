@@ -3,6 +3,7 @@ import { Music2, Quote } from 'lucide-react';
 import Logo from './components/Logo';
 import Mascot from './components/Mascot';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 const interests = [
   { title: 'Chess', description: 'Planning ahead, testing ideas, and finding the move that changes the position.', image: '/senseiuc-hobby-chess.png', variant: 'think' as const },
@@ -55,6 +56,14 @@ export default function LifePage() {
           <blockquote className="max-w-3xl text-xl font-semibold leading-relaxed text-slate-200">“The same mind that enjoys a difficult system also enjoys a close chess position, a demanding set, and a line of poetry that finally lands.”</blockquote>
           <a href="/work" className="inline-flex items-center text-sm font-bold text-orange-400 hover:text-orange-300">Back to systems</a>
         </section>
+
+        <NextRead
+          title="Back to the systems under pressure"
+          description="After the personal texture, return to the engineering work and see how that curiosity shows up in production systems."
+          href="/#projects"
+          cta="See flagship cases"
+          icon={Music2}
+        />
       </main>
     </div>
   );

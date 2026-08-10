@@ -3,6 +3,7 @@ import { ArrowRight } from 'lucide-react';
 import EngineRoom from './components/EngineRoom';
 import Logo from './components/Logo';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 export default function SystemsPage() {
   useEffect(() => { document.title = 'Systems and Architecture | Gideon Nwadialu'; }, []);
@@ -28,6 +29,14 @@ export default function SystemsPage() {
         </section>
 
         <section className="py-10 md:py-14"><EngineRoom /></section>
+
+        <NextRead
+          title="See where these patterns shipped"
+          description="Move from architecture flows to the project archive and compare the systems that used these safeguards in production."
+          href="/work"
+          cta="Browse systems"
+          icon={ArrowRight}
+        />
       </main>
     </div>
   );

@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 const chapters = [
   {
@@ -379,6 +380,16 @@ export default function KongaCaseStudyPage() {
             </div>
           </div>
         </section>
+
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <NextRead
+            title="Explore the architecture room"
+            description="After the Konga deep dive, compare the recurring safeguards behind payments, identity, logistics, rewards, and communications."
+            href="/systems"
+            cta="Open systems"
+            icon={ServerCog}
+          />
+        </div>
       </main>
 
       <footer className="border-t border-slate-900">
