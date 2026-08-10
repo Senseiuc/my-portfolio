@@ -487,15 +487,35 @@ const FLAGSHIP_CASE_STUDIES = [
   },
 ];
 
+const HERO_SIGNALS = [
+  {
+    line: 'Then make it hold up.',
+    path: ['Interface', 'API', 'Ledger', 'Deploy'],
+    note: 'End-to-end delivery under production pressure.',
+  },
+  {
+    line: 'Then make it observable.',
+    path: ['Events', 'Logs', 'Metrics', 'Recovery'],
+    note: 'Clear signals when systems start behaving strangely.',
+  },
+  {
+    line: 'Then make it recoverable.',
+    path: ['Queue', 'Retry', 'Audit', 'Reconcile'],
+    note: 'Failure paths designed before the incident arrives.',
+  },
+];
+
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [activeFlagshipIndex, setActiveFlagshipIndex] = useState(0);
+  const [heroSignalIndex, setHeroSignalIndex] = useState(0);
   const projectDialogRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLElement | null>(null);
   const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
+  const activeHeroSignal = HERO_SIGNALS[heroSignalIndex];
 
   const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
     projectTriggerRef.current = trigger;
@@ -544,6 +564,14 @@ export default function App() {
       projectTriggerRef.current?.focus();
     };
   }, [selectedProject]);
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setHeroSignalIndex((index) => (index + 1) % HERO_SIGNALS.length);
+    }, 3600);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -624,8 +652,38 @@ export default function App() {
               className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-100 leading-[1.02] md:leading-[0.96]"
             >
               I build the whole application.<br />
-              <span className="text-orange-400">Then make it hold up.</span>
+              <motion.span
+                key={activeHeroSignal.line}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.45 }}
+                className="block text-orange-400"
+              >
+                {activeHeroSignal.line}
+              </motion.span>
             </motion.h1>
+
+            <motion.div
+              key={activeHeroSignal.note}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="max-w-2xl border-y border-amber-950/50 py-3"
+              aria-live="polite"
+            >
+              <div className="flex flex-wrap items-center gap-2">
+                {activeHeroSignal.path.map((step, index) => (
+                  <div key={step} className="flex items-center gap-2">
+                    <span className="border border-slate-800 bg-black/20 px-2 py-1 font-mono text-[10px] uppercase text-slate-300">
+                      {step}
+                    </span>
+                    {index < activeHeroSignal.path.length - 1 && <span className="font-mono text-[10px] text-orange-500">→</span>}
+                  </div>
+                ))}
+              </div>
+              <p className="mt-2 font-mono text-[10px] uppercase text-slate-500">{activeHeroSignal.note}</p>
+            </motion.div>
 
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
