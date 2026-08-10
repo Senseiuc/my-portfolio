@@ -72,6 +72,61 @@ const normalizeEmail = (value: unknown): string | null => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : null;
 };
 
+type ContactMessage = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+async function sendContactEmail({ name, email, message }: ContactMessage) {
+  const token = process.env.MAILTRAP_TOKEN;
+  const toEmail = process.env.CONTACT_TO_EMAIL || process.env.MAIL_TO_EMAIL;
+  const fromEmail = process.env.MAIL_FROM_EMAIL || 'hello@senseiuc.com';
+  const fromName = process.env.MAIL_FROM_NAME || 'Senseiuc Portfolio';
+  const apiBase = process.env.MAILTRAP_API_BASE || 'https://send.api.mailtrap.io';
+
+  if (!token || !toEmail) return { skipped: true };
+
+  const subject = `Portfolio contact from ${name}`;
+  const text = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    '',
+    message,
+  ].join('\n');
+
+  const response = await fetch(`${apiBase.replace(/\/$/, '')}/api/send`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: { email: fromEmail, name: fromName },
+      to: [{ email: toEmail }],
+      reply_to: { email, name },
+      subject,
+      text,
+      html: `<p><strong>Name:</strong> ${escapeHtml(name)}</p><p><strong>Email:</strong> ${escapeHtml(email)}</p><p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>`,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Mailtrap send failed with status ${response.status}`);
+  }
+
+  return { skipped: false };
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 // Streak Calculation Helpers
 async function getGithubStreaks(token: string, username: string) {
   try {
@@ -449,7 +504,7 @@ Open /leadership for the complete timeline and outcomes.`;
 });
 
 // Contact message handler
-app.post('/api/contact', contactLimiter, (req, res) => {
+app.post('/api/contact', contactLimiter, async (req, res) => {
   const name = normalizeText(req.body?.name, 100);
   const email = normalizeEmail(req.body?.email);
   const message = normalizeText(req.body?.message, 3000);
@@ -460,9 +515,12 @@ app.post('/api/contact', contactLimiter, (req, res) => {
   try {
     const insert = db.prepare('INSERT INTO messages (name, email, message) VALUES (?, ?, ?)');
     insert.run(name, email, message);
-    res.json({ success: true, message: 'Message saved successfully!' });
+
+    await sendContactEmail({ name, email, message });
+    res.json({ success: true, message: 'Message sent successfully!' });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to record message in database' });
+    console.error('Contact message failed:', error);
+    res.status(500).json({ error: 'Failed to send message. Please email Gideon directly.' });
   }
 });
 

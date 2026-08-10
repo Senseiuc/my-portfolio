@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { after, before, test } from 'node:test';
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
+import http from 'node:http';
 import net from 'node:net';
 import os from 'node:os';
 import path from 'node:path';
@@ -12,6 +13,9 @@ const databasePath = path.join(tempDir, 'portfolio.db');
 const siteUrl = 'https://portfolio.example';
 let server;
 let baseUrl;
+let mailtrapServer;
+let mailtrapBaseUrl;
+const mailtrapRequests = [];
 
 const findPort = () => new Promise((resolve, reject) => {
   const listener = net.createServer();
@@ -41,7 +45,26 @@ const postJson = (pathname, body) => fetch(`${baseUrl}${pathname}`, {
 
 before(async () => {
   const port = await findPort();
+  const mailtrapPort = await findPort();
   baseUrl = `http://127.0.0.1:${port}`;
+  mailtrapBaseUrl = `http://127.0.0.1:${mailtrapPort}`;
+
+  mailtrapServer = http.createServer((req, res) => {
+    let body = '';
+    req.on('data', (chunk) => { body += chunk; });
+    req.on('end', () => {
+      mailtrapRequests.push({
+        method: req.method,
+        url: req.url,
+        authorization: req.headers.authorization,
+        body: JSON.parse(body || '{}'),
+      });
+      res.writeHead(200, { 'content-type': 'application/json' });
+      res.end(JSON.stringify({ success: true }));
+    });
+  });
+  await new Promise((resolve) => mailtrapServer.listen(mailtrapPort, '127.0.0.1', resolve));
+
   server = spawn(process.execPath, ['dist-server/server.js'], {
     cwd: process.cwd(),
     env: {
@@ -53,6 +76,11 @@ before(async () => {
       GEMINI_API_KEY: '',
       GITHUB_TOKEN: '',
       GITLAB_TOKEN: '',
+      MAILTRAP_TOKEN: 'test-mailtrap-token',
+      MAILTRAP_API_BASE: mailtrapBaseUrl,
+      CONTACT_TO_EMAIL: 'gideon@example.com',
+      MAIL_FROM_EMAIL: 'portfolio@example.com',
+      MAIL_FROM_NAME: 'Portfolio Test',
     },
     stdio: ['ignore', 'pipe', 'pipe'],
   });
@@ -63,6 +91,9 @@ after(async () => {
   if (server && !server.killed) {
     server.kill('SIGTERM');
     await new Promise((resolve) => server.once('exit', resolve));
+  }
+  if (mailtrapServer) {
+    await new Promise((resolve) => mailtrapServer.close(resolve));
   }
   fs.rmSync(tempDir, { recursive: true, force: true });
 });
@@ -92,6 +123,34 @@ test('contact validation rejects malformed input', async () => {
   });
   assert.equal(response.status, 400);
   assert.equal(response.headers.get('cache-control'), 'no-store');
+});
+
+test('contact submissions are stored and sent through Mailtrap', async () => {
+  const response = await postJson('/api/contact', {
+    name: 'Hiring Manager',
+    email: 'hiring@example.com',
+    message: 'Can we discuss a senior product engineering role?',
+  });
+
+  assert.equal(response.status, 200);
+  assert.equal((await response.json()).success, true);
+
+  const db = new Database(databasePath);
+  const stored = db.prepare('SELECT name, email, message FROM messages WHERE email = ?').get('hiring@example.com');
+  db.close();
+  assert.deepEqual(stored, {
+    name: 'Hiring Manager',
+    email: 'hiring@example.com',
+    message: 'Can we discuss a senior product engineering role?',
+  });
+
+  assert.equal(mailtrapRequests.length, 1);
+  assert.equal(mailtrapRequests[0].method, 'POST');
+  assert.equal(mailtrapRequests[0].url, '/api/send');
+  assert.equal(mailtrapRequests[0].authorization, 'Bearer test-mailtrap-token');
+  assert.deepEqual(mailtrapRequests[0].body.to, [{ email: 'gideon@example.com' }]);
+  assert.deepEqual(mailtrapRequests[0].body.reply_to, { email: 'hiring@example.com', name: 'Hiring Manager' });
+  assert.match(mailtrapRequests[0].body.subject, /Portfolio contact from Hiring Manager/);
 });
 
 test('terminal endpoint rejects command-shaped injection and accepts allowlisted commands', async () => {
