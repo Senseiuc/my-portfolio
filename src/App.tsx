@@ -504,6 +504,7 @@ const HERO_SIGNALS = [
     note: 'Failure paths designed before the incident arrives.',
   },
 ];
+const HERO_SIGNAL_DELAY_MS = 5200;
 
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -512,6 +513,7 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [activeFlagshipIndex, setActiveFlagshipIndex] = useState(0);
   const [heroSignalIndex, setHeroSignalIndex] = useState(0);
+  const [heroSignalPausedUntil, setHeroSignalPausedUntil] = useState(0);
   const projectDialogRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLElement | null>(null);
   const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
@@ -566,12 +568,17 @@ export default function App() {
   }, [selectedProject]);
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
+    const pauseRemaining = Math.max(0, heroSignalPausedUntil - Date.now());
+    const timeout = window.setTimeout(() => {
       setHeroSignalIndex((index) => (index + 1) % HERO_SIGNALS.length);
-    }, 3600);
+    }, pauseRemaining || HERO_SIGNAL_DELAY_MS);
 
-    return () => window.clearInterval(interval);
-  }, []);
+    return () => window.clearTimeout(timeout);
+  }, [heroSignalIndex, heroSignalPausedUntil]);
+
+  const pauseHeroSignal = () => {
+    setHeroSignalPausedUntil(Date.now() + HERO_SIGNAL_DELAY_MS * 2);
+  };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -673,6 +680,9 @@ export default function App() {
               transition={{ duration: 0.45 }}
               className="min-h-[92px] max-w-2xl border-y border-amber-950/50 py-3 sm:min-h-[82px]"
               aria-live="polite"
+              onPointerDown={pauseHeroSignal}
+              onMouseEnter={pauseHeroSignal}
+              onFocus={pauseHeroSignal}
             >
               <div className="flex flex-wrap items-center gap-2">
                 {activeHeroSignal.path.map((step, index) => (
