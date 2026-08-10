@@ -12,7 +12,9 @@ import {
   ShieldCheck,
   Store,
 } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 const chapters = [
   {
@@ -87,6 +89,10 @@ const payoutSteps = [
 ];
 
 export default function KongaCaseStudyPage() {
+  const [activeChapterIndex, setActiveChapterIndex] = useState(0);
+  const activeChapter = chapters[activeChapterIndex];
+  const ActiveChapterIcon = activeChapter.icon;
+
   useEffect(() => {
     const previousTitle = document.title;
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
@@ -113,7 +119,8 @@ export default function KongaCaseStudyPage() {
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
             Portfolio
           </a>
-          <span className="hidden font-mono text-xs uppercase text-slate-500 sm:block">Enterprise commerce / technical case study</span>
+          <span className="hidden font-mono text-xs uppercase text-slate-500 md:block">Enterprise commerce / technical case study</span>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 
@@ -253,40 +260,77 @@ export default function KongaCaseStudyPage() {
 
         <section className="border-y border-amber-950/50 bg-[#0d0b09]">
           <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24">
-            <div className="max-w-3xl">
-              <p className="font-mono text-xs uppercase text-orange-400">Delivery record</p>
-              <h2 className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl md:text-4xl">Four chapters of the same reliability problem.</h2>
-            </div>
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-[320px_1fr] lg:items-start">
+              <div className="lg:sticky lg:top-24">
+                <p className="font-mono text-xs uppercase text-orange-400">Delivery record</p>
+                <h2 className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Four chapters of the same reliability problem.</h2>
+                <div className="mt-7 flex gap-2 overflow-x-auto border-y border-slate-800 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
+                  {chapters.map((chapter, index) => {
+                    const Icon = chapter.icon;
+                    const isActive = index === activeChapterIndex;
+                    return (
+                      <button
+                        key={chapter.index}
+                        type="button"
+                        onClick={() => setActiveChapterIndex(index)}
+                        className={`min-w-[240px] border px-3 py-3 text-left transition-colors lg:min-w-0 lg:w-full ${
+                          isActive
+                            ? 'border-orange-500/70 bg-orange-500/[0.08]'
+                            : 'border-slate-800 bg-[#0a0806] hover:border-amber-800 hover:bg-orange-500/[0.03]'
+                        }`}
+                        aria-pressed={isActive}
+                      >
+                        <span className="flex items-center justify-between gap-3 font-mono text-[10px] uppercase text-slate-500">
+                          Chapter {chapter.index}
+                          <Icon className={`h-4 w-4 ${isActive ? 'text-orange-400' : 'text-slate-700'}`} aria-hidden="true" />
+                        </span>
+                        <span className="mt-2 block text-sm font-bold text-slate-100">{chapter.title}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
-            <div className="mt-10 divide-y divide-slate-800 border-y border-slate-800">
-              {chapters.map((chapter) => {
-                const Icon = chapter.icon;
-                return (
-                  <article key={chapter.index} className="grid grid-cols-1 gap-5 py-8 lg:grid-cols-12 lg:gap-10">
-                    <div className="lg:col-span-4">
-                      <div className="flex items-center gap-3">
-                        <span className="font-mono text-xs text-orange-400">{chapter.index}</span>
-                        <Icon className="h-5 w-5 text-slate-500" aria-hidden="true" />
-                      </div>
-                      <h3 className="mt-4 text-2xl font-bold text-slate-100">{chapter.title}</h3>
-                      {chapter.index === '04' && (
-                        <img src="/senseiuc-section-testing.png" alt="Senseiuc software testing and operations mascot" width="512" height="512" loading="lazy" decoding="async" className="mascot mascot--inspect mt-6 w-32 object-contain" />
-                      )}
+              <article className="relative overflow-hidden border border-slate-800 bg-[#0a0806] p-5 sm:p-7 md:p-8">
+                <div className="absolute inset-0 systems-grid opacity-[0.1]" aria-hidden="true" />
+                <div className="relative">
+                  <div className="flex items-start justify-between gap-5">
+                    <div>
+                      <p className="font-mono text-[11px] uppercase text-orange-400">Chapter {activeChapter.index}</p>
+                      <h3 className="mt-3 max-w-2xl text-3xl font-extrabold leading-tight text-slate-100 md:text-5xl">{activeChapter.title}</h3>
                     </div>
-                    <dl className="grid grid-cols-1 gap-6 lg:col-span-8 md:grid-cols-3">
-                      <div><dt className="font-mono text-[10px] uppercase text-slate-500">Problem</dt><dd className="mt-2 text-sm leading-6 text-slate-400">{chapter.problem}</dd></div>
-                      <div><dt className="font-mono text-[10px] uppercase text-slate-500">Decision</dt><dd className="mt-2 text-sm leading-6 text-slate-400">{chapter.decision}</dd></div>
-                      <div><dt className="font-mono text-[10px] uppercase text-slate-500">Result</dt><dd className="mt-2 text-sm leading-6 text-slate-300">{chapter.result}</dd></div>
-                      <div className="md:col-span-3">
-                        <dt className="sr-only">Built with</dt>
-                        <dd className="flex flex-wrap gap-x-5 gap-y-2 border-l border-amber-900/60 pl-4">
-                          {chapter.evidence.map((item) => <span key={item} className="text-xs text-slate-500 before:mr-2 before:text-orange-400 before:content-['/']">{item}</span>)}
-                        </dd>
+                    <ActiveChapterIcon className="h-8 w-8 shrink-0 text-slate-600" aria-hidden="true" />
+                  </div>
+
+                  <dl className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+                    <div className="border-l border-orange-500/70 pl-4">
+                      <dt className="font-mono text-[10px] uppercase text-slate-500">Problem</dt>
+                      <dd className="mt-2 text-sm leading-6 text-slate-400">{activeChapter.problem}</dd>
+                    </div>
+                    <div className="border-l border-slate-700 pl-4">
+                      <dt className="font-mono text-[10px] uppercase text-slate-500">Decision</dt>
+                      <dd className="mt-2 text-sm leading-6 text-slate-400">{activeChapter.decision}</dd>
+                    </div>
+                    <div className="border-l border-slate-700 pl-4">
+                      <dt className="font-mono text-[10px] uppercase text-slate-500">Result</dt>
+                      <dd className="mt-2 text-sm leading-6 text-slate-300">{activeChapter.result}</dd>
+                    </div>
+                  </dl>
+
+                  <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    {activeChapter.evidence.map((item, index) => (
+                      <div key={item} className="border border-slate-800 bg-black/20 p-3">
+                        <p className="font-mono text-[10px] uppercase text-slate-600">Evidence {index + 1}</p>
+                        <p className="mt-3 text-sm font-semibold leading-snug text-slate-200">{item}</p>
                       </div>
-                    </dl>
-                  </article>
-                );
-              })}
+                    ))}
+                  </div>
+
+                  {activeChapter.index === '04' && (
+                    <img src="/senseiuc-section-testing.png" alt="Senseiuc software testing and operations mascot" width="512" height="512" loading="lazy" decoding="async" className="mascot mascot--inspect mt-8 w-32 object-contain" />
+                  )}
+                </div>
+              </article>
             </div>
           </div>
         </section>
@@ -336,6 +380,16 @@ export default function KongaCaseStudyPage() {
             </div>
           </div>
         </section>
+
+        <div className="mx-auto max-w-7xl px-4 md:px-8">
+          <NextRead
+            title="Explore the architecture room"
+            description="After the Konga deep dive, compare the recurring safeguards behind payments, identity, logistics, rewards, and communications."
+            href="/systems"
+            cta="Open systems"
+            icon={ServerCog}
+          />
+        </div>
       </main>
 
       <footer className="border-t border-slate-900">

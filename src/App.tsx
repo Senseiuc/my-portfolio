@@ -16,6 +16,8 @@ import {
 import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
 import Mascot from './components/Mascot';
+import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 export const PROJECTS = [
   {
@@ -485,13 +487,37 @@ const FLAGSHIP_CASE_STUDIES = [
   },
 ];
 
+const HERO_SIGNALS = [
+  {
+    line: 'Then make it hold up.',
+    path: ['Interface', 'API', 'Ledger', 'Deploy'],
+    note: 'End-to-end delivery under production pressure.',
+  },
+  {
+    line: 'Then make it observable.',
+    path: ['Events', 'Logs', 'Metrics', 'Recovery'],
+    note: 'Clear signals when systems start behaving strangely.',
+  },
+  {
+    line: 'Then make it recoverable.',
+    path: ['Queue', 'Retry', 'Audit', 'Reconcile'],
+    note: 'Failure paths designed before the incident arrives.',
+  },
+];
+const HERO_SIGNAL_DELAY_MS = 5200;
+
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [activeFlagshipIndex, setActiveFlagshipIndex] = useState(0);
+  const [heroSignalIndex, setHeroSignalIndex] = useState(0);
+  const [heroSignalPausedUntil, setHeroSignalPausedUntil] = useState(0);
   const projectDialogRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLElement | null>(null);
+  const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
+  const activeHeroSignal = HERO_SIGNALS[heroSignalIndex];
 
   const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
     projectTriggerRef.current = trigger;
@@ -540,6 +566,19 @@ export default function App() {
       projectTriggerRef.current?.focus();
     };
   }, [selectedProject]);
+
+  useEffect(() => {
+    const pauseRemaining = Math.max(0, heroSignalPausedUntil - Date.now());
+    const timeout = window.setTimeout(() => {
+      setHeroSignalIndex((index) => (index + 1) % HERO_SIGNALS.length);
+    }, pauseRemaining || HERO_SIGNAL_DELAY_MS);
+
+    return () => window.clearTimeout(timeout);
+  }, [heroSignalIndex, heroSignalPausedUntil]);
+
+  const pauseHeroSignal = () => {
+    setHeroSignalPausedUntil(Date.now() + HERO_SIGNAL_DELAY_MS * 2);
+  };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -592,15 +631,12 @@ export default function App() {
             <a href="#experience" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Experience</a>
             <a href="#contact" className="inline-flex min-h-11 items-center text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
           </nav>
-          <nav aria-label="Mobile navigation" className="flex shrink-0 md:hidden items-center gap-2 font-mono text-[10px] uppercase text-slate-400">
-            <a href="#projects" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Work</a>
-            <a href="#contact" className="inline-flex min-h-11 items-center text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
-          </nav>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 
       {/* Main Container */}
-      <main id="main-content" tabIndex={-1} className="max-w-6xl mx-auto px-4 py-5 md:py-8 relative z-10 space-y-14 md:space-y-20">
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 py-5 md:py-8 relative z-10 space-y-14 md:space-y-20">
 
         {/* HERO SECTION */}
         <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center lg:min-h-[72vh] py-6 md:py-14">
@@ -623,8 +659,43 @@ export default function App() {
               className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-100 leading-[1.02] md:leading-[0.96]"
             >
               I build the whole application.<br />
-              <span className="text-orange-400">Then make it hold up.</span>
+              <span className="relative mt-1 block min-h-[1.06em] text-orange-400 sm:min-h-[1.12em]">
+                <motion.span
+                  key={activeHeroSignal.line}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.45 }}
+                  className="absolute inset-x-0 top-0 block text-[0.78em] leading-[1.06]"
+                >
+                  {activeHeroSignal.line}
+                </motion.span>
+              </span>
             </motion.h1>
+
+            <motion.div
+              key={activeHeroSignal.note}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="min-h-[92px] max-w-2xl border-y border-amber-950/50 py-3 sm:min-h-[82px]"
+              aria-live="polite"
+              onPointerDown={pauseHeroSignal}
+              onMouseEnter={pauseHeroSignal}
+              onFocus={pauseHeroSignal}
+            >
+              <div className="flex flex-wrap items-center gap-2">
+                {activeHeroSignal.path.map((step, index) => (
+                  <div key={step} className="flex items-center gap-2">
+                    <span className="border border-slate-800 bg-black/20 px-2 py-1 font-mono text-[10px] uppercase text-slate-300">
+                      {step}
+                    </span>
+                    {index < activeHeroSignal.path.length - 1 && <span className="font-mono text-[10px] text-orange-500">→</span>}
+                  </div>
+                ))}
+              </div>
+              <p className="mt-2 font-mono text-[10px] uppercase text-slate-500">{activeHeroSignal.note}</p>
+            </motion.div>
 
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -783,107 +854,150 @@ export default function App() {
             </p>
           </div>
 
-          <div className="divide-y divide-amber-950/50 border-y border-amber-950/50">
-            {FLAGSHIP_CASE_STUDIES.map((story, storyIndex) => (
-              <article
-                key={story.project.id}
-                className="group grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10 py-8 md:py-14"
-              >
-                <div className={`hidden lg:flex lg:col-span-3 items-center justify-center ${storyIndex % 2 === 1 ? 'lg:order-3' : ''}`}>
-                  <Mascot
-                    variant={story.mascot}
-                    label={`${story.project.title} case study mascot`}
-                    motion={story.mascot === 'architect' ? 'inspect' : 'float'}
-                    className="w-48 transition-transform duration-300 group-hover:scale-[1.025]"
-                  />
-                </div>
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-[290px_1fr] lg:items-start">
+            <div className="lg:sticky lg:top-24">
+              <div className="flex gap-2 overflow-x-auto border-y border-amber-950/60 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
+                {FLAGSHIP_CASE_STUDIES.map((story, index) => {
+                  const isActive = index === activeFlagshipIndex;
+                  return (
+                    <button
+                      key={story.project.id}
+                      type="button"
+                      onClick={() => setActiveFlagshipIndex(index)}
+                      className={`group min-w-[235px] flex-1 border px-3 py-3 text-left transition-colors lg:min-w-0 ${
+                        isActive
+                          ? 'border-orange-500/70 bg-orange-500/[0.08]'
+                          : 'border-slate-800 bg-[#0a0806]/80 hover:border-amber-800/80 hover:bg-orange-500/[0.03]'
+                      }`}
+                      aria-pressed={isActive}
+                    >
+                      <span className="flex items-center justify-between gap-3 font-mono text-[10px] uppercase text-slate-500">
+                        Case {story.index}
+                        <span className={isActive ? 'text-orange-400' : 'text-slate-700'}>●</span>
+                      </span>
+                      <span className="mt-2 block text-sm font-bold text-slate-100">{story.project.title}</span>
+                      <span className="mt-1 block text-xs leading-relaxed text-slate-500">{story.context}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
 
-                <div className={`lg:col-span-6 ${storyIndex % 2 === 1 ? 'lg:order-2' : ''}`}>
+            <motion.article
+              key={activeFlagship.project.id}
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35 }}
+              className="relative overflow-hidden border border-amber-950/60 bg-[#0d0a07]/86"
+            >
+              <div className="absolute inset-0 systems-grid opacity-[0.12]" aria-hidden="true" />
+              <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_310px]">
+                <div className="p-5 sm:p-7 lg:p-8">
                   <div className="flex items-start justify-between gap-4">
-                    <div className="min-w-0 pt-1">
-                      <p className="font-mono text-[11px] uppercase text-slate-500">
-                        Case {story.index} / {story.context}
+                    <div className="min-w-0">
+                      <p className="font-mono text-[11px] uppercase text-orange-400">
+                        Live case board / {activeFlagship.context}
                       </p>
-                      <h3 className="mt-3 text-2xl md:text-3xl font-bold text-slate-100">{story.project.title}</h3>
+                      <h3 className="mt-3 max-w-3xl text-3xl font-extrabold leading-tight text-slate-100 md:text-5xl">
+                        {activeFlagship.project.title}
+                      </h3>
                     </div>
                     <Mascot
-                      variant={story.mascot}
-                      label={`${story.project.title} case study mascot`}
-                      motion={story.mascot === 'architect' ? 'inspect' : 'float'}
-                      className="w-16 sm:w-24 lg:hidden transition-transform duration-300 group-hover:scale-[1.025]"
+                      variant={activeFlagship.mascot}
+                      label={`${activeFlagship.project.title} case study mascot`}
+                      motion={activeFlagship.mascot === 'architect' ? 'inspect' : 'float'}
+                      className="w-20 shrink-0 sm:w-28 lg:hidden"
                     />
                   </div>
 
-                  <dl className="mt-6 space-y-5">
-                    <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[76px_1fr] sm:gap-4">
-                      <dt className="font-mono text-[11px] uppercase text-orange-400 pt-0.5">Problem</dt>
-                      <dd className="text-sm leading-relaxed text-slate-300">{story.problem}</dd>
+                  <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <div className="border-l border-orange-500/70 pl-4">
+                      <p className="font-mono text-[10px] uppercase text-slate-500">Problem signal</p>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-300">{activeFlagship.problem}</p>
                     </div>
-                    <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-[76px_1fr] sm:gap-4">
-                      <dt className="font-mono text-[11px] uppercase text-orange-400 pt-0.5">Decision</dt>
-                      <dd className="text-sm leading-relaxed text-slate-300">{story.decision}</dd>
+                    <div className="border-l border-slate-700 pl-4">
+                      <p className="font-mono text-[10px] uppercase text-slate-500">Engineering decision</p>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-300">{activeFlagship.decision}</p>
                     </div>
-                  </dl>
-
-                  <div className="mt-6 border-l border-amber-900/60 pl-4">
-                    <p className="font-mono text-[10px] uppercase text-slate-500">Evidence</p>
-                    <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1.5">
-                      {story.evidence.map((item) => (
-                        <li key={item} className="text-xs text-slate-300 before:content-['/'] before:mr-2 before:text-orange-400">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
                   </div>
 
-                  <div className="mt-6 flex flex-wrap items-center gap-2">
-                    {story.project.tags.map((tag) => (
-                      <span key={tag} className="border border-slate-800 px-2.5 py-1 text-[11px] font-mono text-slate-400">
+                  <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    {activeFlagship.evidence.map((item, index) => (
+                      <div key={item} className="min-h-24 border border-slate-800 bg-black/20 p-3">
+                        <p className="font-mono text-[10px] uppercase text-slate-600">Proof {index + 1}</p>
+                        <p className="mt-3 text-sm font-semibold leading-snug text-slate-200">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-7 flex flex-wrap items-center gap-2">
+                    {activeFlagship.project.tags.map((tag) => (
+                      <span key={tag} className="border border-slate-800 bg-[#0a0806]/70 px-2.5 py-1 text-[11px] font-mono text-slate-400">
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  {story.project.id === 'konga-payouts' ? (
-                    <a
-                      href="/work/konga-merchant-platform"
-                      className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-slate-100 hover:text-orange-400 transition-colors"
-                    >
-                      Read full case study
-                      <ArrowRight className="w-4 h-4" />
-                    </a>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={(event) => handleOpenProjectDetails(story.project, event.currentTarget)}
-                      className="mt-7 inline-flex items-center gap-2 text-sm font-bold text-slate-100 hover:text-orange-400 transition-colors"
-                    >
-                      Read engineering notes
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-
-                <div className={`lg:col-span-3 lg:border-l lg:border-amber-950/50 lg:pl-7 flex flex-col justify-center ${storyIndex % 2 === 1 ? 'lg:order-1 lg:border-l-0 lg:border-r lg:pr-7 lg:pl-0' : ''}`}>
-                  <p className="font-mono text-[11px] uppercase text-slate-500">Outcome</p>
-                  <p className="mt-2 text-2xl md:text-3xl font-extrabold text-orange-400">{story.outcome}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{story.outcomeNote}</p>
-                  <div className="mt-5 flex flex-col items-start gap-2">
-                    {(story.project.links ?? (story.project.link ? [{ label: 'Visit production site', url: story.project.link }] : [])).map((link) => (
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                    {activeFlagship.project.id === 'konga-payouts' ? (
+                      <a
+                        href="/work/konga-merchant-platform"
+                        className="inline-flex min-h-11 items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400"
+                      >
+                        Open case study
+                        <ArrowRight className="w-4 h-4" />
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={(event) => handleOpenProjectDetails(activeFlagship.project, event.currentTarget)}
+                        className="inline-flex min-h-11 items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400"
+                      >
+                        Open engineering notes
+                        <ArrowRight className="w-4 h-4" />
+                      </button>
+                    )}
+                    {(activeFlagship.project.links ?? (activeFlagship.project.link ? [{ label: 'Visit production site', url: activeFlagship.project.link }] : [])).map((link) => (
                       <a
                         key={link.url}
                         href={link.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs font-mono text-slate-300 hover:text-orange-400 transition-colors"
+                        className="inline-flex min-h-11 items-center text-xs font-mono text-slate-300 transition-colors hover:text-orange-400"
                       >
                         {link.label} ↗
                       </a>
                     ))}
                   </div>
                 </div>
-              </article>
-            ))}
+
+                <aside className="border-t border-amber-950/60 p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-7">
+                  <div className="flex items-center gap-4 lg:block">
+                    <Mascot
+                      variant={activeFlagship.mascot}
+                      label={`${activeFlagship.project.title} outcome mascot`}
+                      motion={activeFlagship.mascot === 'architect' ? 'inspect' : 'float'}
+                      className="hidden w-40 lg:block"
+                    />
+                    <div>
+                      <p className="font-mono text-[11px] uppercase text-slate-500">Outcome</p>
+                      <p className="mt-2 text-3xl font-extrabold leading-none text-orange-400 md:text-4xl">{activeFlagship.outcome}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-slate-400">{activeFlagship.outcomeNote}</p>
+                    </div>
+                  </div>
+                  <div className="mt-7 border-t border-slate-800 pt-5">
+                    <p className="font-mono text-[10px] uppercase text-slate-500">System shape</p>
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {activeFlagship.project.details.architecture?.map((item: string) => (
+                        <span key={item} className="bg-slate-900/70 px-2 py-1 text-[11px] text-slate-400">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </aside>
+              </div>
+            </motion.article>
           </div>
         </section>
 
@@ -1209,6 +1323,14 @@ export default function App() {
             )}
           </div>
         </section>
+
+        <NextRead
+          title="Browse the full project archive"
+          description="If the flagship cases caught your eye, the archive shows the wider delivery surface across web, mobile, backend, payments, logistics, and operations."
+          href="/work"
+          cta="Open archive"
+          icon={Briefcase}
+        />
 
       </main>
 

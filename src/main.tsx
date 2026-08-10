@@ -1,6 +1,12 @@
 import { lazy, StrictMode, Suspense } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, type Root } from 'react-dom/client'
 import './index.css'
+
+declare global {
+  interface Window {
+    __senseiucRoot?: Root
+  }
+}
 
 const App = lazy(() => import('./App.tsx'))
 const KongaCaseStudyPage = lazy(() => import('./KongaCaseStudyPage.tsx'))
@@ -32,7 +38,20 @@ const RouteComponent = currentPath === '/work/konga-merchant-platform'
                   ? LifePage
               : App
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root')
+if (!rootElement) throw new Error('Root element not found')
+
+const hotRoot = import.meta.hot?.data.root as Root | undefined
+const root = window.__senseiucRoot ?? hotRoot ?? createRoot(rootElement)
+window.__senseiucRoot = root
+
+if (import.meta.hot) {
+  import.meta.hot.dispose((data) => {
+    data.root = root
+  })
+}
+
+root.render(
   <StrictMode>
     <Suspense fallback={<div role="status" className="min-h-screen bg-[#0a0806] px-4 py-16 font-mono text-sm text-slate-500">Loading portfolio...</div>}>
       <RouteComponent />

@@ -1,5 +1,7 @@
 import { ArrowLeft, ArrowRight, BookOpen, Code2, ExternalLink, Wrench } from 'lucide-react';
 import Logo from './components/Logo';
+import MobileMapNav from './components/MobileMapNav';
+import NextRead from './components/NextRead';
 
 const TEACHING_CHAPTERS = [
   {
@@ -65,9 +67,10 @@ export default function BeforeSystemsPage() {
             <Logo className="w-8 h-8" />
             <span className="font-mono text-xs sm:text-sm font-bold uppercase">GIDEON <span className="text-orange-400">NWADIALU</span></span>
           </a>
-          <a href="/" className="inline-flex items-center gap-2 text-xs font-mono uppercase text-slate-300 hover:text-orange-400 transition-colors">
+          <a href="/" className="hidden items-center gap-2 text-xs font-mono uppercase text-slate-300 hover:text-orange-400 transition-colors md:inline-flex">
             <ArrowLeft className="w-4 h-4" /> Home
           </a>
+          <MobileMapNav className="md:hidden" />
         </div>
       </header>
 
@@ -110,6 +113,21 @@ export default function BeforeSystemsPage() {
           </div>
         </section>
 
+        <section className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 md:grid-cols-4" aria-label="Transferable skills from teaching to engineering">
+          {[
+            ['Explain', 'Translate complex ideas until the user, student, or teammate can act.'],
+            ['Sequence', 'Break large problems into steps that can be practiced, tested, and improved.'],
+            ['Support', 'Stay close to real people when the workflow becomes confusing or costly.'],
+            ['Improve', 'Turn repeated pain into better tools, clearer processes, and stronger systems.'],
+          ].map(([title, detail], index) => (
+            <div key={title} className="min-h-40 bg-[#0a0806] p-5">
+              <p className="font-mono text-[10px] uppercase text-orange-400">Transfer {String(index + 1).padStart(2, '0')}</p>
+              <h2 className="mt-3 text-lg font-bold text-slate-100">{title}</h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-500">{detail}</p>
+            </div>
+          ))}
+        </section>
+
         <section className="py-12 md:py-16 border-t border-amber-950/60">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div className="lg:col-span-4">
@@ -144,6 +162,14 @@ export default function BeforeSystemsPage() {
             <a href="https://www.linkedin.com/in/gideonnwadialu/details/experience/" target="_blank" rel="noopener noreferrer" className="flex md:justify-end items-center gap-2 text-xs font-mono text-slate-400 hover:text-orange-400">LinkedIn experience <ExternalLink className="w-3.5 h-3.5" /></a>
           </div>
         </section>
+
+        <NextRead
+          title="Jump from origin story to current systems"
+          description="The early chapters explain the mindset. The work archive shows where that mindset now appears in product engineering."
+          href="/work"
+          cta="Open work"
+          icon={Code2}
+        />
       </main>
 
       <footer className="relative z-10 border-t border-amber-950/40 mt-12">
