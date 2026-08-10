@@ -41,6 +41,18 @@ type MobileMapNavProps = {
 
 export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
   const [open, setOpen] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState(() => `${window.location.pathname}${window.location.hash}`);
+
+  useEffect(() => {
+    const syncLocation = () => setCurrentLocation(`${window.location.pathname}${window.location.hash}`);
+
+    window.addEventListener('hashchange', syncLocation);
+    window.addEventListener('popstate', syncLocation);
+    return () => {
+      window.removeEventListener('hashchange', syncLocation);
+      window.removeEventListener('popstate', syncLocation);
+    };
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -58,6 +70,26 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
       document.body.style.overflow = previousOverflow;
     };
   }, [open]);
+
+  const normalizePath = (href: string) => {
+    if (href.startsWith('/')) return href;
+    return `/${href}`;
+  };
+
+  const isActiveLink = (href: string) => {
+    const [currentPath, currentHashValue] = currentLocation.split('#');
+    const currentHash = currentHashValue ? `#${currentHashValue}` : '';
+
+    if (href.includes('#')) {
+      const [hrefPath, hrefHash] = href.split('#');
+      const normalizedHrefPath = hrefPath || '/';
+      return currentPath === normalizedHrefPath && currentHash === `#${hrefHash}`;
+    }
+
+    return currentPath === normalizePath(href) && !currentHash;
+  };
+
+  const activeLabel = mapLinks.find((link) => isActiveLink(link.href))?.label ?? 'Current stop';
 
   const overlay = open ? createPortal(
     <div
@@ -92,26 +124,39 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
           <p className="mt-2 text-sm leading-relaxed text-slate-400">
             A quick map through the work, systems, story, credentials, console, and contact points.
           </p>
+          <p className="mt-3 inline-flex items-center gap-2 border border-orange-500/30 bg-orange-500/[0.08] px-2 py-1 font-mono text-[10px] uppercase text-orange-300">
+            <span className="h-1.5 w-1.5 bg-orange-400" aria-hidden="true" />
+            You are here: {activeLabel}
+          </p>
         </div>
 
         <nav aria-label="Mobile site map" className="flex-1 overflow-y-auto px-4 py-4">
           <div className="relative space-y-2 before:absolute before:left-[1.32rem] before:top-5 before:h-[calc(100%-2.5rem)] before:border-l before:border-dashed before:border-amber-900/70">
             {mapLinks.map((link, index) => {
               const Icon = link.icon;
+              const isActive = isActiveLink(link.href);
               return (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="group relative grid grid-cols-[2.7rem_1fr_auto] items-center gap-3 border border-slate-800 bg-black/25 px-3 py-3 transition-colors hover:border-orange-500/60 hover:bg-orange-500/[0.04]"
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`group relative grid grid-cols-[2.7rem_1fr_auto] items-center gap-3 border px-3 py-3 transition-colors hover:border-orange-500/60 hover:bg-orange-500/[0.04] ${
+                    isActive
+                      ? 'border-orange-500/70 bg-orange-500/[0.08]'
+                      : 'border-slate-800 bg-black/25'
+                  }`}
                 >
-                  <span className="relative z-10 flex h-8 w-8 items-center justify-center border border-amber-900/70 bg-[#0d0a07] text-orange-400">
+                  <span className={`relative z-10 flex h-8 w-8 items-center justify-center border bg-[#0d0a07] text-orange-400 ${
+                    isActive ? 'border-orange-400 shadow-[0_0_18px_rgba(249,115,22,0.32)]' : 'border-amber-900/70'
+                  }`}>
                     <Icon className="h-4 w-4" aria-hidden="true" />
                   </span>
                   <span className="min-w-0">
                     <span className="flex items-center gap-2 text-sm font-bold text-slate-100 group-hover:text-orange-400">
                       <span className="font-mono text-[10px] text-slate-600">{String(index + 1).padStart(2, '0')}</span>
                       {link.label}
+                      {isActive && <span className="font-mono text-[9px] uppercase text-orange-400">Here</span>}
                     </span>
                     <span className="mt-1 block text-xs leading-relaxed text-slate-500">{link.detail}</span>
                   </span>
