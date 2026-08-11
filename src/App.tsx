@@ -11,7 +11,8 @@ import {
   Send,
   CheckCircle2,
   ArrowRight,
-  FileText
+  FileText,
+  Link as LinkIcon
 } from 'lucide-react';
 import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
@@ -684,6 +685,9 @@ export default function App() {
               <a aria-label="LinkedIn profile" href="https://www.linkedin.com/in/gideonnwadialu/" target="_blank" rel="noopener noreferrer" className="flex h-11 w-11 items-center justify-center border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
                 <Linkedin className="w-4 h-4" />
               </a>
+              <a aria-label="Linktree profile" href="https://linktr.ee/senseiuc" target="_blank" rel="noopener noreferrer" className="flex h-11 w-11 items-center justify-center border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
+                <LinkIcon className="w-4 h-4" />
+              </a>
             </motion.div>
           </div>
 
@@ -1128,6 +1132,9 @@ export default function App() {
               <div className="min-w-0 space-y-3 text-sm lg:mt-6">
                 <a href="mailto:nwadialugideon@gmail.com" className="flex items-center gap-2 text-slate-200 hover:text-orange-400 transition-colors break-all sm:break-normal">
                   <Mail className="w-4 h-4 shrink-0" /> nwadialugideon@gmail.com
+                </a>
+                <a href="https://linktr.ee/senseiuc" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-slate-200 hover:text-orange-400 transition-colors">
+                  <LinkIcon className="w-4 h-4 shrink-0" /> linktr.ee/senseiuc
                 </a>
                 <p className="font-mono text-xs text-slate-500">Lagos, Nigeria / remote</p>
                 <p className="font-mono text-xs text-slate-500">08105347918</p>
