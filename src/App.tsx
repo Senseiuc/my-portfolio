@@ -721,10 +721,10 @@ export default function App() {
       </header>
 
       {/* Main Container */}
-      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 py-5 md:py-8 relative z-10 space-y-14 md:space-y-20">
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 pb-5 pt-3 md:pb-8 md:pt-5 relative z-10 space-y-14 md:space-y-20">
 
         {/* HERO SECTION */}
-        <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center lg:min-h-[72vh] py-6 md:py-14">
+        <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center lg:min-h-[72vh] pb-6 pt-4 md:pb-14 md:pt-8">
           {/* Intro Text */}
           <div className="lg:col-span-7 space-y-5 md:space-y-6">
             <motion.div 
@@ -857,8 +857,9 @@ export default function App() {
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2 font-mono text-[10px] uppercase">
                   <span className="inline-flex items-center gap-1.5 border border-slate-800 bg-black/20 px-2.5 py-1 text-slate-400">
-                    <span className="relative flex h-3.5 w-3.5 items-center justify-center text-orange-400" aria-hidden="true">
-                      <span className="absolute h-3 w-3 animate-ping rounded-full bg-orange-500/30" />
+                    <span className="relative flex h-4 w-4 items-center justify-center text-orange-400" aria-hidden="true">
+                      <span className="absolute h-5 w-5 animate-ping rounded-full border border-orange-500/50" />
+                      <span className="absolute h-2 w-2 rounded-full bg-orange-500/35" />
                       <MapPin className="relative h-3.5 w-3.5" />
                     </span>
                     Lagos, Nigeria / Remote
