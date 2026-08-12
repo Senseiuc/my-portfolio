@@ -462,9 +462,9 @@ const FLAGSHIP_CASE_STUDIES = [
     roleLine: 'Current full-time software engineer / production commerce platform',
     problem: 'An existing high-volume merchant platform needed faster payouts, safer account checks, and more reliable marketplace updates across several internal tools.',
     decision: 'Maintain, improve, and ship features across payout flows, wallet checks, verification work, marketplace sync, testing, and recovery paths.',
-    outcome: '2x faster payouts',
-    outcomeNote: 'merchant payout work completed in half the time',
-    evidence: ['Faster payout runs', '8 work areas touched', 'Repeatable tests'],
+    outcome: 'Weekly escalations near zero',
+    outcomeNote: 'permanent fixes stopped recurring merchant complaints',
+    evidence: ['Recurring issues fixed', '8 work areas touched', '2x faster payouts'],
   },
   {
     project: PROJECTS.find((project) => project.id === 'transglobal')!,
