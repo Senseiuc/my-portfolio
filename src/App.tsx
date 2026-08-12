@@ -921,7 +921,7 @@ export default function App() {
                   <span className="font-mono text-[11px] text-orange-400">MOVE {item.number}</span>
                   <h3 className="mt-1 text-xl font-bold text-slate-100 md:text-lg">{item.title}</h3>
                   <p className="mt-2 text-sm font-semibold leading-relaxed text-slate-200">{item.outcome}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-500">{item.copy}</p>
+                  <p className="mt-2 hidden text-sm leading-relaxed text-slate-500 sm:block">{item.copy}</p>
                 </div>
               </article>
             ))}
