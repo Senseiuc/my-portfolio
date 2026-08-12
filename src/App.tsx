@@ -904,14 +904,19 @@ export default function App() {
                 outcome: 'The product keeps working when things go wrong.',
                 copy: 'I add checks, retries, alerts, and recovery paths before small issues become business blockers.',
               },
-            ].map((item) => (
-              <article key={item.number} className="group grid min-h-[220px] grid-cols-[92px_1fr] gap-4 bg-[#0a0806] p-4 sm:grid-cols-[112px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
-                <Mascot
-                  variant={item.variant}
-                  label={`${item.title} Senseiuc mascot`}
-                  motion={item.variant === 'architect' ? 'inspect' : 'float'}
-                  className="w-24 self-center transition-transform duration-300 group-hover:scale-[1.03] sm:w-28 md:mx-auto md:w-32"
-                />
+            ].map((item, index) => (
+              <article key={item.number} className="group relative grid min-h-[190px] grid-cols-[74px_1fr] gap-4 bg-[#0a0806] p-4 pl-3 sm:grid-cols-[88px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
+                <div className="relative flex justify-center md:block">
+                  {index < 2 && <span className="absolute left-1/2 top-16 h-[calc(100%+3.5rem)] -translate-x-1/2 border-l border-dashed border-amber-900/70 md:hidden" aria-hidden="true" />}
+                  <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-amber-950/70 bg-[#0d0a07] shadow-[0_0_20px_rgba(249,115,22,0.08)] sm:h-20 sm:w-20 md:mx-auto md:h-auto md:w-auto md:border-0 md:bg-transparent md:shadow-none">
+                    <Mascot
+                      variant={item.variant}
+                      label={`${item.title} Senseiuc mascot`}
+                      motion={item.variant === 'architect' ? 'inspect' : 'float'}
+                      className="w-16 transition-transform duration-300 group-hover:scale-[1.03] sm:w-20 md:mx-auto md:w-32"
+                    />
+                  </span>
+                </div>
                 <div className="self-center md:self-auto">
                   <span className="font-mono text-[11px] text-orange-400">MOVE {item.number}</span>
                   <h3 className="mt-1 text-xl font-bold text-slate-100 md:text-lg">{item.title}</h3>
