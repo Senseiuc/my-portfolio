@@ -881,7 +881,7 @@ export default function App() {
             </div>
           </div>
 
-          <div className="relative grid grid-cols-1 gap-0 md:grid-cols-3 md:gap-px md:border md:border-amber-950/60 md:bg-amber-950/60">
+          <div className="relative grid grid-cols-1 gap-0 overflow-hidden md:grid-cols-3 md:gap-6 md:overflow-visible md:pt-7">
             <svg className="pointer-events-none absolute inset-y-8 left-0 right-0 z-0 h-[calc(100%-4rem)] w-full md:hidden" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               <path
                 d="M15 2 L15 35 C36 38 69 38 82 39 C87 41 87 48 82 51 C78 54 78 60 82 64 C63 69 35 68 15 74 L15 86"
@@ -890,6 +890,18 @@ export default function App() {
                 strokeDasharray="2.5 2.5"
                 strokeWidth="0.38"
               />
+            </svg>
+            <svg className="pointer-events-none absolute left-8 right-8 top-20 z-0 hidden h-24 w-[calc(100%-4rem)] md:block" viewBox="0 0 100 24" preserveAspectRatio="none" aria-hidden="true">
+              <path
+                d="M6 12 C20 3 31 3 43 12 S68 21 82 12 S94 6 98 10"
+                fill="none"
+                stroke="rgba(146, 64, 14, 0.46)"
+                strokeDasharray="1.8 2.2"
+                strokeWidth="0.45"
+              />
+              <circle cx="6" cy="12" r="1.15" fill="#f97316" opacity="0.85" />
+              <circle cx="50" cy="12" r="1.15" fill="#f97316" opacity="0.85" />
+              <circle cx="94" cy="10.5" r="1.15" fill="#f97316" opacity="0.85" />
             </svg>
             {[
               {
@@ -916,18 +928,18 @@ export default function App() {
             ].map((item, index) => {
               const isMiddle = index === 1;
               return (
-              <article key={item.number} className={`group relative z-10 grid min-h-[178px] gap-4 border-b border-amber-950/45 bg-transparent p-4 last:border-b-0 md:min-h-[280px] md:grid-cols-1 md:border-b-0 md:bg-[#0a0806] md:p-5 ${isMiddle ? 'grid-cols-[minmax(0,1fr)_74px] sm:grid-cols-[minmax(0,1fr)_88px]' : 'grid-cols-[74px_minmax(0,1fr)] sm:grid-cols-[88px_minmax(0,1fr)]'}`}>
-                <div className={`relative flex justify-center md:block ${isMiddle ? 'order-2 md:order-none' : ''}`}>
-                  <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-amber-950/70 bg-[#0d0a07] shadow-[0_0_20px_rgba(249,115,22,0.08)] sm:h-20 sm:w-20 md:mx-auto md:h-auto md:w-auto md:border-0 md:bg-transparent md:shadow-none">
+              <article key={item.number} className={`group relative z-10 grid min-h-[178px] gap-4 border-b border-amber-950/45 bg-transparent p-4 last:border-b-0 md:min-h-0 md:grid-cols-1 md:border-b-0 md:p-0 ${isMiddle ? 'grid-cols-[minmax(0,1fr)_74px] sm:grid-cols-[minmax(0,1fr)_88px] md:mt-12' : 'grid-cols-[74px_minmax(0,1fr)] sm:grid-cols-[88px_minmax(0,1fr)]'}`}>
+                <div className={`relative flex justify-center md:min-h-[150px] md:items-start ${isMiddle ? 'order-2 md:order-none' : ''}`}>
+                  <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-amber-950/70 bg-[#0d0a07] shadow-[0_0_20px_rgba(249,115,22,0.08)] sm:h-20 sm:w-20 md:mx-auto md:h-32 md:w-32 md:border-amber-950/60 md:bg-[#0d0a07] md:shadow-[0_0_28px_rgba(249,115,22,0.12)]">
                     <Mascot
                       variant={item.variant}
                       label={`${item.title} Senseiuc mascot`}
                       motion={item.variant === 'architect' ? 'inspect' : 'float'}
-                      className="w-16 transition-transform duration-300 group-hover:scale-[1.03] sm:w-20 md:mx-auto md:w-32"
+                      className="w-16 transition-transform duration-300 group-hover:scale-[1.03] sm:w-20 md:mx-auto md:w-28"
                     />
                   </span>
                 </div>
-                <div className={`max-w-[19rem] self-center md:max-w-none md:self-auto ${isMiddle ? 'order-1 justify-self-end text-right md:order-none md:justify-self-auto md:text-left' : ''}`}>
+                <div className={`max-w-[19rem] self-center md:max-w-none md:self-auto md:border-t md:border-amber-950/55 md:pt-5 ${isMiddle ? 'order-1 justify-self-end text-right md:order-none md:justify-self-auto md:text-left' : ''}`}>
                   <span className="font-mono text-[11px] text-orange-400">MOVE {item.number}</span>
                   <h3 className="mt-1 text-xl font-bold text-slate-100 md:text-lg">{item.title}</h3>
                   <p className="mt-2 text-sm font-semibold leading-relaxed text-slate-200">{item.outcome}</p>
