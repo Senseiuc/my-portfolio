@@ -12,7 +12,8 @@ import {
   CheckCircle2,
   ArrowRight,
   FileText,
-  ChevronDown
+  ChevronDown,
+  MapPin
 } from 'lucide-react';
 import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
@@ -855,7 +856,13 @@ export default function App() {
                   <p className="text-sm text-slate-300 mt-1">Ideas turned into dependable software.</p>
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2 font-mono text-[10px] uppercase">
-                  <span className="border border-slate-800 bg-black/20 px-2.5 py-1 text-slate-400">Lagos, Nigeria / Remote</span>
+                  <span className="inline-flex items-center gap-1.5 border border-slate-800 bg-black/20 px-2.5 py-1 text-slate-400">
+                    <span className="relative flex h-3.5 w-3.5 items-center justify-center text-orange-400" aria-hidden="true">
+                      <span className="absolute h-3 w-3 animate-ping rounded-full bg-orange-500/30" />
+                      <MapPin className="relative h-3.5 w-3.5" />
+                    </span>
+                    Lagos, Nigeria / Remote
+                  </span>
                   <span className="border border-orange-500/40 bg-orange-500/[0.08] px-2.5 py-1 text-orange-300">Open to product engineering roles</span>
                 </div>
               </div>
