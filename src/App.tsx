@@ -884,7 +884,7 @@ export default function App() {
           <div className="relative grid grid-cols-1 gap-0 md:grid-cols-3 md:gap-px md:border md:border-amber-950/60 md:bg-amber-950/60">
             <svg className="pointer-events-none absolute inset-y-8 left-0 right-0 z-0 h-[calc(100%-4rem)] w-full md:hidden" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               <path
-                d="M15 2 L15 35 C36 38 69 38 82 39 C87 41 87 48 82 51 C78 54 78 60 82 64 C63 69 35 68 15 74 L15 100"
+                d="M15 2 L15 35 C36 38 69 38 82 39 C87 41 87 48 82 51 C78 54 78 60 82 64 C63 69 35 68 15 74 L15 86"
                 fill="none"
                 stroke="rgba(146, 64, 14, 0.46)"
                 strokeDasharray="2.5 2.5"
