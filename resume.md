@@ -6,7 +6,7 @@
 * 📍 **Location:** Lagos, Nigeria
 * 💼 **LinkedIn:** [linkedin.com/in/gideonnwadialu](https://www.linkedin.com/in/gideonnwadialu/)
 * 💻 **GitHub:** [github.com/Senseiuc](https://github.com/Senseiuc)
-* 🔗 **Linktree:** [linktr.ee/senseiuc](https://linktr.ee/senseiuc)
+* 🔗 **Portfolio:** [gideonnwadialu.com](https://gideonnwadialu.com/)
 
 ---
 
