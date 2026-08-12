@@ -956,9 +956,15 @@ export default function App() {
                 Projects built to solve real business problems.
               </h2>
             </div>
-            <p className="md:col-span-5 text-sm md:text-base leading-relaxed text-slate-400">
-              Three examples showing the problem, what I changed, and the result.
-            </p>
+            <div className="md:col-span-5 md:flex md:justify-end">
+              <a
+                href="/work"
+                className="inline-flex min-h-11 items-center gap-2 border border-slate-800 bg-slate-950/40 px-4 py-3 text-sm font-bold text-slate-200 transition-colors hover:border-orange-500/50 hover:text-orange-300"
+              >
+                More projects
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[290px_1fr] lg:items-start">
