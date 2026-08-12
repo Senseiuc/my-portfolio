@@ -721,7 +721,7 @@ export default function App() {
       </header>
 
       {/* Main Container */}
-      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 pb-5 pt-3 md:pb-8 md:pt-5 relative z-10 space-y-14 md:space-y-20">
+      <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 pb-5 pt-3 md:pb-8 md:pt-5 relative z-10 space-y-10 md:space-y-14">
 
         {/* HERO SECTION */}
         <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center lg:min-h-[72vh] pb-6 pt-4 md:pb-14 md:pt-8">
@@ -873,9 +873,9 @@ export default function App() {
 
         <section aria-labelledby="systems-practice-title" className="border-y border-amber-950/50 py-7 md:py-9">
           <div className="grid grid-cols-1 gap-3 md:grid-cols-12 md:items-end mb-6">
-            <div>
+            <div className="md:col-span-7">
               <p className="font-mono text-xs uppercase text-orange-400">How I work</p>
-              <h2 id="systems-practice-title" className="mt-2 text-2xl font-extrabold text-slate-100 md:text-3xl">
+              <h2 id="systems-practice-title" className="mt-2 max-w-3xl text-2xl font-extrabold text-slate-100 md:text-3xl">
                 How I keep projects reliable.
               </h2>
             </div>
