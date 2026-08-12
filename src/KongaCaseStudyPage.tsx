@@ -40,9 +40,9 @@ const chapters = [
     title: 'Marketplace reliability across old boundaries',
     icon: RefreshCw,
     problem: 'Merchant data, catalog state, pricing, SEO metadata, communications, and administrative tools moved across legacy applications and databases.',
-    decision: 'Repair partial Magento synchronization, add KOMA pricing and merchant settings, introduce versioned SEO-tag caching, centralize email delivery logs, and lead a portal-wide responsive overhaul across SellerHQ and Backyard.',
-    result: 'Made failure states recoverable, sensitive changes auditable, merchant communication traceable, and orders, reviews, subscriptions, wallet, warehouse, products, dashboard, commissions, KongaPay, and reporting usable on mobile for thousands of merchants and administrators.',
-    evidence: ['Self-healing merchant synchronization', 'Cross-database caching + email audit trail', 'Portal-wide mobile UI remediation'],
+    decision: 'Repair partial Magento synchronization, add KOMA pricing and merchant settings, introduce versioned SEO-tag caching, centralize email delivery logs, and lead a portal-wide mobile responsiveness overhaul across SellerHQ and Backyard.',
+    result: 'Made failure states recoverable, sensitive changes auditable, merchant communication traceable, and key merchant/admin workflows usable on mobile while resolving layout, JavaScript, and CSS issues.',
+    evidence: ['Self-healing merchant synchronization', 'Cross-database caching + email audit trail', 'Mobile UI, JavaScript, and CSS remediation'],
   },
   {
     index: '04',

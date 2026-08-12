@@ -441,7 +441,8 @@ const KONGA_CASE_STUDY = {
       'Batch Strategy: Reworked processing around cursor offsets and bounded groups of 500 records instead of broad scans.',
       'Load Control: Introduced controlled microsecond delays between batches to smooth CPU and database demand.',
       'Recovery Path: Strengthened synchronization daemons and failure handling around payout and catalog workflows.',
-      'Platform Delivery: Built or improved wallet debit security, QoS inventory compliance, Dojah-backed identity checks, KOMA pricing, SEO synchronization, email auditing, and responsive merchant operations.',
+      'Platform Delivery: Built or improved wallet debit security, QoS inventory compliance, Dojah-backed identity checks, KOMA pricing, SEO synchronization, email auditing, and mobile-responsive merchant operations.',
+      'Interface Overhaul: Reworked merchant and admin screens for mobile responsiveness while resolving layout, JavaScript, and CSS issues across key workflows.',
       'Engineering Enablement: Revived automated testing with containerized execution, isolated test data, service mocks, environment-driven configuration, readiness handling, CI integration, and targeted regression coverage across Codeception, PHPUnit, and Mocha suites.',
       'Multi-Stack Delivery: Worked across AngularJS and TypeScript interfaces, PHP/Yii commerce services, Node.js/Restify identity services, Python/Flask/Celery notifications, and Docker/Kubernetes operations.',
       'Outcome: Cut payout execution time in half while making critical merchant workflows more traceable, recoverable, and operable.'
@@ -461,10 +462,10 @@ const FLAGSHIP_CASE_STUDIES = [
     context: 'Konga / merchant platform',
     roleLine: 'Current full-time software engineer / production commerce platform',
     problem: 'An existing high-volume merchant platform needed faster payouts, safer account checks, and more reliable marketplace updates across several internal tools.',
-    decision: 'Maintain, improve, and ship features across payout flows, wallet checks, verification work, marketplace sync, testing, and recovery paths.',
+    decision: 'Maintain, improve, and ship features across payout flows, wallet checks, verification work, marketplace sync, responsive UI fixes, testing, and recovery paths.',
     outcome: 'Weekly escalations near zero',
     outcomeNote: 'permanent fixes stopped recurring merchant complaints',
-    evidence: ['Recurring issues fixed', '8 work areas touched', '2x faster payouts'],
+    evidence: ['Recurring issues fixed', 'Mobile UI overhaul', '2x faster payouts'],
   },
   {
     project: PROJECTS.find((project) => project.id === 'transglobal')!,
