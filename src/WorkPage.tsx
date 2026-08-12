@@ -80,10 +80,10 @@ export default function WorkPage() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:items-center">
             <div className="md:col-span-3">
               <span className="font-mono text-[11px] uppercase font-bold text-orange-400">Flagship case study</span>
-              <h2 className="mt-2 text-xl font-bold">Konga Merchant Platform Engineering</h2>
+              <h2 className="mt-2 text-xl font-bold">Konga Merchant Platform Improvements</h2>
             </div>
             <p className="md:col-span-6 text-sm leading-relaxed text-slate-400">
-              A deeper look at commerce work across merchant tools, payments, identity checks, testing, deployment, and support.
+              A deeper look at current full-time commerce work across merchant tools, payments, identity checks, testing, deployment, and support.
             </p>
             <div className="md:col-span-3 md:text-right">
               <a href="/work/konga-merchant-platform" className="inline-flex items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300 transition-colors">

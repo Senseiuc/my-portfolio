@@ -98,9 +98,9 @@ export default function KongaCaseStudyPage() {
     const description = document.querySelector<HTMLMetaElement>('meta[name="description"]');
     const previousDescription = description?.content;
 
-    document.title = 'Konga Merchant Platform Engineering | Gideon Nwadialu';
+    document.title = 'Konga Merchant Platform Improvements | Gideon Nwadialu';
     if (description) {
-      description.content = 'A technical case study of Gideon Nwadialu\'s work on Konga merchant payouts, wallet correctness, compliance, identity, marketplace synchronization, and operations.';
+      description.content = 'A technical case study of Gideon Nwadialu\'s current full-time work improving Konga merchant payouts, wallet correctness, compliance, identity, marketplace synchronization, and operations.';
     }
 
     return () => {
@@ -129,12 +129,12 @@ export default function KongaCaseStudyPage() {
           <div className="systems-grid pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="relative mx-auto grid max-w-7xl grid-cols-1 gap-7 px-4 pb-10 pt-10 md:px-8 md:pb-20 md:pt-20 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-8">
-              <p className="font-mono text-xs uppercase text-orange-400">Konga / Merchant platform engineering</p>
+              <p className="font-mono text-xs uppercase text-orange-400">Konga / Merchant platform improvements</p>
               <h1 className="mt-4 max-w-4xl text-3xl font-extrabold leading-tight text-slate-100 sm:text-4xl md:text-6xl">
                 Making marketplace operations faster, safer, and easier to recover.
               </h1>
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-400 md:text-lg md:leading-8">
-                Gideon handled delivery from merchant and admin interfaces through backend rules, data, scheduled processing, integrations, automated tests, CI, and Kubernetes operations across a multi-language commerce platform.
+                As a current full-time software engineer at Konga, Gideon improves and supports merchant and admin interfaces, backend rules, data, scheduled processing, integrations, automated tests, CI, and Kubernetes operations across a multi-language commerce platform.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a href="https://shq.konga.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400">

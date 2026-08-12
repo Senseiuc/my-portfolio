@@ -416,8 +416,8 @@ const KONGA_CASE_STUDY = {
   id: 'konga-payouts',
   number: '01',
   category: 'Commerce Infrastructure',
-  title: 'Konga Merchant Platform Engineering',
-  shortDesc: 'Improved merchant money movement, compliance, identity verification, marketplace synchronization, engineering feedback loops, and operational interfaces across a high-volume commerce platform.',
+  title: 'Konga Merchant Platform Improvements',
+  shortDesc: 'Current full-time production work improving merchant money movement, compliance, identity verification, marketplace synchronization, engineering feedback loops, and operational interfaces across a high-volume commerce platform.',
   tags: ['PHP', 'MySQL', 'Redis', 'Kubernetes'],
   borderColor: 'hover:border-orange-500/30',
   hoverText: 'group-hover:text-orange-400',
@@ -428,7 +428,7 @@ const KONGA_CASE_STUDY = {
     url: 'https://shq.konga.com/',
     links: [{ label: 'Visit SellerHQ', url: 'https://shq.konga.com/' }],
     system: 'Merchant Commerce and Operations Platform',
-    role: 'Software engineer working across merchant-facing applications, middleware, administration systems, scheduled jobs, integrations, and deployment operations.',
+    role: 'Current full-time software engineer working across merchant-facing applications, middleware, administration systems, scheduled jobs, integrations, testing, and deployment operations.',
     constraints: 'Enterprise source is proprietary; this public case study preserves implementation confidentiality and omits internal topology, source code, credentials, and customer data.',
     architecture: ['Merchant + admin surfaces', 'Marketplace services', 'Scheduled processing', 'Data + external integrations'],
     evidence: [
@@ -459,8 +459,9 @@ const FLAGSHIP_CASE_STUDIES = [
     mascot: 'ledger' as const,
     index: '01',
     context: 'Konga / merchant platform',
-    problem: 'Merchants needed faster payouts, safer account checks, and more reliable marketplace updates across several internal tools.',
-    decision: 'Improved the payout flow, strengthened wallet checks, automated verification work, and made key merchant processes easier to test and recover.',
+    roleLine: 'Current full-time software engineer / production commerce platform',
+    problem: 'An existing high-volume merchant platform needed faster payouts, safer account checks, and more reliable marketplace updates across several internal tools.',
+    decision: 'Maintain, improve, and ship features across payout flows, wallet checks, verification work, marketplace sync, testing, and recovery paths.',
     outcome: '2x faster payouts',
     outcomeNote: 'merchant payout work completed in half the time',
     evidence: ['Faster payout runs', '8 work areas touched', 'Repeatable tests'],
@@ -1014,6 +1015,11 @@ export default function App() {
                       <h3 className="mt-3 max-w-3xl text-3xl font-extrabold leading-tight text-slate-100 md:text-5xl">
                         {activeFlagship.project.title}
                       </h3>
+                      {'roleLine' in activeFlagship && (
+                        <p className="mt-3 max-w-2xl font-mono text-[11px] uppercase leading-relaxed text-slate-500">
+                          {activeFlagship.roleLine}
+                        </p>
+                      )}
                     </div>
                     <Mascot
                       variant={activeFlagship.mascot}
