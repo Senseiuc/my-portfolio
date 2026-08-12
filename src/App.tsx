@@ -872,16 +872,13 @@ export default function App() {
         </section>
 
         <section aria-labelledby="systems-practice-title" className="border-y border-amber-950/50 py-7 md:py-9">
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-12 md:items-end mb-6">
-            <div className="md:col-span-7">
+          <div className="mb-6">
+            <div>
               <p className="font-mono text-xs uppercase text-orange-400">How I work</p>
               <h2 id="systems-practice-title" className="mt-2 max-w-3xl text-2xl font-extrabold text-slate-100 md:text-3xl">
                 How I keep projects reliable.
               </h2>
             </div>
-            <p className="text-sm leading-relaxed text-slate-400 md:col-span-5">
-              Clear payments, connected tools, and plans for the messy parts that show up after launch.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 gap-px border border-amber-950/60 bg-amber-950/60 md:grid-cols-3">
@@ -908,7 +905,7 @@ export default function App() {
                 copy: 'I add checks, retries, alerts, and recovery paths before small issues become business blockers.',
               },
             ].map((item) => (
-              <article key={item.number} className="group grid min-h-[220px] grid-cols-[92px_1fr] gap-4 bg-[#0a0806] p-4 transition-colors hover:bg-orange-500/[0.035] sm:grid-cols-[112px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
+              <article key={item.number} className="group grid min-h-[220px] grid-cols-[92px_1fr] gap-4 bg-[#0a0806] p-4 transition-colors hover:bg-orange-500/[0.012] hover:ring-1 hover:ring-orange-500/25 sm:grid-cols-[112px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
                 <Mascot
                   variant={item.variant}
                   label={`${item.title} Senseiuc mascot`}
