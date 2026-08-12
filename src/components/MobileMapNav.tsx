@@ -22,10 +22,10 @@ import Logo from './Logo';
 const navGroups = [
   {
     label: 'About',
-    detail: 'Who Gideon is and what shaped the work',
+    detail: 'Who Gideon is and how he works',
     icon: User,
     links: [
-      { href: '/', label: 'Overview', detail: 'Positioning and first impression', icon: Home },
+      { href: '/', label: 'Overview', detail: 'Start here', icon: Home },
       { href: '/before-systems', label: 'Origin story', detail: 'Teaching, support, operations', icon: User },
       { href: '/leadership', label: 'Leadership', detail: 'Mentorship and service roles', icon: HeartHandshake },
       { href: '/credentials', label: 'Credentials', detail: 'Certificates and learning stack', icon: Award },
@@ -35,22 +35,22 @@ const navGroups = [
   },
   {
     label: 'Projects',
-    detail: 'Proof of shipped product engineering',
+    detail: 'Real work and client-ready examples',
     icon: Briefcase,
     links: [
-      { href: '/#projects', label: 'Featured cases', detail: 'Pressure-tested project cockpit', icon: Compass },
-      { href: '/work', label: 'All projects', detail: 'Complete shipped-systems archive', icon: Briefcase },
-      { href: '/work/konga-merchant-platform', label: 'Konga case study', detail: 'Commerce engineering deep dive', icon: Map },
+      { href: '/#projects', label: 'Featured projects', detail: 'Quick project highlights', icon: Compass },
+      { href: '/work', label: 'All projects', detail: 'Complete work archive', icon: Briefcase },
+      { href: '/work/konga-merchant-platform', label: 'Konga case study', detail: 'A deeper project story', icon: Map },
     ],
   },
   {
     label: 'Systems',
-    detail: 'Technical depth, flows, and live signals',
+    detail: 'Skills and how the work is built',
     icon: Route,
     links: [
-      { href: '/#competencies', label: 'Capabilities', detail: 'Frontend, backend, mobile, DevOps', icon: Cpu },
-      { href: '/systems', label: 'Architecture room', detail: 'Interactive system flows', icon: Route },
-      { href: '/console', label: 'Portfolio console', detail: 'Runtime, GitHub, explorer', icon: Terminal },
+      { href: '/#competencies', label: 'Skills', detail: 'Web, backend, mobile, launch', icon: Cpu },
+      { href: '/systems', label: 'How systems work', detail: 'Project flows and safeguards', icon: Route },
+      { href: '/console', label: 'Portfolio console', detail: 'Live site details', icon: Terminal },
     ],
   },
   {

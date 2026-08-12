@@ -458,54 +458,37 @@ const FLAGSHIP_CASE_STUDIES = [
     mascot: 'ledger' as const,
     index: '01',
     context: 'Konga / merchant platform',
-    problem: 'High-volume money movement, merchant compliance, identity checks, and marketplace synchronization crossed several legacy services and operational surfaces.',
-    decision: 'Bound payout work, protect wallet mutations, automate compliance and verification, make cross-system failures recoverable, and restore repeatable local and CI testing.',
+    problem: 'Merchants needed faster payouts, safer account checks, and more reliable marketplace updates across several internal tools.',
+    decision: 'Improved the payout flow, strengthened wallet checks, automated verification work, and made key merchant processes easier to test and recover.',
     outcome: '2x faster payouts',
-    outcomeNote: 'bounded processing without database locking spikes',
-    evidence: ['500-record batches', '8 repositories', 'Containerized tests'],
+    outcomeNote: 'merchant payout work completed in half the time',
+    evidence: ['Faster payout runs', '8 work areas touched', 'Repeatable tests'],
   },
   {
     project: PROJECTS.find((project) => project.id === 'transglobal')!,
     mascot: 'integrate' as const,
     index: '02',
     context: 'Transglobal x Sabre / logistics',
-    problem: 'Shipping quotes, tariff matrices, customer accounts, and payment providers lived across disconnected systems.',
-    decision: 'Build one Laravel integration hub with tariff seeders, signed webhooks, DVA provisioning, and gateway fallbacks.',
+    problem: 'Shipping quotes, customer accounts, and payment updates were spread across different tools.',
+    decision: 'Built one connected hub to manage tariffs, bookings, payments, and shipment updates in one flow.',
     outcome: 'One integration hub',
-    outcomeNote: 'from global tariff import to payment confirmation',
-    evidence: ['2 repositories', '45 tests', '57 migrations'],
+    outcomeNote: 'from shipping quote to payment confirmation',
+    evidence: ['2 connected platforms', '45 tests', '57 data updates'],
   },
   {
     project: PROJECTS.find((project) => project.id === 'tripease')!,
     mascot: 'architect' as const,
     index: '03',
     context: 'TripEase / distributed transit',
-    problem: 'Booking, fleet operations, payments, and identity needed independent ownership without risking duplicate wallet actions.',
-    decision: 'Split four containerized services and protect the ledger with row locks, idempotency keys, and deadlock retries.',
-    outcome: '4 bounded services',
-    outcomeNote: 'with concurrency-safe escrow operations',
-    evidence: ['4 repositories', '20 company tests', '5 retry attempts'],
+    problem: 'Bookings, transport companies, payments, and user accounts all needed to work together without duplicate charges or wallet mistakes.',
+    decision: 'Separated the major parts of the product and added checks around payments, bookings, and wallet updates.',
+    outcome: '4 connected services',
+    outcomeNote: 'booking, payments, fleet, and accounts working together',
+    evidence: ['4 product areas', '20 company tests', 'Safer retries'],
   },
 ];
 
-const HERO_SIGNALS = [
-  {
-    line: 'Then make it hold up.',
-    path: ['Interface', 'API', 'Ledger', 'Deploy'],
-    note: 'End-to-end delivery under production pressure.',
-  },
-  {
-    line: 'Then make it observable.',
-    path: ['Events', 'Logs', 'Metrics', 'Recovery'],
-    note: 'Clear signals when systems start behaving strangely.',
-  },
-  {
-    line: 'Then make it recoverable.',
-    path: ['Queue', 'Retry', 'Audit', 'Reconcile'],
-    note: 'Failure paths designed before the incident arrives.',
-  },
-];
-const HERO_SIGNAL_DELAY_MS = 5200;
+const HERO_STEPS = ['Design', 'Build', 'Launch', 'Support'];
 
 const PRIMARY_NAV_GROUPS = [
   {
@@ -524,20 +507,20 @@ const PRIMARY_NAV_GROUPS = [
   {
     label: 'Projects',
     href: '#projects',
-    summary: 'See the shipped work and case-study evidence.',
+    summary: 'See real work, live links, and what each project solved.',
     links: [
       ['#projects', 'Featured cases'],
-      ['/work', 'All shipped systems'],
+      ['/work', 'All projects'],
       ['/work/konga-merchant-platform', 'Konga case study'],
     ],
   },
   {
     label: 'Systems',
     href: '#competencies',
-    summary: 'Understand the technical range and operating style.',
+    summary: 'See the skills behind the work in plain terms.',
     links: [
       ['#competencies', 'Capabilities'],
-      ['/systems', 'Architecture room'],
+      ['/systems', 'How the systems work'],
       ['/console', 'Portfolio console'],
     ],
   },
@@ -558,7 +541,7 @@ const EXPLORE_GROUPS = [
   {
     label: 'About me',
     eyebrow: 'Person first',
-    description: 'Background, leadership, credentials, life outside code, and a printable resume.',
+    description: 'Background, leadership, certificates, life outside code, and a printable resume.',
     links: [
       ['/before-systems', 'Origin story'],
       ['/leadership', 'Leadership'],
@@ -569,21 +552,21 @@ const EXPLORE_GROUPS = [
   },
   {
     label: 'Projects',
-    eyebrow: 'Proof of delivery',
-    description: 'Featured case studies, the full archive, and deeper production evidence.',
+    eyebrow: 'Work delivered',
+    description: 'Featured projects, the full archive, live links, and the problems solved.',
     links: [
       ['#projects', 'Featured cases'],
-      ['/work', 'All shipped systems'],
+      ['/work', 'All projects'],
       ['/work/konga-merchant-platform', 'Konga case study'],
     ],
   },
   {
     label: 'Systems',
     eyebrow: 'How I build',
-    description: 'Capabilities, architecture flows, runtime signals, and production thinking.',
+    description: 'The skills, flows, and practical decisions behind the work.',
     links: [
       ['#competencies', 'Capabilities'],
-      ['/systems', 'Architecture room'],
+      ['/systems', 'How systems work'],
       ['/console', 'Portfolio console'],
     ],
   },
@@ -606,12 +589,9 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [activeFlagshipIndex, setActiveFlagshipIndex] = useState(0);
-  const [heroSignalIndex, setHeroSignalIndex] = useState(0);
-  const [heroSignalPausedUntil, setHeroSignalPausedUntil] = useState(0);
   const projectDialogRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLElement | null>(null);
   const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
-  const activeHeroSignal = HERO_SIGNALS[heroSignalIndex];
 
   const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
     projectTriggerRef.current = trigger;
@@ -660,19 +640,6 @@ export default function App() {
       projectTriggerRef.current?.focus();
     };
   }, [selectedProject]);
-
-  useEffect(() => {
-    const pauseRemaining = Math.max(0, heroSignalPausedUntil - Date.now());
-    const timeout = window.setTimeout(() => {
-      setHeroSignalIndex((index) => (index + 1) % HERO_SIGNALS.length);
-    }, pauseRemaining || HERO_SIGNAL_DELAY_MS);
-
-    return () => window.clearTimeout(timeout);
-  }, [heroSignalIndex, heroSignalPausedUntil]);
-
-  const pauseHeroSignal = () => {
-    setHeroSignalPausedUntil(Date.now() + HERO_SIGNAL_DELAY_MS * 2);
-  };
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -758,7 +725,7 @@ export default function App() {
         {/* HERO SECTION */}
         <section id="about" className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center lg:min-h-[72vh] py-6 md:py-14">
           {/* Intro Text */}
-          <div className="lg:col-span-7 space-y-5 md:space-y-7">
+          <div className="lg:col-span-7 space-y-5 md:space-y-6">
             <motion.div 
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -766,52 +733,68 @@ export default function App() {
               className="flex max-w-full items-start gap-2 border-l-2 border-orange-500 pl-3"
             >
               <Cpu className="w-4 h-4 text-orange-400" />
-              <span className="min-w-0 font-mono text-[10px] leading-relaxed text-orange-300 uppercase font-bold sm:text-xs">Product engineer / interface to infrastructure</span>
+              <span className="min-w-0 font-mono text-[10px] leading-relaxed text-orange-300 uppercase font-bold sm:text-xs">Product engineer / web, mobile, backend</span>
             </motion.div>
 
             <motion.h1 
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-slate-100 leading-[1.02] md:leading-[0.96]"
+              className="max-w-3xl text-4xl font-extrabold leading-[1.04] text-slate-100 sm:text-5xl md:text-[3.65rem] lg:text-[3.95rem] xl:text-[4.2rem] xl:leading-[1]"
             >
+              I’m Gideon Nwadialu.<br />
               I build the whole application.<br />
-              <span className="relative mt-1 block min-h-[1.06em] text-orange-400 sm:min-h-[1.12em]">
-                <motion.span
-                  key={activeHeroSignal.line}
-                  initial={{ opacity: 0, y: 14 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.45 }}
-                  className="absolute inset-x-0 top-0 block text-[0.78em] leading-[1.06]"
-                >
-                  {activeHeroSignal.line}
-                </motion.span>
-              </span>
+              <span className="block text-orange-400">Then make it hold up.</span>
             </motion.h1>
 
             <motion.div
-              key={activeHeroSignal.note}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
-              className="min-h-[92px] max-w-2xl border-y border-amber-950/50 py-3 sm:min-h-[82px]"
-              aria-live="polite"
-              onPointerDown={pauseHeroSignal}
-              onMouseEnter={pauseHeroSignal}
-              onFocus={pauseHeroSignal}
+              className="max-w-2xl border-y border-amber-950/50 py-3.5"
+              aria-label="Product delivery path: design, build, launch, support"
             >
-              <div className="flex flex-wrap items-center gap-2">
-                {activeHeroSignal.path.map((step, index) => (
-                  <div key={step} className="flex items-center gap-2">
-                    <span className="border border-slate-800 bg-black/20 px-2 py-1 font-mono text-[10px] uppercase text-slate-300">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
+                {HERO_STEPS.map((step, index) => (
+                  <div key={step} className="flex items-center gap-2 sm:gap-2.5">
+                    <motion.span
+                      initial={{ borderColor: 'rgba(30, 41, 59, 1)', color: 'rgb(203, 213, 225)', backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+                      animate={{
+                        borderColor: ['rgba(30, 41, 59, 1)', 'rgba(249, 115, 22, 0.95)', 'rgba(30, 41, 59, 1)'],
+                        color: ['rgb(203, 213, 225)', 'rgb(255, 237, 213)', 'rgb(203, 213, 225)'],
+                        backgroundColor: ['rgba(0, 0, 0, 0.2)', 'rgba(249, 115, 22, 0.18)', 'rgba(0, 0, 0, 0.2)'],
+                        boxShadow: ['0 0 0 rgba(249, 115, 22, 0)', '0 0 22px rgba(249, 115, 22, 0.22)', '0 0 0 rgba(249, 115, 22, 0)'],
+                      }}
+                      transition={{
+                        duration: 3.1,
+                        delay: index * 0.5,
+                        repeat: Infinity,
+                        repeatDelay: 1.5,
+                        ease: 'easeInOut',
+                      }}
+                      className="border px-2.5 py-1.5 font-mono text-[10px] font-bold uppercase sm:px-3 sm:text-xs"
+                    >
                       {step}
-                    </span>
-                    {index < activeHeroSignal.path.length - 1 && <span className="font-mono text-[10px] text-orange-500">→</span>}
+                    </motion.span>
+                    {index < HERO_STEPS.length - 1 && (
+                      <motion.span
+                        initial={{ opacity: 0.35, scaleX: 0.7 }}
+                        animate={{ opacity: [0.35, 1, 0.35], scaleX: [0.7, 1, 0.7] }}
+                        transition={{
+                          duration: 3.1,
+                          delay: index * 0.5 + 0.25,
+                          repeat: Infinity,
+                          repeatDelay: 1.5,
+                          ease: 'easeInOut',
+                        }}
+                        className="h-px w-4 origin-left bg-orange-500 sm:w-6"
+                        aria-hidden="true"
+                      />
+                    )}
                   </div>
                 ))}
               </div>
-              <p className="mt-2 font-mono text-[10px] uppercase text-slate-500">{activeHeroSignal.note}</p>
+              <p className="mt-2 font-mono text-[10px] uppercase text-slate-500">Complete delivery from idea to live product.</p>
             </motion.div>
 
             <motion.p 
@@ -820,7 +803,7 @@ export default function App() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="text-slate-300 text-base md:text-lg max-w-2xl leading-relaxed font-sans"
             >
-              I’m Gideon Nwadialu, a Product Engineer with deep backend expertise. I take products from interface and mobile experience through APIs, data, infrastructure, deployment, and production support, with particular depth in payments and complex integrations.
+              From first screen to backend, payments, launch, and support, I help turn product ideas into working software.
             </motion.p>
 
             <motion.div
@@ -832,26 +815,6 @@ export default function App() {
               <span>Lagos, Nigeria / remote</span>
               <span className="text-orange-400">Open to product engineering roles</span>
             </motion.div>
-
-            <motion.dl
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="grid grid-cols-3 border-y border-amber-950/60 py-4 max-w-2xl"
-            >
-              <div className="pr-2">
-                <dt className="font-mono text-[9px] leading-tight uppercase text-slate-500 sm:text-[11px]">Payout speed</dt>
-                <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">2x faster</dd>
-              </div>
-              <div className="border-l border-amber-950/60 px-3 sm:pl-4">
-                <dt className="font-mono text-[9px] leading-tight uppercase text-slate-500 sm:text-[11px]">Records moved</dt>
-                <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">100k+</dd>
-              </div>
-              <div className="border-l border-amber-950/60 pl-3 sm:pl-4">
-                <dt className="font-mono text-[9px] leading-tight uppercase text-slate-500 sm:text-[11px]">Core focus</dt>
-                <dd className="mt-1 text-base sm:text-xl font-bold text-slate-100">Reliability</dd>
-              </div>
-            </motion.dl>
 
             <motion.div 
               initial={{ opacity: 0 }}
@@ -898,8 +861,8 @@ export default function App() {
               </div>
               <div className="border-t border-amber-900/40 p-4 flex items-end justify-between gap-4">
                 <div>
-                  <p className="font-mono text-[10px] uppercase text-orange-400">Senseiuc / systems study 01</p>
-                  <p className="text-sm text-slate-300 mt-1">Strategy translated into dependable software.</p>
+                  <p className="font-mono text-[10px] uppercase text-orange-400">Senseiuc / product build 01</p>
+                  <p className="text-sm text-slate-300 mt-1">Ideas turned into dependable software.</p>
                 </div>
                 <span className="font-mono text-[10px] text-slate-500">LAGOS → REMOTE</span>
               </div>
@@ -910,13 +873,13 @@ export default function App() {
         <section aria-labelledby="systems-practice-title" className="border-y border-amber-950/50 py-8 md:py-10">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-8">
             <div>
-              <p className="font-mono text-xs uppercase text-orange-400">The Senseiuc method</p>
+              <p className="font-mono text-xs uppercase text-orange-400">How I work</p>
               <h2 id="systems-practice-title" className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100">
-                Three moves behind every reliable system.
+                Three things I care about on every project.
               </h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-slate-400">
-              Understand the money, connect the moving parts, then design for the failure nobody scheduled.
+              Make the important parts clear, connect the tools properly, and plan for real-life problems.
             </p>
           </div>
 
@@ -925,20 +888,20 @@ export default function App() {
               {
                 variant: 'ledger' as const,
                 number: '01',
-                title: 'Protect the ledger',
-                copy: 'Treat every payment state, retry, and reconciliation path as an auditable contract.',
+                title: 'Protect the money',
+                copy: 'Payments, refunds, wallets, and records should be clear, traceable, and hard to break.',
               },
               {
                 variant: 'integrate' as const,
                 number: '02',
-                title: 'Bridge the systems',
-                copy: 'Make APIs, webhooks, queues, and legacy services agree on one dependable truth.',
+                title: 'Connect the tools',
+                copy: 'Make websites, apps, payments, messages, and admin tools work together smoothly.',
               },
               {
                 variant: 'architect' as const,
                 number: '03',
-                title: 'Plan beyond happy paths',
-                copy: 'Model locks, failures, recovery, and scale before they become production incidents.',
+                title: 'Plan for problems',
+                copy: 'Build with retries, checks, and recovery paths so issues do not stop the whole business.',
               },
             ].map((item) => (
               <article key={item.number} className="group grid grid-cols-[88px_1fr] sm:grid-cols-[112px_1fr] md:block gap-4 items-center md:px-6 first:md:pl-0 last:md:pr-0 md:border-l first:md:border-l-0 border-amber-950/50">
@@ -961,13 +924,13 @@ export default function App() {
         <section id="projects" className="space-y-7 md:space-y-10" aria-labelledby="selected-work-title">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:items-end">
             <div className="md:col-span-7">
-              <p className="font-mono text-xs uppercase text-orange-400">Selected work / production systems</p>
+              <p className="font-mono text-xs uppercase text-orange-400">Selected work / real projects</p>
               <h2 id="selected-work-title" className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-100">
-                Systems judged by what happens under pressure.
+                Projects built to solve real business problems.
               </h2>
             </div>
             <p className="md:col-span-5 text-sm md:text-base leading-relaxed text-slate-400">
-              Three projects that show the work from production bottleneck to architecture decision and operational result.
+              Three examples showing the problem, what I changed, and the result.
             </p>
           </div>
 
@@ -1013,7 +976,7 @@ export default function App() {
                   <div className="flex items-start justify-between gap-4">
                     <div className="min-w-0">
                       <p className="font-mono text-[11px] uppercase text-orange-400">
-                        Live case board / {activeFlagship.context}
+                        Project snapshot / {activeFlagship.context}
                       </p>
                       <h3 className="mt-3 max-w-3xl text-3xl font-extrabold leading-tight text-slate-100 md:text-5xl">
                         {activeFlagship.project.title}
@@ -1023,17 +986,17 @@ export default function App() {
                       variant={activeFlagship.mascot}
                       label={`${activeFlagship.project.title} case study mascot`}
                       motion={activeFlagship.mascot === 'architect' ? 'inspect' : 'float'}
-                      className="w-20 shrink-0 sm:w-28 lg:hidden"
+                      className="w-20 shrink-0 sm:w-28 md:hidden"
                     />
                   </div>
 
                   <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className="border-l border-orange-500/70 pl-4">
-                      <p className="font-mono text-[10px] uppercase text-slate-500">Problem signal</p>
+                      <p className="font-mono text-[10px] uppercase text-slate-500">Problem</p>
                       <p className="mt-2 text-sm leading-relaxed text-slate-300">{activeFlagship.problem}</p>
                     </div>
                     <div className="border-l border-slate-700 pl-4">
-                      <p className="font-mono text-[10px] uppercase text-slate-500">Engineering decision</p>
+                      <p className="font-mono text-[10px] uppercase text-slate-500">What I did</p>
                       <p className="mt-2 text-sm leading-relaxed text-slate-300">{activeFlagship.decision}</p>
                     </div>
                   </div>
@@ -1041,7 +1004,7 @@ export default function App() {
                   <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
                     {activeFlagship.evidence.map((item, index) => (
                       <div key={item} className="min-h-24 border border-slate-800 bg-black/20 p-3">
-                        <p className="font-mono text-[10px] uppercase text-slate-600">Proof {index + 1}</p>
+                        <p className="font-mono text-[10px] uppercase text-slate-600">Detail {index + 1}</p>
                         <p className="mt-3 text-sm font-semibold leading-snug text-slate-200">{item}</p>
                       </div>
                     ))}
@@ -1070,7 +1033,7 @@ export default function App() {
                         onClick={(event) => handleOpenProjectDetails(activeFlagship.project, event.currentTarget)}
                         className="inline-flex min-h-11 items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400"
                       >
-                        Open engineering notes
+                        View project details
                         <ArrowRight className="w-4 h-4" />
                       </button>
                     )}
@@ -1094,7 +1057,7 @@ export default function App() {
                       variant={activeFlagship.mascot}
                       label={`${activeFlagship.project.title} outcome mascot`}
                       motion={activeFlagship.mascot === 'architect' ? 'inspect' : 'float'}
-                      className="hidden w-40 lg:block"
+                      className="hidden w-32 md:block lg:w-40"
                     />
                     <div>
                       <p className="font-mono text-[11px] uppercase text-slate-500">Outcome</p>
@@ -1103,7 +1066,7 @@ export default function App() {
                     </div>
                   </div>
                   <div className="mt-7 border-t border-slate-800 pt-5">
-                    <p className="font-mono text-[10px] uppercase text-slate-500">System shape</p>
+                    <p className="font-mono text-[10px] uppercase text-slate-500">Built with</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {activeFlagship.project.details.architecture?.map((item: string) => (
                         <span key={item} className="bg-slate-900/70 px-2 py-1 text-[11px] text-slate-400">
@@ -1122,49 +1085,49 @@ export default function App() {
         <section id="competencies" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:items-end">
             <div className="md:col-span-7">
-              <p className="font-mono text-xs uppercase text-orange-400">Capability board / field tested</p>
+              <p className="font-mono text-xs uppercase text-orange-400">What I can help with</p>
               <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100 flex items-center gap-2">
               <Layers className="w-5 h-5 text-orange-400" />
-              Core Competencies
+              Core Skills
               </h2>
             </div>
-            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">One accountable engineering path from product interface to production operations, demonstrated through shipped systems.</p>
+            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">I can help with the full product: screens, backend, mobile app, deployment, and support.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 border-y border-slate-800 md:border-x">
             <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-b md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
               <Mascot variant="code" motion="inspect" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">01 / Frontend & Product Workflows</span>
-              <h3 className="font-bold text-slate-200 text-base">Interfaces People Can Operate</h3>
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">01 / Websites & dashboards</span>
+              <h3 className="font-bold text-slate-200 text-base">Screens People Can Use</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Builds responsive React and Next.js portals, administration dashboards, CMS workflows, booking journeys, and role-aware operational interfaces connected to real production processes.
+                Builds websites, portals, dashboards, booking flows, and admin tools that are clear on desktop and mobile.
               </p>
             </div>
 
             <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-b border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
               <Mascot variant="secure" motion="inspect" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">02 / Backend & Financial Systems</span>
-              <h3 className="font-bold text-slate-200 text-base">Reliable APIs, Ledgers & Integrations</h3>
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">02 / Backend & payments</span>
+              <h3 className="font-bold text-slate-200 text-base">Reliable Business Logic</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Engineers payment workflows, APIs, queues, webhooks, data migrations, and concurrency-safe services, including payout processing that ran twice as fast without database locking spikes.
+                Builds the behind-the-scenes parts: accounts, payments, notifications, reports, data, and integrations with other services.
               </p>
             </div>
 
             <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
               <Mascot variant="build" motion="float" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">03 / Mobile & Cross-Platform</span>
-              <h3 className="font-bold text-slate-200 text-base">Mobile Products on Shared Platforms</h3>
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">03 / Mobile apps</span>
+              <h3 className="font-bold text-slate-200 text-base">Mobile Apps Connected to the Web</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Delivers Flutter clients alongside web and API platforms, including the Ansar-Ud-Deen member experience and TripEase mobile workflows backed by shared identity, payment, and content services.
+                Builds Flutter mobile apps that connect to the same accounts, content, payments, and admin tools as the website.
               </p>
             </div>
 
             <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-t md:border-t-0 border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
               <Mascot variant="deploy" motion="celebrate" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">04 / DevOps & Production Ownership</span>
-              <h3 className="font-bold text-slate-200 text-base">From Repository to Running Service</h3>
+              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">04 / Launch & support</span>
+              <h3 className="font-bold text-slate-200 text-base">From Code to Live Product</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
-                Containers, deploys, monitors, and troubleshoots applications with Docker, Kubernetes, CI/CD workflows, environment automation, and production-safe migration practices.
+                Sets up deployments, fixes issues, improves speed, and keeps the product easier to maintain after it goes live.
               </p>
             </div>
           </div>
@@ -1196,15 +1159,15 @@ export default function App() {
               Professional Experience
               </h2>
             </div>
-            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">Production engineering across commerce, financial platforms, consulting, and care operations.</p>
+            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">Work across commerce, finance, consulting, logistics, care, and community platforms.</p>
           </div>
 
           <div className="border-y border-slate-800 divide-y divide-slate-800">
             {[
-              ['2024 — PRESENT', 'Konga', 'Software Engineer', 'Optimized payouts and escrow releases, repaired synchronization daemons, resolved resource locks in high-volume background jobs, and managed staging workloads.'],
-              ['2021 — PRESENT', 'Golden Attic', 'Senior Full-Stack Engineer, part-time', 'Led a Laravel 5.8 to 11 migration while preserving more than 100,000 historical records, built dual-currency wallet ledgers, and engineered event-driven reward processors.'],
-              ['2020 — PRESENT', 'Independent consulting', 'Full-Stack & DevOps Consultant', 'Built Sabre tariff seeders and billing gateways, FastAPI service integrations, and a visitor-management platform for a confidential financial services client.'],
-              ['2022 — 2024', 'Xxolcare', 'Software Developer', 'Built care-booking workflows, integrated Paystack webhooks and transactional notifications, and standardized Docker development environments.'],
+              ['2024 — PRESENT', 'Konga', 'Software Engineer', 'Improved merchant payouts, repaired marketplace sync issues, supported money movement workflows, and helped keep key commerce tools stable.'],
+              ['2021 — PRESENT', 'Golden Attic', 'Senior Full-Stack Engineer, part-time', 'Upgraded the platform, preserved more than 100,000 records, improved wallets, and rebuilt reward and marketplace workflows.'],
+              ['2020 — PRESENT', 'Independent consulting', 'Full-Stack & DevOps Consultant', 'Built shipping, billing, AI learning, and visitor-management platforms for different clients.'],
+              ['2022 — 2024', 'Xxolcare', 'Software Developer', 'Built booking flows, payment updates, staff tools, and cleaner development/deployment processes.'],
             ].map(([period, company, role, description], index) => (
               <article key={company} className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 py-6">
                 <div className="md:col-span-2 flex items-center gap-2 font-mono text-xs text-orange-400">
@@ -1228,7 +1191,7 @@ export default function App() {
               <p className="font-mono text-xs uppercase text-orange-400">Portfolio routes</p>
               <h2 id="explore-more-title" className="mt-2 text-2xl font-extrabold text-slate-100">Choose the right doorway.</h2>
               <p className="mt-3 text-sm leading-relaxed text-slate-500">
-                The site now groups the story into about, projects, systems, and contact so the first scan has a cleaner map.
+                Start with the section that matters most to you: who I am, what I have built, how I work, or how to reach me.
               </p>
             </div>
             <nav aria-label="Additional portfolio areas" className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 md:col-span-8 md:grid-cols-2">
@@ -1360,7 +1323,7 @@ export default function App() {
             <p className="font-mono text-xs uppercase text-orange-400">Your move</p>
             <h2 className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-100">Bring me the difficult part.</h2>
             <p className="mt-4 text-base leading-relaxed text-slate-400 max-w-md">
-              I’m open to end-to-end web and mobile application work, backend and payment platforms, product integrations, and production engineering conversations.
+              I’m open to web and mobile products, backend and payment platforms, integrations, and ongoing product support.
             </p>
             <div className="mt-5 lg:mt-6 flex items-center gap-3 sm:gap-5 lg:block">
               <Mascot variant="integrate" label="Senseiuc partnership mascot" motion="float" className="w-16 sm:w-24 lg:w-36" />
@@ -1450,7 +1413,7 @@ export default function App() {
 
         <NextRead
           title="Browse the full project archive"
-          description="If the flagship cases caught your eye, the archive shows the wider delivery surface across web, mobile, backend, payments, logistics, and operations."
+          description="If the featured projects caught your eye, the archive shows more work across web, mobile, backend, payments, logistics, and operations."
           href="/work"
           cta="Open archive"
           icon={Briefcase}

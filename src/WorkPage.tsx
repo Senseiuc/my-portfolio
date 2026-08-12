@@ -55,17 +55,17 @@ export default function WorkPage() {
       <main id="work-archive" tabIndex={-1} className="relative z-10 max-w-7xl mx-auto px-4 py-8 md:py-16">
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 border-b border-amber-950/60 pb-8 md:pb-14">
           <div className="lg:col-span-8">
-            <p className="font-mono text-xs uppercase text-orange-400">Selected systems / 2020 to now</p>
-            <h1 className="mt-3 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">Work that spans the whole stack.</h1>
+            <p className="font-mono text-xs uppercase text-orange-400">Projects / 2020 to now</p>
+            <h1 className="mt-3 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">A wider look at what I have built.</h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300">
-              Production systems delivered across interfaces, mobile clients, APIs, financial ledgers, data migrations, integrations, testing, infrastructure, and ongoing operations.
+              Websites, mobile apps, payment flows, booking platforms, dashboards, and business tools delivered for real users.
             </p>
           </div>
           <div className="lg:col-span-4 flex items-end gap-4">
             <img src="/senseiuc-section-architect.png" alt="Senseiuc systems architect mascot" width="512" height="512" className="mascot mascot--inspect w-28 sm:w-36 shrink-0 object-contain" />
             <dl className="grid grid-cols-1 gap-4 flex-1 content-end">
               <div className="border-l border-orange-500 pl-4">
-                <dt className="font-mono text-[11px] uppercase text-slate-500">Systems</dt>
+                <dt className="font-mono text-[11px] uppercase text-slate-500">Projects</dt>
                 <dd className="mt-1 text-2xl font-bold">11</dd>
               </div>
               <div className="border-l border-slate-700 pl-4">
@@ -83,7 +83,7 @@ export default function WorkPage() {
               <h2 className="mt-2 text-xl font-bold">Konga Merchant Platform Engineering</h2>
             </div>
             <p className="md:col-span-6 text-sm leading-relaxed text-slate-400">
-              End-to-end commerce engineering across merchant interfaces, PHP and Node.js services, Python notifications, money movement, identity, testing, Docker, Kubernetes, and production support.
+              A deeper look at commerce work across merchant tools, payments, identity checks, testing, deployment, and support.
             </p>
             <div className="md:col-span-3 md:text-right">
               <a href="/work/konga-merchant-platform" className="inline-flex items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300 transition-colors">
@@ -100,7 +100,7 @@ export default function WorkPage() {
                 <Layers3 className="w-5 h-5 text-orange-400" />
                 <div>
                   <p className="font-mono text-xs uppercase text-orange-400">Project archive</p>
-                  <h2 className="mt-1 text-2xl md:text-3xl font-extrabold">Browse shipped systems</h2>
+                  <h2 className="mt-1 text-2xl md:text-3xl font-extrabold">Browse completed work</h2>
                 </div>
               </div>
             </div>
