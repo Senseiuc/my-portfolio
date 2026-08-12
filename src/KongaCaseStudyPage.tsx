@@ -164,7 +164,7 @@ export default function KongaCaseStudyPage() {
                 ['Frontend', 'JavaScript, TypeScript, AngularJS, Grunt, Sass'],
                 ['Backend + services', 'PHP, Yii 1.1, Node.js, Restify, Knex, Bookshelf, Python, Flask, Celery'],
                 ['Testing', 'Codeception, PHPUnit, Mocha, Chai, Sinon, service mocks'],
-                ['Data + operations', 'MySQL, Redis, Docker, GitLab CI, Kubernetes, PM2'],
+                ['Data + operations', 'MySQL, Redis, RabbitMQ, Beanstalk, Docker, GitLab CI, Kubernetes, PM2'],
               ].map(([label, tools]) => (
                 <div key={label} className="bg-[#0a0806] p-4">
                   <dt className="font-mono text-[10px] uppercase text-orange-400">{label}</dt>

@@ -418,7 +418,7 @@ const KONGA_CASE_STUDY = {
   category: 'Commerce Infrastructure',
   title: 'Konga Merchant Platform Improvements',
   shortDesc: 'Current full-time production work improving merchant money movement, compliance, identity verification, marketplace synchronization, engineering feedback loops, and operational interfaces across a high-volume commerce platform.',
-  tags: ['PHP', 'MySQL', 'Redis', 'Kubernetes'],
+  tags: ['PHP/Node.js', 'MySQL', 'Redis', 'Kubernetes + Queues'],
   borderColor: 'hover:border-orange-500/30',
   hoverText: 'group-hover:text-orange-400',
   accentColor: 'text-orange-400',
