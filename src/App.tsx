@@ -806,16 +806,6 @@ export default function App() {
               From first screen to backend, payments, launch, and support, I help turn product ideas into working software.
             </motion.p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.22 }}
-              className="flex flex-wrap gap-x-4 gap-y-1.5 font-mono text-[10px] uppercase text-slate-400 sm:text-[11px]"
-            >
-              <span>Lagos, Nigeria / remote</span>
-              <span className="text-orange-400">Open to product engineering roles</span>
-            </motion.div>
-
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -859,12 +849,15 @@ export default function App() {
                   className="block w-full h-full object-contain"
                 />
               </div>
-              <div className="border-t border-amber-900/40 p-4 flex items-end justify-between gap-4">
+              <div className="border-t border-amber-900/40 p-4">
                 <div>
                   <p className="font-mono text-[10px] uppercase text-orange-400">Senseiuc / product build 01</p>
                   <p className="text-sm text-slate-300 mt-1">Ideas turned into dependable software.</p>
                 </div>
-                <span className="font-mono text-[10px] text-slate-500">LAGOS → REMOTE</span>
+                <div className="mt-4 flex flex-wrap gap-2 font-mono text-[10px] uppercase">
+                  <span className="border border-slate-800 bg-black/20 px-2.5 py-1 text-slate-400">Lagos, Nigeria / Remote</span>
+                  <span className="border border-orange-500/40 bg-orange-500/[0.08] px-2.5 py-1 text-orange-300">Open to product engineering roles</span>
+                </div>
               </div>
             </motion.div>
           </div>
