@@ -905,7 +905,7 @@ export default function App() {
                 copy: 'I add checks, retries, alerts, and recovery paths before small issues become business blockers.',
               },
             ].map((item) => (
-              <article key={item.number} className="group grid min-h-[220px] grid-cols-[92px_1fr] gap-4 bg-[#0a0806] p-4 transition-colors hover:bg-orange-500/[0.012] hover:ring-1 hover:ring-orange-500/25 sm:grid-cols-[112px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
+              <article key={item.number} className="group grid min-h-[220px] grid-cols-[92px_1fr] gap-4 bg-[#0a0806] p-4 sm:grid-cols-[112px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
                 <Mascot
                   variant={item.variant}
                   label={`${item.title} Senseiuc mascot`}
