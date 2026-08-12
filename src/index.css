@@ -10,17 +10,24 @@
     --color-accent: #f97316;
   }
 
+  html {
+    max-width: 100%;
+    overflow-x: clip;
+    scroll-behavior: smooth;
+    text-size-adjust: 100%;
+  }
+
   body {
     background-color: var(--color-bg-dark);
     color: #e2e8f0;
     font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    overflow-x: hidden;
-    min-width: 320px;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
-  html {
-    scroll-behavior: smooth;
-    text-size-adjust: 100%;
+  #root {
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   img,

@@ -451,7 +451,7 @@ export default function ChatWidget() {
               exit={{ opacity: 0, x: 20, scale: 0.9 }}
               transition={{ delay: 0.8, duration: 0.3 }}
               onClick={() => setIsOpen(true)}
-              className="absolute right-14 mr-2 bg-slate-950/90 border border-orange-500/30 px-3.5 py-2 rounded-lg text-orange-400 font-bold text-[10px] tracking-wide whitespace-nowrap shadow-xl hidden sm:flex items-center gap-2 backdrop-blur-md cursor-pointer select-none hover:border-orange-500/60 hover:text-orange-300 transition-colors pointer-events-auto"
+              className="absolute right-14 mr-2 hidden max-w-[calc(100vw-6rem)] items-center gap-2 truncate rounded-lg border border-orange-500/30 bg-slate-950/90 px-3.5 py-2 text-[10px] font-bold tracking-wide text-orange-400 shadow-xl backdrop-blur-md transition-colors hover:border-orange-500/60 hover:text-orange-300 sm:flex pointer-events-auto cursor-pointer select-none"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-ping" />
               <span>Questions about the work?</span>
