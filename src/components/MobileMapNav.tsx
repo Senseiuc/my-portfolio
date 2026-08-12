@@ -19,21 +19,53 @@ import {
 } from 'lucide-react';
 import Logo from './Logo';
 
-const mapLinks = [
-  { href: '/', label: 'Home base', detail: 'Intro, flagship work, contact', icon: Home },
-  { href: '/#projects', label: 'Flagship cases', detail: 'Pressure-tested project cockpit', icon: Compass },
-  { href: '/#competencies', label: 'Capabilities', detail: 'Frontend, backend, mobile, DevOps', icon: Cpu },
-  { href: '/work', label: 'Project archive', detail: 'All shipped systems', icon: Briefcase },
-  { href: '/systems', label: 'Architecture room', detail: 'Interactive system flows', icon: Route },
-  { href: '/work/konga-merchant-platform', label: 'Konga case study', detail: 'Commerce engineering deep dive', icon: Map },
-  { href: '/leadership', label: 'Leadership', detail: 'Mentorship and service roles', icon: HeartHandshake },
-  { href: '/credentials', label: 'Credentials', detail: 'Certificates and learning stack', icon: Award },
-  { href: '/before-systems', label: 'Origin story', detail: 'Teaching, support, operations', icon: User },
-  { href: '/life', label: 'Life outside code', detail: 'Curiosity, rhythm, people', icon: Compass },
-  { href: '/console', label: 'Portfolio console', detail: 'Runtime, GitHub, explorer', icon: Terminal },
-  { href: '/resume.html', label: 'Resume', detail: 'Printable career snapshot', icon: FileText },
-  { href: '/#contact', label: 'Contact', detail: 'Start a conversation', icon: Mail },
+const navGroups = [
+  {
+    label: 'About',
+    detail: 'Who Gideon is and what shaped the work',
+    icon: User,
+    links: [
+      { href: '/', label: 'Overview', detail: 'Positioning and first impression', icon: Home },
+      { href: '/before-systems', label: 'Origin story', detail: 'Teaching, support, operations', icon: User },
+      { href: '/leadership', label: 'Leadership', detail: 'Mentorship and service roles', icon: HeartHandshake },
+      { href: '/credentials', label: 'Credentials', detail: 'Certificates and learning stack', icon: Award },
+      { href: '/life', label: 'Life outside code', detail: 'Curiosity, rhythm, people', icon: Compass },
+      { href: '/resume.html', label: 'Resume', detail: 'Printable career snapshot', icon: FileText },
+    ],
+  },
+  {
+    label: 'Projects',
+    detail: 'Proof of shipped product engineering',
+    icon: Briefcase,
+    links: [
+      { href: '/#projects', label: 'Featured cases', detail: 'Pressure-tested project cockpit', icon: Compass },
+      { href: '/work', label: 'All projects', detail: 'Complete shipped-systems archive', icon: Briefcase },
+      { href: '/work/konga-merchant-platform', label: 'Konga case study', detail: 'Commerce engineering deep dive', icon: Map },
+    ],
+  },
+  {
+    label: 'Systems',
+    detail: 'Technical depth, flows, and live signals',
+    icon: Route,
+    links: [
+      { href: '/#competencies', label: 'Capabilities', detail: 'Frontend, backend, mobile, DevOps', icon: Cpu },
+      { href: '/systems', label: 'Architecture room', detail: 'Interactive system flows', icon: Route },
+      { href: '/console', label: 'Portfolio console', detail: 'Runtime, GitHub, explorer', icon: Terminal },
+    ],
+  },
+  {
+    label: 'Contact',
+    detail: 'Start a conversation or verify public profiles',
+    icon: Mail,
+    links: [
+      { href: '/#contact', label: 'Contact form', detail: 'Send a direct message', icon: Mail },
+      { href: 'mailto:hello@gideonnwadialu.com', label: 'Email', detail: 'hello@gideonnwadialu.com', icon: Mail },
+      { href: 'https://github.com/Senseiuc', label: 'GitHub', detail: 'Public code and activity', icon: Terminal },
+      { href: 'https://www.linkedin.com/in/gideonnwadialu/', label: 'LinkedIn', detail: 'Professional profile', icon: User },
+    ],
+  },
 ];
+const mapLinks = navGroups.flatMap((group) => group.links);
 
 type MobileMapNavProps = {
   className?: string;
@@ -77,6 +109,8 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
   };
 
   const isActiveLink = (href: string) => {
+    if (!href.startsWith('/')) return false;
+
     const [currentPath, currentHashValue] = currentLocation.split('#');
     const currentHash = currentHashValue ? `#${currentHashValue}` : '';
 
@@ -122,7 +156,7 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
         <div className="border-b border-amber-950/60 px-4 py-4">
           <p className="font-mono text-[10px] uppercase text-orange-400">Choose your route</p>
           <p className="mt-2 text-sm leading-relaxed text-slate-400">
-            A quick map through the work, systems, story, credentials, console, and contact points.
+            Four clear paths: about, projects, systems, and contact.
           </p>
           <p className="mt-3 inline-flex items-center gap-2 border border-orange-500/30 bg-orange-500/[0.08] px-2 py-1 font-mono text-[10px] uppercase text-orange-300">
             <span className="h-1.5 w-1.5 bg-orange-400" aria-hidden="true" />
@@ -131,37 +165,59 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
         </div>
 
         <nav aria-label="Mobile site map" className="flex-1 overflow-y-auto px-4 py-4">
-          <div className="relative space-y-2 before:absolute before:left-[1.32rem] before:top-5 before:h-[calc(100%-2.5rem)] before:border-l before:border-dashed before:border-amber-900/70">
-            {mapLinks.map((link, index) => {
-              const Icon = link.icon;
-              const isActive = isActiveLink(link.href);
+          <div className="space-y-5">
+            {navGroups.map((group, groupIndex) => {
+              const GroupIcon = group.icon;
+              const groupActive = group.links.some((link) => isActiveLink(link.href));
               return (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  aria-current={isActive ? 'page' : undefined}
-                  className={`group relative grid grid-cols-[2.7rem_1fr_auto] items-center gap-3 border px-3 py-3 transition-colors hover:border-orange-500/60 hover:bg-orange-500/[0.04] ${
-                    isActive
-                      ? 'border-orange-500/70 bg-orange-500/[0.08]'
-                      : 'border-slate-800 bg-black/25'
-                  }`}
-                >
-                  <span className={`relative z-10 flex h-8 w-8 items-center justify-center border bg-[#0d0a07] text-orange-400 ${
-                    isActive ? 'border-orange-400 shadow-[0_0_18px_rgba(249,115,22,0.32)]' : 'border-amber-900/70'
-                  }`}>
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="flex items-center gap-2 text-sm font-bold text-slate-100 group-hover:text-orange-400">
-                      <span className="font-mono text-[10px] text-slate-600">{String(index + 1).padStart(2, '0')}</span>
-                      {link.label}
-                      {isActive && <span className="font-mono text-[9px] uppercase text-orange-400">Here</span>}
+                <div key={group.label} className={`border p-3 ${groupActive ? 'border-orange-500/70 bg-orange-500/[0.05]' : 'border-slate-800 bg-black/15'}`}>
+                  <div className="grid grid-cols-[2.4rem_1fr] gap-3">
+                    <span className={`flex h-8 w-8 items-center justify-center border bg-[#0d0a07] text-orange-400 ${groupActive ? 'border-orange-400' : 'border-amber-900/70'}`}>
+                      <GroupIcon className="h-4 w-4" aria-hidden="true" />
                     </span>
-                    <span className="mt-1 block text-xs leading-relaxed text-slate-500">{link.detail}</span>
-                  </span>
-                  <ChevronRight className="h-4 w-4 text-slate-700 transition-colors group-hover:text-orange-400" aria-hidden="true" />
-                </a>
+                    <div>
+                      <p className="flex items-center gap-2 text-sm font-bold text-slate-100">
+                        <span className="font-mono text-[10px] text-slate-600">{String(groupIndex + 1).padStart(2, '0')}</span>
+                        {group.label}
+                        {groupActive && <span className="font-mono text-[9px] uppercase text-orange-400">Here</span>}
+                      </p>
+                      <p className="mt-1 text-xs leading-relaxed text-slate-500">{group.detail}</p>
+                    </div>
+                  </div>
+
+                  <div className="relative mt-3 space-y-2 pl-5 before:absolute before:left-4 before:top-2 before:h-[calc(100%-1rem)] before:border-l before:border-dashed before:border-amber-900/70">
+                    {group.links.map((link) => {
+                      const Icon = link.icon;
+                      const isActive = isActiveLink(link.href);
+                      return (
+                        <a
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setOpen(false)}
+                          aria-current={isActive ? 'page' : undefined}
+                          className={`group/link relative grid grid-cols-[1.75rem_1fr_auto] items-center gap-2 border px-2 py-2 transition-colors hover:border-orange-500/60 hover:bg-orange-500/[0.04] ${
+                            isActive
+                              ? 'border-orange-500/70 bg-orange-500/[0.08]'
+                              : 'border-slate-800 bg-black/25'
+                          }`}
+                        >
+                          <span className={`relative z-10 flex h-6 w-6 items-center justify-center border bg-[#0d0a07] text-orange-400 ${
+                            isActive ? 'border-orange-400 shadow-[0_0_18px_rgba(249,115,22,0.32)]' : 'border-amber-900/70'
+                          }`}>
+                            <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+                          </span>
+                          <span className="min-w-0">
+                            <span className="flex items-center gap-2 text-xs font-bold text-slate-100 group-hover/link:text-orange-400">
+                              {link.label}
+                            </span>
+                            <span className="mt-0.5 block text-[11px] leading-relaxed text-slate-500">{link.detail}</span>
+                          </span>
+                          <ChevronRight className="h-3.5 w-3.5 text-slate-700 transition-colors group-hover/link:text-orange-400" aria-hidden="true" />
+                        </a>
+                      );
+                    })}
+                  </div>
+                </div>
               );
             })}
           </div>

@@ -11,7 +11,8 @@ import {
   Send,
   CheckCircle2,
   ArrowRight,
-  FileText
+  FileText,
+  ChevronDown
 } from 'lucide-react';
 import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
@@ -506,6 +507,99 @@ const HERO_SIGNALS = [
 ];
 const HERO_SIGNAL_DELAY_MS = 5200;
 
+const PRIMARY_NAV_GROUPS = [
+  {
+    label: 'About',
+    href: '#about',
+    summary: 'Start with the person, path, and credibility.',
+    links: [
+      ['#about', 'Overview'],
+      ['/before-systems', 'Origin story'],
+      ['/leadership', 'Leadership'],
+      ['/credentials', 'Credentials'],
+      ['/life', 'Life outside code'],
+      ['/resume.html', 'Resume'],
+    ],
+  },
+  {
+    label: 'Projects',
+    href: '#projects',
+    summary: 'See the shipped work and case-study evidence.',
+    links: [
+      ['#projects', 'Featured cases'],
+      ['/work', 'All shipped systems'],
+      ['/work/konga-merchant-platform', 'Konga case study'],
+    ],
+  },
+  {
+    label: 'Systems',
+    href: '#competencies',
+    summary: 'Understand the technical range and operating style.',
+    links: [
+      ['#competencies', 'Capabilities'],
+      ['/systems', 'Architecture room'],
+      ['/console', 'Portfolio console'],
+    ],
+  },
+  {
+    label: 'Contact',
+    href: '#contact',
+    summary: 'Reach out or verify public profiles.',
+    links: [
+      ['#contact', 'Contact form'],
+      ['mailto:hello@gideonnwadialu.com', 'Email'],
+      ['https://github.com/Senseiuc', 'GitHub'],
+      ['https://www.linkedin.com/in/gideonnwadialu/', 'LinkedIn'],
+    ],
+  },
+];
+
+const EXPLORE_GROUPS = [
+  {
+    label: 'About me',
+    eyebrow: 'Person first',
+    description: 'Background, leadership, credentials, life outside code, and a printable resume.',
+    links: [
+      ['/before-systems', 'Origin story'],
+      ['/leadership', 'Leadership'],
+      ['/credentials', 'Credentials'],
+      ['/life', 'Life outside code'],
+      ['/resume.html', 'Resume'],
+    ],
+  },
+  {
+    label: 'Projects',
+    eyebrow: 'Proof of delivery',
+    description: 'Featured case studies, the full archive, and deeper production evidence.',
+    links: [
+      ['#projects', 'Featured cases'],
+      ['/work', 'All shipped systems'],
+      ['/work/konga-merchant-platform', 'Konga case study'],
+    ],
+  },
+  {
+    label: 'Systems',
+    eyebrow: 'How I build',
+    description: 'Capabilities, architecture flows, runtime signals, and production thinking.',
+    links: [
+      ['#competencies', 'Capabilities'],
+      ['/systems', 'Architecture room'],
+      ['/console', 'Portfolio console'],
+    ],
+  },
+  {
+    label: 'Contact',
+    eyebrow: 'Next move',
+    description: 'Start a conversation, check public profiles, or jump straight to email.',
+    links: [
+      ['#contact', 'Contact form'],
+      ['mailto:hello@gideonnwadialu.com', 'Email'],
+      ['https://github.com/Senseiuc', 'GitHub'],
+      ['https://www.linkedin.com/in/gideonnwadialu/', 'LinkedIn'],
+    ],
+  },
+];
+
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
@@ -625,11 +719,34 @@ export default function App() {
             </span>
           </a>
 
-          <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-6 font-mono text-xs text-slate-400">
-            <a href="#projects" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Selected work</a>
-            <a href="/systems" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Systems</a>
-            <a href="#experience" className="inline-flex min-h-11 items-center hover:text-orange-400 transition-colors">Experience</a>
-            <a href="#contact" className="inline-flex min-h-11 items-center text-slate-100 hover:text-orange-400 transition-colors">Contact</a>
+          <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-2 font-mono text-xs text-slate-400">
+            {PRIMARY_NAV_GROUPS.map((group) => (
+              <div key={group.label} className="group/nav relative">
+                <a
+                  href={group.href}
+                  className="inline-flex min-h-11 items-center gap-1.5 px-2 uppercase transition-colors hover:text-orange-400 focus-visible:text-orange-400"
+                >
+                  {group.label}
+                  <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover/nav:rotate-180" aria-hidden="true" />
+                </a>
+                <div className="invisible absolute right-0 top-full z-50 w-72 border border-slate-800 bg-[#0d0a07] p-3 opacity-0 shadow-2xl transition-all duration-150 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:translate-y-0 group-focus-within/nav:opacity-100">
+                  <p className="text-[10px] font-bold uppercase text-orange-400">{group.label}</p>
+                  <p className="mt-1 font-sans text-xs normal-case leading-relaxed text-slate-500">{group.summary}</p>
+                  <div className="mt-3 space-y-1">
+                    {group.links.map(([href, label]) => (
+                      <a
+                        key={`${group.label}-${href}`}
+                        href={href}
+                        className="flex items-center justify-between gap-3 border border-transparent px-2 py-2 text-slate-300 transition-colors hover:border-orange-500/40 hover:bg-orange-500/[0.05] hover:text-orange-400"
+                      >
+                        <span>{label}</span>
+                        <ArrowRight className="h-3.5 w-3.5 text-slate-700" aria-hidden="true" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
           </nav>
           <MobileMapNav className="md:hidden" />
         </div>
@@ -1106,26 +1223,33 @@ export default function App() {
         </section>
 
         <section aria-labelledby="explore-more-title" className="border-y border-amber-950/60 py-8">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-12 md:items-end">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
             <div className="md:col-span-4">
-              <p className="font-mono text-xs uppercase text-orange-400">Explore by interest</p>
-              <h2 id="explore-more-title" className="mt-2 text-2xl font-extrabold text-slate-100">Go deeper where it matters.</h2>
+              <p className="font-mono text-xs uppercase text-orange-400">Portfolio routes</p>
+              <h2 id="explore-more-title" className="mt-2 text-2xl font-extrabold text-slate-100">Choose the right doorway.</h2>
+              <p className="mt-3 text-sm leading-relaxed text-slate-500">
+                The site now groups the story into about, projects, systems, and contact so the first scan has a cleaner map.
+              </p>
             </div>
-            <nav aria-label="Additional portfolio areas" className="grid grid-cols-2 gap-px border border-slate-800 bg-slate-800 md:col-span-8">
-              {[
-                ['/work', 'All systems', 'Complete project archive and delivery scope'],
-                ['/systems', 'Architecture', 'Interactive workflows and safeguards'],
-                ['/leadership', 'Leadership', 'Mentorship, tutoring, and community work'],
-                ['/credentials', 'Credentials', 'Training and professional certifications'],
-                ['/console', 'Portfolio console', 'Runtime, GitHub, and project explorer'],
-                ['/before-systems', 'The human story', 'Teaching, operations, and life before software'],
-                ['/life', 'Life outside code', 'Chess, fitness, poetry, gaming, music, and people'],
-                ['/resume.html', 'Resume', 'A concise printable view of experience and skills'],
-              ].map(([href, title, description]) => (
-                <a key={href} href={href} className="group min-h-28 bg-[#0a0806] p-3 sm:p-4 transition-colors hover:bg-orange-500/[0.04]">
-                  <span className="flex items-center justify-between gap-3 text-sm font-bold text-slate-200 group-hover:text-orange-400">{title}<ArrowRight className="h-4 w-4 shrink-0" /></span>
-                  <span className="mt-2 block text-xs leading-relaxed text-slate-500">{description}</span>
-                </a>
+            <nav aria-label="Additional portfolio areas" className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 md:col-span-8 md:grid-cols-2">
+              {EXPLORE_GROUPS.map((group) => (
+                <article key={group.label} className="bg-[#0a0806] p-4 sm:p-5">
+                  <p className="font-mono text-[10px] uppercase text-orange-400">{group.eyebrow}</p>
+                  <h3 className="mt-2 text-lg font-extrabold text-slate-100">{group.label}</h3>
+                  <p className="mt-2 min-h-12 text-xs leading-relaxed text-slate-500">{group.description}</p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {group.links.map(([href, label]) => (
+                      <a
+                        key={`${group.label}-${href}`}
+                        href={href}
+                        className="inline-flex min-h-9 items-center gap-2 border border-slate-800 px-2.5 py-1.5 text-xs font-bold text-slate-300 transition-colors hover:border-orange-500/60 hover:text-orange-400"
+                      >
+                        {label}
+                        <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+                      </a>
+                    ))}
+                  </div>
+                </article>
               ))}
             </nav>
           </div>
