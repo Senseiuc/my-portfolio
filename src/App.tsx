@@ -953,7 +953,7 @@ export default function App() {
             <div className="md:col-span-7">
               <p className="font-mono text-xs uppercase text-orange-400">Selected work / real projects</p>
               <h2 id="selected-work-title" className="mt-2 text-3xl md:text-4xl font-extrabold text-slate-100">
-                Projects built to solve real business problems.
+                Real systems I’ve improved, shipped, and supported.
               </h2>
             </div>
             <div className="md:col-span-5 md:flex md:justify-end">
