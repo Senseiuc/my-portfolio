@@ -871,51 +871,55 @@ export default function App() {
           </div>
         </section>
 
-        <section aria-labelledby="systems-practice-title" className="border-y border-amber-950/50 py-8 md:py-10">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-3 mb-8">
+        <section aria-labelledby="systems-practice-title" className="border-y border-amber-950/50 py-7 md:py-9">
+          <div className="grid grid-cols-1 gap-3 md:grid-cols-12 md:items-end mb-6">
             <div>
               <p className="font-mono text-xs uppercase text-orange-400">How I work</p>
-              <h2 id="systems-practice-title" className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100">
-                Three things I care about on every project.
+              <h2 id="systems-practice-title" className="mt-2 text-2xl font-extrabold text-slate-100 md:text-3xl">
+                How I keep projects reliable.
               </h2>
             </div>
-            <p className="max-w-md text-sm leading-relaxed text-slate-400">
-              Make the important parts clear, connect the tools properly, and plan for real-life problems.
+            <p className="text-sm leading-relaxed text-slate-400 md:col-span-5">
+              Clear payments, connected tools, and plans for the messy parts that show up after launch.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0">
+          <div className="grid grid-cols-1 gap-px border border-amber-950/60 bg-amber-950/60 md:grid-cols-3">
             {[
               {
                 variant: 'ledger' as const,
                 number: '01',
-                title: 'Protect the money',
-                copy: 'Payments, refunds, wallets, and records should be clear, traceable, and hard to break.',
+                title: 'Keep money safe',
+                outcome: 'Payments and records stay clear.',
+                copy: 'I make payment flows, refunds, wallets, and reports easier to track and harder to break.',
               },
               {
                 variant: 'integrate' as const,
                 number: '02',
-                title: 'Connect the tools',
-                copy: 'Make websites, apps, payments, messages, and admin tools work together smoothly.',
+                title: 'Connect your tools',
+                outcome: 'Your website, app, and admin tools work together.',
+                copy: 'I connect screens, payments, messages, dashboards, and third-party services into one smoother workflow.',
               },
               {
                 variant: 'architect' as const,
                 number: '03',
-                title: 'Plan for problems',
-                copy: 'Build with retries, checks, and recovery paths so issues do not stop the whole business.',
+                title: 'Plan for real life',
+                outcome: 'The product keeps working when things go wrong.',
+                copy: 'I add checks, retries, alerts, and recovery paths before small issues become business blockers.',
               },
             ].map((item) => (
-              <article key={item.number} className="group grid grid-cols-[88px_1fr] sm:grid-cols-[112px_1fr] md:block gap-4 items-center md:px-6 first:md:pl-0 last:md:pr-0 md:border-l first:md:border-l-0 border-amber-950/50">
+              <article key={item.number} className="group grid min-h-[220px] grid-cols-[92px_1fr] gap-4 bg-[#0a0806] p-4 transition-colors hover:bg-orange-500/[0.035] sm:grid-cols-[112px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
                 <Mascot
                   variant={item.variant}
                   label={`${item.title} Senseiuc mascot`}
                   motion={item.variant === 'architect' ? 'inspect' : 'float'}
-                  className="w-24 sm:w-28 md:w-40 mx-auto transition-transform duration-300 group-hover:scale-[1.03]"
+                  className="w-24 self-center transition-transform duration-300 group-hover:scale-[1.03] sm:w-28 md:mx-auto md:w-32"
                 />
-                <div className="md:mt-4">
+                <div className="self-center md:self-auto">
                   <span className="font-mono text-[11px] text-orange-400">MOVE {item.number}</span>
-                  <h3 className="mt-1 text-lg font-bold text-slate-100">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-slate-400">{item.copy}</p>
+                  <h3 className="mt-1 text-xl font-bold text-slate-100 md:text-lg">{item.title}</h3>
+                  <p className="mt-2 text-sm font-semibold leading-relaxed text-slate-200">{item.outcome}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">{item.copy}</p>
                 </div>
               </article>
             ))}
