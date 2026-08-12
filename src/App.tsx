@@ -881,7 +881,16 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-px border border-amber-950/60 bg-amber-950/60 md:grid-cols-3">
+          <div className="relative grid grid-cols-1 gap-0 md:grid-cols-3 md:gap-px md:border md:border-amber-950/60 md:bg-amber-950/60">
+            <svg className="pointer-events-none absolute inset-y-8 left-0 right-0 z-0 h-[calc(100%-4rem)] w-full md:hidden" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+              <path
+                d="M18 2 C18 21 82 24 82 42 C82 62 18 61 18 82 C18 90 18 95 18 100"
+                fill="none"
+                stroke="rgba(146, 64, 14, 0.72)"
+                strokeDasharray="2.5 2.5"
+                strokeWidth="0.45"
+              />
+            </svg>
             {[
               {
                 variant: 'ledger' as const,
@@ -904,10 +913,11 @@ export default function App() {
                 outcome: 'The product keeps working when things go wrong.',
                 copy: 'I add checks, retries, alerts, and recovery paths before small issues become business blockers.',
               },
-            ].map((item, index) => (
-              <article key={item.number} className="group relative grid min-h-[190px] grid-cols-[74px_1fr] gap-4 bg-[#0a0806] p-4 pl-3 sm:grid-cols-[88px_1fr] md:min-h-[280px] md:grid-cols-1 md:p-5">
-                <div className="relative flex justify-center md:block">
-                  {index < 2 && <span className="absolute left-1/2 top-16 h-[calc(100%+3.5rem)] -translate-x-1/2 border-l border-dashed border-amber-900/70 md:hidden" aria-hidden="true" />}
+            ].map((item, index) => {
+              const isMiddle = index === 1;
+              return (
+              <article key={item.number} className={`group relative z-10 grid min-h-[178px] gap-4 border-b border-amber-950/45 bg-transparent p-4 last:border-b-0 md:min-h-[280px] md:grid-cols-1 md:border-b-0 md:bg-[#0a0806] md:p-5 ${isMiddle ? 'grid-cols-[1fr_74px] sm:grid-cols-[1fr_88px]' : 'grid-cols-[74px_1fr] sm:grid-cols-[88px_1fr]'}`}>
+                <div className={`relative flex justify-center md:block ${isMiddle ? 'order-2 md:order-none' : ''}`}>
                   <span className="relative z-10 flex h-16 w-16 items-center justify-center rounded-full border border-amber-950/70 bg-[#0d0a07] shadow-[0_0_20px_rgba(249,115,22,0.08)] sm:h-20 sm:w-20 md:mx-auto md:h-auto md:w-auto md:border-0 md:bg-transparent md:shadow-none">
                     <Mascot
                       variant={item.variant}
@@ -917,14 +927,15 @@ export default function App() {
                     />
                   </span>
                 </div>
-                <div className="self-center md:self-auto">
+                <div className={`self-center md:self-auto ${isMiddle ? 'order-1 text-right md:order-none md:text-left' : ''}`}>
                   <span className="font-mono text-[11px] text-orange-400">MOVE {item.number}</span>
                   <h3 className="mt-1 text-xl font-bold text-slate-100 md:text-lg">{item.title}</h3>
                   <p className="mt-2 text-sm font-semibold leading-relaxed text-slate-200">{item.outcome}</p>
                   <p className="mt-2 hidden text-sm leading-relaxed text-slate-500 sm:block">{item.copy}</p>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </section>
 
