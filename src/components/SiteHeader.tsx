@@ -46,6 +46,8 @@ const PRIMARY_NAV_GROUPS = [
       ['mailto:hello@gideonnwadialu.com', 'Email'],
       ['https://github.com/Senseiuc', 'GitHub'],
       ['https://www.linkedin.com/in/gideonnwadialu/', 'LinkedIn'],
+      ['https://www.instagram.com/senseiuc/', 'Instagram'],
+      ['https://x.com/SenseiUC', 'X / Twitter'],
     ],
   },
 ] as const;

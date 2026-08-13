@@ -14,6 +14,8 @@ import {
   Menu,
   Route,
   Terminal,
+  Instagram,
+  Twitter,
   User,
   X,
 } from 'lucide-react';
@@ -63,6 +65,8 @@ const navGroups = [
       { href: 'mailto:hello@gideonnwadialu.com', label: 'Email', detail: 'hello@gideonnwadialu.com', icon: Mail },
       { href: 'https://github.com/Senseiuc', label: 'GitHub', detail: 'Public code and activity', icon: Terminal },
       { href: 'https://www.linkedin.com/in/gideonnwadialu/', label: 'LinkedIn', detail: 'Professional profile', icon: User },
+      { href: 'https://www.instagram.com/senseiuc/', label: 'Instagram', detail: '@senseiuc', icon: Instagram },
+      { href: 'https://x.com/SenseiUC', label: 'X / Twitter', detail: '@SenseiUC', icon: Twitter },
     ],
   },
 ];

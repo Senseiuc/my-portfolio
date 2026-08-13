@@ -6,6 +6,8 @@ import {
   Mail, 
   Github, 
   Linkedin, 
+  Instagram,
+  Twitter,
   Briefcase, 
   Calendar,
   Send,
@@ -859,6 +861,12 @@ export default function App() {
               <a aria-label="LinkedIn profile" href="https://www.linkedin.com/in/gideonnwadialu/" target="_blank" rel="noopener noreferrer" className="flex h-11 w-11 items-center justify-center border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
                 <Linkedin className="w-4 h-4" />
               </a>
+              <a aria-label="Instagram profile" href="https://www.instagram.com/senseiuc/" target="_blank" rel="noopener noreferrer" className="flex h-11 w-11 items-center justify-center border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a aria-label="X / Twitter profile" href="https://x.com/SenseiUC" target="_blank" rel="noopener noreferrer" className="flex h-11 w-11 items-center justify-center border border-slate-800 hover:border-orange-500/50 bg-slate-900/40 rounded transition-colors text-slate-400 hover:text-orange-400 cursor-pointer">
+                <Twitter className="w-4 h-4" />
+              </a>
             </motion.div>
           </div>
 
@@ -1441,6 +1449,10 @@ export default function App() {
                 </a>
                 <p className="font-mono text-xs text-slate-500">Lagos, Nigeria / remote</p>
                 <p className="font-mono text-xs text-slate-500">08105347918</p>
+                <div className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-xs text-slate-500">
+                  <a href="https://www.instagram.com/senseiuc/" target="_blank" rel="noopener noreferrer" className="hover:text-orange-400 transition-colors">Instagram</a>
+                  <a href="https://x.com/SenseiUC" target="_blank" rel="noopener noreferrer" className="hover:text-orange-400 transition-colors">X / Twitter</a>
+                </div>
               </div>
             </div>
           </div>
