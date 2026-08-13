@@ -1,7 +1,6 @@
 import {
   ExternalLink,
   ArrowRight,
-  CheckCircle2,
   Database,
   Gauge,
   Layers3,
@@ -11,86 +10,72 @@ import {
   ShieldCheck,
   Store,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import NextRead from './components/NextRead';
 import SiteHeader from './components/SiteHeader';
 
 const chapters = [
   {
     index: '01',
-    title: 'Money movement with bounded risk',
+    title: 'Faster payouts with safer wallet checks',
     icon: LockKeyhole,
-    problem: 'High-volume escrow releases and merchant wallet actions had to move faster without increasing lock pressure or allowing concurrent debits.',
-    decision: 'Bound payout work with cursor offsets and 500-record batches, pace execution, and protect interactive debits with pessimistic row locks plus OTP confirmation.',
-    result: 'Payout execution completed in half the previous time while avoiding the database CPU spikes associated with the earlier flow.',
-    evidence: ['500-record payout batches', 'Pessimistic wallet row locks', 'Two-step OTP debit confirmation'],
+    problem: 'Merchant payouts needed to run faster, but wallet debits still had to be protected from double charges and database strain.',
+    decision: 'Processed payouts in 500-record batches, resumed work from saved cursors, slowed each batch enough to protect the database, and added locked wallet checks with OTP confirmation.',
+    result: 'Cut payout time in half while keeping wallet updates safer and avoiding the database CPU spikes from the older flow.',
   },
   {
     index: '02',
-    title: 'Compliance that operates as a system',
+    title: 'Clearer compliance and identity checks',
     icon: ShieldCheck,
-    problem: 'Inventory quality rules and merchant identity checks crossed onboarding, scheduled enforcement, operations review, and external notification services.',
-    decision: 'Build the QoS workflow across schema, cron enforcement, REST endpoints, admin review, audit history, Hermes reporting, tests, and Kubernetes configuration; connect NIN and CAC verification to Dojah-backed onboarding controls.',
-    result: 'Converted manual compliance work into traceable, configurable workflows with explicit exclusions, deadlines, verification states, and operational reporting.',
-    evidence: ['Cron-based inventory enforcement', 'Hermes breach reporting', 'NIN and CAC verification controls'],
+    problem: 'Inventory compliance and merchant identity checks needed clear workflows across onboarding, scheduled checks, operations review, and external notifications.',
+    decision: 'Built the QoS workflow for rules, scheduled checks, admin review, audit history, Hermes reports, and tests; connected NIN and CAC verification to Dojah-backed onboarding checks.',
+    result: 'Turned manual compliance work into clearer workflows with deadlines, exclusions, verification states, review history, and reports for operations teams.',
   },
   {
     index: '03',
-    title: 'Marketplace reliability across old boundaries',
+    title: 'Marketplace reliability and mobile UX overhaul',
     icon: RefreshCw,
-    problem: 'Merchant data, catalog state, pricing, SEO metadata, communications, and administrative tools moved across legacy applications and databases.',
-    decision: 'Repair partial Magento synchronization, add KOMA pricing and merchant settings, introduce versioned SEO-tag caching, centralize email delivery logs, and lead a portal-wide mobile responsiveness overhaul across SellerHQ and Backyard.',
-    result: 'Made failure states recoverable, sensitive changes auditable, merchant communication traceable, and key merchant/admin workflows usable on mobile while resolving layout, JavaScript, and CSS issues.',
-    evidence: ['Self-healing merchant synchronization', 'Cross-database caching + email audit trail', 'Mobile UI, JavaScript, and CSS remediation'],
+    problem: 'Merchant sync failures, pricing changes, SEO updates, email delivery, and mobile screens needed better recovery, clearer history, and easier use.',
+    decision: 'Fixed Magento sync gaps, added merchant pricing and settings controls, added version history for SEO tags, centralized email logs, and improved mobile responsiveness across SellerHQ and Backyard.',
+    result: 'Made marketplace updates easier to recover, changes easier to review, merchant emails easier to trace, and key merchant/admin tasks easier to finish on smaller screens.',
   },
   {
     index: '04',
-    title: 'A repeatable engineering feedback loop',
+    title: 'More reliable tests and release checks',
     icon: ServerCog,
-    problem: 'Legacy tests depended on fragile shared services and environment-specific configuration, making local verification and CI feedback difficult to reproduce.',
-    decision: 'Containerize the test workflow, isolate its schema and migrations, mock Hermes, add MySQL readiness and Redis setup, normalize environment-driven service configuration, and connect the suite to CI build and deployment stages.',
-    result: 'Revived automated testing as a practical local and CI development workflow, then expanded regression coverage around SSO, authentication middleware, wallet behavior, and compliance rules.',
-    evidence: ['Containerized PHPUnit workflow', 'Isolated schema + Hermes mock', 'SSO and authentication regression tests'],
+    problem: 'Tests were hard to run the same way locally and in CI because they depended on shared services and environment-specific setup.',
+    decision: 'Containerized the test setup, isolated the test database, mocked Hermes, added MySQL and Redis readiness checks, cleaned up service configuration, and connected the tests to CI.',
+    result: 'Made automated tests useful again for local development and CI, then added checks for SSO, login behavior, wallet behavior, and compliance rules.',
   },
 ];
 
 const topology = [
-  { label: 'Frontend and operations UX', detail: 'JavaScript and TypeScript merchant/admin surfaces across SellerHQ, Backyard, wallet, products, orders, compliance, and reporting.', icon: Store },
-  { label: 'Commerce and identity services', detail: 'PHP/Yii marketplace services and Node.js authentication handling business rules, APIs, validation, pricing, and secure wallet actions.', icon: Layers3 },
-  { label: 'Data, jobs, and integrations', detail: 'MySQL, Redis, cron and queue workers connecting Magento, Dojah, SSO, and Python/Celery-powered Hermes notifications.', icon: Database },
-  { label: 'Delivery and operations', detail: 'Docker local environments, isolated tests, GitLab CI pipelines, and Kubernetes deployments, services, ingress, Redis, and scheduled workloads.', icon: ServerCog },
-];
-
-const deliverySlices = [
-  {
-    title: 'QoS inventory compliance',
-    impact: 'A complete operational control loop',
-    path: ['Countdown and admin review UI', 'REST rules + audit schema', 'Inventory zeroing cron', 'Hermes breach reports', 'Kubernetes configuration'],
-  },
-  {
-    title: 'Merchant identity verification',
-    impact: 'Faster, governed onboarding decisions',
-    path: ['Document upload + OCR UX', 'NIN/CAC validation', 'Dojah service integration', 'Identity reuse controls', 'Auditable merchant state'],
-  },
-  {
-    title: 'Engineering feedback loop',
-    impact: 'Repeatable local and CI verification',
-    path: ['Docker test environment', 'Isolated schema + migrations', 'Hermes mock + service readiness', 'Regression suites', 'Build and deployment pipeline'],
-  },
+  { label: 'Merchant and admin UX', detail: 'Improved SellerHQ and Backyard screens for wallet, products, orders, compliance, reports, and mobile use.', icon: Store },
+  { label: 'Commerce and identity rules', detail: 'Shipped PHP/Yii and Node.js changes for validation, pricing, onboarding, wallet safety, and SSO.', icon: Layers3 },
+  { label: 'Data, jobs, and integrations', detail: 'Worked with MySQL, Redis, queues, cron jobs, Magento sync, Dojah checks, and Hermes notifications.', icon: Database },
+  { label: 'Tests, CI, and operations', detail: 'Improved Docker test setup, service mocks, GitLab CI, and Kubernetes deployment configuration.', icon: ServerCog },
 ];
 
 const payoutSteps = [
-  ['Select', 'Resume from a cursor instead of rescanning the full release set.'],
-  ['Bound', 'Load no more than 500 eligible records into one unit of work.'],
-  ['Release', 'Apply payout rules and persist merchant ledger changes.'],
-  ['Pace', 'Yield briefly between batches to smooth database and CPU demand.'],
-  ['Continue', 'Advance the cursor until the eligible release set is exhausted.'],
+  ['Select', 'Resume from the last saved point instead of scanning everything again.'],
+  ['Batch', 'Load up to 500 eligible records at a time.'],
+  ['Release', 'Apply payout rules and save the merchant wallet changes.'],
+  ['Pause', 'Wait briefly between batches to reduce database pressure.'],
+  ['Continue', 'Move to the next saved point until all eligible payouts are done.'],
 ];
 
 export default function KongaCaseStudyPage() {
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
+  const chapterDetailRef = useRef<HTMLElement | null>(null);
   const activeChapter = chapters[activeChapterIndex];
   const ActiveChapterIcon = activeChapter.icon;
+
+  const selectChapter = (index: number) => {
+    setActiveChapterIndex(index);
+    window.requestAnimationFrame(() => {
+      chapterDetailRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -124,7 +109,7 @@ export default function KongaCaseStudyPage() {
                 Making marketplace operations faster, safer, and easier to recover.
               </h1>
               <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-400 md:text-lg md:leading-8">
-                As a current full-time software engineer at Konga, Gideon improves and supports merchant and admin interfaces, backend rules, data, scheduled processing, integrations, automated tests, CI, and Kubernetes operations across a multi-language commerce platform.
+                Current full-time software engineering work across merchant payouts, wallet safety, compliance, marketplace sync, mobile UX, automated tests, CI, and production deployments.
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-3">
                 <a href="https://shq.konga.com/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400">
@@ -138,40 +123,18 @@ export default function KongaCaseStudyPage() {
             <aside className="border-l border-amber-900/60 pl-4 lg:col-span-4 lg:self-end lg:pl-7" aria-label="Case study outcome">
               <p className="font-mono text-[11px] uppercase text-slate-500">Flagship production result</p>
               <p className="mt-2 text-3xl font-extrabold text-orange-400 sm:text-4xl">2x faster</p>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-slate-400">merchant payout execution, with bounded batches and paced processing to control database pressure.</p>
+              <p className="mt-2 max-w-sm text-sm leading-6 text-slate-400">merchant payout execution, using smaller batches and short pauses to reduce database pressure.</p>
             </aside>
           </div>
         </section>
 
-        <section className="border-b border-slate-900" aria-labelledby="frameworks-title">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-10 md:px-8 md:py-12 lg:grid-cols-12">
-            <div className="lg:col-span-3">
-              <p className="font-mono text-xs uppercase text-orange-400">Languages and frameworks</p>
-              <h2 id="frameworks-title" className="mt-2 text-2xl font-bold text-slate-100">A multi-stack delivery surface.</h2>
-            </div>
-            <dl className="grid grid-cols-1 gap-px bg-slate-800 border border-slate-800 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-4">
-              {[
-                ['Frontend', 'JavaScript, TypeScript, AngularJS, Grunt, Sass'],
-                ['Backend + services', 'PHP, Yii 1.1, Node.js, Restify, Knex, Bookshelf, Python, Flask, Celery'],
-                ['Testing', 'Codeception, PHPUnit, Mocha, Chai, Sinon, service mocks'],
-                ['Data + operations', 'MySQL, Redis, RabbitMQ, Beanstalk, Docker, GitLab CI, Kubernetes, PM2'],
-              ].map(([label, tools]) => (
-                <div key={label} className="bg-[#0a0806] p-4">
-                  <dt className="font-mono text-[10px] uppercase text-orange-400">{label}</dt>
-                  <dd className="mt-2 text-sm leading-6 text-slate-400">{tools}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </section>
-
-        <section className="border-b border-slate-900" aria-label="Project scope">
+        <section className="border-b border-slate-900" aria-label="Impact snapshot">
           <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-slate-900 px-4 md:grid-cols-4 md:divide-y-0 md:px-8">
             {[
-              ['8 repositories', 'Merchant, middleware, administration, identity, notification, integration, and operations codebases.'],
-              ['4 language ecosystems', 'JavaScript/TypeScript, PHP, Node.js, and Python services connected through APIs, queues, shared data, and operational workflows.'],
-              ['Screen to cluster', 'Frontend remediation, backend rules, integrations, tests, CI, and Kubernetes operations delivered as one accountable engineering path.'],
-              ['2024 - present', 'Sustained delivery across production features, incident recovery, modernization, and deployment operations.'],
+              ['2x faster payouts', 'Smaller batches and short pauses reduced payout time without overloading the database.'],
+              ['8 repositories', 'Merchant, middleware, admin, identity, notification, integration, and operations codebases.'],
+              ['4 language stacks', 'JavaScript/TypeScript, PHP, Node.js, and Python services connected through APIs, queues, and shared data.'],
+              ['2024 - present', 'Ongoing work across production features, fixes, modernization, and deployments.'],
             ].map(([value, detail]) => (
               <div key={value} className="p-3 sm:p-5 md:px-7 md:py-7 md:first:pl-0 md:last:pr-0">
                 <p className="text-base font-bold text-slate-100 sm:text-xl">{value}</p>
@@ -181,13 +144,13 @@ export default function KongaCaseStudyPage() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24" aria-labelledby="scope-title">
+        <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-20" aria-labelledby="scope-title">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <p className="font-mono text-xs uppercase text-orange-400">Technical design 01</p>
-              <h2 id="scope-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">From merchant screen to cluster operations.</h2>
+              <p className="font-mono text-xs uppercase text-orange-400">What I improved</p>
+              <h2 id="scope-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Production work across the full platform.</h2>
               <p className="mt-4 text-sm leading-7 text-slate-400">
-                The work was not confined to one repository or layer. Product changes moved through merchant and admin interfaces, commerce and identity services, background processing, shared data, external systems, tests, and deployment infrastructure.
+                The work touched user-facing screens, backend rules, background jobs, integrations, tests, and deployment setup.
               </p>
             </div>
 
@@ -203,47 +166,11 @@ export default function KongaCaseStudyPage() {
                       </div>
                       <h3 className="mt-5 font-bold text-slate-100 sm:mt-8">{node.label}</h3>
                       <p className="mt-2 text-sm leading-6 text-slate-500">{node.detail}</p>
-                      {index < topology.length - 1 && (
-                        <ArrowRight className="absolute -right-3 top-1/2 z-10 hidden h-6 w-6 bg-[#0a0806] p-1 text-amber-700 sm:block" aria-hidden="true" />
-                      )}
                     </li>
                   );
                 })}
               </ol>
-              <p className="mt-3 text-xs leading-5 text-slate-600">Technical overview of the platform. Internal endpoints, infrastructure names, credentials, customer data, and proprietary schemas remain confidential.</p>
-            </div>
-          </div>
-        </section>
-
-        <section className="border-y border-slate-900 bg-[#0d0b09]" aria-labelledby="delivery-slices-title">
-          <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24">
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:items-end">
-              <div className="md:col-span-7">
-                <p className="font-mono text-xs uppercase text-orange-400">Technical design 02</p>
-                <h2 id="delivery-slices-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl md:text-4xl">Features delivered as complete operating paths.</h2>
-              </div>
-              <p className="text-sm leading-7 text-slate-400 md:col-span-5">Each path crossed interface, application logic, data, service integration, verification, and production operations instead of stopping at a single layer.</p>
-            </div>
-
-            <div className="mt-10 divide-y divide-slate-800 border-y border-slate-800">
-              {deliverySlices.map((slice, sliceIndex) => (
-                <article key={slice.title} className="grid grid-cols-1 gap-5 py-6 sm:py-8 lg:grid-cols-12 lg:items-center">
-                  <div className="lg:col-span-3">
-                    <span className="font-mono text-[10px] text-orange-400">PATH {String(sliceIndex + 1).padStart(2, '0')}</span>
-                    <h3 className="mt-2 text-lg font-bold text-slate-100">{slice.title}</h3>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">{slice.impact}</p>
-                  </div>
-                  <ol className="grid grid-cols-2 border border-slate-800 sm:grid-cols-5 lg:col-span-9">
-                    {slice.path.map((step, stepIndex) => (
-                      <li key={step} className="relative min-h-20 border-b border-r border-slate-800 p-3 even:border-r-0 sm:border-b-0 sm:border-r sm:last:border-r-0">
-                        <span className="font-mono text-[9px] text-orange-400">{String(stepIndex + 1).padStart(2, '0')}</span>
-                        <p className="mt-2 text-xs leading-5 text-slate-300">{step}</p>
-                        {stepIndex < slice.path.length - 1 && <ArrowRight className="absolute -right-3 top-1/2 z-10 hidden h-6 w-6 bg-[#0d0b09] p-1 text-amber-700 sm:block" aria-hidden="true" />}
-                      </li>
-                    ))}
-                  </ol>
-                </article>
-              ))}
+              <p className="mt-3 text-xs leading-5 text-slate-600">High-level view only. Internal endpoints, server names, credentials, customer data, and private database details remain confidential.</p>
             </div>
           </div>
         </section>
@@ -251,9 +178,9 @@ export default function KongaCaseStudyPage() {
         <section className="border-y border-amber-950/50 bg-[#0d0b09]">
           <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24">
             <div className="grid grid-cols-1 gap-8 lg:grid-cols-[320px_1fr] lg:items-start">
-              <div className="lg:sticky lg:top-24">
+              <div className="sticky top-20 z-20 -mx-4 border-b border-amber-950/50 bg-[#0d0b09]/95 px-4 pb-4 pt-1 backdrop-blur md:-mx-8 md:px-8 lg:top-24 lg:mx-0 lg:border-b-0 lg:bg-transparent lg:px-0 lg:pb-0 lg:pt-0 lg:backdrop-blur-none">
                 <p className="font-mono text-xs uppercase text-orange-400">Delivery record</p>
-                <h2 className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Four chapters of the same reliability problem.</h2>
+                <h2 className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Key production workstreams.</h2>
                 <div className="mt-7 flex gap-2 overflow-x-auto border-y border-slate-800 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
                   {chapters.map((chapter, index) => {
                     const Icon = chapter.icon;
@@ -262,7 +189,7 @@ export default function KongaCaseStudyPage() {
                       <button
                         key={chapter.index}
                         type="button"
-                        onClick={() => setActiveChapterIndex(index)}
+                        onClick={() => selectChapter(index)}
                         className={`min-w-[240px] border px-3 py-3 text-left transition-colors lg:min-w-0 lg:w-full ${
                           isActive
                             ? 'border-orange-500/70 bg-orange-500/[0.08]'
@@ -281,7 +208,7 @@ export default function KongaCaseStudyPage() {
                 </div>
               </div>
 
-              <article className="relative overflow-hidden border border-slate-800 bg-[#0a0806] p-5 sm:p-7 md:p-8">
+              <article ref={chapterDetailRef} className="relative scroll-mt-56 overflow-hidden border border-slate-800 bg-[#0a0806] p-5 sm:p-7 md:scroll-mt-44 md:p-8 lg:scroll-mt-32">
                 <div className="absolute inset-0 systems-grid opacity-[0.1]" aria-hidden="true" />
                 <div className="relative">
                   <div className="flex items-start justify-between gap-5">
@@ -307,15 +234,6 @@ export default function KongaCaseStudyPage() {
                     </div>
                   </dl>
 
-                  <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                    {activeChapter.evidence.map((item, index) => (
-                      <div key={item} className="border border-slate-800 bg-black/20 p-3">
-                        <p className="font-mono text-[10px] uppercase text-slate-600">Evidence {index + 1}</p>
-                        <p className="mt-3 text-sm font-semibold leading-snug text-slate-200">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-
                   {activeChapter.index === '04' && (
                     <img src="/senseiuc-section-testing.png" alt="Senseiuc software testing and operations mascot" width="512" height="512" loading="lazy" decoding="async" className="mascot mascot--inspect mt-8 w-32 object-contain" />
                   )}
@@ -328,13 +246,13 @@ export default function KongaCaseStudyPage() {
         <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-24" aria-labelledby="payout-design-title">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
             <div className="lg:col-span-4">
-              <p className="font-mono text-xs uppercase text-orange-400">Technical design 03</p>
-              <h2 id="payout-design-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Bounded payout execution.</h2>
-              <p className="mt-4 text-sm leading-7 text-slate-400">The optimization treated throughput and database stability as one design constraint. Smaller resumable units reduced broad scans and made load easier to control.</p>
+              <p className="font-mono text-xs uppercase text-orange-400">How payouts got faster</p>
+              <h2 id="payout-design-title" className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Smaller batches, steadier load.</h2>
+              <p className="mt-4 text-sm leading-7 text-slate-400">The payout flow was changed so it could process work in smaller chunks, resume safely, and avoid putting too much pressure on the database at once.</p>
               <div className="mt-7 border-l border-amber-900/60 pl-5">
                 <Gauge className="h-5 w-5 text-orange-400" aria-hidden="true" />
                 <p className="mt-3 text-xl font-bold text-slate-100">500 records per batch</p>
-                <p className="mt-1 text-sm text-slate-500">with cursor progression and deliberate pacing</p>
+                <p className="mt-1 text-sm text-slate-500">with saved progress and short pauses between batches</p>
               </div>
             </div>
 
@@ -353,30 +271,18 @@ export default function KongaCaseStudyPage() {
           </div>
         </section>
 
-        <section className="border-t border-slate-900">
-          <div className="mx-auto grid max-w-7xl grid-cols-1 gap-7 px-4 py-12 md:px-8 md:py-14 lg:grid-cols-12">
-            <div className="lg:col-span-7">
-              <p className="font-mono text-xs uppercase text-orange-400">Confidentiality</p>
-              <h2 className="mt-3 text-2xl font-bold text-slate-100">Technical depth without exposing private systems.</h2>
-              <p className="mt-4 max-w-3xl text-sm leading-7 text-slate-400">This case study focuses on the problems solved, systems built, and production results. Source code, internal topology, customer information, credentials, and operational secrets remain private.</p>
-            </div>
-            <div className="lg:col-span-5 lg:border-l lg:border-slate-800 lg:pl-8">
-              {[['Covered', 'Architecture, migrations, tests, scheduled jobs, integrations, and deployment workflows.'], ['Protected', 'Source code, customer data, internal endpoints, credentials, and operational details.']].map(([label, copy]) => (
-                <div key={label} className="flex gap-3 py-3 first:pt-0">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-orange-400" aria-hidden="true" />
-                  <p className="text-sm leading-6 text-slate-500"><strong className="text-slate-300">{label}:</strong> {copy}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <div className="mx-auto max-w-7xl border-t border-slate-900 px-4 pt-8 md:px-8">
+          <p className="max-w-3xl text-xs leading-6 text-slate-600">
+            Note: this case study focuses on scope, decisions, and results. Source code, customer data, internal endpoints, credentials, and operational details remain private.
+          </p>
+        </div>
 
         <div className="mx-auto max-w-7xl px-4 md:px-8">
           <NextRead
-            title="Explore the architecture room"
-            description="After the Konga deep dive, compare the recurring safeguards behind payments, identity, logistics, rewards, and communications."
-            href="/systems"
-            cta="Open systems"
+            title="Back to all projects"
+            description="Return to the project archive and compare the other systems, portals, logistics tools, and production workflows."
+            href="/work"
+            cta="Open all projects"
             icon={ServerCog}
           />
         </div>

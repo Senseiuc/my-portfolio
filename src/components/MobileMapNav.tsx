@@ -74,6 +74,7 @@ type MobileMapNavProps = {
 
 export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
   const [open, setOpen] = useState(false);
+  const [expandedGroup, setExpandedGroup] = useState<string | null>(null);
   const [currentLocation, setCurrentLocation] = useState(() => `${window.location.pathname}${window.location.hash}`);
 
   useEffect(() => {
@@ -88,7 +89,10 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
   }, []);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setExpandedGroup(null);
+      return;
+    }
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -170,9 +174,17 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
             {navGroups.map((group, groupIndex) => {
               const GroupIcon = group.icon;
               const groupActive = group.links.some((link) => isActiveLink(link.href));
+              const isExpanded = expandedGroup === group.label;
+              const groupPanelId = `mobile-map-group-${group.label.toLowerCase()}`;
               return (
                 <div key={group.label} className={`border p-3 ${groupActive ? 'border-orange-500/70 bg-orange-500/[0.05]' : 'border-slate-800 bg-black/15'}`}>
-                  <div className="grid grid-cols-[2.4rem_1fr] gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setExpandedGroup(isExpanded ? null : group.label)}
+                    className="grid w-full grid-cols-[2.4rem_1fr_auto] gap-3 text-left"
+                    aria-expanded={isExpanded}
+                    aria-controls={groupPanelId}
+                  >
                     <span className={`flex h-8 w-8 items-center justify-center border bg-[#0d0a07] text-orange-400 ${groupActive ? 'border-orange-400' : 'border-amber-900/70'}`}>
                       <GroupIcon className="h-4 w-4" aria-hidden="true" />
                     </span>
@@ -184,9 +196,13 @@ export default function MobileMapNav({ className = '' }: MobileMapNavProps) {
                       </p>
                       <p className="mt-1 text-xs leading-relaxed text-slate-500">{group.detail}</p>
                     </div>
-                  </div>
+                    <ChevronRight className={`mt-2 h-4 w-4 text-slate-600 transition-transform ${isExpanded ? 'rotate-90 text-orange-400' : ''}`} aria-hidden="true" />
+                  </button>
 
-                  <div className="relative mt-3 space-y-2 pl-5 before:absolute before:left-4 before:top-2 before:h-[calc(100%-1rem)] before:border-l before:border-dashed before:border-amber-900/70">
+                  <div
+                    id={groupPanelId}
+                    className={`relative mt-3 space-y-2 pl-5 before:absolute before:left-4 before:top-2 before:h-[calc(100%-1rem)] before:border-l before:border-dashed before:border-amber-900/70 ${isExpanded ? 'block' : 'hidden'}`}
+                  >
                     {group.links.map((link) => {
                       const Icon = link.icon;
                       const isActive = isActiveLink(link.href);

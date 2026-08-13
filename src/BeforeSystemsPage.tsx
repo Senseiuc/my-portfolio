@@ -1,4 +1,4 @@
-import { ArrowRight, BookOpen, Code2, ExternalLink, Wrench } from 'lucide-react';
+import { ArrowRight, BookOpen, Code2, Wrench } from 'lucide-react';
 import NextRead from './components/NextRead';
 import SiteHeader from './components/SiteHeader';
 
@@ -63,27 +63,31 @@ export default function BeforeSystemsPage() {
       <SiteHeader />
 
       <main id="origin-story" tabIndex={-1} className="relative z-10 max-w-6xl mx-auto px-4 py-8 md:py-16">
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-12 items-center border-b border-amber-950/60 pb-10 md:pb-16">
+        <section className="grid grid-cols-1 gap-6 border-b border-amber-950/60 pb-8 md:pb-16 lg:grid-cols-12 lg:items-center lg:gap-12">
           <div className="lg:col-span-8">
             <p className="font-mono text-xs uppercase text-orange-400">The prequel / 2013 to 2022</p>
-            <h1 className="mt-3 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+            <h1 className="mt-3 text-[2.45rem] font-extrabold leading-[1.05] sm:text-5xl md:text-6xl">
               Before I built systems,<br /><span className="text-orange-400">I taught people how to solve them.</span>
             </h1>
-            <p className="mt-6 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300">
+            <p className="mt-5 max-w-3xl text-base leading-relaxed text-slate-300 md:mt-6 md:text-lg">
               Software was not the first place I learned to break hard problems into understandable steps. That happened in mathematics classrooms, tutorial programmes, school events, support desks, and one very hands-on hospitality operation.
             </p>
           </div>
           <div className="lg:col-span-4 flex lg:justify-end">
-            <img src="/gideon_caricature.webp" alt="Caricature of Gideon Nwadialu" width="520" height="520" className="w-32 sm:w-48 lg:w-64 aspect-square object-cover border border-slate-800" />
+            <img src="/gideon_caricature.webp" alt="Caricature of Gideon Nwadialu" width="520" height="520" className="aspect-square w-full max-w-56 object-cover border border-slate-800 sm:max-w-64 lg:w-64" />
           </div>
         </section>
 
-        <section className="py-10 md:py-16 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12">
+        <section className="grid grid-cols-1 gap-6 py-8 md:py-16 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
             <div className="lg:sticky lg:top-24">
-              <img src="/senseiuc-section-teaching.png" alt="Senseiuc mascot teaching mathematics" width="512" height="512" className="mascot mascot--inspect w-24 md:w-36 object-contain" />
-              <p className="mt-4 font-mono text-xs uppercase text-orange-400">Chapter one</p>
-              <h2 className="mt-2 text-3xl font-extrabold">The classroom years</h2>
+              <div className="grid grid-cols-[minmax(0,1fr)_88px] items-center gap-4 lg:block">
+                <div>
+                  <p className="font-mono text-xs uppercase text-orange-400 lg:mt-4">Chapter one</p>
+                  <h2 className="mt-2 text-3xl font-extrabold">The classroom years</h2>
+                </div>
+                <img src="/senseiuc-section-teaching.png" alt="Senseiuc mascot teaching mathematics" width="512" height="512" className="mascot mascot--inspect order-2 w-20 object-contain lg:order-none lg:w-36" />
+              </div>
               <p className="mt-4 text-sm leading-relaxed text-slate-400">Teaching sharpened the skills I still use in engineering: clarity, patience, structure, feedback, and knowing when a problem needs a different explanation.</p>
             </div>
           </div>
@@ -101,16 +105,16 @@ export default function BeforeSystemsPage() {
           </div>
         </section>
 
-        <section className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 md:grid-cols-4" aria-label="Transferable skills from teaching to engineering">
+        <section className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-3 md:mx-0 md:grid md:grid-cols-4 md:gap-px md:overflow-visible md:border md:border-slate-800 md:bg-slate-800 md:px-0 md:pb-0" aria-label="Transferable skills from teaching to engineering">
           {[
             ['Explain', 'Translate complex ideas until the user, student, or teammate can act.'],
             ['Sequence', 'Break large problems into steps that can be practiced, tested, and improved.'],
             ['Support', 'Stay close to real people when the workflow becomes confusing or costly.'],
             ['Improve', 'Turn repeated pain into better tools, clearer processes, and stronger systems.'],
           ].map(([title, detail], index) => (
-            <div key={title} className="min-h-40 bg-[#0a0806] p-5">
+            <div key={title} className="min-w-[72vw] snap-center border border-slate-800 bg-[#0a0806] p-4 md:min-h-40 md:min-w-0 md:border-0 md:p-5">
               <p className="font-mono text-[10px] uppercase text-orange-400">Transfer {String(index + 1).padStart(2, '0')}</p>
-              <h2 className="mt-3 text-lg font-bold text-slate-100">{title}</h2>
+              <h2 className="mt-2 text-base font-bold text-slate-100 md:mt-3 md:text-lg">{title}</h2>
               <p className="mt-3 text-sm leading-relaxed text-slate-500">{detail}</p>
             </div>
           ))}
@@ -119,9 +123,13 @@ export default function BeforeSystemsPage() {
         <section className="py-12 md:py-16 border-t border-amber-950/60">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div className="lg:col-span-4">
-              <Wrench className="w-7 h-7 text-orange-400" />
-              <p className="mt-4 font-mono text-xs uppercase text-orange-400">Chapter two</p>
-              <h2 className="mt-2 text-3xl font-extrabold">Then I started fixing the tools</h2>
+              <div className="grid grid-cols-[minmax(0,1fr)_3rem] items-center gap-4 lg:block">
+                <div>
+                  <p className="font-mono text-xs uppercase text-orange-400 lg:mt-4">Chapter two</p>
+                  <h2 className="mt-2 text-3xl font-extrabold">Then I started fixing the tools</h2>
+                </div>
+                <Wrench className="order-2 h-8 w-8 justify-self-end text-orange-400 lg:order-none lg:h-7 lg:w-7 lg:justify-self-auto" />
+              </div>
               <p className="mt-4 text-sm leading-relaxed text-slate-400">The path into software was practical: support the users, understand the workflow, improve the app, and learn whatever the next problem required.</p>
             </div>
             <div className="lg:col-span-8 space-y-0 border-y border-slate-800 divide-y divide-slate-800">
@@ -141,13 +149,9 @@ export default function BeforeSystemsPage() {
 
         <section className="py-10 border-y border-slate-800 grid grid-cols-1 md:grid-cols-12 gap-6 md:items-center">
           <div className="md:col-span-2"><BookOpen className="w-8 h-8 text-orange-400" /></div>
-          <div className="md:col-span-7">
+          <div className="md:col-span-10">
             <h2 className="text-2xl font-extrabold">The through-line</h2>
             <p className="mt-3 text-sm leading-relaxed text-slate-400">Teaching made complexity understandable. Support made technology accountable to real users. Operations exposed the cost of slow workflows. Engineering gave me a way to improve all three at once.</p>
-          </div>
-          <div className="md:col-span-3 md:text-right space-y-3">
-            <a href="/work" className="inline-flex items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300">See what I build now <ArrowRight className="w-4 h-4" /></a>
-            <a href="https://www.linkedin.com/in/gideonnwadialu/details/experience/" target="_blank" rel="noopener noreferrer" className="flex md:justify-end items-center gap-2 text-xs font-mono text-slate-400 hover:text-orange-400">LinkedIn experience <ExternalLink className="w-3.5 h-3.5" /></a>
           </div>
         </section>
 

@@ -526,52 +526,6 @@ const CORE_SKILLS = [
   },
 ];
 
-const EXPLORE_GROUPS = [
-  {
-    label: 'About me',
-    eyebrow: 'Person first',
-    description: 'Background, leadership, certificates, life outside code, and a printable resume.',
-    links: [
-      ['/before-systems', 'Origin story'],
-      ['/leadership', 'Leadership'],
-      ['/credentials', 'Credentials'],
-      ['/life', 'Life outside code'],
-      ['/resume.html', 'Resume'],
-    ],
-  },
-  {
-    label: 'Projects',
-    eyebrow: 'Work delivered',
-    description: 'Featured projects, the full archive, live links, and the problems solved.',
-    links: [
-      ['#projects', 'Featured cases'],
-      ['/work', 'All projects'],
-      ['/work/konga-merchant-platform', 'Konga case study'],
-    ],
-  },
-  {
-    label: 'Systems',
-    eyebrow: 'How I build',
-    description: 'The skills, flows, and practical decisions behind the work.',
-    links: [
-      ['#competencies', 'Capabilities'],
-      ['/systems', 'How systems work'],
-      ['/console', 'Portfolio console'],
-    ],
-  },
-  {
-    label: 'Contact',
-    eyebrow: 'Next move',
-    description: 'Start a conversation, check public profiles, or jump straight to email.',
-    links: [
-      ['#contact', 'Contact form'],
-      ['mailto:hello@gideonnwadialu.com', 'Email'],
-      ['https://github.com/Senseiuc', 'GitHub'],
-      ['https://www.linkedin.com/in/gideonnwadialu/', 'LinkedIn'],
-    ],
-  },
-];
-
 export default function App() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [sent, setSent] = useState(false);
@@ -1220,13 +1174,13 @@ export default function App() {
           </div>
         </section>
 
-        <section id="before-systems" className="grid grid-cols-1 md:grid-cols-12 gap-6 md:items-center border-y border-slate-800 py-7">
-          <div className="relative md:col-span-3 min-h-24 pr-24 flex flex-col justify-center">
+        <section id="before-systems" className="grid grid-cols-1 gap-4 border-y border-slate-800 py-6 md:grid-cols-12 md:items-center md:gap-6 md:py-7">
+          <div className="relative flex min-h-24 flex-col justify-center pr-24 md:col-span-3">
             <p className="font-mono text-xs uppercase text-orange-400">The prequel</p>
             <h2 className="mt-2 text-2xl font-extrabold text-slate-100">Before I built systems</h2>
             <img src="/senseiuc-section-teaching.png" alt="Senseiuc mascot teaching mathematics" width="512" height="512" loading="lazy" decoding="async" className="mascot mascot--inspect absolute right-0 bottom-0 w-24 object-contain" />
           </div>
-          <p className="md:col-span-6 text-sm leading-relaxed text-slate-400">
+          <p className="hidden text-sm leading-relaxed text-slate-400 md:col-span-6 md:block">
             I taught mathematics, ran tutorials, trained teams, fixed office computers, supervised hospitality operations, designed flyers, edited video, and kept asking how the work itself could be better. Software became the next classroom.
           </p>
           <div className="md:col-span-3 md:text-right">
@@ -1305,39 +1259,6 @@ export default function App() {
                 </div>
               </article>
             ))}
-          </div>
-        </section>
-
-        <section aria-labelledby="explore-more-title" className="border-y border-amber-950/60 py-8">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
-            <div className="md:col-span-4">
-              <p className="font-mono text-xs uppercase text-orange-400">Portfolio routes</p>
-              <h2 id="explore-more-title" className="mt-2 text-2xl font-extrabold text-slate-100">Choose the right doorway.</h2>
-              <p className="mt-3 text-sm leading-relaxed text-slate-500">
-                Start with the section that matters most to you: who I am, what I have built, how I work, or how to reach me.
-              </p>
-            </div>
-            <nav aria-label="Additional portfolio areas" className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 md:col-span-8 md:grid-cols-2">
-              {EXPLORE_GROUPS.map((group) => (
-                <article key={group.label} className="bg-[#0a0806] p-4 sm:p-5">
-                  <p className="font-mono text-[10px] uppercase text-orange-400">{group.eyebrow}</p>
-                  <h3 className="mt-2 text-lg font-extrabold text-slate-100">{group.label}</h3>
-                  <p className="mt-2 min-h-12 text-xs leading-relaxed text-slate-500">{group.description}</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {group.links.map(([href, label]) => (
-                      <a
-                        key={`${group.label}-${href}`}
-                        href={href}
-                        className="inline-flex min-h-9 items-center gap-2 border border-slate-800 px-2.5 py-1.5 text-xs font-bold text-slate-300 transition-colors hover:border-orange-500/60 hover:text-orange-400"
-                      >
-                        {label}
-                        <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                      </a>
-                    ))}
-                  </div>
-                </article>
-              ))}
-            </nav>
           </div>
         </section>
 

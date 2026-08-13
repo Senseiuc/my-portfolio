@@ -181,8 +181,8 @@ export default function WorkPage() {
             </div>
           </div>
 
-          <div className="hidden grid-cols-1 gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_390px] lg:items-start">
-            <div className={`grid auto-rows-fr grid-cols-1 gap-px border border-slate-800 bg-slate-800 ${visibleProjects.length === 1 ? '' : 'sm:grid-cols-2'}`}>
+          <div className="hidden grid-cols-1 gap-4 lg:grid lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">
+            <div className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:space-y-2 lg:overflow-y-auto lg:border lg:border-slate-800 lg:p-2">
               {visibleProjects.map((project, index) => {
                 const isActive = project.id === activeProject.id;
                 return (
@@ -190,27 +190,22 @@ export default function WorkPage() {
                     key={project.id}
                     type="button"
                     onClick={() => setActiveProjectId(project.id)}
-                    className={`group min-h-52 bg-[#0a0806] p-4 text-left transition-colors hover:bg-orange-500/[0.035] ${
-                      isActive ? 'outline outline-1 outline-orange-500/70 -outline-offset-1' : ''
+                    className={`group w-full border px-3 py-3 text-left transition-colors ${
+                      isActive ? 'border-orange-500/70 bg-orange-500/[0.08]' : 'border-slate-800 bg-[#0a0806] hover:border-amber-800 hover:bg-orange-500/[0.035]'
                     }`}
                     aria-pressed={isActive}
                   >
                     <span className="font-mono text-[10px] uppercase font-bold text-orange-400">
                       {String(index + 1).padStart(2, '0')} / {project.category}
                     </span>
-                    <h3 className="mt-3 text-lg font-bold text-slate-100 group-hover:text-orange-300">{project.title}</h3>
-                    <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-slate-500">{project.shortDesc}</p>
-                    <div className="mt-4 flex flex-wrap gap-1.5">
-                      {project.tags.slice(0, 4).map((tag) => (
-                        <span key={tag} className="border border-slate-800 px-2 py-1 text-[10px] font-mono text-slate-400">{tag}</span>
-                      ))}
-                    </div>
+                    <h3 className="mt-2 text-sm font-bold text-slate-100 group-hover:text-orange-300">{project.title}</h3>
+                    <p className="mt-1 line-clamp-1 text-xs leading-relaxed text-slate-500">{project.details.system}</p>
                   </button>
                 );
               })}
             </div>
 
-            <aside className="lg:sticky lg:top-24 border border-amber-950/60 bg-[#0d0a07]/90 p-5">
+            <aside className="border border-amber-950/60 bg-[#0d0a07]/90 p-5">
               <p className="font-mono text-[11px] uppercase text-orange-400">Active system</p>
               <h3 className="mt-2 text-2xl font-extrabold text-slate-100">{activeProject.title}</h3>
               <p className="mt-3 text-sm leading-relaxed text-slate-400">{activeProject.shortDesc}</p>
@@ -257,10 +252,10 @@ export default function WorkPage() {
         </section>
 
         <NextRead
-          title="Read the Konga case study"
-          description="The archive shows breadth. The Konga case study goes deeper into one production environment across money movement, identity, testing, and operations."
-          href="/work/konga-merchant-platform"
-          cta="Open case study"
+          title="Explore the systems behind the work"
+          description="Move from the project archive into the recurring patterns behind payments, identity, logistics, rewards, and communications."
+          href="/systems"
+          cta="Open systems"
           icon={Layers3}
         />
       </main>

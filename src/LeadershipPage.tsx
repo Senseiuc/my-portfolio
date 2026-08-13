@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ArrowRight, GraduationCap, HeartHandshake, Users } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { GraduationCap, HeartHandshake, Users } from 'lucide-react';
 import Mascot from './components/Mascot';
 import NextRead from './components/NextRead';
 import SiteHeader from './components/SiteHeader';
@@ -73,7 +73,19 @@ const LEADERSHIP_ROLES = [
 
 export default function LeadershipPage() {
   const [activeRoleIndex, setActiveRoleIndex] = useState(0);
+  const roleDetailRef = useRef<HTMLElement>(null);
   const activeRole = LEADERSHIP_ROLES[activeRoleIndex];
+
+  const handleRoleSelect = (index: number) => {
+    if (index === activeRoleIndex) return;
+    setActiveRoleIndex(index);
+    requestAnimationFrame(() => {
+      roleDetailRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    });
+  };
 
   return (
     <div className="min-h-screen bg-[#0a0806] text-slate-100 font-sans selection:bg-orange-500/30 selection:text-orange-200">
@@ -86,11 +98,11 @@ export default function LeadershipPage() {
         <section className="relative grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-end border-b border-amber-950/60 pb-8 md:pb-14">
           <div className="md:col-span-9">
             <p className="font-mono text-xs uppercase text-orange-400">Leadership / mentorship / service</p>
-            <h1 className="mt-3 pr-16 text-3xl sm:pr-0 sm:text-5xl md:text-6xl font-extrabold leading-tight">Leadership is making<br /><span className="text-orange-400">other people stronger.</span></h1>
+            <h1 className="mt-3 pr-28 text-3xl sm:pr-0 sm:text-5xl md:text-6xl font-extrabold leading-tight">Leadership is making<br /><span className="text-orange-400">other people stronger.</span></h1>
             <p className="mt-5 max-w-3xl text-base md:text-lg leading-relaxed text-slate-300">From mathematics tutorials to community events and technology outreach, these roles taught me to organize clearly, listen closely, delegate thoughtfully, and contribute alongside the people I lead.</p>
           </div>
-          <div className="absolute right-0 top-0 md:static md:col-span-3 md:flex md:justify-end">
-            <Mascot variant="partner" label="Leadership and collaboration mascot" motion="float" className="w-16 sm:w-24 md:w-40" />
+          <div className="absolute right-0 top-8 md:static md:col-span-3 md:flex md:justify-end">
+            <Mascot variant="partner" label="Leadership and collaboration mascot" motion="float" className="w-28 sm:w-32 md:w-40" />
           </div>
         </section>
 
@@ -113,7 +125,7 @@ export default function LeadershipPage() {
 
         <section className="py-10 md:py-14">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px_1fr] lg:items-start">
-            <div className="lg:sticky lg:top-24">
+            <div className="sticky top-[76px] z-30 bg-[#0a0806]/95 py-2 backdrop-blur-md lg:top-24 lg:bg-transparent lg:py-0 lg:backdrop-blur-none">
               <p className="font-mono text-xs uppercase text-orange-400">Role switchboard</p>
               <div className="mt-4 flex gap-2 overflow-x-auto border-y border-slate-800 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
                 {LEADERSHIP_ROLES.map((entry, index) => {
@@ -122,7 +134,7 @@ export default function LeadershipPage() {
                     <button
                       key={`${entry.role}-${entry.organization}`}
                       type="button"
-                      onClick={() => setActiveRoleIndex(index)}
+                      onClick={() => handleRoleSelect(index)}
                       className={`min-w-[220px] border px-3 py-3 text-left transition-colors lg:min-w-0 lg:w-full ${
                         isActive ? 'border-orange-500/70 bg-orange-500/[0.08]' : 'border-slate-800 bg-[#0a0806] hover:border-amber-800'
                       }`}
@@ -137,7 +149,7 @@ export default function LeadershipPage() {
               </div>
             </div>
 
-            <article className="relative overflow-hidden border border-slate-800 bg-[#0d0a07]/90 p-5 sm:p-7">
+            <article ref={roleDetailRef} className="relative scroll-mt-60 overflow-hidden border border-slate-800 bg-[#0d0a07]/90 p-5 sm:p-7 md:scroll-mt-24">
               <div className="absolute inset-0 systems-grid opacity-[0.1]" aria-hidden="true" />
               <div className="relative">
                 <p className="font-mono text-[11px] uppercase text-orange-400">{activeRole.category} / {activeRole.period}</p>
@@ -154,11 +166,6 @@ export default function LeadershipPage() {
               </div>
             </article>
           </div>
-        </section>
-
-        <section className="py-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
-          <p className="max-w-xl text-sm leading-relaxed text-slate-400">The same habits carry into engineering: clarify the goal, distribute ownership, support the team, and stay close enough to the work to help.</p>
-          <a href="/work" className="inline-flex items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300">See engineering work <ArrowRight className="w-4 h-4" /></a>
         </section>
 
         <NextRead

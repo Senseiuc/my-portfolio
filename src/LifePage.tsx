@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Quote } from 'lucide-react';
+import { Music2, Quote } from 'lucide-react';
 import Mascot from './components/Mascot';
 import NextRead from './components/NextRead';
 import SiteHeader from './components/SiteHeader';
@@ -44,10 +44,9 @@ export default function LifePage() {
           ))}
         </section>
 
-        <section className="grid grid-cols-1 gap-6 border-b border-amber-950/60 py-10 md:grid-cols-[auto_1fr_auto] md:items-center">
+        <section className="grid grid-cols-1 gap-6 border-b border-amber-950/60 py-10 md:grid-cols-[auto_1fr] md:items-center">
           <Quote className="h-8 w-8 text-orange-400" />
           <blockquote className="max-w-3xl text-xl font-semibold leading-relaxed text-slate-200">“The same mind that enjoys a difficult system also enjoys a close chess position, a demanding set, and a line of poetry that finally lands.”</blockquote>
-          <a href="/work" className="inline-flex items-center text-sm font-bold text-orange-400 hover:text-orange-300">Back to systems</a>
         </section>
 
         <NextRead
