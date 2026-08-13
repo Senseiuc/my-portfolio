@@ -540,6 +540,35 @@ export default function App() {
   const coreSkillsPauseUntilRef = useRef(0);
   const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
 
+  useEffect(() => {
+    if (!window.location.hash) return;
+
+    const targetId = window.location.hash.slice(1);
+    if (!targetId) return;
+
+    let attempts = 0;
+    let timeoutId: number | undefined;
+
+    const scrollToHashTarget = () => {
+      const target = document.getElementById(targetId);
+      if (target) {
+        target.scrollIntoView({ block: 'start' });
+        return;
+      }
+
+      attempts += 1;
+      if (attempts < 12) {
+        timeoutId = window.setTimeout(scrollToHashTarget, 80);
+      }
+    };
+
+    timeoutId = window.setTimeout(scrollToHashTarget, 0);
+
+    return () => {
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, []);
+
   const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
     projectTriggerRef.current = trigger;
     setSelectedProject(project);

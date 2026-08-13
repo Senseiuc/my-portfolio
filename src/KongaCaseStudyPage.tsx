@@ -120,10 +120,21 @@ export default function KongaCaseStudyPage() {
               </div>
             </div>
 
-            <aside className="border-l border-amber-900/60 pl-4 lg:col-span-4 lg:self-end lg:pl-7" aria-label="Case study outcome">
-              <p className="font-mono text-[11px] uppercase text-slate-500">Flagship production result</p>
-              <p className="mt-2 text-3xl font-extrabold text-orange-400 sm:text-4xl">2x faster</p>
-              <p className="mt-2 max-w-sm text-sm leading-6 text-slate-400">merchant payout execution, using smaller batches and short pauses to reduce database pressure.</p>
+            <aside className="grid grid-cols-[minmax(0,1fr)_120px] items-center gap-4 border-l border-amber-900/60 pl-4 sm:grid-cols-[minmax(0,1fr)_150px] lg:col-span-4 lg:block lg:self-end lg:pl-7" aria-label="Case study outcome">
+              <div>
+                <p className="font-mono text-[11px] uppercase text-slate-500">Flagship production result</p>
+                <p className="mt-2 text-3xl font-extrabold text-orange-400 sm:text-4xl">2x faster</p>
+                <p className="mt-2 max-w-sm text-sm leading-6 text-slate-400">merchant payout execution, using smaller batches and short pauses to reduce database pressure.</p>
+              </div>
+              <img
+                src="/senseiuc-konga-mascot.png"
+                alt="Senseiuc mascot presenting the Konga smile logo"
+                width="1254"
+                height="1254"
+                loading="eager"
+                decoding="async"
+                className="mascot mascot--float ml-auto w-28 object-contain mix-blend-screen sm:w-36 lg:mb-6 lg:ml-0 lg:w-56"
+              />
             </aside>
           </div>
         </section>

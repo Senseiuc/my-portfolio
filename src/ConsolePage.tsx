@@ -52,10 +52,10 @@ export default function ConsolePage() {
         </section>
 
         <NextRead
-          title="Leave the console and inspect the architecture"
-          description="The console shows this portfolio running. The systems page shows how the larger product systems were designed to hold up."
-          href="/systems"
-          cta="Open systems"
+          title="Done inspecting? Start a conversation"
+          description="If the console raised the right questions, send a note and I’ll reply with the context, tradeoffs, or project details you need."
+          href="/#contact"
+          cta="Contact me"
           icon={Activity}
         />
       </main>
