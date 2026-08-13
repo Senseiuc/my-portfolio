@@ -13,6 +13,7 @@ import {
 import { useEffect, useRef, useState } from 'react';
 import NextRead from './components/NextRead';
 import SiteHeader from './components/SiteHeader';
+import { useSwipeHint } from './hooks/useSwipeHint';
 
 const chapters = [
   {
@@ -67,6 +68,7 @@ const payoutSteps = [
 export default function KongaCaseStudyPage() {
   const [activeChapterIndex, setActiveChapterIndex] = useState(0);
   const chapterDetailRef = useRef<HTMLElement | null>(null);
+  const chapterSwitcherRef = useSwipeHint<HTMLDivElement>();
   const activeChapter = chapters[activeChapterIndex];
   const ActiveChapterIcon = activeChapter.icon;
 
@@ -192,7 +194,7 @@ export default function KongaCaseStudyPage() {
               <div className="sticky top-20 z-20 -mx-4 border-b border-amber-950/50 bg-[#0d0b09]/95 px-4 pb-4 pt-1 backdrop-blur md:-mx-8 md:px-8 lg:top-24 lg:mx-0 lg:border-b-0 lg:bg-transparent lg:px-0 lg:pb-0 lg:pt-0 lg:backdrop-blur-none">
                 <p className="font-mono text-xs uppercase text-orange-400">Delivery record</p>
                 <h2 className="mt-3 text-2xl font-extrabold text-slate-100 sm:text-3xl">Key production workstreams.</h2>
-                <div className="mt-7 flex gap-2 overflow-x-auto border-y border-slate-800 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
+                <div ref={chapterSwitcherRef} className="mt-7 flex gap-2 overflow-x-auto border-y border-slate-800 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
                   {chapters.map((chapter, index) => {
                     const Icon = chapter.icon;
                     const isActive = index === activeChapterIndex;

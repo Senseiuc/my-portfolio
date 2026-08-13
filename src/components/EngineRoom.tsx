@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Wrench,
 } from 'lucide-react';
+import { useSwipeHint } from '../hooks/useSwipeHint';
 
 type FlowKey = 'payout' | 'identity' | 'tripease' | 'golden-attic' | 'transglobal' | 'ansar';
 
@@ -131,6 +132,7 @@ export default function EngineRoom() {
   const [activeKey, setActiveKey] = useState<FlowKey>('payout');
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const panelRef = useRef<HTMLDivElement | null>(null);
+  const tablistRef = useSwipeHint<HTMLDivElement>();
   const activeFlow = flows.find((flow) => flow.key === activeKey) ?? flows[0];
 
   const selectFlow = (key: FlowKey) => {
@@ -168,7 +170,7 @@ export default function EngineRoom() {
         </p>
       </div>
 
-      <div role="tablist" aria-label="System architecture walkthroughs" className="sticky top-20 z-20 mb-8 grid grid-cols-2 border border-slate-800 bg-[#0a0806]/95 backdrop-blur md:grid-cols-6 lg:top-24">
+      <div ref={tablistRef} role="tablist" aria-label="System architecture walkthroughs" className="sticky top-20 z-20 mb-8 flex overflow-x-auto border border-slate-800 bg-[#0a0806]/95 backdrop-blur md:grid md:grid-cols-6 md:overflow-visible lg:top-24">
         {flows.map((flow, index) => (
           <button
             key={flow.key}
@@ -181,7 +183,7 @@ export default function EngineRoom() {
             tabIndex={activeKey === flow.key ? 0 : -1}
             onClick={() => selectFlow(flow.key)}
             onKeyDown={(event) => handleTabKeyDown(event, index)}
-            className={`min-h-16 px-3 py-2 border-r border-b md:border-b-0 border-slate-800 text-left cursor-pointer transition-colors ${activeKey === flow.key ? 'bg-orange-500 text-[#0a0806]' : 'bg-[#0d0a07] text-slate-400 hover:text-slate-100 hover:bg-slate-900'}`}
+            className={`min-h-16 min-w-[150px] px-3 py-2 border-r border-b md:min-w-0 md:border-b-0 border-slate-800 text-left cursor-pointer transition-colors ${activeKey === flow.key ? 'bg-orange-500 text-[#0a0806]' : 'bg-[#0d0a07] text-slate-400 hover:text-slate-100 hover:bg-slate-900'}`}
           >
             <span className="block font-mono text-[10px] opacity-70">0{index + 1}</span>
             <span className="block text-xs font-bold">{flow.shortLabel}</span>

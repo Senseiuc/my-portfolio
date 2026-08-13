@@ -3,6 +3,7 @@ import { GraduationCap, HeartHandshake, Users } from 'lucide-react';
 import Mascot from './components/Mascot';
 import NextRead from './components/NextRead';
 import SiteHeader from './components/SiteHeader';
+import { useSwipeHint } from './hooks/useSwipeHint';
 
 const LEADERSHIP_ROLES = [
   {
@@ -74,6 +75,7 @@ const LEADERSHIP_ROLES = [
 export default function LeadershipPage() {
   const [activeRoleIndex, setActiveRoleIndex] = useState(0);
   const roleDetailRef = useRef<HTMLElement>(null);
+  const roleSwitcherRef = useSwipeHint<HTMLDivElement>();
   const activeRole = LEADERSHIP_ROLES[activeRoleIndex];
 
   const handleRoleSelect = (index: number) => {
@@ -127,7 +129,7 @@ export default function LeadershipPage() {
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px_1fr] lg:items-start">
             <div className="sticky top-[76px] z-30 bg-[#0a0806]/95 py-2 backdrop-blur-md lg:top-24 lg:bg-transparent lg:py-0 lg:backdrop-blur-none">
               <p className="font-mono text-xs uppercase text-orange-400">Role switchboard</p>
-              <div className="mt-4 flex gap-2 overflow-x-auto border-y border-slate-800 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
+              <div ref={roleSwitcherRef} className="mt-4 flex gap-2 overflow-x-auto border-y border-slate-800 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
                 {LEADERSHIP_ROLES.map((entry, index) => {
                   const isActive = index === activeRoleIndex;
                   return (

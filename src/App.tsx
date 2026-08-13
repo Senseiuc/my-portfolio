@@ -18,6 +18,7 @@ import ChatWidget from './components/ChatWidget';
 import Mascot from './components/Mascot';
 import NextRead from './components/NextRead';
 import SiteHeader from './components/SiteHeader';
+import { useSwipeHint } from './hooks/useSwipeHint';
 
 export const PROJECTS = [
   {
@@ -532,11 +533,16 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [activeFlagshipIndex, setActiveFlagshipIndex] = useState(0);
+  const [showFlagshipCue, setShowFlagshipCue] = useState(false);
   const [activeCoreSkillIndex, setActiveCoreSkillIndex] = useState(0);
   const projectDialogRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLElement | null>(null);
+  const projectsSectionRef = useRef<HTMLElement>(null);
   const flagshipArticleRef = useRef<HTMLElement>(null);
   const coreSkillsCarouselRef = useRef<HTMLDivElement>(null);
+  const flagshipSwitcherRef = useSwipeHint<HTMLDivElement>();
+  const flagshipCueShownRef = useRef(false);
+  const flagshipUserSelectedRef = useRef(false);
   const coreSkillsPauseUntilRef = useRef(0);
   const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
 
@@ -577,6 +583,7 @@ export default function App() {
   const closeProjectDetails = () => setSelectedProject(null);
 
   const handleFlagshipCaseSelect = (index: number) => {
+    flagshipUserSelectedRef.current = true;
     if (index === activeFlagshipIndex) return;
     setActiveFlagshipIndex(index);
     requestAnimationFrame(() => {
@@ -586,6 +593,33 @@ export default function App() {
       });
     });
   };
+
+  useEffect(() => {
+    const section = projectsSectionRef.current;
+    if (!section) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!window.matchMedia('(min-width: 1024px)').matches) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || flagshipCueShownRef.current || flagshipUserSelectedRef.current) return;
+
+        flagshipCueShownRef.current = true;
+        window.setTimeout(() => {
+          if (!flagshipUserSelectedRef.current) {
+            setShowFlagshipCue(true);
+            window.setTimeout(() => setShowFlagshipCue(false), 1800);
+          }
+        }, 700);
+        observer.disconnect();
+      },
+      { threshold: 0.45 },
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
 
   const pauseCoreSkillsAutoScroll = () => {
     coreSkillsPauseUntilRef.current = Date.now() + 12000;
@@ -946,7 +980,7 @@ export default function App() {
           </div>
         </section>
 
-        <section id="projects" className="space-y-7 md:space-y-10" aria-labelledby="selected-work-title">
+        <section ref={projectsSectionRef} id="projects" className="space-y-7 md:space-y-10" aria-labelledby="selected-work-title">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:items-end">
             <div className="md:col-span-7">
               <p className="font-mono text-xs uppercase text-orange-400">Selected work / real projects</p>
@@ -967,9 +1001,10 @@ export default function App() {
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[290px_1fr] lg:items-start">
             <div className="sticky top-[76px] z-30 bg-[#0a0806]/95 py-2 backdrop-blur-md lg:top-24 lg:bg-transparent lg:py-0 lg:backdrop-blur-none">
-              <div className="flex gap-2 overflow-x-auto border-y border-amber-950/60 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
+              <div ref={flagshipSwitcherRef} className="flex gap-2 overflow-x-auto border-y border-amber-950/60 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
                 {FLAGSHIP_CASE_STUDIES.map((story, index) => {
                   const isActive = index === activeFlagshipIndex;
+                  const isNextCue = showFlagshipCue && index === (activeFlagshipIndex + 1) % FLAGSHIP_CASE_STUDIES.length;
                   return (
                     <button
                       key={story.project.id}
@@ -979,12 +1014,12 @@ export default function App() {
                         isActive
                           ? 'border-orange-500/70 bg-orange-500/[0.08]'
                           : 'border-slate-800 bg-[#0a0806]/80 hover:border-amber-800/80 hover:bg-orange-500/[0.03]'
-                      }`}
+                      } ${showFlagshipCue && isActive ? 'lg:animate-[pulse_1.4s_ease-in-out_1]' : ''} ${isNextCue ? 'lg:border-orange-500/50 lg:bg-orange-500/[0.05]' : ''}`}
                       aria-pressed={isActive}
                     >
                       <span className="flex items-center justify-between gap-3 font-mono text-[10px] uppercase text-slate-500">
                         Case {story.index}
-                        <span className={isActive ? 'text-orange-400' : 'text-slate-700'}>●</span>
+                        <span className={isActive || isNextCue ? 'text-orange-400' : 'text-slate-700'}>●</span>
                       </span>
                       <span className="mt-2 block text-sm font-bold text-slate-100">{story.project.title}</span>
                       <span className="mt-1 block text-xs leading-relaxed text-slate-500">{story.context}</span>
