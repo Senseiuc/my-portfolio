@@ -12,7 +12,7 @@ const PRIMARY_NAV_GROUPS = [
       ['/#experience', 'Experience'],
       ['/before-systems', 'Origin story'],
       ['/leadership', 'Leadership'],
-      ['/credentials', 'Credentials'],
+      ['/credentials', 'Academics & Credentials'],
       ['/life', 'Life outside code'],
       ['/resume.html', 'Resume'],
     ],

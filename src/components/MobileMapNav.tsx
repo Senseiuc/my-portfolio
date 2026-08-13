@@ -29,7 +29,7 @@ const navGroups = [
       { href: '/#experience', label: 'Experience', detail: 'Career context', icon: Briefcase },
       { href: '/before-systems', label: 'Origin story', detail: 'Teaching, support, operations', icon: User },
       { href: '/leadership', label: 'Leadership', detail: 'Mentorship and service roles', icon: HeartHandshake },
-      { href: '/credentials', label: 'Credentials', detail: 'Certificates and learning stack', icon: Award },
+      { href: '/credentials', label: 'Academics & Credentials', detail: 'Degree, certificates, and learning stack', icon: Award },
       { href: '/life', label: 'Life outside code', detail: 'Curiosity, rhythm, people', icon: Compass },
       { href: '/resume.html', label: 'Resume', detail: 'Printable career snapshot', icon: FileText },
     ],

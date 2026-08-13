@@ -1325,8 +1325,8 @@ export default function App() {
 
         <section id="certifications" className="hidden">
           <div className="relative md:col-span-3 min-h-24 pr-24 flex flex-col justify-center">
-            <p className="font-mono text-xs uppercase text-orange-400">Credentials</p>
-            <h2 className="mt-2 text-2xl font-extrabold text-slate-100">Selected certifications</h2>
+            <p className="font-mono text-xs uppercase text-orange-400">Academics & credentials</p>
+            <h2 className="mt-2 text-2xl font-extrabold text-slate-100">Selected learning proof</h2>
             <img src="/senseiuc-section-certificate.png" alt="Senseiuc mascot holding a certificate" width="512" height="512" loading="lazy" decoding="async" className="mascot mascot--celebrate absolute right-0 bottom-0 w-24 object-contain" />
           </div>
           <div className="md:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -1341,7 +1341,7 @@ export default function App() {
           </div>
           <div className="md:col-span-3 md:text-right">
             <a href="/credentials" className="inline-flex items-center gap-2 text-sm font-bold text-orange-400 hover:text-orange-300 transition-colors">
-              View all credentials <ArrowRight className="w-4 h-4" />
+              View academics & credentials <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </section>
