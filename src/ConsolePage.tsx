@@ -1,10 +1,9 @@
 import { useLayoutEffect } from 'react';
 import { Activity, Database, Github, Terminal as TerminalIcon } from 'lucide-react';
 import GitStats from './components/GitStats';
-import Logo from './components/Logo';
 import MetricsMonitor from './components/MetricsMonitor';
-import MobileMapNav from './components/MobileMapNav';
 import NextRead from './components/NextRead';
+import SiteHeader from './components/SiteHeader';
 import Terminal from './components/Terminal';
 
 export default function ConsolePage() {
@@ -13,13 +12,7 @@ export default function ConsolePage() {
   return (
     <div className="min-h-screen bg-[#0a0806] text-slate-100">
       <div className="systems-grid fixed inset-0 pointer-events-none" aria-hidden="true" />
-      <header className="sticky top-0 z-50 border-b border-amber-950/40 bg-[#0a0806]/95 backdrop-blur-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-          <a href="/" className="flex min-h-11 items-center gap-2 text-sm font-bold text-slate-200 hover:text-orange-400"><Logo className="h-8 w-8" /> Gideon Nwadialu</a>
-          <span className="hidden font-mono text-[10px] uppercase text-slate-500 md:inline">Technical appendix</span>
-          <MobileMapNav className="md:hidden" />
-        </div>
-      </header>
+      <SiteHeader />
 
       <main className="relative z-10 mx-auto max-w-6xl px-4 py-8 md:py-16">
         <section className="border-b border-amber-950/60 pb-10 md:pb-14">

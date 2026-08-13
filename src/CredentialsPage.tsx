@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import Logo from './components/Logo';
-import MobileMapNav from './components/MobileMapNav';
+import { ExternalLink } from 'lucide-react';
 import NextRead from './components/NextRead';
+import SiteHeader from './components/SiteHeader';
 
 const CREDENTIALS = [
   {
@@ -61,18 +60,7 @@ export default function CredentialsPage() {
       <a href="#credentials-list" className="skip-link">Skip to credentials</a>
       <div className="systems-grid fixed inset-0 pointer-events-none" aria-hidden="true" />
 
-      <header className="sticky top-0 z-50 border-b border-amber-950/40 bg-[#0a0806]/92 backdrop-blur-md">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <a href="/" className="flex items-center gap-2" aria-label="Gideon Nwadialu home">
-            <Logo className="w-8 h-8" />
-            <span className="font-mono text-xs sm:text-sm font-bold uppercase">GIDEON <span className="text-orange-400">NWADIALU</span></span>
-          </a>
-          <a href="/" className="hidden items-center gap-2 text-xs font-mono uppercase text-slate-300 hover:text-orange-400 transition-colors md:inline-flex">
-            <ArrowLeft className="w-4 h-4" /> Home
-          </a>
-          <MobileMapNav className="md:hidden" />
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="credentials-list" tabIndex={-1} className="relative z-10 max-w-5xl mx-auto px-4 py-8 md:py-16">
         <section className="relative grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 border-b border-amber-950/60 pb-8 md:pb-14">

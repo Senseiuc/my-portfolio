@@ -12,14 +12,12 @@ import {
   CheckCircle2,
   ArrowRight,
   FileText,
-  ChevronDown,
   MapPin
 } from 'lucide-react';
-import Logo from './components/Logo';
 import ChatWidget from './components/ChatWidget';
 import Mascot from './components/Mascot';
-import MobileMapNav from './components/MobileMapNav';
 import NextRead from './components/NextRead';
+import SiteHeader from './components/SiteHeader';
 
 export const PROJECTS = [
   {
@@ -97,7 +95,7 @@ export const PROJECTS = [
     number: '03',
     category: 'Transit Booking',
     title: 'TripEase Logistics Router',
-    shortDesc: 'A distributed transit scheduling, seat booking, and fleet routing ecosystem built across separate Laravel microservices managing escrow ledger wallets and payment gateways.',
+    shortDesc: 'A distributed transit scheduling, seat booking, and fleet routing ecosystem designed from scratch as Laravel microservices managing escrow ledger wallets and payment gateways.',
     tags: ['PHP', 'Laravel', 'Docker', 'Microservices'],
     borderColor: 'hover:border-indigo-500/30',
     hoverText: 'group-hover:text-indigo-400',
@@ -202,7 +200,7 @@ export const PROJECTS = [
     number: '06',
     category: 'Integration APIs',
     title: 'Transglobal X Sabre',
-    shortDesc: 'Designed and built the Transglobal logistics API engine and shipping portal from scratch, integrating Sabre tariff matrices, Paystack dedicated accounts, and SeerBit gateways.',
+    shortDesc: 'Built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of those APIs for tariffs, bookings, payments, and shipment sync.',
     tags: ['PHP', 'Laravel', 'Docker'],
     borderColor: 'hover:border-yellow-500/30',
     hoverText: 'group-hover:text-yellow-400',
@@ -218,12 +216,12 @@ export const PROJECTS = [
         { label: 'Transglobal platform', url: 'https://transglobal.africa/' },
         { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
       ],
-      system: 'Logistics Sabre Integration API & Booking Hub',
-      role: 'Full-stack architect and implementation owner across the Transglobal API hub and customer-facing Cargo portal.',
+      system: 'Two Custom Logistics Platforms, Connected by API',
+      role: 'Full-stack architect and implementation owner for both the Transglobal API platform and the Sabre Cargo portal built on top of it.',
       constraints: 'Partner tariff matrices changed independently, payment providers required different handshakes, and shipment state had to remain consistent across systems.',
-      architecture: ['Sabre tariff import', 'Transglobal API hub', 'Cargo booking portal', 'SeerBit + shipment sync'],
+      architecture: ['Transglobal APIs', 'Sabre Cargo portal', 'Sabre tariff import', 'SeerBit + shipment sync'],
       evidence: [
-        '2 connected product repositories',
+        '2 platforms built from scratch and connected',
         '45 tests and 57 migrations across Transglobal Backyard and Cargo',
         'Custom tariff overrides, commission calculations, shipment tracking, and payment provider interfaces',
         'Self-healing tariff imports and migration to a single SeerBit provider'
@@ -234,7 +232,7 @@ export const PROJECTS = [
         'Sabre Tariff Auto-Seeders: Programmed database tariff seeders parsing global international shipping rate matrix files, mapping weight-based pricing brackets (sellingRate10kg vs. sellingRate20kg) and auto-creating missing countries/locations.',
         'SeerBit Payment Gateway: Developed a payment provider for the Cargo portal utilizing a secure token-exchange handshake (generating dynamic Bearer tokens via credential encryption).',
         'Webhook Syncing: Engineered webhook listener routes validating HMAC-SHA512 signatures and dispatching automated shipment status syncs to downstream logistics databases.',
-        'Console Feedback Scheduler: Coded cron-driven console commands sending automated NPS review requests 24 hours after delivery, with partner-portal exclusion rules (sabre/bicourtney).'
+        'Console Feedback Scheduler: Coded cron-driven console commands sending automated NPS review requests 24 hours after delivery, with partner-portal exclusion rules.'
       ],
       commits: [
         '9175766 feat: automatically create missing countries/tariff buckets (backyard)',
@@ -472,71 +470,59 @@ const FLAGSHIP_CASE_STUDIES = [
     mascot: 'integrate' as const,
     index: '02',
     context: 'Transglobal x Sabre / logistics',
-    problem: 'Shipping quotes, customer accounts, and payment updates were spread across different tools.',
-    decision: 'Built one connected hub to manage tariffs, bookings, payments, and shipment updates in one flow.',
-    outcome: 'One integration hub',
-    outcomeNote: 'from shipping quote to payment confirmation',
-    evidence: ['2 connected platforms', '45 tests', '57 data updates'],
+    problem: 'Transglobal needed a logistics API platform, while Sabre needed a cargo portal that could depend on those APIs for quotes, accounts, payments, and shipment updates.',
+    decision: 'Built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of it for tariffs, bookings, payments, and shipment updates.',
+    outcome: 'Two systems, one flow',
+    outcomeNote: 'Sabre runs on Transglobal APIs from quote to payment confirmation',
+    evidence: ['Transglobal API built', 'Sabre portal built', 'Systems connected'],
   },
   {
     project: PROJECTS.find((project) => project.id === 'tripease')!,
     mascot: 'architect' as const,
     index: '03',
     context: 'TripEase / distributed transit',
-    problem: 'Bookings, transport companies, payments, and user accounts all needed to work together without duplicate charges or wallet mistakes.',
-    decision: 'Separated the major parts of the product and added checks around payments, bookings, and wallet updates.',
+    problem: 'A new logistics product needed bookings, transport companies, payments, wallets, and user accounts to work together without duplicate charges or balance mistakes.',
+    decision: 'Designed the system from scratch as four Laravel microservices, then added transaction checks around payments, bookings, and wallet updates.',
     outcome: '4 connected services',
     outcomeNote: 'booking, payments, fleet, and accounts working together',
-    evidence: ['4 product areas', '20 company tests', 'Safer retries'],
+    evidence: ['4 Laravel microservices', 'Escrow-safe payments', 'Retry-safe wallets'],
   },
 ];
 
 const HERO_STEPS = ['Design', 'Build', 'Launch', 'Support'];
 
-const PRIMARY_NAV_GROUPS = [
+const CORE_SKILLS = [
   {
-    label: 'About',
-    href: '#about',
-    summary: 'Start with the person, path, and credibility.',
-    links: [
-      ['#about', 'Overview'],
-      ['/before-systems', 'Origin story'],
-      ['/leadership', 'Leadership'],
-      ['/credentials', 'Credentials'],
-      ['/life', 'Life outside code'],
-      ['/resume.html', 'Resume'],
-    ],
+    number: '01',
+    label: 'Websites & dashboards',
+    title: 'Screens People Can Use',
+    copy: 'Builds websites, portals, dashboards, booking flows, and admin tools that are clear on desktop and mobile.',
+    variant: 'code' as const,
+    motion: 'inspect' as const,
   },
   {
-    label: 'Projects',
-    href: '#projects',
-    summary: 'See real work, live links, and what each project solved.',
-    links: [
-      ['#projects', 'Featured cases'],
-      ['/work', 'All projects'],
-      ['/work/konga-merchant-platform', 'Konga case study'],
-    ],
+    number: '02',
+    label: 'Backend & payments',
+    title: 'Reliable Business Logic',
+    copy: 'Builds the behind-the-scenes parts: accounts, payments, notifications, reports, data, and integrations with other services.',
+    variant: 'secure' as const,
+    motion: 'inspect' as const,
   },
   {
-    label: 'Systems',
-    href: '#competencies',
-    summary: 'See the skills behind the work in plain terms.',
-    links: [
-      ['#competencies', 'Capabilities'],
-      ['/systems', 'How the systems work'],
-      ['/console', 'Portfolio console'],
-    ],
+    number: '03',
+    label: 'Mobile apps',
+    title: 'Mobile Apps Connected to the Web',
+    copy: 'Builds Flutter mobile apps that connect to the same accounts, content, payments, and admin tools as the website.',
+    variant: 'build' as const,
+    motion: 'float' as const,
   },
   {
-    label: 'Contact',
-    href: '#contact',
-    summary: 'Reach out or verify public profiles.',
-    links: [
-      ['#contact', 'Contact form'],
-      ['mailto:hello@gideonnwadialu.com', 'Email'],
-      ['https://github.com/Senseiuc', 'GitHub'],
-      ['https://www.linkedin.com/in/gideonnwadialu/', 'LinkedIn'],
-    ],
+    number: '04',
+    label: 'Launch & support',
+    title: 'From Code to Live Product',
+    copy: 'Sets up deployments, fixes issues, improves speed, and keeps the product easier to maintain after it goes live.',
+    variant: 'deploy' as const,
+    motion: 'celebrate' as const,
   },
 ];
 
@@ -592,8 +578,12 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [selectedProject, setSelectedProject] = useState<any | null>(null);
   const [activeFlagshipIndex, setActiveFlagshipIndex] = useState(0);
+  const [activeCoreSkillIndex, setActiveCoreSkillIndex] = useState(0);
   const projectDialogRef = useRef<HTMLDivElement>(null);
   const projectTriggerRef = useRef<HTMLElement | null>(null);
+  const flagshipArticleRef = useRef<HTMLElement>(null);
+  const coreSkillsCarouselRef = useRef<HTMLDivElement>(null);
+  const coreSkillsPauseUntilRef = useRef(0);
   const activeFlagship = FLAGSHIP_CASE_STUDIES[activeFlagshipIndex];
 
   const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
@@ -602,6 +592,72 @@ export default function App() {
   };
 
   const closeProjectDetails = () => setSelectedProject(null);
+
+  const handleFlagshipCaseSelect = (index: number) => {
+    if (index === activeFlagshipIndex) return;
+    setActiveFlagshipIndex(index);
+    requestAnimationFrame(() => {
+      flagshipArticleRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    });
+  };
+
+  const pauseCoreSkillsAutoScroll = () => {
+    coreSkillsPauseUntilRef.current = Date.now() + 12000;
+  };
+
+  const updateActiveCoreSkill = () => {
+    const carousel = coreSkillsCarouselRef.current;
+    if (!carousel) return;
+
+    const slides = Array.from(carousel.children) as HTMLElement[];
+    if (!slides.length) return;
+
+    const nextIndex = slides.reduce(
+      (closest, slide, index) => {
+        const distance = Math.abs(slide.offsetLeft - carousel.scrollLeft);
+        return distance < closest.distance ? { index, distance } : closest;
+      },
+      { index: 0, distance: Number.POSITIVE_INFINITY }
+    ).index;
+
+    setActiveCoreSkillIndex(nextIndex);
+  };
+
+  useEffect(() => {
+    const carousel = coreSkillsCarouselRef.current;
+    if (!carousel) return;
+
+    const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.matchMedia('(max-width: 767px)').matches;
+    if (shouldReduceMotion || !isMobile) return;
+
+    const interval = window.setInterval(() => {
+      if (Date.now() < coreSkillsPauseUntilRef.current) return;
+
+      const slides = Array.from(carousel.children) as HTMLElement[];
+      if (!slides.length) return;
+
+      const currentIndex = slides.reduce(
+        (closest, slide, index) => {
+          const distance = Math.abs(slide.offsetLeft - carousel.scrollLeft);
+          return distance < closest.distance ? { index, distance } : closest;
+        },
+        { index: 0, distance: Number.POSITIVE_INFINITY }
+      ).index;
+
+      const nextIndex = (currentIndex + 1) % slides.length;
+      carousel.scrollTo({
+        left: slides[nextIndex].offsetLeft,
+        behavior: 'smooth',
+      });
+      setActiveCoreSkillIndex(nextIndex);
+    }, 3600);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (!selectedProject) return;
@@ -677,50 +733,7 @@ export default function App() {
       
       <div className="systems-grid fixed inset-0 pointer-events-none z-0" aria-hidden="true" />
 
-      <header className="sticky top-0 z-50 w-full bg-[#0a0806]/92 backdrop-blur-md border-b border-amber-950/40">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <a href="#about" className="flex min-h-11 min-w-0 items-center gap-1.5" aria-label="Gideon Nwadialu, back to introduction">
-            <Logo className="w-8 h-8" />
-            <span className="hidden font-mono text-[10px] font-bold text-slate-100 uppercase min-[360px]:inline sm:text-sm">
-              GIDEON <span className="text-orange-400">NWADIALU</span>
-            </span>
-            <span className="font-mono text-[10px] font-bold text-slate-100 uppercase min-[360px]:hidden">
-              GIDEON <span className="text-orange-400">N.</span>
-            </span>
-          </a>
-
-          <nav aria-label="Primary navigation" className="hidden md:flex items-center gap-2 font-mono text-xs text-slate-400">
-            {PRIMARY_NAV_GROUPS.map((group) => (
-              <div key={group.label} className="group/nav relative">
-                <a
-                  href={group.href}
-                  className="inline-flex min-h-11 items-center gap-1.5 px-2 uppercase transition-colors hover:text-orange-400 focus-visible:text-orange-400"
-                >
-                  {group.label}
-                  <ChevronDown className="h-3.5 w-3.5 transition-transform group-hover/nav:rotate-180" aria-hidden="true" />
-                </a>
-                <div className="invisible absolute right-0 top-full z-50 w-72 border border-slate-800 bg-[#0d0a07] p-3 opacity-0 shadow-2xl transition-all duration-150 group-hover/nav:visible group-hover/nav:translate-y-0 group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:translate-y-0 group-focus-within/nav:opacity-100">
-                  <p className="text-[10px] font-bold uppercase text-orange-400">{group.label}</p>
-                  <p className="mt-1 font-sans text-xs normal-case leading-relaxed text-slate-500">{group.summary}</p>
-                  <div className="mt-3 space-y-1">
-                    {group.links.map(([href, label]) => (
-                      <a
-                        key={`${group.label}-${href}`}
-                        href={href}
-                        className="flex items-center justify-between gap-3 border border-transparent px-2 py-2 text-slate-300 transition-colors hover:border-orange-500/40 hover:bg-orange-500/[0.05] hover:text-orange-400"
-                      >
-                        <span>{label}</span>
-                        <ArrowRight className="h-3.5 w-3.5 text-slate-700" aria-hidden="true" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </nav>
-          <MobileMapNav className="md:hidden" />
-        </div>
-      </header>
+      <SiteHeader />
 
       {/* Main Container */}
       <main id="main-content" tabIndex={-1} className="max-w-7xl mx-auto px-4 pb-5 pt-3 md:pb-8 md:pt-5 relative z-10 space-y-10 md:space-y-14">
@@ -963,14 +976,14 @@ export default function App() {
                 href="/work"
                 className="inline-flex min-h-11 items-center gap-2 border border-slate-800 bg-slate-950/40 px-4 py-3 text-sm font-bold text-slate-200 transition-colors hover:border-orange-500/50 hover:text-orange-300"
               >
-                More projects
+                All projects
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[290px_1fr] lg:items-start">
-            <div className="lg:sticky lg:top-24">
+            <div className="sticky top-[76px] z-30 bg-[#0a0806]/95 py-2 backdrop-blur-md lg:top-24 lg:bg-transparent lg:py-0 lg:backdrop-blur-none">
               <div className="flex gap-2 overflow-x-auto border-y border-amber-950/60 py-2 lg:block lg:space-y-2 lg:overflow-visible lg:border lg:p-2">
                 {FLAGSHIP_CASE_STUDIES.map((story, index) => {
                   const isActive = index === activeFlagshipIndex;
@@ -978,7 +991,7 @@ export default function App() {
                     <button
                       key={story.project.id}
                       type="button"
-                      onClick={() => setActiveFlagshipIndex(index)}
+                      onClick={() => handleFlagshipCaseSelect(index)}
                       className={`group min-w-[235px] flex-1 border px-3 py-3 text-left transition-colors lg:min-w-0 ${
                         isActive
                           ? 'border-orange-500/70 bg-orange-500/[0.08]'
@@ -999,21 +1012,22 @@ export default function App() {
             </div>
 
             <motion.article
+              ref={flagshipArticleRef}
               key={activeFlagship.project.id}
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35 }}
-              className="relative overflow-hidden border border-amber-950/60 bg-[#0d0a07]/86"
+              className="relative scroll-mt-60 overflow-hidden border border-amber-950/60 bg-[#0d0a07]/86 md:scroll-mt-24"
             >
               <div className="absolute inset-0 systems-grid opacity-[0.12]" aria-hidden="true" />
               <div className="relative grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_310px]">
-                <div className="p-5 sm:p-7 lg:p-8">
-                  <div className="flex items-start justify-between gap-4">
+                <div className="p-4 sm:p-7 lg:p-8">
+                  <div className="flex items-start justify-between gap-3 sm:gap-4">
                     <div className="min-w-0">
                       <p className="font-mono text-[11px] uppercase text-orange-400">
                         Project snapshot / {activeFlagship.context}
                       </p>
-                      <h3 className="mt-3 max-w-3xl text-3xl font-extrabold leading-tight text-slate-100 md:text-5xl">
+                      <h3 className="mt-3 max-w-3xl text-2xl font-extrabold leading-tight text-slate-100 sm:text-3xl md:text-5xl">
                         {activeFlagship.project.title}
                       </h3>
                       {'roleLine' in activeFlagship && (
@@ -1026,31 +1040,37 @@ export default function App() {
                       variant={activeFlagship.mascot}
                       label={`${activeFlagship.project.title} case study mascot`}
                       motion={activeFlagship.mascot === 'architect' ? 'inspect' : 'float'}
-                      className="w-20 shrink-0 sm:w-28 md:hidden"
+                      className="w-16 shrink-0 min-[380px]:w-20 sm:w-24 md:hidden"
                     />
                   </div>
 
-                  <div className="mt-7 grid grid-cols-1 gap-4 md:grid-cols-2">
-                    <div className="border-l border-orange-500/70 pl-4">
+                  <div className="mt-5 grid grid-cols-1 gap-3 md:mt-7 md:grid-cols-2 md:gap-4">
+                    <div className="border border-slate-800 border-l-orange-500/80 bg-black/15 p-4 md:border-0 md:border-l md:border-orange-500/70 md:bg-transparent md:p-0 md:pl-4">
                       <p className="font-mono text-[10px] uppercase text-slate-500">Problem</p>
-                      <p className="mt-2 text-sm leading-relaxed text-slate-300">{activeFlagship.problem}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-slate-300 md:text-sm">{activeFlagship.problem}</p>
                     </div>
-                    <div className="border-l border-slate-700 pl-4">
+                    <div className="border border-slate-800 border-l-slate-600 bg-black/15 p-4 md:border-0 md:border-l md:border-slate-700 md:bg-transparent md:p-0 md:pl-4">
                       <p className="font-mono text-[10px] uppercase text-slate-500">What I did</p>
                       <p className="mt-2 text-sm leading-relaxed text-slate-300">{activeFlagship.decision}</p>
                     </div>
                   </div>
 
-                  <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <div className="mt-4 border border-amber-950/60 bg-black/15 p-4 md:hidden">
+                    <p className="font-mono text-[10px] uppercase text-slate-500">Outcome</p>
+                    <p className="mt-2 text-2xl font-extrabold leading-tight text-orange-400">{activeFlagship.outcome}</p>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400">{activeFlagship.outcomeNote}</p>
+                  </div>
+
+                  <div className="mt-4 hidden grid-cols-1 gap-2 min-[430px]:grid-cols-3 md:mt-8 md:grid md:gap-3">
                     {activeFlagship.evidence.map((item, index) => (
-                      <div key={item} className="min-h-24 border border-slate-800 bg-black/20 p-3">
+                      <div key={item} className="min-h-[76px] border border-slate-800 bg-black/20 p-3 md:min-h-24">
                         <p className="font-mono text-[10px] uppercase text-slate-600">Detail {index + 1}</p>
                         <p className="mt-3 text-sm font-semibold leading-snug text-slate-200">{item}</p>
                       </div>
                     ))}
                   </div>
 
-                  <div className="mt-7 flex flex-wrap items-center gap-2">
+                  <div className="mt-5 flex flex-wrap items-center gap-2 md:mt-7">
                     {activeFlagship.project.tags.map((tag) => (
                       <span key={tag} className="border border-slate-800 bg-[#0a0806]/70 px-2.5 py-1 text-[11px] font-mono text-slate-400">
                         {tag}
@@ -1058,11 +1078,11 @@ export default function App() {
                     ))}
                   </div>
 
-                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <div className="mt-6 flex flex-wrap items-center gap-3 md:mt-8">
                     {activeFlagship.project.id === 'konga-payouts' ? (
                       <a
                         href="/work/konga-merchant-platform"
-                        className="inline-flex min-h-11 items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400"
+                        className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400 sm:flex-none"
                       >
                         Open case study
                         <ArrowRight className="w-4 h-4" />
@@ -1071,7 +1091,7 @@ export default function App() {
                       <button
                         type="button"
                         onClick={(event) => handleOpenProjectDetails(activeFlagship.project, event.currentTarget)}
-                        className="inline-flex min-h-11 items-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400"
+                        className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 bg-orange-500 px-4 py-2.5 text-sm font-bold text-[#0a0806] transition-colors hover:bg-orange-400 sm:flex-none"
                       >
                         View project details
                         <ArrowRight className="w-4 h-4" />
@@ -1091,7 +1111,7 @@ export default function App() {
                   </div>
                 </div>
 
-                <aside className="border-t border-amber-950/60 p-5 sm:p-7 lg:border-l lg:border-t-0 lg:p-7">
+                <aside className="hidden border-t border-amber-950/60 p-4 sm:p-7 md:block lg:border-l lg:border-t-0 lg:p-7">
                   <div className="flex items-center gap-4 lg:block">
                     <Mascot
                       variant={activeFlagship.mascot}
@@ -1101,11 +1121,11 @@ export default function App() {
                     />
                     <div>
                       <p className="font-mono text-[11px] uppercase text-slate-500">Outcome</p>
-                      <p className="mt-2 text-3xl font-extrabold leading-none text-orange-400 md:text-4xl">{activeFlagship.outcome}</p>
+                      <p className="mt-2 text-2xl font-extrabold leading-tight text-orange-400 sm:text-3xl md:text-4xl">{activeFlagship.outcome}</p>
                       <p className="mt-3 text-sm leading-relaxed text-slate-400">{activeFlagship.outcomeNote}</p>
                     </div>
                   </div>
-                  <div className="mt-7 border-t border-slate-800 pt-5">
+                  <div className="mt-5 border-t border-slate-800 pt-5 md:mt-7">
                     <p className="font-mono text-[10px] uppercase text-slate-500">Built with</p>
                     <div className="mt-3 flex flex-wrap gap-2">
                       {activeFlagship.project.details.architecture?.map((item: string) => (
@@ -1134,42 +1154,69 @@ export default function App() {
             <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">I can help with the full product: screens, backend, mobile app, deployment, and support.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 border-y border-slate-800 md:border-x">
-            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-b md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="code" motion="inspect" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">01 / Websites & dashboards</span>
-              <h3 className="font-bold text-slate-200 text-base">Screens People Can Use</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Builds websites, portals, dashboards, booking flows, and admin tools that are clear on desktop and mobile.
-              </p>
+          <div className="md:hidden">
+            <div
+              ref={coreSkillsCarouselRef}
+              onPointerDown={pauseCoreSkillsAutoScroll}
+              onWheel={pauseCoreSkillsAutoScroll}
+              onFocus={pauseCoreSkillsAutoScroll}
+              onScroll={updateActiveCoreSkill}
+              className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-4"
+            >
+              {CORE_SKILLS.map((skill) => (
+                <article
+                  key={skill.number}
+                  className="relative min-h-[270px] min-w-[84vw] snap-center overflow-hidden border border-slate-800 bg-[#0a0806]/88 p-5 pr-20"
+                >
+                  <Mascot
+                    variant={skill.variant}
+                    motion={skill.motion}
+                    label={`${skill.title} mascot`}
+                    className="absolute bottom-2 right-2 w-20 opacity-85"
+                  />
+                  <span className="font-mono text-[11px] font-bold uppercase text-orange-400">
+                    {skill.number} / {skill.label}
+                  </span>
+                  <h3 className="mt-4 text-xl font-extrabold leading-tight text-slate-100">{skill.title}</h3>
+                  <p className="mt-4 text-sm leading-relaxed text-slate-400">{skill.copy}</p>
+                </article>
+              ))}
             </div>
+            <div className="mt-1 flex items-center justify-between border-t border-slate-800 pt-3">
+              <span className="font-mono text-[10px] uppercase text-slate-500">Swipe skills</span>
+              <div className="flex gap-1.5" aria-hidden="true">
+                {CORE_SKILLS.map((skill, index) => (
+                  <span
+                    key={skill.number}
+                    className={`h-1.5 w-6 transition-colors ${
+                      index === activeCoreSkillIndex ? 'bg-orange-500' : 'bg-slate-800'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
 
-            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-b border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="secure" motion="inspect" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">02 / Backend & payments</span>
-              <h3 className="font-bold text-slate-200 text-base">Reliable Business Logic</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Builds the behind-the-scenes parts: accounts, payments, notifications, reports, data, and integrations with other services.
-              </p>
-            </div>
-
-            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 md:border-r border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="build" motion="float" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">03 / Mobile apps</span>
-              <h3 className="font-bold text-slate-200 text-base">Mobile Apps Connected to the Web</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Builds Flutter mobile apps that connect to the same accounts, content, payments, and admin tools as the website.
-              </p>
-            </div>
-
-            <div className="relative p-5 pb-20 sm:p-6 sm:pr-28 border-t md:border-t-0 border-slate-800 space-y-2 hover:bg-orange-500/[0.03] transition-colors overflow-hidden">
-              <Mascot variant="deploy" motion="celebrate" className="absolute right-2 bottom-1 w-16 sm:w-20 opacity-80" />
-              <span className="font-mono text-[11px] text-orange-400 uppercase font-bold">04 / Launch & support</span>
-              <h3 className="font-bold text-slate-200 text-base">From Code to Live Product</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Sets up deployments, fixes issues, improves speed, and keeps the product easier to maintain after it goes live.
-              </p>
-            </div>
+          <div className="hidden grid-cols-1 border-y border-slate-800 md:grid md:grid-cols-2 md:border-x">
+            {CORE_SKILLS.map((skill, index) => (
+              <div
+                key={skill.number}
+                className={`relative space-y-2 overflow-hidden border-slate-800 p-5 pb-20 transition-colors hover:bg-orange-500/[0.03] sm:p-6 sm:pr-28 ${
+                  index < 2 ? 'border-b' : ''
+                } ${index % 2 === 0 ? 'md:border-r' : ''}`}
+              >
+                <Mascot
+                  variant={skill.variant}
+                  motion={skill.motion}
+                  className="absolute bottom-1 right-2 w-16 opacity-80 sm:w-20"
+                />
+                <span className="font-mono text-[11px] font-bold uppercase text-orange-400">
+                  {skill.number} / {skill.label}
+                </span>
+                <h3 className="text-base font-bold text-slate-200">{skill.title}</h3>
+                <p className="text-sm leading-relaxed text-slate-400">{skill.copy}</p>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -1193,33 +1240,69 @@ export default function App() {
         <section id="experience" className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:items-end">
             <div className="md:col-span-7">
-              <p className="font-mono text-xs uppercase text-orange-400">Experience / where the work happened</p>
+              <p className="font-mono text-xs uppercase text-orange-400">Experience / career context</p>
               <h2 className="mt-2 text-2xl md:text-3xl font-extrabold text-slate-100 flex items-center gap-2">
               <Briefcase className="w-5 h-5 text-orange-400" />
               Professional Experience
               </h2>
             </div>
-            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">Work across commerce, finance, consulting, logistics, care, and community platforms.</p>
+            <p className="md:col-span-5 text-sm leading-relaxed text-slate-400">Where the work happened across full-time product engineering, part-time platform ownership, and independent client systems.</p>
           </div>
 
-          <div className="border-y border-slate-800 divide-y divide-slate-800">
+          <div className="grid grid-cols-1 gap-px border border-slate-800 bg-slate-800 md:grid-cols-2">
             {[
-              ['2024 — PRESENT', 'Konga', 'Software Engineer', 'Improved merchant payouts, repaired marketplace sync issues, supported money movement workflows, and helped keep key commerce tools stable.'],
-              ['2021 — PRESENT', 'Golden Attic', 'Senior Full-Stack Engineer, part-time', 'Upgraded the platform, preserved more than 100,000 records, improved wallets, and rebuilt reward and marketplace workflows.'],
-              ['2020 — PRESENT', 'Independent consulting', 'Full-Stack & DevOps Consultant', 'Built shipping, billing, AI learning, and visitor-management platforms for different clients.'],
-              ['2022 — 2024', 'Xxolcare', 'Software Developer', 'Built booking flows, payment updates, staff tools, and cleaner development/deployment processes.'],
-            ].map(([period, company, role, description], index) => (
-              <article key={company} className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-6 py-6">
-                <div className="md:col-span-2 flex items-center gap-2 font-mono text-xs text-orange-400">
+              {
+                period: '2024 — Present',
+                company: 'Konga',
+                mode: 'Full-time product engineering',
+                title: 'Production commerce systems',
+                description: 'Merchant tools, payouts, marketplace sync, verification work, testing, and operational support inside a live commerce environment.',
+                proof: ['Merchant platform', 'Money movement', 'Production support'],
+              },
+              {
+                period: '2021 — Present',
+                company: 'Golden Attic',
+                mode: 'Part-time platform ownership',
+                title: 'Long-running finance and marketplace platform',
+                description: 'Wallets, rewards, marketplace flows, database preservation, and continued platform upgrades across more than 100,000 records.',
+                proof: ['100k+ records', 'Wallet systems', 'Rewards + marketplace'],
+              },
+              {
+                period: '2020 — Present',
+                company: 'Independent consulting',
+                mode: 'Client systems',
+                title: 'Custom platforms from brief to production',
+                description: 'Shipping, billing, AI learning, visitor management, radio publishing, and care hospitality systems built or brought into production shape.',
+                proof: ['Logistics', 'AI learning', 'Operations tools'],
+              },
+              {
+                period: '2022 — 2024',
+                company: 'Xxolcare',
+                mode: 'Software developer',
+                title: 'Care hospitality operations',
+                description: 'Booking flows, payment updates, staff tools, admin operations, and cleaner deployment processes for service delivery workflows.',
+                proof: ['Bookings', 'Payments', 'Staff operations'],
+              },
+            ].map((item, index) => (
+              <article key={item.company} className="bg-[#0a0806] p-5 transition-colors hover:bg-orange-500/[0.025] sm:p-6">
+                <div className="flex items-center gap-2 font-mono text-[11px] uppercase text-orange-400">
                   <span className="text-slate-600">0{index + 1}</span>
-                  <Calendar className="w-3.5 h-3.5" />
-                  {period}
+                  <Calendar className="h-3.5 w-3.5" />
+                  {item.period}
                 </div>
-                <div className="md:col-span-4">
-                  <h3 className="text-lg font-bold text-slate-100">{company}</h3>
-                  <p className="mt-1 text-sm text-slate-500">{role}</p>
+                <div className="mt-4">
+                  <p className="font-mono text-[10px] uppercase text-slate-500">{item.mode}</p>
+                  <h3 className="mt-1 text-xl font-extrabold text-slate-100">{item.company}</h3>
+                  <p className="mt-2 text-sm font-bold text-slate-300">{item.title}</p>
                 </div>
-                <p className="md:col-span-6 text-sm leading-relaxed text-slate-400">{description}</p>
+                <p className="mt-3 text-sm leading-relaxed text-slate-400">{item.description}</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {item.proof.map((proof) => (
+                    <span key={proof} className="border border-slate-800 bg-slate-950/40 px-2.5 py-1 text-[11px] text-slate-400">
+                      {proof}
+                    </span>
+                  ))}
+                </div>
               </article>
             ))}
           </div>
@@ -1539,7 +1622,7 @@ export default function App() {
 
               {selectedProject.details.evidence && (
                 <div>
-                  <p className="font-mono text-xs uppercase text-orange-400 mb-3">Evidence and operating scope</p>
+                  <p className="font-mono text-xs uppercase text-orange-400 mb-3">Build scope</p>
                   <ul className="border-y border-slate-800 divide-y divide-slate-800">
                     {selectedProject.details.evidence.map((item: string) => (
                       <li key={item} className="py-3 text-sm leading-relaxed text-slate-400 flex gap-3">
@@ -1567,7 +1650,7 @@ export default function App() {
               </div>
 
               <div>
-                <p className="font-mono text-xs uppercase text-slate-500 mb-3">Selected implementation references</p>
+                <p className="font-mono text-xs uppercase text-slate-500 mb-3">Project links</p>
                 <div className="border-l border-amber-900/60 pl-4 space-y-2">
                       {selectedProject.details.commits.map((commit: string, i: number) => (
                         <div key={i} className="text-slate-400 text-xs leading-relaxed flex gap-2 font-mono">

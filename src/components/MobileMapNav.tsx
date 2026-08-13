@@ -26,6 +26,7 @@ const navGroups = [
     icon: User,
     links: [
       { href: '/', label: 'Overview', detail: 'Start here', icon: Home },
+      { href: '/#experience', label: 'Experience', detail: 'Career context', icon: Briefcase },
       { href: '/before-systems', label: 'Origin story', detail: 'Teaching, support, operations', icon: User },
       { href: '/leadership', label: 'Leadership', detail: 'Mentorship and service roles', icon: HeartHandshake },
       { href: '/credentials', label: 'Credentials', detail: 'Certificates and learning stack', icon: Award },

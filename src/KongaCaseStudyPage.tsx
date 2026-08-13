@@ -1,6 +1,5 @@
 import {
   ExternalLink,
-  ArrowLeft,
   ArrowRight,
   CheckCircle2,
   Database,
@@ -13,8 +12,8 @@ import {
   Store,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import MobileMapNav from './components/MobileMapNav';
 import NextRead from './components/NextRead';
+import SiteHeader from './components/SiteHeader';
 
 const chapters = [
   {
@@ -113,16 +112,7 @@ export default function KongaCaseStudyPage() {
     <div className="min-h-screen bg-[#0a0806] text-slate-300">
       <a href="#case-study-main" className="skip-link">Skip to case study</a>
 
-      <header className="sticky top-0 z-40 border-b border-amber-950/60 bg-[#0a0806]/95 backdrop-blur">
-        <div className="mx-auto flex min-h-14 max-w-7xl items-center justify-between px-4 py-3 md:px-8">
-          <a href="/" className="inline-flex items-center gap-2 text-sm font-bold text-slate-200 transition-colors hover:text-orange-400">
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Portfolio
-          </a>
-          <span className="hidden font-mono text-xs uppercase text-slate-500 md:block">Enterprise commerce / technical case study</span>
-          <MobileMapNav className="md:hidden" />
-        </div>
-      </header>
+      <SiteHeader />
 
       <main id="case-study-main">
         <section className="relative overflow-hidden border-b border-amber-950/60">
