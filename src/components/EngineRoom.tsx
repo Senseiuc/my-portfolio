@@ -130,7 +130,15 @@ const flows: SystemFlow[] = [
 export default function EngineRoom() {
   const [activeKey, setActiveKey] = useState<FlowKey>('payout');
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
+  const panelRef = useRef<HTMLDivElement | null>(null);
   const activeFlow = flows.find((flow) => flow.key === activeKey) ?? flows[0];
+
+  const selectFlow = (key: FlowKey) => {
+    setActiveKey(key);
+    window.requestAnimationFrame(() => {
+      panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  };
 
   const handleTabKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     let nextIndex = index;
@@ -141,7 +149,7 @@ export default function EngineRoom() {
     else return;
 
     event.preventDefault();
-    setActiveKey(flows[nextIndex].key);
+    selectFlow(flows[nextIndex].key);
     tabRefs.current[nextIndex]?.focus();
   };
 
@@ -160,7 +168,7 @@ export default function EngineRoom() {
         </p>
       </div>
 
-      <div role="tablist" aria-label="System architecture walkthroughs" className="grid grid-cols-2 md:grid-cols-6 border border-slate-800 mb-8">
+      <div role="tablist" aria-label="System architecture walkthroughs" className="sticky top-20 z-20 mb-8 grid grid-cols-2 border border-slate-800 bg-[#0a0806]/95 backdrop-blur md:grid-cols-6 lg:top-24">
         {flows.map((flow, index) => (
           <button
             key={flow.key}
@@ -171,7 +179,7 @@ export default function EngineRoom() {
             aria-selected={activeKey === flow.key}
             aria-controls="engine-room-panel"
             tabIndex={activeKey === flow.key ? 0 : -1}
-            onClick={() => setActiveKey(flow.key)}
+            onClick={() => selectFlow(flow.key)}
             onKeyDown={(event) => handleTabKeyDown(event, index)}
             className={`min-h-16 px-3 py-2 border-r border-b md:border-b-0 border-slate-800 text-left cursor-pointer transition-colors ${activeKey === flow.key ? 'bg-orange-500 text-[#0a0806]' : 'bg-[#0d0a07] text-slate-400 hover:text-slate-100 hover:bg-slate-900'}`}
           >
@@ -183,10 +191,11 @@ export default function EngineRoom() {
 
       <div
         id="engine-room-panel"
+        ref={panelRef}
         role="tabpanel"
         aria-labelledby={`engine-room-tab-${activeKey}`}
         tabIndex={0}
-        className="grid grid-cols-1 gap-8 lg:grid-cols-12"
+        className="grid scroll-mt-56 grid-cols-1 gap-8 md:scroll-mt-44 lg:grid-cols-12 lg:scroll-mt-32"
       >
         <div className="lg:col-span-4">
           <p className="font-mono text-[10px] uppercase text-orange-400">Selected workflow</p>
