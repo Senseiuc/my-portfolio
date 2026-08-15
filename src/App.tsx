@@ -539,6 +539,7 @@ export default function App() {
   const projectsSectionRef = useRef<HTMLElement>(null);
   const flagshipArticleRef = useRef<HTMLElement>(null);
   const coreSkillsCarouselRef = useRef<HTMLDivElement>(null);
+  const heroVideoRef = useRef<HTMLVideoElement>(null);
   const flagshipSwitcherRef = useSwipeHint<HTMLDivElement>();
   const flagshipCueShownRef = useRef(false);
   const flagshipUserSelectedRef = useRef(false);
@@ -572,6 +573,28 @@ export default function App() {
     return () => {
       if (timeoutId) window.clearTimeout(timeoutId);
     };
+  }, []);
+
+  useEffect(() => {
+    const video = heroVideoRef.current;
+    if (!video) return;
+
+    const playHeroVideo = () => {
+      video.muted = true;
+      video.play().catch(() => {
+        window.setTimeout(() => {
+          video.play().catch(() => {});
+        }, 500);
+      });
+    };
+
+    if (video.readyState >= HTMLMediaElement.HAVE_ENOUGH_DATA) {
+      playHeroVideo();
+      return;
+    }
+
+    video.addEventListener('canplay', playHeroVideo, { once: true });
+    return () => video.removeEventListener('canplay', playHeroVideo);
   }, []);
 
   const handleOpenProjectDetails = (project: any, trigger: HTMLElement) => {
@@ -876,12 +899,13 @@ export default function App() {
             >
               <div className="aspect-video bg-black">
                 <video
+                  ref={heroVideoRef}
                   src="/Bearded_logo_glowing_orange_energy_202607140039.mp4"
                   autoPlay
                   loop
                   muted
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   poster="/background-senseiuc-design.webp"
                   aria-label="Animated Senseiuc chessboard identity"
                   className="block w-full h-full object-contain"
