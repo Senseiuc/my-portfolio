@@ -97,7 +97,7 @@ export const PROJECTS = [
     id: 'tripease',
     number: '03',
     category: 'Transit Booking',
-    title: 'TripEase Logistics Router',
+    title: 'Transit Booking Microservices',
     shortDesc: 'A distributed transit scheduling, seat booking, and fleet routing ecosystem designed from scratch as Laravel microservices managing escrow ledger wallets and payment gateways.',
     tags: ['PHP', 'Laravel', 'Docker', 'Microservices'],
     borderColor: 'hover:border-indigo-500/30',
@@ -107,6 +107,7 @@ export const PROJECTS = [
     details: {
       url: null,
       system: 'Distributed Microservices Logistics System',
+      projectName: 'TripEase',
       role: 'System architect and backend engineer across four independently versioned Laravel services.',
       constraints: 'Independent service ownership, duplicate payment callbacks, concurrent wallet mutations, and multi-leg journey discovery.',
       architecture: ['Auth', 'Companies + route graph', 'Payments', 'Transport + escrow ledger'],
@@ -202,7 +203,7 @@ export const PROJECTS = [
     id: 'transglobal',
     number: '06',
     category: 'Integration APIs',
-    title: 'Transglobal X Sabre',
+    title: 'Logistics API & Cargo Booking Platform',
     shortDesc: 'Contract via DTL: built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of those APIs for tariffs, bookings, payments, and shipment sync.',
     tags: ['PHP', 'Laravel', 'Docker'],
     borderColor: 'hover:border-yellow-500/30',
@@ -215,6 +216,7 @@ export const PROJECTS = [
     ],
     details: {
       url: 'https://transglobal.africa/',
+      projectName: 'Transglobal X Sabre',
       links: [
         { label: 'Transglobal platform', url: 'https://transglobal.africa/' },
         { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
@@ -252,7 +254,7 @@ export const PROJECTS = [
     id: 'ansar-ud-deen',
     number: '07',
     category: 'Digital Modernization',
-    title: 'Ansar-Ud-Deen Society Digital Platform',
+    title: 'Society Web, API & Mobile Platform',
     shortDesc: 'Contract via DTL: a society-wide digital platform spanning a NestJS API, Next.js website and CMS, Flutter mobile app, donation workflows, queued communications, and production operations.',
     tags: ['NestJS', 'Next.js', 'Flutter', 'PostgreSQL'],
     borderColor: 'hover:border-green-500/30',
@@ -261,7 +263,8 @@ export const PROJECTS = [
     link: null,
     details: {
       url: null,
-      system: 'Ansar-Ud-Deen Society Digital Platform',
+      system: 'Society Web, API, CMS, and Mobile Platform',
+      projectName: 'Ansar-Ud-Deen Society Digital Platform',
       role: 'Contract platform engineer via DTL modernizing the society website, administration workflows, API platform, and member-facing mobile experience.',
       constraints: 'A public-facing institution needed one governed content source, dependable donation and communication flows, and deployable web and mobile clients without disrupting existing operations.',
       architecture: ['Next.js web + CMS', 'NestJS API', 'PostgreSQL + Redis queues', 'Flutter mobile client'],
@@ -292,7 +295,7 @@ export const PROJECTS = [
     id: 'golden-attic',
     number: '08',
     category: 'Financial Commerce',
-    title: 'Golden Attic Community Platform',
+    title: 'Financial Ledger & Marketplace Platform',
     shortDesc: 'Modernized a community economic platform spanning dual-currency wallets, marketplace operations, referral networks, rewards processing, data migration, testing, and containerized delivery.',
     tags: ['Laravel 11', 'PHP', 'Redis', 'Docker'],
     borderColor: 'hover:border-amber-500/30',
@@ -301,7 +304,8 @@ export const PROJECTS = [
     link: null,
     details: {
       url: null,
-      system: 'Golden Attic Community Economic Platform',
+      system: 'Community Economic Platform',
+      projectName: 'Golden Attic',
       role: 'Senior full-stack engineer owning modernization and delivery across backend services, financial workflows, seller interfaces, data, testing, and deployment.',
       constraints: 'The live platform needed a major framework upgrade while preserving more than 100,000 historical records and maintaining correctness across wallets, commissions, marketplace orders, and referral rewards.',
       architecture: ['Laravel 11 application', 'Cash + shopping + investment wallets', 'Redis-backed queues', 'Marketplace + referral network'],
@@ -375,7 +379,7 @@ export const PROJECTS = [
     id: 'shipwize',
     number: '10',
     category: 'Delivery Logistics',
-    title: 'Shipwize',
+    title: 'Shipment Booking & Tracking Platform',
     shortDesc: 'A shipment booking and tracking platform combining delivery pricing, Flutterwave payments, confirmation codes, operational dashboards, commissions, and Termii SMS updates.',
     tags: ['Laravel', 'Livewire', 'Flutterwave', 'Termii'],
     borderColor: 'hover:border-blue-500/30',
@@ -384,7 +388,8 @@ export const PROJECTS = [
     link: 'https://shipwize.ng/',
     details: {
       url: 'https://shipwize.ng/',
-      system: 'Shipwize Booking, Payment, and Tracking Platform',
+      system: 'Booking, Payment, and Tracking Platform',
+      projectName: 'Shipwize',
       role: 'Full-stack engineer implementing the shipment lifecycle from booking and payment through tracking and delivery confirmation.',
       constraints: 'Customers and operators needed one reliable workflow connecting shipment pricing, online payment verification, status updates, collection security, and outbound communication.',
       architecture: ['Shipment booking', 'Flutterwave verification', 'Tracking timeline', 'Termii delivery alerts'],
@@ -1671,6 +1676,13 @@ export default function App() {
                       {link.label} ↗
                     </a>
                   ))}
+                </div>
+              )}
+
+              {selectedProject.details.projectName && (
+                <div className="pt-4 border-t border-amber-950/50">
+                  <p className="font-mono text-[10px] uppercase text-slate-600">Project name</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-500">{selectedProject.details.projectName}</p>
                 </div>
               )}
             </div>

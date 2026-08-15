@@ -1,4 +1,4 @@
-# TripEase Logistics Router & Fleet Microservices - Project Profile
+# Transit Booking Microservices - Project Profile
 
 **TripEase** is a high-performance transit routing, seat booking, and multi-service logistics ecosystem. Architected from the ground up as a distributed microservices network, it implements separate service modules managing user identities, transport operating companies, escrow ledger wallets, and payment gateways.
 
@@ -183,5 +183,4 @@ graph TD
 3. **Idempotence Integrity:** The payments, credits, and debits track distinct references (`REF`, `REF-DEBIT`, `REF-REFUND`). If any request crashes halfway, the client retries safely without risking duplicate funding or duplicate debits.
 4. **Autonomous Decoupling:** The `Transport Service` maintains a caching schema of routes. If the `Companies Service` experiences a temporary outage, passengers can still browse journeys. The booking sync acts as the final validation checkpoint during checkout.
 5. **Self-Healing Reconciliations:** The fallback compensation loop guarantees that network outages between the Transport and Companies services do not lock passenger capital. If the booking cannot be confirmed, the ledger automatically balances back to zero.
-
 

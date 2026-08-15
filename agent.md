@@ -62,16 +62,16 @@ Important source files:
 Current public project set:
 
 - Konga Merchant Platform Engineering
-- Transglobal X Sabre and Cargo booking portal (contract via DTL)
-- TripEase Logistics Router
+- Logistics API & Cargo Booking Platform (Transglobal X Sabre, contract via DTL)
+- Transit Booking Microservices (TripEase)
 - Xxolcare Booking Portal
 - Lextorah Educational Ecosystem
 - Wings Tenancy System
 - Radio News CMS
-- Ansar-Ud-Deen Digital Platform (contract via DTL)
-- Golden Attic Community Platform
+- Society Web, API & Mobile Platform (Ansar-Ud-Deen, contract via DTL)
+- Financial Ledger & Marketplace Platform (Golden Attic)
 - Visitor Management System (contract via DTL)
-- Shipwize
+- Shipment Booking & Tracking Platform (Shipwize)
 
 The homepage presents three flagship case studies and a compact set of onward
 paths. The complete project archive lives at `/work`, the dedicated Konga case

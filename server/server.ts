@@ -634,15 +634,15 @@ Information about Gideon Nwadialu:
   - Asoland College (2015 - 2016): Taught Mathematics and Quantitative Reasoning, organized classes for school events, composed anniversary songs, and trained students for sports activities.
   - Merus College (2013 - 2014): Taught junior secondary Mathematics, Introductory Technology, and Computer Science, making lessons more approachable and improving class performance by over 30%.
 - Primary Projects:
-  - TransGlobal x Sabre: Contract via DTL; shipping logistics portal with Sabre matrix seeding and real-time transit pricing.
-  - TripEase: Multi-tenant containerized microservices (Auth, Payments, Companies, Transport) transit router with escrow wallets.
+  - Logistics API & Cargo Booking Platform: Contract via DTL; TransGlobal x Sabre shipping logistics portal with Sabre matrix seeding and real-time transit pricing.
+  - Transit Booking Microservices: TripEase multi-tenant containerized microservices (Auth, Payments, Companies, Transport) transit router with escrow wallets.
   - Wings: Tenancy contract and rent scheduler automation with FIFO billing application.
   - RadioNews: Radio CMS dashboard with Daily.co WebRTC integrations and Spatie access controls.
   - Lextorah: FastAPI tutoring portal with smart sync pipelines and footer chatbot widgets.
-  - Ansar-Ud-Deen Digital Platform: Contract via DTL; NestJS, Next.js, and Flutter modernization platform with PostgreSQL, Redis queues, donations, CMS workflows, and containerized operations.
-  - Golden Attic Community Platform: Laravel 11 community economic platform with XOF/USD wallets, marketplace seller workflows, referral networks, Redis-backed rewards, testing, and Docker operations.
+  - Society Web, API & Mobile Platform: Contract via DTL; Ansar-Ud-Deen modernization platform with NestJS, Next.js, Flutter, PostgreSQL, Redis queues, donations, CMS workflows, and containerized operations.
+  - Financial Ledger & Marketplace Platform: Golden Attic Laravel 11 community economic platform with XOF/USD wallets, marketplace seller workflows, referral networks, Redis-backed rewards, testing, and Docker operations.
   - Visitor Management System: Contract via DTL; multi-location visitor and staff check-in with approvals, role controls, privacy consent, and SMS/email notifications.
-  - Shipwize: Shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation, commissions, and Termii notifications.
+  - Shipment Booking & Tracking Platform: Shipwize shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation, commissions, and Termii notifications.
 - Core Technologies:
   - Languages: PHP, TypeScript, JavaScript, Python, SQL
   - Frontend & Mobile: React, Next.js, TypeScript, Flutter

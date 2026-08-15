@@ -1,4 +1,4 @@
-# Transglobal X Sabre - Project Profile
+# Logistics API & Cargo Booking Platform - Project Profile
 
 **Transglobal X Sabre** is an enterprise logistics integration hub and billing gateway. It coordinates bulk international tariffs seeding, custom weight-tiered selling rates, Paystack-backed Dedicated Virtual Accounts (DVA) for logistical partner organizations, and automated webhook synchronization dispatching shipping statuses to downstream cargo booking engines.
 
