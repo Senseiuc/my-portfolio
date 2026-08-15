@@ -85,7 +85,7 @@ if (!row || row.count === 0) {
   const insert = db.prepare('INSERT OR REPLACE INTO sys_metrics (key, value) VALUES (?, ?)');
   insert.run('konga_sync_count', '986');
   insert.run('lextorah_sync_count', '412');
-  insert.run('sabre_seed_count', '1420');
+  insert.run('tariff_seed_count', '1420');
   insert.run('last_deployment_time', new Date().toISOString());
 }
 

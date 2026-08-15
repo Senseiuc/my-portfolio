@@ -62,16 +62,16 @@ Important source files:
 Current public project set:
 
 - Konga Merchant Platform Engineering
-- Logistics API & Cargo Booking Platform (Transglobal X Sabre, contract via DTL)
-- Transit Booking Microservices (TripEase)
+- Logistics API & Cargo Booking Platform (contract)
+- Transit Booking Microservices
 - Xxolcare Booking Portal
 - Lextorah Educational Ecosystem
 - Wings Tenancy System
 - Radio News CMS
-- Society Web, API & Mobile Platform (Ansar-Ud-Deen, contract via DTL)
-- Financial Ledger & Marketplace Platform (Golden Attic)
-- Visitor Management System (contract via DTL)
-- Shipment Booking & Tracking Platform (Shipwize)
+- Society Web, API & Mobile Platform (contract)
+- Financial Ledger & Marketplace Platform
+- Visitor Management System (contract)
+- Shipment Booking & Tracking Platform
 
 The homepage presents three flagship case studies and a compact set of onward
 paths. The complete project archive lives at `/work`, the dedicated Konga case
@@ -104,10 +104,10 @@ is `https://fcmbvms.visitors.com.ng`.
 Approved production URLs:
 
 - Konga SellerHQ: `https://shq.konga.com/`
-- Transglobal platform: `https://transglobal.africa/`
-- Cargo booking portal: `https://cargo.sabrecwa.com/`
+- Logistics API platform: production URL intentionally omitted from public copy
+- Cargo booking portal: production URL intentionally omitted from public copy
 - Visitor Management System: `https://fcmbvms.visitors.com.ng`
-- Shipwize: `https://shipwize.ng/`
+- Shipment booking platform: `https://shipwize.ng/`
 
 ## Evidence And Copy Rules
 
@@ -128,11 +128,11 @@ Useful local evidence locations outside this repository may include:
 
 - `/Users/gideonnwadialu/lextorah`
 - `/Users/gideonnwadialu/Projects/cargo`
-- `/Users/gideonnwadialu/Projects/transglobal_backyard`
-- `/Users/gideonnwadialu/Tripease`
+- Core logistics API repository path is intentionally omitted from public copy
+- Transit microservices repository path is intentionally omitted from public copy
 - `/Users/gideonnwadialu/Projects/visitorManagementSystems`
 - `/Users/gideonnwadialu/Projects/funmi-express`
-- `/Users/gideonnwadialu/ansaruddeensociety-1`
+- Society platform repository path is intentionally omitted from public copy
 
 Local repositories are evidence sources, not permission to publish confidential
 content. If a repository is absent, preserve the portfolio entry and mark data
@@ -166,10 +166,10 @@ them. Preserve the full public phone number `08105347918`.
 Work Experience must always be listed in this order:
 
 1. Konga (2024 - Present)
-2. Golden Attic (2021 - Present)
+2. Financial Ledger & Marketplace Platform (2021 - Present)
 3. Freelance Software Engineer (2020 - Present), with nested project bullets for
-   Ansar-Ud-Deen Digital Platform, Lextorah, Transglobal & Cargo, TripEase,
-   Visitor Management System, and Shipwize.
+   Society Web, API & Mobile Platform, Lextorah, Logistics API & Cargo Booking Platform,
+   Transit Booking Microservices, Visitor Management System, and Shipment Booking & Tracking Platform.
 4. Xxolcare (2022 - 2024)
 
 Before adding a metric to the CV, identify its source. If it cannot be supported,

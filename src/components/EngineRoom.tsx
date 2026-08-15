@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { useSwipeHint } from '../hooks/useSwipeHint';
 
-type FlowKey = 'payout' | 'identity' | 'tripease' | 'golden-attic' | 'transglobal' | 'ansar';
+type FlowKey = 'payout' | 'identity' | 'transit-ledger' | 'marketplace-rewards' | 'cargo-platform' | 'communications';
 
 interface SystemFlow {
   key: FlowKey;
@@ -59,8 +59,8 @@ const flows: SystemFlow[] = [
     stack: ['AngularJS', 'TypeScript', 'Node.js', 'Restify', 'Dojah API', 'MySQL'],
   },
   {
-    key: 'tripease',
-    label: 'TripEase escrow ledger',
+    key: 'transit-ledger',
+    label: 'Transit escrow ledger',
     shortLabel: 'Escrow',
     context: 'A booking workflow coordinated across independently versioned transit services.',
     trigger: 'A verified payment or booking adjustment requests a wallet mutation.',
@@ -76,8 +76,8 @@ const flows: SystemFlow[] = [
     stack: ['Laravel', 'PHP', 'MySQL', 'Docker', 'Paystack', 'Flutterwave'],
   },
   {
-    key: 'golden-attic',
-    label: 'Golden Attic rewards',
+    key: 'marketplace-rewards',
+    label: 'Marketplace rewards',
     shortLabel: 'Rewards',
     context: 'Dual-currency wallet and commission processing on a modernized community commerce platform.',
     trigger: 'A qualifying marketplace or referral event creates a reward or commission workload.',
@@ -93,13 +93,13 @@ const flows: SystemFlow[] = [
     stack: ['Laravel 11', 'PHP', 'MySQL', 'Redis', 'Docker', 'CI'],
   },
   {
-    key: 'transglobal',
-    label: 'Transglobal shipment integration',
+    key: 'cargo-platform',
+    label: 'Cargo shipment integration',
     shortLabel: 'Logistics',
     context: 'Shipment booking coordinated between the Cargo portal, Backyard API, tariffs, payments, and tracking.',
     trigger: 'A customer or partner submits an international shipment booking.',
     steps: [
-      { title: 'Resolve the tariff', detail: 'Match origin, destination, and weight against the imported Sabre tariff structure.' },
+      { title: 'Resolve the tariff', detail: 'Match origin, destination, and weight against the imported partner tariff structure.' },
       { title: 'Create the booking', detail: 'Persist shipment and customer data through the connected booking platform.' },
       { title: 'Initiate payment', detail: 'Start the configured SeerBit or Paystack payment workflow.' },
       { title: 'Verify the callback', detail: 'Validate the incoming payment or shipment webhook signature.' },
@@ -107,11 +107,11 @@ const flows: SystemFlow[] = [
     ],
     safeguard: 'Signed webhook verification, payment confirmation, retry-aware integrations, and scheduled follow-up jobs.',
     outcome: 'Two connected applications coordinate tariffs, payments, waybills, and shipment updates through explicit integration boundaries.',
-    stack: ['Laravel', 'PHP', 'MySQL', 'Sabre', 'SeerBit', 'Paystack'],
+    stack: ['Laravel', 'PHP', 'MySQL', 'Tariff imports', 'SeerBit', 'Paystack'],
   },
   {
-    key: 'ansar',
-    label: 'Ansar-Ud-Deen communications',
+    key: 'communications',
+    label: 'Society communications',
     shortLabel: 'Comms',
     context: 'Governed content and communications shared by web, administration, and mobile clients.',
     trigger: 'An administrator publishes content or starts a member communication workflow.',

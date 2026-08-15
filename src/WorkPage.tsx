@@ -6,12 +6,12 @@ import SiteHeader from './components/SiteHeader';
 import { PROJECTS } from './App';
 
 const PROJECT_ORDER = [
-  'ansar-ud-deen',
-  'golden-attic',
-  'tripease',
+  'society-platform',
+  'financial-marketplace',
+  'transit-microservices',
   'visitor-management',
-  'shipwize',
-  'transglobal',
+  'shipment-platform',
+  'cargo-platform',
   'xxolcare',
   'lextorah',
   'wings',

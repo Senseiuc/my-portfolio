@@ -196,7 +196,7 @@ test('oversized JSON receives a controlled 413 response', async () => {
 
 test('chat fallback answers project comparisons and rejects empty messages', async () => {
   const comparison = await postJson('/api/chat', {
-    message: 'Compare TripEase and Transglobal',
+    message: 'Compare transit microservices and the cargo platform',
     userProfile: { firstName: 'Visitor' },
     history: [{ role: 'assistant', text: 'Which systems interest you?' }],
   });

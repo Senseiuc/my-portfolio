@@ -11,7 +11,7 @@ interface Message {
 const STARTER_QUESTIONS = [
   'Which project best shows backend architecture?',
   'How did Gideon improve Konga payouts?',
-  'Compare TripEase and Transglobal',
+  'Compare transit microservices and the cargo platform',
   'What can Gideon build for my team?'
 ];
 

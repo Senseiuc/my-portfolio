@@ -94,7 +94,7 @@ export const PROJECTS = [
     }
   },
   {
-    id: 'tripease',
+    id: 'transit-microservices',
     number: '03',
     category: 'Transit Booking',
     title: 'Transit Booking Microservices',
@@ -200,48 +200,48 @@ export const PROJECTS = [
     }
   },
   {
-    id: 'transglobal',
+    id: 'cargo-platform',
     number: '06',
     category: 'Integration APIs',
     title: 'Logistics API & Cargo Booking Platform',
-    shortDesc: 'Contract via DTL: built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of those APIs for tariffs, bookings, payments, and shipment sync.',
+    shortDesc: 'Contract: built a logistics API platform from scratch, then built a partner cargo booking portal on top of those APIs for tariffs, bookings, payments, and shipment sync.',
     tags: ['PHP', 'Laravel', 'Docker'],
     borderColor: 'hover:border-yellow-500/30',
     hoverText: 'group-hover:text-yellow-400',
     accentColor: 'text-yellow-400',
     link: 'https://cargo.sabrecwa.com/',
     links: [
-      { label: 'Transglobal platform', url: 'https://transglobal.africa/' },
+      { label: 'API platform', url: 'https://transglobal.africa/' },
       { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
     ],
     details: {
       url: 'https://transglobal.africa/',
       projectName: 'Transglobal X Sabre',
       links: [
-        { label: 'Transglobal platform', url: 'https://transglobal.africa/' },
+        { label: 'API platform', url: 'https://transglobal.africa/' },
         { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
       ],
       system: 'Two Custom Logistics Platforms, Connected by API',
-      role: 'Contract full-stack architect via DTL and implementation owner for both the Transglobal API platform and the Sabre Cargo portal built on top of it.',
+      role: 'Contract full-stack architect and implementation owner for both the core logistics API platform and the partner cargo portal built on top of it.',
       constraints: 'Partner tariff matrices changed independently, payment providers required different handshakes, and shipment state had to remain consistent across systems.',
-      architecture: ['Transglobal APIs', 'Sabre Cargo portal', 'Sabre tariff import', 'SeerBit + shipment sync'],
+      architecture: ['Core logistics APIs', 'Partner cargo portal', 'Tariff import', 'SeerBit + shipment sync'],
       evidence: [
         '2 platforms built from scratch and connected',
-        '45 tests and 57 migrations across Transglobal Backyard and Cargo',
+        '45 tests and 57 migrations across the API hub and cargo portal',
         'Custom tariff overrides, commission calculations, shipment tracking, and payment provider interfaces',
         'Self-healing tariff imports and migration to a single SeerBit provider'
       ],
       contributions: [
-        'Full-Stack Architecture: Engineered both the Transglobal API hub and Cargo shipping portal from scratch, designing database schemas, multi-tenant referral models, and admin/customer dashboards.',
+        'Full-Stack Architecture: Engineered both the logistics API hub and cargo shipping portal from scratch, designing database schemas, multi-tenant referral models, and admin/customer dashboards.',
         'Paystack DVA Gateway: Integrated Paystack dedicated virtual bank accounts linked to customer codes, with explicit name normalization and retry handling for validation failures.',
-        'Sabre Tariff Auto-Seeders: Programmed database tariff seeders parsing global international shipping rate matrix files, mapping weight-based pricing brackets (sellingRate10kg vs. sellingRate20kg) and auto-creating missing countries/locations.',
+        'Tariff Auto-Seeders: Programmed database tariff seeders parsing global international shipping rate matrix files, mapping weight-based pricing brackets (sellingRate10kg vs. sellingRate20kg) and auto-creating missing countries/locations.',
         'SeerBit Payment Gateway: Developed a payment provider for the Cargo portal utilizing a secure token-exchange handshake (generating dynamic Bearer tokens via credential encryption).',
         'Webhook Syncing: Engineered webhook listener routes validating HMAC-SHA512 signatures and dispatching automated shipment status syncs to downstream logistics databases.',
         'Console Feedback Scheduler: Coded cron-driven console commands sending automated NPS review requests 24 hours after delivery, with partner-portal exclusion rules.'
       ],
       commits: [
         '9175766 feat: automatically create missing countries/tariff buckets (backyard)',
-        'c7d03a7 feat: Sabre Tariff matrix update and commission calculation bypass (backyard)',
+        'c7d03a7 feat: tariff matrix update and commission calculation bypass (backyard)',
         '28f45b3 Fix Paystack test-bank assignment & update runtime to sail-8.4 (backyard)',
         '13be8f8 Fix Paystack Customer Update last_name required validation error (backyard)',
         'b174a3b feat: complete feedback system with delayed emails & NPS (backyard)',
@@ -251,11 +251,11 @@ export const PROJECTS = [
     }
   },
   {
-    id: 'ansar-ud-deen',
+    id: 'society-platform',
     number: '07',
     category: 'Digital Modernization',
     title: 'Society Web, API & Mobile Platform',
-    shortDesc: 'Contract via DTL: a society-wide digital platform spanning a NestJS API, Next.js website and CMS, Flutter mobile app, donation workflows, queued communications, and production operations.',
+    shortDesc: 'Contract: a society-wide digital platform spanning a NestJS API, Next.js website and CMS, Flutter mobile app, donation workflows, queued communications, and production operations.',
     tags: ['NestJS', 'Next.js', 'Flutter', 'PostgreSQL'],
     borderColor: 'hover:border-green-500/30',
     hoverText: 'group-hover:text-green-400',
@@ -265,7 +265,7 @@ export const PROJECTS = [
       url: null,
       system: 'Society Web, API, CMS, and Mobile Platform',
       projectName: 'Ansar-Ud-Deen Society Digital Platform',
-      role: 'Contract platform engineer via DTL modernizing the society website, administration workflows, API platform, and member-facing mobile experience.',
+      role: 'Contract platform engineer modernizing the society website, administration workflows, API platform, and member-facing mobile experience.',
       constraints: 'A public-facing institution needed one governed content source, dependable donation and communication flows, and deployable web and mobile clients without disrupting existing operations.',
       architecture: ['Next.js web + CMS', 'NestJS API', 'PostgreSQL + Redis queues', 'Flutter mobile client'],
       evidence: [
@@ -292,7 +292,7 @@ export const PROJECTS = [
     }
   },
   {
-    id: 'golden-attic',
+    id: 'financial-marketplace',
     number: '08',
     category: 'Financial Commerce',
     title: 'Financial Ledger & Marketplace Platform',
@@ -340,7 +340,7 @@ export const PROJECTS = [
     number: '09',
     category: 'Workplace Operations',
     title: 'Visitor Management System',
-    shortDesc: 'Contract via DTL: a multi-location visitor and staff check-in platform with approval workflows, role-based administration, duplicate-entry protection, privacy controls, and SMS/email notifications.',
+    shortDesc: 'Contract: a multi-location visitor and staff check-in platform with approval workflows, role-based administration, duplicate-entry protection, privacy controls, and SMS/email notifications.',
     tags: ['Laravel', 'Filament', 'Termii', 'Cloudinary'],
     borderColor: 'hover:border-cyan-500/30',
     hoverText: 'group-hover:text-cyan-400',
@@ -349,7 +349,7 @@ export const PROJECTS = [
     details: {
       url: 'https://fcmbvms.visitors.com.ng',
       system: 'Multi-Location Visitor Management System',
-      role: 'Contract full-stack engineer via DTL responsible for self-service check-in, staff workflows, administration controls, and notification delivery.',
+      role: 'Contract full-stack engineer responsible for self-service check-in, staff workflows, administration controls, and notification delivery.',
       constraints: 'Reception teams needed fast identity lookup and location-aware check-in while preventing duplicate visits and preserving consent, privacy, and role boundaries.',
       architecture: ['Location QR entry', 'Visitor + staff check-in', 'Approval and access rules', 'Email + SMS notifications'],
       evidence: [
@@ -376,7 +376,7 @@ export const PROJECTS = [
     }
   },
   {
-    id: 'shipwize',
+    id: 'shipment-platform',
     number: '10',
     category: 'Delivery Logistics',
     title: 'Shipment Booking & Tracking Platform',
@@ -474,21 +474,21 @@ const FLAGSHIP_CASE_STUDIES = [
     evidence: ['Recurring issues fixed', 'Mobile UI overhaul', '2x faster payouts'],
   },
   {
-    project: PROJECTS.find((project) => project.id === 'transglobal')!,
+    project: PROJECTS.find((project) => project.id === 'cargo-platform')!,
     mascot: 'integrate' as const,
     index: '02',
-    context: 'Transglobal x Sabre / logistics',
-    problem: 'Transglobal needed a logistics API platform, while Sabre needed a cargo portal that could depend on those APIs for quotes, accounts, payments, and shipment updates.',
-    decision: 'On a contract via DTL, built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of it for tariffs, bookings, payments, and shipment updates.',
+    context: 'Connected logistics systems',
+    problem: 'A logistics provider needed an API platform, while a partner needed a cargo portal that could depend on those APIs for quotes, accounts, payments, and shipment updates.',
+    decision: 'On a contract, built the logistics API platform from scratch, then built the partner cargo booking portal on top of it for tariffs, bookings, payments, and shipment updates.',
     outcome: 'Two systems, one flow',
-    outcomeNote: 'Sabre runs on Transglobal APIs from quote to payment confirmation',
-    evidence: ['Transglobal API built', 'Sabre portal built', 'Systems connected'],
+    outcomeNote: 'the partner portal runs on the core logistics APIs from quote to payment confirmation',
+    evidence: ['Core API built', 'Partner portal built', 'Systems connected'],
   },
   {
-    project: PROJECTS.find((project) => project.id === 'tripease')!,
+    project: PROJECTS.find((project) => project.id === 'transit-microservices')!,
     mascot: 'architect' as const,
     index: '03',
-    context: 'TripEase / distributed transit',
+    context: 'Distributed transit',
     problem: 'A new logistics product needed bookings, transport companies, payments, wallets, and user accounts to work together without duplicate charges or balance mistakes.',
     decision: 'Designed the system from scratch as four Laravel microservices, then added transaction checks around payments, bookings, and wallet updates.',
     outcome: '4 connected services',
@@ -1292,7 +1292,7 @@ export default function App() {
               },
               {
                 period: '2021 — Present',
-                company: 'Golden Attic',
+                company: 'Financial platform',
                 mode: 'Part-time platform ownership',
                 title: 'Long-running finance and marketplace platform',
                 description: 'Wallets, rewards, marketplace flows, database preservation, and continued platform upgrades across more than 100,000 records.',

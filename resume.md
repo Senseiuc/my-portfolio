@@ -30,7 +30,7 @@ Senior Full-Stack Engineer specializing in backend systems, APIs, payment infras
 * Resolved a critical Magento sync pipeline failure by enforcing numeric customer ID validations, **making stuck merchant synchronization immediately diagnosable and recoverable**.
 * Engineered bank details modification trackers and admin payout controls with mandatory change logging, **adding complete traceability** for sensitive account settings.
 
-### **Golden Attic** | *Senior Full-Stack Engineer (Part-time)* (2021 - PRESENT)
+### **Financial Ledger & Marketplace Platform** | *Senior Full-Stack Engineer (Part-time)* (2021 - PRESENT)
 * Led a community platform backend migration from Laravel 5.8 to 11, **slashing technical debt and ensuring zero data loss** for over 100,000 historical records.
 * Designed a multi-wallet, dual-currency (XOF/USD) ledger core for P2P transfers and withdrawals, **improving settlement transaction speeds by 40%**.
 * Engineered a tamper-resistant transaction ledger with hashed audit records, **providing cryptographic integrity verification** for all financial operations across the platform.
@@ -38,7 +38,7 @@ Senior Full-Stack Engineer specializing in backend systems, APIs, payment infras
 
 ### **Freelance Software Engineer** | *Full-Stack Consultant & DevOps Specialist* (2020 - PRESENT)
 
-#### **Society Web, API & Mobile Platform** *(Ansar-Ud-Deen Digital Platform | Senior Full-Stack Engineer, Contract via DTL | 2026 - PRESENT)*
+#### **Society Web, API & Mobile Platform** *(Senior Full-Stack Engineer, Contract | 2026 - PRESENT)*
 * Modernized a society-wide platform across a NestJS API, Next.js website and CMS, and Flutter mobile app, backed by PostgreSQL, Prisma, Redis, and BullMQ.
 * Implemented governed content delivery, donation workflows, Cloudinary media, queued communications, Sentry monitoring, and Docker-based staging and production operations.
 
@@ -48,19 +48,19 @@ Senior Full-Stack Engineer specializing in backend systems, APIs, payment infras
 * Resolved cross-cutting API routing and CORS misconfigurations across FastAPI endpoints, **eliminating integration errors** and reducing end-to-end latency.
 * Standardized containerized staging and production runs using Docker and Nginx reverse proxies, **reducing manual environment setup overhead by 60%**.
 
-#### **Logistics API & Cargo Booking Platform** *(Transglobal & Cargo/Sabre | Full-Stack Consultant, Contract via DTL)*
+#### **Logistics API & Cargo Booking Platform** *(Full-Stack Consultant, Contract)*
 * Architected a global supply chain bookings and cargo platform with Seerbit payment orchestration, **processing international shipments** through automated tariff calculation and secure transaction flows.
-* Designed and implemented automated Sabre Tariff calculation seeders, **eliminating tariff calculation errors** for new countries and buckets.
-* Built custom Sabre Tariff matrix updates and partner commission override mechanics, **improving settlement accuracy** and reducing manual rate intervention.
+* Designed and implemented automated tariff calculation seeders, **eliminating tariff calculation errors** for new countries and buckets.
+* Built custom tariff matrix updates and partner commission override mechanics, **improving settlement accuracy** and reducing manual rate intervention.
 * Migrated legacy payment integrations to Seerbit API gateways, **lowering payment failure rates by 15%** using test-bank simulation validations.
 
-#### **Transit Booking Microservices** *(TripEase | Full-Stack Engineer)*
+#### **Transit Booking Microservices** *(Full-Stack Engineer)*
 * Built a Laravel 12 and React Native transportation platform across four Dockerized services for identity, operators, payments, and transport, **reducing environment startup times by 50%** while protecting escrow operations with idempotency and transaction locks.
 
-#### **Visitor Management System** *(Senior Full-Stack Engineer, Contract via DTL | 2025)*
+#### **Visitor Management System** *(Senior Full-Stack Engineer, Contract | 2025)*
 * Delivered multi-location QR check-in, staff approvals, duplicate-entry protection, RBAC, privacy consent, and Termii/email notifications for a confidential financial-services client, **reducing manual reception logging overhead by 70%**.
 
-#### **Shipment Booking & Tracking Platform** *(Shipwize | Senior Full-Stack Engineer, Contract | 2024 - 2025)*
+#### **Shipment Booking & Tracking Platform** *(Senior Full-Stack Engineer, Contract | 2024 - 2025)*
 * Built shipment booking and public tracking workflows with Flutterwave verification, delivery confirmation codes, commissions, operational dashboards, and Termii customer notifications.
 
 ### **Xxolcare** | *Software Developer* (2022 - 2024)
