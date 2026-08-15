@@ -22,6 +22,14 @@ const ORDERED_PROJECTS = PROJECT_ORDER
   .map((id) => PROJECTS.find((project) => project.id === id))
   .filter((project): project is NonNullable<typeof project> => Boolean(project));
 
+const confidentialityNote = 'Production URL withheld due to client confidentiality.';
+
+const hasProductionLink = (project: NonNullable<typeof PROJECTS[number]>) =>
+  Boolean(project.details.links?.length || project.links?.length || project.link);
+
+const hasWithheldProductionUrl = (project: NonNullable<typeof PROJECTS[number]>) =>
+  !hasProductionLink(project) && project.details.constraints?.startsWith(confidentialityNote);
+
 export default function WorkPage() {
   const categories = useMemo(() => ['All', ...Array.from(new Set(ORDERED_PROJECTS.map((project) => project.category)))], []);
   const [activeCategory, setActiveCategory] = useState('All');
@@ -175,6 +183,9 @@ export default function WorkPage() {
                         </a>
                       ))}
                     </div>
+                    {hasWithheldProductionUrl(project) && (
+                      <p className="mt-4 border-l border-amber-900/70 pl-3 text-xs leading-relaxed text-slate-500">{confidentialityNote}</p>
+                    )}
                   </div>
                 </article>
               ))}
@@ -247,6 +258,9 @@ export default function WorkPage() {
                   </a>
                 ))}
               </div>
+              {hasWithheldProductionUrl(activeProject) && (
+                <p className="mt-4 border-l border-amber-900/70 pl-3 text-xs leading-relaxed text-slate-500">{confidentialityNote}</p>
+              )}
             </aside>
           </div>
         </section>
