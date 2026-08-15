@@ -203,7 +203,7 @@ export const PROJECTS = [
     number: '06',
     category: 'Integration APIs',
     title: 'Transglobal X Sabre',
-    shortDesc: 'Built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of those APIs for tariffs, bookings, payments, and shipment sync.',
+    shortDesc: 'Contract via DTL: built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of those APIs for tariffs, bookings, payments, and shipment sync.',
     tags: ['PHP', 'Laravel', 'Docker'],
     borderColor: 'hover:border-yellow-500/30',
     hoverText: 'group-hover:text-yellow-400',
@@ -220,7 +220,7 @@ export const PROJECTS = [
         { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
       ],
       system: 'Two Custom Logistics Platforms, Connected by API',
-      role: 'Full-stack architect and implementation owner for both the Transglobal API platform and the Sabre Cargo portal built on top of it.',
+      role: 'Contract full-stack architect via DTL and implementation owner for both the Transglobal API platform and the Sabre Cargo portal built on top of it.',
       constraints: 'Partner tariff matrices changed independently, payment providers required different handshakes, and shipment state had to remain consistent across systems.',
       architecture: ['Transglobal APIs', 'Sabre Cargo portal', 'Sabre tariff import', 'SeerBit + shipment sync'],
       evidence: [
@@ -253,7 +253,7 @@ export const PROJECTS = [
     number: '07',
     category: 'Digital Modernization',
     title: 'Ansar-Ud-Deen Society Digital Platform',
-    shortDesc: 'A society-wide digital platform spanning a NestJS API, Next.js website and CMS, Flutter mobile app, donation workflows, queued communications, and production operations.',
+    shortDesc: 'Contract via DTL: a society-wide digital platform spanning a NestJS API, Next.js website and CMS, Flutter mobile app, donation workflows, queued communications, and production operations.',
     tags: ['NestJS', 'Next.js', 'Flutter', 'PostgreSQL'],
     borderColor: 'hover:border-green-500/30',
     hoverText: 'group-hover:text-green-400',
@@ -262,7 +262,7 @@ export const PROJECTS = [
     details: {
       url: null,
       system: 'Ansar-Ud-Deen Society Digital Platform',
-      role: 'Platform engineer modernizing the society website, administration workflows, API platform, and member-facing mobile experience.',
+      role: 'Contract platform engineer via DTL modernizing the society website, administration workflows, API platform, and member-facing mobile experience.',
       constraints: 'A public-facing institution needed one governed content source, dependable donation and communication flows, and deployable web and mobile clients without disrupting existing operations.',
       architecture: ['Next.js web + CMS', 'NestJS API', 'PostgreSQL + Redis queues', 'Flutter mobile client'],
       evidence: [
@@ -336,7 +336,7 @@ export const PROJECTS = [
     number: '09',
     category: 'Workplace Operations',
     title: 'Visitor Management System',
-    shortDesc: 'A multi-location visitor and staff check-in platform with approval workflows, role-based administration, duplicate-entry protection, privacy controls, and SMS/email notifications.',
+    shortDesc: 'Contract via DTL: a multi-location visitor and staff check-in platform with approval workflows, role-based administration, duplicate-entry protection, privacy controls, and SMS/email notifications.',
     tags: ['Laravel', 'Filament', 'Termii', 'Cloudinary'],
     borderColor: 'hover:border-cyan-500/30',
     hoverText: 'group-hover:text-cyan-400',
@@ -345,7 +345,7 @@ export const PROJECTS = [
     details: {
       url: 'https://fcmbvms.visitors.com.ng',
       system: 'Multi-Location Visitor Management System',
-      role: 'Full-stack engineer responsible for self-service check-in, staff workflows, administration controls, and notification delivery.',
+      role: 'Contract full-stack engineer via DTL responsible for self-service check-in, staff workflows, administration controls, and notification delivery.',
       constraints: 'Reception teams needed fast identity lookup and location-aware check-in while preventing duplicate visits and preserving consent, privacy, and role boundaries.',
       architecture: ['Location QR entry', 'Visitor + staff check-in', 'Approval and access rules', 'Email + SMS notifications'],
       evidence: [
@@ -474,7 +474,7 @@ const FLAGSHIP_CASE_STUDIES = [
     index: '02',
     context: 'Transglobal x Sabre / logistics',
     problem: 'Transglobal needed a logistics API platform, while Sabre needed a cargo portal that could depend on those APIs for quotes, accounts, payments, and shipment updates.',
-    decision: 'Built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of it for tariffs, bookings, payments, and shipment updates.',
+    decision: 'On a contract via DTL, built Transglobal\'s logistics API platform from scratch, then built Sabre\'s cargo booking portal on top of it for tariffs, bookings, payments, and shipment updates.',
     outcome: 'Two systems, one flow',
     outcomeNote: 'Sabre runs on Transglobal APIs from quote to payment confirmation',
     evidence: ['Transglobal API built', 'Sabre portal built', 'Systems connected'],

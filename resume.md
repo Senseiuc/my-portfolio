@@ -38,7 +38,7 @@ Senior Full-Stack Engineer specializing in backend systems, APIs, payment infras
 
 ### **Freelance Software Engineer** | *Full-Stack Consultant & DevOps Specialist* (2020 - PRESENT)
 
-#### **Ansar-Ud-Deen Digital Platform** *(Senior Full-Stack Engineer, Contract | 2026 - PRESENT)*
+#### **Ansar-Ud-Deen Digital Platform** *(Senior Full-Stack Engineer, Contract via DTL | 2026 - PRESENT)*
 * Modernized a society-wide platform across a NestJS API, Next.js website and CMS, and Flutter mobile app, backed by PostgreSQL, Prisma, Redis, and BullMQ.
 * Implemented governed content delivery, donation workflows, Cloudinary media, queued communications, Sentry monitoring, and Docker-based staging and production operations.
 
@@ -48,7 +48,7 @@ Senior Full-Stack Engineer specializing in backend systems, APIs, payment infras
 * Resolved cross-cutting API routing and CORS misconfigurations across FastAPI endpoints, **eliminating integration errors** and reducing end-to-end latency.
 * Standardized containerized staging and production runs using Docker and Nginx reverse proxies, **reducing manual environment setup overhead by 60%**.
 
-#### **Transglobal & Cargo (Sabre)** *(Full-Stack Consultant)*
+#### **Transglobal & Cargo (Sabre)** *(Full-Stack Consultant, Contract via DTL)*
 * Architected a global supply chain bookings and cargo platform with Seerbit payment orchestration, **processing international shipments** through automated tariff calculation and secure transaction flows.
 * Designed and implemented automated Sabre Tariff calculation seeders, **eliminating tariff calculation errors** for new countries and buckets.
 * Built custom Sabre Tariff matrix updates and partner commission override mechanics, **improving settlement accuracy** and reducing manual rate intervention.
@@ -57,7 +57,7 @@ Senior Full-Stack Engineer specializing in backend systems, APIs, payment infras
 #### **TripEase** *(Full-Stack Engineer)*
 * Built a Laravel 12 and React Native transportation platform across four Dockerized services for identity, operators, payments, and transport, **reducing environment startup times by 50%** while protecting escrow operations with idempotency and transaction locks.
 
-#### **Visitor Management System** *(Senior Full-Stack Engineer, Contract | 2025)*
+#### **Visitor Management System** *(Senior Full-Stack Engineer, Contract via DTL | 2025)*
 * Delivered multi-location QR check-in, staff approvals, duplicate-entry protection, RBAC, privacy consent, and Termii/email notifications for a confidential financial-services client, **reducing manual reception logging overhead by 70%**.
 
 #### **Shipwize** *(Senior Full-Stack Engineer, Contract | 2024 - 2025)*

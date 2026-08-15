@@ -3,6 +3,7 @@
 **Transglobal X Sabre** is an enterprise logistics integration hub and billing gateway. It coordinates bulk international tariffs seeding, custom weight-tiered selling rates, Paystack-backed Dedicated Virtual Accounts (DVA) for logistical partner organizations, and automated webhook synchronization dispatching shipping statuses to downstream cargo booking engines.
 
 * **Production URLs:** [https://cargo.sabrecwa.com/](https://cargo.sabrecwa.com/) (Cargo Booking) | [https://transglobal.africa/](https://transglobal.africa/) (API Hub)
+* **Engagement:** Contract full-stack engineering via DTL.
 * **Core Technology Stack:** Laravel (PHP), MySQL, Paystack Gateway, SeerBit Gateway, Docker.
 
 ---

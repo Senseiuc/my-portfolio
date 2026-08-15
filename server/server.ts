@@ -530,23 +530,23 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
   const namePrefix = '';
 
   if (msg.includes('compare') && msg.includes('tripease') && (msg.includes('transglobal') || msg.includes('sabre'))) {
-    return `${namePrefix}TripEase demonstrates distributed architecture: four bounded services for identity, companies, payments, and transport, with concurrency-safe escrow operations. Transglobal demonstrates integration depth: one Laravel hub coordinating Sabre tariffs, customer accounts, payment providers, and signed shipment webhooks. TripEase is the stronger microservices example; Transglobal is the stronger external-systems integration example.`;
+    return `${namePrefix}TripEase demonstrates distributed architecture: four bounded services for identity, companies, payments, and transport, with concurrency-safe escrow operations. Transglobal, delivered as contract work via DTL, demonstrates integration depth: one Laravel hub coordinating Sabre tariffs, customer accounts, payment providers, and signed shipment webhooks. TripEase is the stronger microservices example; Transglobal is the stronger external-systems integration example.`;
   }
   if (msg.includes('best') || msg.includes('strongest') || msg.includes('backend architecture')) {
-    return `${namePrefix}the strongest public backend examples are Konga for high-volume batch processing, TripEase for service boundaries and ledger concurrency, and Transglobal for payment and logistics integrations. Ansar-Ud-Deen adds full-platform operational ownership across API, web, mobile, queues, and deployment.`;
+    return `${namePrefix}the strongest public backend examples are Konga for high-volume batch processing, TripEase for service boundaries and ledger concurrency, and Transglobal for payment and logistics integrations delivered via DTL. Ansar-Ud-Deen, also contract work via DTL, adds full-platform operational ownership across API, web, mobile, queues, and deployment.`;
   }
   if (msg.includes('what can') || msg.includes('for my team') || msg.includes('hire')) {
     return `${namePrefix}Gideon can own an application end to end: responsive web interfaces, Flutter mobile clients, APIs, data models, payments and integrations, containerized deployment, and production troubleshooting. His deepest specialization is in backend-heavy systems where reliability, transactions, and operational workflows matter.`;
   }
   if (msg.includes('projects') || msg.includes('portfolio') || msg.includes('work')) {
-    return `${namePrefix}Gideon's portfolio covers commerce infrastructure at Konga, community finance and marketplace operations at Golden Attic, distributed transit with TripEase, logistics integrations for Transglobal and Shipwize, the Ansar-Ud-Deen web/mobile platform, visitor operations, education, property management, broadcasting, and care hospitality. Ask for a comparison or a specific project and I can explain the engineering decisions and results.`;
+    return `${namePrefix}Gideon's portfolio covers commerce infrastructure at Konga, community finance and marketplace operations at Golden Attic, distributed transit with TripEase, logistics integrations for Transglobal and Shipwize, DTL contract work on Ansar-Ud-Deen and visitor operations, education, property management, broadcasting, and care hospitality. Ask for a comparison or a specific project and I can explain the engineering decisions and results.`;
   }
   
   if (msg.includes('konga')) {
     return `${namePrefix}at Konga, Gideon works across the merchant platform: payout and wallet correctness, QoS inventory compliance, merchant identity verification, Magento synchronization, pricing, email auditing, responsive operations, testing enablement, and deployment support. He revived repeatable local and CI verification with containerized tests, isolated test data, service mocks, environment-driven configuration, readiness handling, and targeted SSO/authentication regression coverage. His flagship performance result was refactoring payout execution around cursor offsets, bounded 500-record batches, and paced processing, cutting execution time in half while controlling database pressure. His work spans eight merchant, middleware, administration, identity, notification, integration, and operations repositories.`;
   }
   if (msg.includes('sabre') || msg.includes('transglobal')) {
-    return `${namePrefix}Gideon designed and built the TransGlobal logistics shipping portal and backend API from scratch. He integrated the Sabre global tariff matrices, custom price calculator models, and payment systems (Paystack, SeerBit).`;
+    return `${namePrefix}Gideon designed and built the TransGlobal logistics shipping portal and backend API from scratch as contract work via DTL. He integrated the Sabre global tariff matrices, custom price calculator models, and payment systems (Paystack, SeerBit).`;
   }
   if (msg.includes('tripease') || msg.includes('trip-ease')) {
     return `${namePrefix}TripEase is a containerized microservices project built by Gideon. It features 4 independent services (Auth, Companies, Payments, Transport) running in Docker. He designed an escrow wallet ledger with deadlock retry mechanisms and idempotency check guards.`;
@@ -564,13 +564,13 @@ function getLocalChatResponse(message: string, userProfile?: { firstName: string
     return `${namePrefix}RadioNews is a broadcasting CMS Gideon built using Filament and Spatie roles. He integrated WebRTC video call rooms using the Daily.co API and created automated shell deploy scripts.`;
   }
   if (msg.includes('ansar') || msg.includes('deen')) {
-    return `${namePrefix}the Ansar-Ud-Deen Digital Platform is a society-wide modernization project spanning a NestJS API, Next.js website and CMS, Flutter mobile app, PostgreSQL, Redis queues, donations, media delivery, and containerized operations.`;
+    return `${namePrefix}the Ansar-Ud-Deen Digital Platform was contract work via DTL: a society-wide modernization project spanning a NestJS API, Next.js website and CMS, Flutter mobile app, PostgreSQL, Redis queues, donations, media delivery, and containerized operations.`;
   }
   if (msg.includes('golden attic') || msg.includes('goldenattic')) {
     return `${namePrefix}at Golden Attic, Gideon owns delivery across a Laravel 11 community economic platform spanning dual-currency XOF/USD wallets, marketplace seller workflows, referral networks, queued rewards, testing, Docker, and production operations. He led the Laravel 5.8 to 11 migration while preserving more than 100,000 historical records, improved settlement speed by 40%, and reduced server overhead by 35% through queued reward and commission processing.`;
   }
   if (msg.includes('visitor management') || msg.includes('visitor system') || msg.includes('check-in')) {
-    return `${namePrefix}Gideon built a multi-location visitor and staff management system with QR-based entry, approval workflows, duplicate check-in protection, role-based administration, privacy consent, and Termii SMS and email alerts.`;
+    return `${namePrefix}Gideon built a multi-location visitor and staff management system as contract work via DTL, with QR-based entry, approval workflows, duplicate check-in protection, role-based administration, privacy consent, and Termii SMS and email alerts.`;
   }
   if (msg.includes('shipwize')) {
     return `${namePrefix}Shipwize is a Laravel logistics platform Gideon developed for shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation codes, commissions, and Termii customer notifications.`;
@@ -625,7 +625,7 @@ Information about Gideon Nwadialu:
 - Professional Experience:
   1. Konga (2024 - Present): Software Engineer. Works across merchant money movement, inventory compliance, identity verification, marketplace synchronization, pricing, communications, testing enablement, and platform operations. Revived containerized local and CI testing across legacy merchant services. Optimized payout execution to run twice as fast using cursor offsets, bounded 500-record batches, and paced processing.
   2. Golden Attic (2021 - Present): Senior Full-Stack Engineer (Part-time). Built financial ledger architectures and data pipelines.
-  3. Freelance/Contracting (2020 - Present): Engineered Sabre logistics platforms, smart-sync script handlers, and RBAC ledger systems.
+  3. Freelance/Contracting (2020 - Present): Engineered Sabre logistics platforms, Ansar-Ud-Deen platform work, and RBAC visitor systems via DTL, alongside other smart-sync and deployment automation work.
   4. Xxolcare (2022 - 2024): Software Engineer. Built care-scheduling engine, integrated Paystack billing, resolved calculation deficit bugs, and developed QR code digital business cards.
   5. LifeSeed Worldwide (2021 - 2022): Progressed from IT Support Specialist intern to part-time Web Developer, building Laravel, jQuery, and Bootstrap applications, gathering customer feedback, providing IT support, and creating promotional design and video content.
   6. DENICHE Hospitality (2021 - 2022): Junior Web Developer. Maintained workplace technology, trained staff on internal software, improved multi-entry sales workflows, added Vue.js booking calculations, and served briefly as Operational Supervisor.
@@ -634,14 +634,14 @@ Information about Gideon Nwadialu:
   - Asoland College (2015 - 2016): Taught Mathematics and Quantitative Reasoning, organized classes for school events, composed anniversary songs, and trained students for sports activities.
   - Merus College (2013 - 2014): Taught junior secondary Mathematics, Introductory Technology, and Computer Science, making lessons more approachable and improving class performance by over 30%.
 - Primary Projects:
-  - TransGlobal x Sabre: Shipping logistics portal with Sabre matrix seeding and real-time transit pricing.
+  - TransGlobal x Sabre: Contract via DTL; shipping logistics portal with Sabre matrix seeding and real-time transit pricing.
   - TripEase: Multi-tenant containerized microservices (Auth, Payments, Companies, Transport) transit router with escrow wallets.
   - Wings: Tenancy contract and rent scheduler automation with FIFO billing application.
   - RadioNews: Radio CMS dashboard with Daily.co WebRTC integrations and Spatie access controls.
   - Lextorah: FastAPI tutoring portal with smart sync pipelines and footer chatbot widgets.
-  - Ansar-Ud-Deen Digital Platform: NestJS, Next.js, and Flutter modernization platform with PostgreSQL, Redis queues, donations, CMS workflows, and containerized operations.
+  - Ansar-Ud-Deen Digital Platform: Contract via DTL; NestJS, Next.js, and Flutter modernization platform with PostgreSQL, Redis queues, donations, CMS workflows, and containerized operations.
   - Golden Attic Community Platform: Laravel 11 community economic platform with XOF/USD wallets, marketplace seller workflows, referral networks, Redis-backed rewards, testing, and Docker operations.
-  - Visitor Management System: Multi-location visitor and staff check-in with approvals, role controls, privacy consent, and SMS/email notifications.
+  - Visitor Management System: Contract via DTL; multi-location visitor and staff check-in with approvals, role controls, privacy consent, and SMS/email notifications.
   - Shipwize: Shipment booking, Flutterwave payment verification, tracking updates, delivery confirmation, commissions, and Termii notifications.
 - Core Technologies:
   - Languages: PHP, TypeScript, JavaScript, Python, SQL
