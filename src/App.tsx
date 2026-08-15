@@ -109,7 +109,7 @@ export const PROJECTS = [
       system: 'Distributed Microservices Logistics System',
       projectName: 'TripEase',
       role: 'System architect and backend engineer across four independently versioned Laravel services.',
-      constraints: 'Independent service ownership, duplicate payment callbacks, concurrent wallet mutations, and multi-leg journey discovery.',
+      constraints: 'Production URL withheld due to client confidentiality. Independent service ownership, duplicate payment callbacks, concurrent wallet mutations, and multi-leg journey discovery.',
       architecture: ['Auth', 'Companies + route graph', 'Payments', 'Transport + escrow ledger'],
       evidence: [
         '4 independently versioned service repositories',
@@ -209,21 +209,13 @@ export const PROJECTS = [
     borderColor: 'hover:border-yellow-500/30',
     hoverText: 'group-hover:text-yellow-400',
     accentColor: 'text-yellow-400',
-    link: 'https://cargo.sabrecwa.com/',
-    links: [
-      { label: 'API platform', url: 'https://transglobal.africa/' },
-      { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
-    ],
+    link: null,
     details: {
-      url: 'https://transglobal.africa/',
+      url: null,
       projectName: 'Transglobal X Sabre',
-      links: [
-        { label: 'API platform', url: 'https://transglobal.africa/' },
-        { label: 'Cargo booking portal', url: 'https://cargo.sabrecwa.com/' }
-      ],
       system: 'Two Custom Logistics Platforms, Connected by API',
       role: 'Contract full-stack architect and implementation owner for both the core logistics API platform and the partner cargo portal built on top of it.',
-      constraints: 'Partner tariff matrices changed independently, payment providers required different handshakes, and shipment state had to remain consistent across systems.',
+      constraints: 'Production URL withheld due to client confidentiality. Partner tariff matrices changed independently, payment providers required different handshakes, and shipment state had to remain consistent across systems.',
       architecture: ['Core logistics APIs', 'Partner cargo portal', 'Tariff import', 'SeerBit + shipment sync'],
       evidence: [
         '2 platforms built from scratch and connected',
@@ -266,7 +258,7 @@ export const PROJECTS = [
       system: 'Society Web, API, CMS, and Mobile Platform',
       projectName: 'Ansar-Ud-Deen Society Digital Platform',
       role: 'Contract platform engineer modernizing the society website, administration workflows, API platform, and member-facing mobile experience.',
-      constraints: 'A public-facing institution needed one governed content source, dependable donation and communication flows, and deployable web and mobile clients without disrupting existing operations.',
+      constraints: 'Production URL withheld due to client confidentiality. A public-facing institution needed one governed content source, dependable donation and communication flows, and deployable web and mobile clients without disrupting existing operations.',
       architecture: ['Next.js web + CMS', 'NestJS API', 'PostgreSQL + Redis queues', 'Flutter mobile client'],
       evidence: [
         '154 commits in the local monorepo',
@@ -307,7 +299,7 @@ export const PROJECTS = [
       system: 'Community Economic Platform',
       projectName: 'Golden Attic',
       role: 'Senior full-stack engineer owning modernization and delivery across backend services, financial workflows, seller interfaces, data, testing, and deployment.',
-      constraints: 'The live platform needed a major framework upgrade while preserving more than 100,000 historical records and maintaining correctness across wallets, commissions, marketplace orders, and referral rewards.',
+      constraints: 'Production URL withheld due to client confidentiality. The live platform needed a major framework upgrade while preserving more than 100,000 historical records and maintaining correctness across wallets, commissions, marketplace orders, and referral rewards.',
       architecture: ['Laravel 11 application', 'Cash + shopping + investment wallets', 'Redis-backed queues', 'Marketplace + referral network'],
       evidence: [
         'Laravel 5.8 to Laravel 11 upgrade with more than 100,000 historical records preserved',
